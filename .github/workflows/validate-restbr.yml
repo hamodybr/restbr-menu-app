@@ -39,13 +39,40 @@ jobs:
       - name: Required runtime files
         shell: bash
         run: |
-          test -f js/supabase-config.js
-          test -f js/cart-preload.js
-          test -f js/language-policy.js
-          test -f js/menu-policy.js
-          test -f js/offline-policy.js
-          test -f owner/owner-v2.js
-          test -f owner/owner-settings-v2.js
-          test -f owner/bulk-pricing-v2.js
-          test -f owner/auth-v2.js
-          test -f admin/admin-v2.js
+          set -euo pipefail
+          required=(
+            js/supabase-config.js
+            js/tenant-head.js
+            js/timezone-policy.js
+            js/offline-policy.js
+            js/language-policy.js
+            js/menu-policy.js
+            js/cart-preload.js
+            js/order-analytics.js
+            owner/auth-v2.js
+            owner/permissions-v2.js
+            owner/owner-v2.js
+            owner/owner-settings-v2.js
+            owner/bulk-pricing-v2.js
+            owner/analytics-v2.js
+            admin/admin-v2.js
+            admin/plan-v2.js
+            migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql
+            migration/platform/RESTBR-MEMBERS-V1.sql
+            migration/platform/RESTBR-ANALYTICS-V2.sql
+            migration/platform/RESTBR-SECURITY-HARDEN-V1.sql
+          )
+          for file in "${required[@]}"; do
+            echo "Required: $file"
+            test -f "$file"
+          done
+
+      - name: Guard RESTBR runtime versions
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'supabase-config.js?v=2.8' index.html
+          grep -q 'cart-preload.js?v=1.1' index.html
+          grep -q 'order-analytics.js?v=1.0' index.html
+          grep -q 'restbr-menu-core-v14' sw.js
+          grep -q 'supabase-config.js?v=2.8' sw.js
