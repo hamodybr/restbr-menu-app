@@ -44,6 +44,7 @@ jobs:
             css/responsive-parity.css
             js/supabase-config.js
             js/tenant-head.js
+            js/brand-template-fix.js
             js/timezone-policy.js
             js/offline-policy.js
             js/language-policy.js
@@ -82,11 +83,13 @@ jobs:
           set -euo pipefail
           grep -q 'responsive-parity.css?v=1.0' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
+          grep -q 'brand-template-fix.js?v=1.0' index.html
           grep -q 'timezone-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.1' index.html
           grep -q 'order-analytics.js?v=1.0' index.html
-          grep -q 'restbr-menu-core-v15' sw.js
+          grep -q 'restbr-menu-core-v16' sw.js
           grep -q 'responsive-parity.css?v=1.0' sw.js
+          grep -q 'brand-template-fix.js?v=1.0' sw.js
           grep -q 'supabase-config.js?v=2.8' sw.js
           grep -q 'tenant-recovery-v2.js?v=2.0' owner/config.js
           grep -q 'permissions-v2.js?v=2.1' owner/config.js
