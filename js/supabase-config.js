@@ -1,5 +1,5 @@
 // ==========================================
-// RESTBR MENU CORE — Tenant Data Bridge V2.4
+// RESTBR MENU CORE — Tenant Data Bridge V2.5
 // ==========================================
 // Public data is supplied by the same-origin Cloudflare Worker:
 //   GET  /_restbr/bootstrap
@@ -25,6 +25,8 @@
 // - background_url -> background_video/background_video_url compatibility
 // - address_* -> footer_location_* compatibility
 // - card_glass_opacity -> card_glass_transparency conversion
+//
+// V2.5 makes restaurant_name_* authoritative over legacy branding name_*.
 
 (() => {
   const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
@@ -81,6 +83,22 @@
   function normalizeTenantSettings(raw = {}) {
     const s = { ...(raw || {}) };
 
+    const nameAr = hasValue(s.restaurant_name_ar)
+      ? String(s.restaurant_name_ar).trim()
+      : hasValue(s.name_ar)
+        ? String(s.name_ar).trim()
+        : '';
+    const nameKu = hasValue(s.restaurant_name_ku)
+      ? String(s.restaurant_name_ku).trim()
+      : hasValue(s.name_ku)
+        ? String(s.name_ku).trim()
+        : nameAr;
+    const nameEn = hasValue(s.restaurant_name_en)
+      ? String(s.restaurant_name_en).trim()
+      : hasValue(s.name_en)
+        ? String(s.name_en).trim()
+        : nameAr;
+
     const phone = hasValue(s.phone) ? String(s.phone).trim() : '';
     const whatsapp = hasValue(s.whatsapp_number)
       ? String(s.whatsapp_number).trim()
@@ -134,6 +152,12 @@
 
     return {
       ...s,
+      name_ar: nameAr,
+      name_ku: nameKu,
+      name_en: nameEn,
+      restaurant_name_ar: nameAr,
+      restaurant_name_ku: nameKu,
+      restaurant_name_en: nameEn,
       phone,
       whatsapp,
       whatsapp_number: whatsapp,
@@ -339,7 +363,7 @@
 
   window.supabaseClient = client;
   window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
-  console.log('✅ RESTBR tenant data bridge V2.4 ready');
+  console.log('✅ RESTBR tenant data bridge V2.5 ready');
 })();
 
 const supabaseClient = window.supabaseClient;
