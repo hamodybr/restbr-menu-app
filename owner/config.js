@@ -22,6 +22,9 @@ window.RESTBR_OWNER_CONFIG = {
 
   const params = new URLSearchParams(location.search);
   window.RESTBR_OWNER_TENANT_SLUG = String(params.get('tenant') || '').trim().toLowerCase();
+  if(window.RESTBR_OWNER_TENANT_SLUG){
+    try{localStorage.setItem('RESTBR_OWNER_LAST_TENANT',window.RESTBR_OWNER_TENANT_SLUG);}catch(_){}
+  }
 })();
 
 // Load Owner V2 extensions only after the dashboard shell, Supabase CDN and
@@ -39,6 +42,7 @@ window.addEventListener('load', () => {
   };
 
   load('restbrOwnerAuthV2Script', './auth-v2.js?v=2.1');
+  load('restbrOwnerTenantRecoveryV2Script', './tenant-recovery-v2.js?v=2.0');
   load('restbrOwnerPermissionsV2Script', './permissions-v2.js?v=2.1');
   load('restbrOwnerV2Script', './owner-v2.js?v=2.1');
   load('restbrOwnerSettingsV2Script', './owner-settings-v2.js?v=2.1');
