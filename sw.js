@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-menu-core-v2";
+const CACHE_NAME = "restbr-menu-core-v3";
 
 const CORE = [
   "./",
@@ -8,7 +8,7 @@ const CORE = [
   "./css/cart.css?v=3.6",
   "./js/app.js?v=17.4",
   "./js/cart.js?v=4.1",
-  "./js/supabase-config.js?v=2.2"
+  "./js/supabase-config.js?v=2.3"
 ];
 
 self.addEventListener("install", event => {
