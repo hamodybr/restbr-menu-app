@@ -1,16 +1,16 @@
 -- ============================================================
--- RESTBR PRODUCT OPTION STATE SYNC V1.1
+-- RESTBR PRODUCT OPTION STATE SYNC V1.2
 -- Keeps products.metadata.has_options synchronized with usable option rows.
---
--- IMPORTANT:
--- RESTBR platform stores has_options inside products.metadata JSONB.
--- product_options availability is stored inside option.metadata.is_available.
--- Run once in restbr-platform > Supabase SQL Editor.
+-- Trigger implementation lives in private schema and is not exposed as RPC.
 -- ============================================================
 
 begin;
 
-create or replace function public.sync_product_has_options()
+-- Remove an older public implementation if it was ever installed.
+drop trigger if exists trg_sync_product_has_options on public.product_options;
+drop function if exists public.sync_product_has_options();
+
+create or replace function private.sync_product_has_options()
 returns trigger
 language plpgsql
 security definer
@@ -74,18 +74,18 @@ begin
     where p.id = v_old_product_id;
   end if;
 
-  -- Return value is ignored for AFTER row triggers.
   return null;
 end;
 $$;
 
-drop trigger if exists trg_sync_product_has_options on public.product_options;
+-- Trigger-only helper: no browser/API role should call it directly.
+revoke all on function private.sync_product_has_options() from public, anon, authenticated;
 
 create trigger trg_sync_product_has_options
 after insert or delete or update of product_id, is_active, metadata
 on public.product_options
 for each row
-execute function public.sync_product_has_options();
+execute function private.sync_product_has_options();
 
 -- One-time repair for every existing product.
 update public.products p
