@@ -8,7 +8,7 @@ window.RESTBR_OWNER_CONFIG = {
 
 // Load Owner V2 extensions only after the dashboard shell, Supabase CDN and
 // legacy controller have finished booting. async=false preserves execution
-// order: menu/editor extension first, operations/settings extension second.
+// order and isolates the stable dashboard from extension failures.
 window.addEventListener('load', () => {
   const load = (id, src) => {
     if (document.getElementById(id)) return;
@@ -21,4 +21,5 @@ window.addEventListener('load', () => {
 
   load('restbrOwnerV2Script', './owner-v2.js?v=2.0');
   load('restbrOwnerSettingsV2Script', './owner-settings-v2.js?v=2.0');
+  load('restbrBulkPricingV2Script', './bulk-pricing-v2.js?v=2.0');
 }, { once:true });
