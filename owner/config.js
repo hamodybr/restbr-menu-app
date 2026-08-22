@@ -27,4 +27,5 @@ window.addEventListener('load', () => {
   load('restbrOwnerAnalyticsV2Script', './analytics-v2.js?v=2.0');
   load('restbrOwnerVisibilityV2Script', './visibility-v2.js?v=2.0');
   load('restbrOwnerAuditV2Script', './audit-v2.js?v=2.0');
+  load('restbrOwnerQrV2Script', './qr-v2.js?v=2.0');
 }, { once:true });
