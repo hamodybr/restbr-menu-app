@@ -1,5 +1,5 @@
 // ==========================================
-// RESTBR MENU CORE — Tenant Data Bridge V2.3
+// RESTBR MENU CORE — Tenant Data Bridge V2.4
 // ==========================================
 // Public data is supplied by the same-origin Cloudflare Worker:
 //   GET  /_restbr/bootstrap
@@ -20,6 +20,11 @@
 // - has_options is derived from the active option rows, so stale DB flags do
 //   not leak into the menu runtime
 // - base_price remains the fallback only when no active option rows exist
+//
+// V2.4 normalizes Owner Dashboard setting names used by the public runtime:
+// - background_url -> background_video/background_video_url compatibility
+// - address_* -> footer_location_* compatibility
+// - card_glass_opacity -> card_glass_transparency conversion
 
 (() => {
   const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
@@ -37,6 +42,28 @@
 
   function boolOr(value, fallback) {
     return typeof value === 'boolean' ? value : Boolean(fallback);
+  }
+
+  function objectValue(value) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) {
+      return { ...value };
+    }
+
+    if (typeof value === 'string' && value.trim()) {
+      try {
+        const parsed = JSON.parse(value);
+        if (parsed && typeof parsed === 'object' && !Array.isArray(parsed)) {
+          return { ...parsed };
+        }
+      } catch (_) {}
+    }
+
+    return {};
+  }
+
+  function clampPercent(value) {
+    const n = Number(value);
+    return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : null;
   }
 
   function normalizeProduct(raw = {}, hasActiveOptions = false) {
@@ -72,16 +99,38 @@
     const snapchat = hasValue(s.snapchat_url) ? String(s.snapchat_url).trim() : '';
     const hasSocial = Boolean(instagram || facebook || tiktok || snapchat);
 
-    const footerLocationAr = hasValue(s.footer_location_ar) ? String(s.footer_location_ar) : '';
-    const footerLocationKu = hasValue(s.footer_location_ku) ? String(s.footer_location_ku) : '';
-    const footerLocationEn = hasValue(s.footer_location_en) ? String(s.footer_location_en) : '';
+    const footerLocationAr = hasValue(s.footer_location_ar)
+      ? String(s.footer_location_ar)
+      : hasValue(s.address_ar)
+        ? String(s.address_ar)
+        : '';
+    const footerLocationKu = hasValue(s.footer_location_ku)
+      ? String(s.footer_location_ku)
+      : hasValue(s.address_ku)
+        ? String(s.address_ku)
+        : '';
+    const footerLocationEn = hasValue(s.footer_location_en)
+      ? String(s.footer_location_en)
+      : hasValue(s.address_en)
+        ? String(s.address_en)
+        : '';
     const hasFooterLocation = Boolean(footerLocationAr || footerLocationKu || footerLocationEn || location);
 
     const backgroundVideo = hasValue(s.background_video)
       ? String(s.background_video).trim()
       : hasValue(s.background_video_url)
         ? String(s.background_video_url).trim()
-        : '';
+        : hasValue(s.background_url)
+          ? String(s.background_url).trim()
+          : '';
+
+    const uiDesign = objectValue(s.ui_design_settings);
+    if (hasValue(uiDesign.card_glass_opacity)) {
+      const opacity = clampPercent(uiDesign.card_glass_opacity);
+      if (opacity !== null) {
+        uiDesign.card_glass_transparency = 100 - opacity;
+      }
+    }
 
     return {
       ...s,
@@ -97,8 +146,10 @@
       facebook_url: facebook,
       tiktok_url: tiktok,
       snapchat_url: snapchat,
+      background_url: backgroundVideo,
       background_video: backgroundVideo,
       background_video_url: backgroundVideo,
+      ui_design_settings: uiDesign,
       background_video_enabled: boolOr(s.background_video_enabled, backgroundVideo),
       top_call_enabled: boolOr(s.top_call_enabled, phone),
       top_whatsapp_enabled: boolOr(s.top_whatsapp_enabled, whatsapp),
@@ -288,7 +339,7 @@
 
   window.supabaseClient = client;
   window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
-  console.log('✅ RESTBR tenant data bridge V2.3 ready');
+  console.log('✅ RESTBR tenant data bridge V2.4 ready');
 })();
 
 const supabaseClient = window.supabaseClient;
