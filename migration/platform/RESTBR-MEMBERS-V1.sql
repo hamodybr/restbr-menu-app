@@ -1,5 +1,5 @@
 -- ============================================================
--- RESTBR MEMBERS V1.1
+-- RESTBR MEMBERS V1.2
 -- Super Admin RPCs for assigning existing Auth users to restaurants.
 -- Uses only the restaurant_members columns already required by Owner V1:
 -- restaurant_id, user_id, role, is_active.
@@ -112,7 +112,7 @@ returns jsonb
 language plpgsql
 security definer
 set search_path = ''
-as $$;
+as $$
 begin
   if not private.is_platform_admin() then
     raise exception 'platform admin required' using errcode = '42501';
