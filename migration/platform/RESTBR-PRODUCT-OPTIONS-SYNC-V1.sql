@@ -1,12 +1,9 @@
 -- ============================================================
--- RESTBR PRODUCT OPTION STATE SYNC V1.3
+-- RESTBR PRODUCT OPTION STATE SYNC V1.4
 -- Keeps products.metadata.has_options synchronized with usable option rows.
 -- Trigger implementation lives in private schema and is not exposed as RPC.
--- V1.3 uses cast-free JSON availability checks so malformed metadata cannot
--- break product-option writes.
+-- Transaction lifecycle is owned by the Supabase migration runner.
 -- ============================================================
-
-begin;
 
 -- Remove an older public implementation if it was ever installed.
 drop trigger if exists trg_sync_product_has_options on public.product_options;
@@ -107,8 +104,6 @@ set
     true
   ),
   updated_at = now();
-
-commit;
 
 -- Verification:
 -- select
