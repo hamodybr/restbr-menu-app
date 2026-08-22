@@ -1,15 +1,41 @@
 (() => {
-  const KEY="restbrCartV1";
+  const tenantIdentity=String(
+    window.RESTBR_TENANT?.id ||
+    window.RESTBR_BOOTSTRAP?.restaurant?.id ||
+    window.RESTBR_TENANT?.slug ||
+    window.RESTBR_BOOTSTRAP?.restaurant?.slug ||
+    location.hostname ||
+    "unknown"
+  ).trim().toLowerCase();
+  const KEY=window.RESTBR_CART_STORAGE_KEY||`restbrCartV2:${tenantIdentity}`;
   let cart=[];
   const T={
-    ar:{cart:"السلة",empty:"السلة فارغة",total:"الإجمالي",continue:"متابعة الطلب",added:"تمت الإضافة للسلة",choose:"اختر النوع",add:"إضافة للسلة",close:"إغلاق",clear:"إفراغ السلة",clearConfirm:"هل تريد إفراغ السلة بالكامل؟",checkout:"إكمال الطلب",name:"الاسم",phone:"رقم الهاتف",orderType:"نوع الطلب",delivery:"توصيل",pickup:"استلام من المطعم",address:"العنوان",location:"الموقع",getLocation:"تحديد موقعي",notes:"ملاحظات الطلب (اختياري)",review:"مراجعة الطلب",send:"إرسال الطلب عبر WhatsApp",required:"يرجى إكمال الحقول المطلوبة",locationOk:"تم تحديد الموقع",locationFail:"تعذر تحديد الموقع",back:"رجوع"},
-    ku:{cart:"سەبەتە",empty:"سەبەتە بەتاڵە",total:"کۆی گشتی",continue:"بەردەوام بە",added:"زیاد کرا",choose:"جۆر هەڵبژێرە",add:"زیادکردن بۆ سەبەتە",close:"داخستن",clear:"بەتاڵکردنەوەی سەبەتە",clearConfirm:"دڵنیایت لە بەتاڵکردنەوەی تەواوی سەبەتە؟",checkout:"تەواوکردنی داواکاری",name:"ناو",phone:"ژمارەی مۆبایل",orderType:"جۆری داواکاری",delivery:"گەیاندن",pickup:"وەرگرتن لە چێشتخانە",address:"ناونیشان",location:"شوێن",getLocation:"شوێنم دیاری بکە",notes:"تێبینی (ئارەزوومەندانە)",review:"پێداچوونەوە",send:"ناردنی داواکاری بە WhatsApp",required:"تکایە خانە پێویستەکان پڕ بکەرەوە",locationOk:"شوێن دیاری کرا",locationFail:"نەتوانرا شوێن دیاری بکرێت",back:"گەڕانەوە"},
-    en:{cart:"Cart",empty:"Your cart is empty",total:"Total",continue:"Continue order",added:"Added to cart",choose:"Choose an option",add:"Add to cart",close:"Close",clear:"Clear cart",clearConfirm:"Clear the entire cart?",checkout:"Checkout",name:"Name",phone:"Phone number",orderType:"Order type",delivery:"Delivery",pickup:"Pickup",address:"Address",location:"Location",getLocation:"Use my location",notes:"Order notes (optional)",review:"Review order",send:"Send order via WhatsApp",required:"Please complete the required fields",locationOk:"Location captured",locationFail:"Could not get location",back:"Back"}
+    ar:{cart:"السلة",empty:"السلة فارغة",total:"الإجمالي",continue:"متابعة الطلب",added:"تمت الإضافة للسلة",choose:"اختر النوع",add:"إضافة للسلة",close:"إغلاق",clear:"إفراغ السلة",clearConfirm:"هل تريد إفراغ السلة بالكامل؟",checkout:"إكمال الطلب",name:"الاسم",phone:"رقم الهاتف",orderType:"نوع الطلب",delivery:"توصيل",pickup:"استلام من المطعم",address:"العنوان",location:"الموقع",getLocation:"تحديد موقعي",notes:"ملاحظات الطلب (اختياري)",review:"مراجعة الطلب",send:"إرسال الطلب عبر WhatsApp",required:"يرجى إكمال الحقول المطلوبة",locationOk:"تم تحديد الموقع",locationFail:"تعذر تحديد الموقع",back:"رجوع",whatsappMissing:"رقم واتساب المطعم غير مضبوط حالياً"},
+    ku:{cart:"سەبەتە",empty:"سەبەتە بەتاڵە",total:"کۆی گشتی",continue:"بەردەوام بە",added:"زیاد کرا",choose:"جۆر هەڵبژێرە",add:"زیادکردن بۆ سەبەتە",close:"داخستن",clear:"بەتاڵکردنەوەی سەبەتە",clearConfirm:"دڵنیایت لە بەتاڵکردنەوەی تەواوی سەبەتە؟",checkout:"تەواوکردنی داواکاری",name:"ناو",phone:"ژمارەی مۆبایل",orderType:"جۆری داواکاری",delivery:"گەیاندن",pickup:"وەرگرتن لە چێشتخانە",address:"ناونیشان",location:"شوێن",getLocation:"شوێنم دیاری بکە",notes:"تێبینی (ئارەزوومەندانە)",review:"پێداچوونەوە",send:"ناردنی داواکاری بە WhatsApp",required:"تکایە خانە پێویستەکان پڕ بکەرەوە",locationOk:"شوێن دیاری کرا",locationFail:"نەتوانرا شوێن دیاری بکرێت",back:"گەڕانەوە",whatsappMissing:"ژمارەی واتساپی چێشتخانەکە ڕێک نەخراوە"},
+    en:{cart:"Cart",empty:"Your cart is empty",total:"Total",continue:"Continue order",added:"Added to cart",choose:"Choose an option",add:"Add to cart",close:"Close",clear:"Clear cart",clearConfirm:"Clear the entire cart?",checkout:"Checkout",name:"Name",phone:"Phone number",orderType:"Order type",delivery:"Delivery",pickup:"Pickup",address:"Address",location:"Location",getLocation:"Use my location",notes:"Order notes (optional)",review:"Review order",send:"Send order via WhatsApp",required:"Please complete the required fields",locationOk:"Location captured",locationFail:"Could not get location",back:"Back",whatsappMissing:"The restaurant WhatsApp number is not configured"}
   };
   const lang=()=>window.SHORASH_LANG?window.SHORASH_LANG():(localStorage.getItem("shorashLang")||"ar");
   const tr=k=>(T[lang()]||T.ar)[k]||T.ar[k];
   const txt=o=>(o&&(o[lang()]||o.ar||o.en))||"";
-  const money=n=>Number(n||0).toLocaleString("en-US")+" "+(lang()==="en"?"IQD":"د.ع");
+  const currencyCode=()=>String(
+    window.SHORASH_DB?.restaurant?.currency ||
+    window.RESTBR_TENANT?.currency ||
+    window.RESTBR_BOOTSTRAP?.restaurant?.currency ||
+    "IQD"
+  ).trim().toUpperCase()||"IQD";
+  const currencyLabel=()=>{
+    const code=currencyCode();
+    if(code==="IQD")return lang()==="en"?"IQD":"د.ع";
+    return code;
+  };
+  const money=n=>{
+    const value=Number(n||0);
+    const code=currencyCode();
+    return value.toLocaleString("en-US",{
+      minimumFractionDigits:0,
+      maximumFractionDigits:code==="IQD"?0:2
+    })+" "+currencyLabel();
+  };
   const restaurant=()=>window.SHORASH_DB?.restaurant||{};
   const deliveryAllowed=()=>restaurant().deliveryEnabled!==false;
   const pickupAllowed=()=>restaurant().pickupEnabled!==false;
@@ -287,6 +313,12 @@
       return;
     }
 
+    const destination=whatsappNumber();
+    if(!destination){
+      toast(tr("whatsappMissing"));
+      return;
+    }
+
     const currentDB=window.SHORASH_DB;
 
     const unavailableItem=cart.find(item=>{
@@ -323,9 +355,14 @@
     if(/^9647\d{9}$/.test(phone)) phone="+"+phone;
 
     const {sum}=totals();
+    const prefix=String(
+      window.RESTBR_TENANT?.slug ||
+      window.RESTBR_BOOTSTRAP?.restaurant?.slug ||
+      "RB"
+    ).replace(/[^a-z0-9]/gi,"").toUpperCase().slice(0,8)||"RB";
 
     const id=
-      "SH-"+
+      prefix+"-"+
       new Date().toISOString().slice(2,10).replaceAll("-","")+
       "-"+
       String(Date.now()).slice(-5);
@@ -399,13 +436,13 @@
     }
 
     const url=
-      `https://wa.me/${whatsappNumber()}?text=${encodeURIComponent(lines.join("\n"))}`;
+      `https://wa.me/${destination}?text=${encodeURIComponent(lines.join("\n"))}`;
 
     window.location.href=url;
   }
   function choiceOpen(v){ensureUI();document.getElementById("smChoiceSheet").classList.toggle("open",v);document.getElementById("smChoiceBackdrop").classList.toggle("open",v);document.getElementById("smChoiceSheet").setAttribute("aria-hidden",String(!v));lock()}
 
-  function addItem(p,oi){if(!ordersAllowed()){toast(closedMessage());syncOrderState();return}const o=(p.options||[])[oi];if(!o)return;const key=`${p.id}:${oi}`,found=cart.find(x=>x.key===key);if(found)found.qty++;else cart.push({key,productId:p.id,optionIndex:oi,name:p.name,option:{ar:o.ar,ku:o.ku,en:o.en},price:Number(o.price||0),image:p.image||"",qty:1});window.SHORASH_TRACK?.("product_interest",p.id);save();toast(tr("added"))}
+  function addItem(p,oi){if(!ordersAllowed()){toast(closedMessage());syncOrderState();return}const o=(p.options||[])[oi];if(!o)return;const optionId=String(o.id||"").trim();const key=`${p.id}:${optionId||oi}`,found=cart.find(x=>x.key===key);if(found)found.qty++;else cart.push({key,productId:p.id,optionId:optionId||undefined,optionIndex:oi,name:p.name,option:{ar:o.ar,ku:o.ku,en:o.en},price:Number(o.price||0),image:p.image||"",qty:1});window.SHORASH_TRACK?.("product_interest",p.id);save();toast(tr("added"))}
   function addFromButton(btn){const D=window.SHORASH_DB;if(!D)return;const p=D.products.find(x=>String(x.id)===String(btn.dataset.productId));if(!p)return;addItem(p,Number(btn.dataset.optionIndex))}
   function showChoices(productId){if(!ordersAllowed()){toast(closedMessage());syncOrderState();return}const D=window.SHORASH_DB;if(!D)return;const p=D.products.find(x=>String(x.id)===String(productId));if(!p)return;ensureUI();document.getElementById("smChoiceLabel").textContent=tr("choose");document.getElementById("smChoiceTitle").textContent=txt(p.name);document.getElementById("smChoiceList").innerHTML=(p.options||[]).map((o,i)=>`<button class="sm-choice-option" type="button" data-choice-product="${p.id}" data-choice-index="${i}"><span>${txt(o)}</span><b>${money(o.price)}</b><i>+</i></button>`).join("");choiceOpen(true)}
   function showImage(img){ensureUI();const v=document.getElementById("smImageViewer"),full=document.getElementById("smImageFull");full.src=img.dataset.fullImage||img.src;full.alt=img.alt||"";document.getElementById("smImageCaption").textContent=img.dataset.productName||img.alt||"";v.classList.add("open");v.setAttribute("aria-hidden","false");lock()}
