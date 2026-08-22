@@ -1,43 +1,187 @@
 // ==========================================
-// SHORASH MENU — Supabase Configuration
+// RESTBR MENU CORE — Tenant Data Bridge
 // ==========================================
+// Public menu data comes from the same-origin Cloudflare Worker endpoint:
+//   /_restbr/bootstrap
+//
+// The existing menu app expects a small subset of the Supabase client API.
+// This compatibility layer keeps the proven SHORASH UI code unchanged while
+// making the frontend tenant-aware and independent from any restaurant's DB key.
 
-const SUPABASE_URL = 'https://pklzxpivnoqnrzyjryqz.supabase.co';
+(() => {
+  const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
+  const RESTBR_TRACK_URL = '/_restbr/track';
 
-const SUPABASE_PUBLISHABLE_KEY = 'sb_publishable_CC5l_DeuRDVy32hFOoVWMw_7i45WhmK';
+  let bootstrapPromise = null;
 
-// Create Supabase client
-const supabaseClient = window.supabase.createClient(
-  SUPABASE_URL,
-  SUPABASE_PUBLISHABLE_KEY
-);
+  function cloneRows(rows) {
+    return Array.isArray(rows) ? rows.map(row => ({ ...row })) : [];
+  }
 
-console.log('✅ SHORASH Supabase connected');
+  async function loadBootstrap(force = false) {
+    if (!force && bootstrapPromise) return bootstrapPromise;
 
-// ==========================================
-// SHORASH MENU — Supabase Connection Test
-// ==========================================
+    bootstrapPromise = fetch(RESTBR_BOOTSTRAP_URL, {
+      method: 'GET',
+      headers: { Accept: 'application/json' },
+      cache: 'no-store'
+    })
+      .then(async response => {
+        const payload = await response.json().catch(() => ({}));
+        if (!response.ok || !payload?.ok) {
+          const message = payload?.message || payload?.error || `RESTBR bootstrap failed (${response.status})`;
+          throw new Error(message);
+        }
 
-async function testSupabaseConnection() {
-  try {
-    console.log('🔄 Testing Supabase connection...');
+        window.RESTBR_TENANT = payload.restaurant || null;
+        window.RESTBR_BOOTSTRAP = payload;
+        return payload;
+      })
+      .catch(error => {
+        bootstrapPromise = null;
+        console.error('❌ RESTBR bootstrap error:', error);
+        throw error;
+      });
 
-    const { data, error } = await supabaseClient
-      .from('restaurant_settings')
-      .select('*')
-      .limit(1);
+    return bootstrapPromise;
+  }
 
-    if (error) {
-      console.error('❌ Supabase test failed:', error);
-      return;
+  class RestBRQuery {
+    constructor(table) {
+      this.table = table;
+      this.orderColumn = null;
+      this.ascending = true;
+      this.limitCount = null;
     }
 
-    console.log('✅ SUPABASE CONNECTION SUCCESS');
-    console.log('📦 Restaurant settings:', data);
+    select() {
+      return this;
+    }
 
-  } catch (error) {
-    console.error('❌ Supabase connection error:', error);
+    order(column, options = {}) {
+      this.orderColumn = column;
+      this.ascending = options?.ascending !== false;
+      return this;
+    }
+
+    limit(count) {
+      const n = Number(count);
+      this.limitCount = Number.isFinite(n) && n >= 0 ? n : null;
+      return this;
+    }
+
+    async execute() {
+      try {
+        const payload = await loadBootstrap();
+
+        let rows;
+        switch (this.table) {
+          case 'restaurant_settings':
+            rows = payload.settings ? [payload.settings] : [];
+            break;
+          case 'categories':
+            rows = cloneRows(payload.categories);
+            break;
+          case 'products':
+            rows = cloneRows(payload.products);
+            break;
+          case 'product_options':
+            rows = cloneRows(payload.product_options);
+            break;
+          default:
+            throw new Error(`Unsupported RESTBR public table: ${this.table}`);
+        }
+
+        if (this.orderColumn) {
+          const key = this.orderColumn;
+          const direction = this.ascending ? 1 : -1;
+          rows.sort((a, b) => {
+            const av = a?.[key];
+            const bv = b?.[key];
+            if (av === bv) return 0;
+            if (av === null || av === undefined) return 1;
+            if (bv === null || bv === undefined) return -1;
+            return av > bv ? direction : -direction;
+          });
+        }
+
+        if (this.limitCount !== null) {
+          rows = rows.slice(0, this.limitCount);
+        }
+
+        return { data: rows, error: null };
+      } catch (error) {
+        return {
+          data: null,
+          error: {
+            message: error?.message || String(error),
+            details: error
+          }
+        };
+      }
+    }
+
+    then(resolve, reject) {
+      return this.execute().then(resolve, reject);
+    }
+
+    catch(reject) {
+      return this.execute().catch(reject);
+    }
   }
-}
 
-testSupabaseConnection();
+  const supabaseClient = {
+    from(table) {
+      return new RestBRQuery(String(table || ''));
+    },
+
+    async rpc(name, params = {}) {
+      if (name !== 'track_menu_event') {
+        return {
+          data: null,
+          error: { message: `Unsupported RESTBR public RPC: ${name}` }
+        };
+      }
+
+      try {
+        const response = await fetch(RESTBR_TRACK_URL, {
+          method: 'POST',
+          headers: {
+            'content-type': 'application/json',
+            Accept: 'application/json'
+          },
+          body: JSON.stringify({
+            event_type: String(params?.p_event_type || ''),
+            ref_id: String(params?.p_ref_id || ''),
+            language: String(params?.p_language || '')
+          }),
+          keepalive: true
+        });
+
+        if (!response.ok) {
+          const payload = await response.json().catch(() => ({}));
+          return {
+            data: null,
+            error: { message: payload?.error || `Analytics failed (${response.status})` }
+          };
+        }
+
+        return { data: null, error: null };
+      } catch (error) {
+        return {
+          data: null,
+          error: { message: error?.message || String(error) }
+        };
+      }
+    }
+  };
+
+  // Keep the global name expected by the existing public app.
+  window.supabaseClient = supabaseClient;
+  window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
+
+  console.log('✅ RESTBR tenant data bridge ready');
+})();
+
+// Existing app.js references `supabaseClient` as a global variable.
+const supabaseClient = window.supabaseClient;
