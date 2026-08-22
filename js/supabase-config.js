@@ -1,5 +1,5 @@
 // ==========================================
-// RESTBR MENU CORE — Tenant Data Bridge V2.2
+// RESTBR MENU CORE — Tenant Data Bridge V2.3
 // ==========================================
 // Public data is supplied by the same-origin Cloudflare Worker:
 //   GET  /_restbr/bootstrap
@@ -14,6 +14,12 @@
 // it needs to build a default option for products without explicit options.
 // The bridge exposes price as a compatibility alias without changing the
 // canonical base_price field.
+//
+// V2.3 makes product-option state deterministic for the public menu:
+// - inactive product_options are removed before the legacy renderer sees them
+// - has_options is derived from the active option rows, so stale DB flags do
+//   not leak into the menu runtime
+// - base_price remains the fallback only when no active option rows exist
 
 (() => {
   const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
@@ -33,14 +39,15 @@
     return typeof value === 'boolean' ? value : Boolean(fallback);
   }
 
-  function normalizeProduct(raw = {}) {
+  function normalizeProduct(raw = {}, hasActiveOptions = false) {
     const product = { ...(raw || {}) };
     const basePrice = product.base_price ?? product.price ?? null;
 
     return {
       ...product,
       base_price: basePrice,
-      price: basePrice
+      price: basePrice,
+      has_options: Boolean(hasActiveOptions)
     };
   }
 
@@ -129,7 +136,22 @@
         }
 
         payload.settings = normalizeTenantSettings(payload.settings || {});
-        payload.products = cloneRows(payload.products).map(normalizeProduct);
+
+        payload.product_options = cloneRows(payload.product_options)
+          .filter(option => option?.is_active !== false);
+
+        const productIdsWithActiveOptions = new Set(
+          payload.product_options
+            .map(option => String(option?.product_id || '').trim())
+            .filter(Boolean)
+        );
+
+        payload.products = cloneRows(payload.products).map(product =>
+          normalizeProduct(
+            product,
+            productIdsWithActiveOptions.has(String(product?.id || '').trim())
+          )
+        );
 
         window.RESTBR_TENANT = payload.restaurant || null;
         window.RESTBR_BOOTSTRAP = payload;
@@ -266,7 +288,7 @@
 
   window.supabaseClient = client;
   window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
-  console.log('✅ RESTBR tenant data bridge V2.2 ready');
+  console.log('✅ RESTBR tenant data bridge V2.3 ready');
 })();
 
 const supabaseClient = window.supabaseClient;
