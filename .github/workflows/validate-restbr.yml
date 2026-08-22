@@ -1,0 +1,51 @@
+name: Validate RESTBR
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          while IFS= read -r -d '' file; do
+            echo "Checking $file"
+            node --check "$file"
+          done < <(find . -type f -name '*.js' -not -path './node_modules/*' -print0)
+
+      - name: Validate JSON assets
+        shell: bash
+        run: |
+          node -e "JSON.parse(require('fs').readFileSync('data/menu.json','utf8')); console.log('data/menu.json OK')"
+          node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest.webmanifest OK')"
+
+      - name: Required runtime files
+        shell: bash
+        run: |
+          test -f js/supabase-config.js
+          test -f js/cart-preload.js
+          test -f js/language-policy.js
+          test -f js/menu-policy.js
+          test -f js/offline-policy.js
+          test -f owner/owner-v2.js
+          test -f owner/owner-settings-v2.js
+          test -f owner/bulk-pricing-v2.js
+          test -f owner/auth-v2.js
+          test -f admin/admin-v2.js
