@@ -1,12 +1,35 @@
 // ============================================================
-// RESTBR OWNER AUTH V2.0 — self registration for restaurant staff
+// RESTBR OWNER AUTH V2.1 — self registration + shared V2 Supabase client
 // Creates an Auth account only. Super Admin still controls tenant membership.
 // ============================================================
 (() => {
   'use strict';
   const cfg=window.RESTBR_OWNER_CONFIG||{};
   if(!cfg.supabaseUrl||!cfg.publishableKey||!window.supabase)return;
-  const sb=window.supabase.createClient(cfg.supabaseUrl,cfg.publishableKey,{auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}});
+
+  // The stable legacy Owner controller has already booted before this file.
+  // From this point forward all V2 extensions share exactly one Supabase
+  // client/session instead of creating competing GoTrue clients.
+  const nativeCreateClient=window.supabase.createClient.bind(window.supabase);
+  const sb=window.RESTBR_OWNER_V2_CLIENT || nativeCreateClient(
+    cfg.supabaseUrl,
+    cfg.publishableKey,
+    {auth:{persistSession:true,autoRefreshToken:true,detectSessionInUrl:true}}
+  );
+  window.RESTBR_OWNER_V2_CLIENT=sb;
+
+  if(!window.__RESTBR_OWNER_CREATE_CLIENT_WRAPPED){
+    window.__RESTBR_OWNER_CREATE_CLIENT_WRAPPED=true;
+    window.supabase.createClient=(url,key,options)=>{
+      if(
+        String(url||'')===String(cfg.supabaseUrl||'') &&
+        String(key||'')===String(cfg.publishableKey||'') &&
+        window.RESTBR_OWNER_V2_CLIENT
+      ) return window.RESTBR_OWNER_V2_CLIENT;
+      return nativeCreateClient(url,key,options);
+    };
+  }
+
   const $=id=>document.getElementById(id);
 
   function injectStyles(){
@@ -54,7 +77,7 @@
     injectStyles();ensureModal();
     const form=$('loginForm');if(!form||$('rbOwnerCreateAccount'))return;
     const button=document.createElement('button');button.id='rbOwnerCreateAccount';button.type='button';button.className='rb-auth-create';button.textContent='إنشاء حساب جديد';button.onclick=open;form.after(button);
-    console.log('✅ RESTBR Owner Auth V2.0 ready');
+    console.log('✅ RESTBR Owner Auth V2.1 ready — shared V2 client active');
   }
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
