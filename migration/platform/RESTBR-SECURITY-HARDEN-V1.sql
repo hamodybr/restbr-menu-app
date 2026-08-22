@@ -1,10 +1,8 @@
 -- ============================================================
--- RESTBR SECURITY HARDEN V1
+-- RESTBR SECURITY HARDEN V1.1
 -- Removes unnecessary direct EXECUTE grants from internal helper functions.
--- Verified against restbr-platform on 2026-08-23.
+-- Transaction lifecycle is owned by the Supabase migration runner.
 -- ============================================================
-
-begin;
 
 -- This function is used only by the database event trigger `ensure_rls`.
 -- It must not be callable as a public PostgREST RPC.
@@ -15,5 +13,3 @@ revoke execute on function public.rls_auto_enable() from public, anon, authentic
 revoke execute on function private.is_platform_admin() from public, anon;
 
 grant execute on function private.is_platform_admin() to authenticated, service_role;
-
-commit;
