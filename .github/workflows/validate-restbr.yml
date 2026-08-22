@@ -41,6 +41,7 @@ jobs:
         run: |
           set -euo pipefail
           required=(
+            css/responsive-parity.css
             js/supabase-config.js
             js/tenant-head.js
             js/timezone-policy.js
@@ -50,6 +51,7 @@ jobs:
             js/cart-preload.js
             js/order-analytics.js
             owner/auth-v2.js
+            owner/tenant-recovery-v2.js
             owner/permissions-v2.js
             owner/owner-v2.js
             owner/owner-settings-v2.js
@@ -78,17 +80,28 @@ jobs:
         shell: bash
         run: |
           set -euo pipefail
+          grep -q 'responsive-parity.css?v=1.0' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
           grep -q 'timezone-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.1' index.html
           grep -q 'order-analytics.js?v=1.0' index.html
-          grep -q 'restbr-menu-core-v14' sw.js
+          grep -q 'restbr-menu-core-v15' sw.js
+          grep -q 'responsive-parity.css?v=1.0' sw.js
           grep -q 'supabase-config.js?v=2.8' sw.js
-          grep -q 'auth-v2.js?v=2.1' owner/config.js
-          grep -q 'visibility-v2.js?v=2.0' owner/config.js
-          grep -q 'audit-v2.js?v=2.0' owner/config.js
-          grep -q 'qr-v2.js?v=2.0' owner/config.js
-          grep -q 'session-v2.js?v=2.0' admin/index.html
+          grep -q 'tenant-recovery-v2.js?v=2.0' owner/config.js
+          grep -q 'permissions-v2.js?v=2.1' owner/config.js
+          grep -q 'visibility-v2.js?v=2.1' owner/config.js
+          grep -q 'audit-v2.js?v=2.1' owner/config.js
+          grep -q 'qr-v2.js?v=2.1' owner/config.js
+          grep -q 'session-v2.js?v=2.1' admin/index.html
+          grep -q 'admin-v2.js?v=2.1' admin/index.html
           grep -q 'plan-v2.js?v=2.2' admin/index.html
           grep -q 'restaurant-settings-v2.js?v=2.0' admin/index.html
           grep -q 'domains-v2.js?v=2.0' admin/index.html
+
+      - name: Guard management hidden semantics
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q '\[hidden\]{display:none!important}' owner/config.js
+          grep -q '\[hidden\]{display:none!important}' admin/session-v2.js
