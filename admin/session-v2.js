@@ -1,10 +1,18 @@
 // ============================================================
-// RESTBR SUPER ADMIN SESSION V2.0
+// RESTBR SUPER ADMIN SESSION V2.1
 // Reuses one Supabase client/session across Admin V1 + V2 extensions.
+// Also keeps the native HTML hidden attribute authoritative for extension UI.
 // Load after supabase-js CDN and before admin.js.
 // ============================================================
 (() => {
   'use strict';
+
+  if(!document.getElementById('restbrAdminHiddenGuard')){
+    const style=document.createElement('style');
+    style.id='restbrAdminHiddenGuard';
+    style.textContent='[hidden]{display:none!important}';
+    document.head.appendChild(style);
+  }
 
   if(!window.supabase?.createClient || window.__RESTBR_ADMIN_CREATE_CLIENT_WRAPPED)return;
 
@@ -23,5 +31,5 @@
     return client;
   };
 
-  console.log('✅ RESTBR Super Admin shared session V2.0 ready');
+  console.log('✅ RESTBR Super Admin shared session V2.1 ready');
 })();
