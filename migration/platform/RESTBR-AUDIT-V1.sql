@@ -1,11 +1,9 @@
 -- ============================================================
--- RESTBR AUDIT LOG V1
+-- RESTBR AUDIT LOG V1.1
 -- Tenant-scoped change history for platform/menu management tables.
 -- Owner/Manager can read their restaurant log; Platform Admin can read all.
--- Writes are trigger-only.
+-- Writes are trigger-only. Transaction lifecycle is owned by Supabase.
 -- ============================================================
-
-begin;
 
 create table if not exists public.audit_logs (
   id bigint generated always as identity primary key,
@@ -115,5 +113,3 @@ begin
   end loop;
 end;
 $$;
-
-commit;
