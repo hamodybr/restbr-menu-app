@@ -1,10 +1,8 @@
 -- ============================================================
--- RESTBR MEMBERS V1.3
+-- RESTBR MEMBERS V1.4
 -- Super Admin RPCs for assigning existing Auth users to restaurants.
--- Schema verified against restbr-platform on 2026-08-23.
+-- Transaction lifecycle is owned by the Supabase migration runner.
 -- ============================================================
-
-begin;
 
 create or replace function public.admin_assign_restaurant_member(
   p_restaurant_id uuid,
@@ -140,5 +138,3 @@ revoke execute on function public.admin_set_restaurant_member_active(uuid,uuid,b
 grant execute on function public.admin_assign_restaurant_member(uuid,text,text) to authenticated, service_role;
 grant execute on function public.admin_list_restaurant_members(uuid) to authenticated, service_role;
 grant execute on function public.admin_set_restaurant_member_active(uuid,uuid,boolean) to authenticated, service_role;
-
-commit;
