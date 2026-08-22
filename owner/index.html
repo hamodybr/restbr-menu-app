@@ -317,7 +317,7 @@
   </div>
 </div>
 
-<script src="./config.js?v=1.0"></script>
+<script src="./config.js?v=1.1"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
@@ -346,7 +346,11 @@
     return String(v ?? '').replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#039;'}[c]));
   }
   function n(v, fallback=0){ const x=Number(v); return Number.isFinite(x)?x:fallback; }
-  function money(v){ return n(v).toLocaleString('en-US', {maximumFractionDigits:3}) + ' د.ع'; }
+  function money(v){
+    const code=String(tenant?.restaurants?.currency||'IQD').trim().toUpperCase()||'IQD';
+    const label=code==='IQD'?'د.ع':code;
+    return n(v).toLocaleString('en-US',{maximumFractionDigits:code==='IQD'?0:3})+' '+label;
+  }
   function cleanFileName(name='file'){
     const ext = String(name).split('.').pop().toLowerCase().replace(/[^a-z0-9]/g,'') || 'bin';
     return `${Date.now()}-${Math.random().toString(36).slice(2,8)}.${ext}`;
