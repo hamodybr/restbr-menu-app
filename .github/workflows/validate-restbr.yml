@@ -45,11 +45,13 @@ jobs:
             js/supabase-config.js
             js/tenant-head.js
             js/brand-template-fix.js
+            js/currency-policy.js
             js/timezone-policy.js
             js/offline-policy.js
             js/language-policy.js
             js/menu-policy.js
             js/cart-preload.js
+            js/cart.js
             js/order-analytics.js
             owner/auth-v2.js
             owner/tenant-recovery-v2.js
@@ -84,12 +86,16 @@ jobs:
           grep -q 'responsive-parity.css?v=1.0' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
           grep -q 'brand-template-fix.js?v=1.0' index.html
+          grep -q 'currency-policy.js?v=1.0' index.html
           grep -q 'timezone-policy.js?v=1.0' index.html
-          grep -q 'cart-preload.js?v=1.1' index.html
+          grep -q 'cart-preload.js?v=1.2' index.html
           grep -q 'order-analytics.js?v=1.0' index.html
-          grep -q 'restbr-menu-core-v16' sw.js
+          grep -q 'restbr-menu-core-v17' sw.js
           grep -q 'responsive-parity.css?v=1.0' sw.js
           grep -q 'brand-template-fix.js?v=1.0' sw.js
+          grep -q 'currency-policy.js?v=1.0' sw.js
+          grep -q 'cart-preload.js?v=1.2' sw.js
+          grep -q 'cart.js?v=4.2' sw.js
           grep -q 'supabase-config.js?v=2.8' sw.js
           grep -q 'tenant-recovery-v2.js?v=2.1' owner/config.js
           grep -q 'permissions-v2.js?v=2.1' owner/config.js
@@ -101,6 +107,14 @@ jobs:
           grep -q 'plan-v2.js?v=2.2' admin/index.html
           grep -q 'restaurant-settings-v2.js?v=2.0' admin/index.html
           grep -q 'domains-v2.js?v=2.0' admin/index.html
+
+      - name: Guard tenant cart isolation
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'restbrCartV2:' js/cart-preload.js
+          grep -q 'restbrCartV2:' js/cart.js
+          grep -q 'optionId' js/cart.js
 
       - name: Guard management hidden semantics
         shell: bash
