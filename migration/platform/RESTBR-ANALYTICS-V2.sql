@@ -1,9 +1,8 @@
 -- ============================================================
--- RESTBR ANALYTICS V2
+-- RESTBR ANALYTICS V2.1
 -- Tenant-timezone daily aggregation + checkout/order funnel events.
+-- Transaction lifecycle is owned by the Supabase migration runner.
 -- ============================================================
-
-begin;
 
 alter table public.menu_analytics_daily
   drop constraint if exists menu_analytics_daily_event_type_check;
@@ -88,5 +87,3 @@ $$;
 -- exposes no read access and only accepts active restaurant ids.
 revoke execute on function public.track_menu_event(uuid,text,text,text) from public, authenticated;
 grant execute on function public.track_menu_event(uuid,text,text,text) to anon, service_role;
-
-commit;
