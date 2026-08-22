@@ -20,6 +20,7 @@ window.addEventListener('load', () => {
   };
 
   load('restbrOwnerAuthV2Script', './auth-v2.js?v=2.1');
+  load('restbrOwnerPermissionsV2Script', './permissions-v2.js?v=2.0');
   load('restbrOwnerV2Script', './owner-v2.js?v=2.0');
   load('restbrOwnerSettingsV2Script', './owner-settings-v2.js?v=2.0');
   load('restbrBulkPricingV2Script', './bulk-pricing-v2.js?v=2.0');
