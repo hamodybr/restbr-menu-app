@@ -1,4 +1,4 @@
-const CACHE_NAME = "restaurant-menu-v4-5-3";
+const CACHE_NAME = "restbr-menu-core-v1";
 
 const CORE = [
   "./",
@@ -6,12 +6,9 @@ const CORE = [
   "./manifest.webmanifest",
   "./css/style.css?v=4.0",
   "./css/cart.css?v=3.6",
-  "./js/app.js?v=17.3",
-  "./js/cart.js?v=4.0",
-  "./js/supabase-config.js?v=1.0",
-  "./assets/favicon.png",
-  "./assets/apple-touch-icon.png",
-  "./assets/shorash-logo.jpeg"
+  "./js/app.js?v=17.4",
+  "./js/cart.js?v=4.1",
+  "./js/supabase-config.js?v=2.0"
 ];
 
 self.addEventListener("install", event => {
@@ -42,7 +39,9 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
 
-  // Never cache Supabase/API or unrelated third-party requests.
+  // RESTBR tenant APIs must always stay live and tenant-specific.
+  if (url.pathname.startsWith("/_restbr/")) return;
+
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
