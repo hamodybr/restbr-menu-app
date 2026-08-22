@@ -26,4 +26,5 @@ window.addEventListener('load', () => {
   load('restbrBulkPricingV2Script', './bulk-pricing-v2.js?v=2.0');
   load('restbrOwnerAnalyticsV2Script', './analytics-v2.js?v=2.0');
   load('restbrOwnerVisibilityV2Script', './visibility-v2.js?v=2.0');
+  load('restbrOwnerAuditV2Script', './audit-v2.js?v=2.0');
 }, { once:true });
