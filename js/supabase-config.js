@@ -1,5 +1,5 @@
 // ==========================================
-// RESTBR MENU CORE — Tenant Data Bridge V2.6
+// RESTBR MENU CORE — Tenant Data Bridge V2.7
 // ==========================================
 // Public data is supplied by the same-origin Cloudflare Worker:
 //   GET  /_restbr/bootstrap
@@ -10,9 +10,11 @@
 // V2.3 active product-option normalization + derived has_options.
 // V2.4 Owner Dashboard setting-name compatibility.
 // V2.5 restaurant_name_* becomes authoritative over legacy branding name_*.
-// V2.6 adds a tenant-scoped, time-limited bootstrap cache for true offline
-// fallback so the app never replaces a previously loaded menu with the empty
-// static data/menu.json fallback during a temporary network/router outage.
+// V2.6 tenant-scoped, time-limited bootstrap cache for true offline fallback.
+// V2.7 understands the RESTBR platform JSONB schema:
+// - products.metadata legacy/activity/badge flags are exposed to legacy app.js
+// - option metadata.is_available is respected
+// - has_options is derived only from usable options
 
 (() => {
   const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
@@ -60,15 +62,40 @@
     return `${BOOTSTRAP_CACHE_PREFIX}:${location.hostname}:${location.port || 'default'}`;
   }
 
-  function normalizeProduct(raw = {}, hasActiveOptions = false) {
+  function normalizeOption(raw = {}) {
+    const option = { ...(raw || {}) };
+    const metadata = objectValue(option.metadata);
+    const available = metadata.is_available !== false && option.is_available !== false;
+
+    return {
+      ...option,
+      metadata,
+      is_available: available
+    };
+  }
+
+  function normalizeProduct(raw = {}, hasUsableOptions = false) {
     const product = { ...(raw || {}) };
+    const metadata = objectValue(product.metadata);
     const basePrice = product.base_price ?? product.price ?? null;
+    const legacyActive = metadata.legacy_is_active;
 
     return {
       ...product,
+      metadata,
       base_price: basePrice,
       price: basePrice,
-      has_options: Boolean(hasActiveOptions)
+      is_active:
+        typeof product.is_active === 'boolean'
+          ? product.is_active
+          : typeof legacyActive === 'boolean'
+            ? legacyActive
+            : true,
+      is_popular: Boolean(product.is_popular ?? metadata.is_popular ?? metadata.popular ?? false),
+      is_new: Boolean(product.is_new ?? metadata.is_new ?? metadata.new ?? false),
+      is_hot: Boolean(product.is_hot ?? metadata.is_hot ?? metadata.hot ?? false),
+      is_offer: Boolean(product.is_offer ?? metadata.is_offer ?? metadata.offer ?? false),
+      has_options: Boolean(hasUsableOptions)
     };
   }
 
@@ -179,7 +206,7 @@
       snapchat_enabled: boolOr(s.snapchat_enabled, snapchat),
       show_footer_phone: boolOr(s.show_footer_phone, phone),
       show_footer_location: boolOr(s.show_footer_location, hasFooterLocation),
-      show_footer_socials: boolOr(s.show_footer_socials, hasSocial),
+      show_footer_socials: boolOr(s.show_footer_socials, hasSocial)
     };
   }
 
@@ -189,9 +216,10 @@
     payload.settings = normalizeTenantSettings(payload.settings || {});
 
     payload.product_options = cloneRows(payload.product_options)
-      .filter(option => option?.is_active !== false);
+      .map(normalizeOption)
+      .filter(option => option?.is_active !== false && option?.is_available !== false);
 
-    const productIdsWithActiveOptions = new Set(
+    const productIdsWithUsableOptions = new Set(
       payload.product_options
         .map(option => String(option?.product_id || '').trim())
         .filter(Boolean)
@@ -200,7 +228,7 @@
     payload.products = cloneRows(payload.products).map(product =>
       normalizeProduct(
         product,
-        productIdsWithActiveOptions.has(String(product?.id || '').trim())
+        productIdsWithUsableOptions.has(String(product?.id || '').trim())
       )
     );
 
@@ -418,7 +446,7 @@
 
   window.supabaseClient = client;
   window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
-  console.log('✅ RESTBR tenant data bridge V2.6 ready');
+  console.log('✅ RESTBR tenant data bridge V2.7 ready');
 })();
 
 const supabaseClient = window.supabaseClient;
