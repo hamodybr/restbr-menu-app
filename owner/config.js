@@ -42,7 +42,7 @@ window.addEventListener('load', () => {
   };
 
   load('restbrOwnerAuthV2Script', './auth-v2.js?v=2.1');
-  load('restbrOwnerTenantRecoveryV2Script', './tenant-recovery-v2.js?v=2.0');
+  load('restbrOwnerTenantRecoveryV2Script', './tenant-recovery-v2.js?v=2.1');
   load('restbrOwnerPermissionsV2Script', './permissions-v2.js?v=2.1');
   load('restbrOwnerV2Script', './owner-v2.js?v=2.1');
   load('restbrOwnerSettingsV2Script', './owner-settings-v2.js?v=2.1');
