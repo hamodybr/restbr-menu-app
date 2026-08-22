@@ -25,26 +25,13 @@
 </head>
 
 <body>
-  <video
-    id="smBgVideo"
-    class="sm-bg-video"
-    autoplay
-    muted
-    loop
-    playsinline>
-  </video>
-
+  <video id="smBgVideo" class="sm-bg-video" autoplay muted loop playsinline></video>
   <div class="sm-bg-overlay"></div>
 
   <div id="smIntro" class="sm-intro">
     <div class="sm-intro-logo-wrap">
-      <img
-        src=""
-        alt=""
-        class="sm-intro-logo"
-        style="visibility:hidden">
+      <img src="" alt="" class="sm-intro-logo" style="visibility:hidden">
     </div>
-
     <div class="sm-intro-brand"></div>
     <div class="sm-intro-sub">MENU</div>
   </div>
@@ -52,13 +39,8 @@
   <main id="smApp" class="sm-app">
     <header class="sm-header">
       <div class="sm-logo-wrap">
-        <img
-          src=""
-          alt=""
-          class="sm-logo"
-          style="visibility:hidden">
+        <img src="" alt="" class="sm-logo" style="visibility:hidden">
       </div>
-
       <h1>MENU</h1>
       <p id="smSubtitle"></p>
       <div id="smLangs" class="sm-langs"></div>
@@ -71,7 +53,6 @@
     </div>
 
     <div id="smCatsSentinel"></div>
-
     <section id="smMenu" class="sm-menu"></section>
 
     <footer class="sm-footer">
@@ -99,31 +80,22 @@
     </footer>
   </main>
 
-  <button
-    id="smTopBtn"
-    class="sm-top-btn"
-    type="button"
-    aria-label="Back to top">↑</button>
+  <button id="smTopBtn" class="sm-top-btn" type="button" aria-label="Back to top">↑</button>
 
   <script>
     (function(){
       try{
         const raw=localStorage.getItem("SHORASH_BRAND_CACHE_V1");
         if(!raw)return;
-
         const cached=JSON.parse(raw)||{};
         const lang=localStorage.getItem("shorashLang")||"ar";
-
-        const name=
-          lang==="ku"
-            ? (cached.nameKu||cached.nameAr||cached.nameEn||"")
-            : lang==="en"
-              ? (cached.nameEn||cached.nameAr||cached.nameKu||"")
-              : (cached.nameAr||cached.nameKu||cached.nameEn||"");
-
+        const name=lang==="ku"
+          ? (cached.nameKu||cached.nameAr||cached.nameEn||"")
+          : lang==="en"
+            ? (cached.nameEn||cached.nameAr||cached.nameKu||"")
+            : (cached.nameAr||cached.nameKu||cached.nameEn||"");
         const brand=document.querySelector(".sm-intro-brand");
         if(brand)brand.textContent=name;
-
         document.querySelectorAll(".sm-intro-logo, .sm-logo").forEach(logo=>{
           if(logo && cached.logo){
             logo.src=cached.logo;
@@ -135,7 +107,7 @@
   </script>
 
   <!-- RESTBR tenant bridge -->
-  <script src="js/supabase-config.js?v=2.0"></script>
+  <script src="js/supabase-config.js?v=2.1"></script>
 
   <!-- Menu + Cart -->
   <script src="js/app.js?v=17.4"></script>
