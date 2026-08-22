@@ -1,9 +1,7 @@
 -- ============================================================
--- RESTBR MEMBERS V1.2
+-- RESTBR MEMBERS V1.3
 -- Super Admin RPCs for assigning existing Auth users to restaurants.
--- Uses only the restaurant_members columns already required by Owner V1:
--- restaurant_id, user_id, role, is_active.
--- Run once in restbr-platform > Supabase SQL Editor.
+-- Schema verified against restbr-platform on 2026-08-23.
 -- ============================================================
 
 begin;
@@ -56,7 +54,7 @@ begin
     where m.restaurant_id = p_restaurant_id and m.user_id = v_user_id
   ) then
     update public.restaurant_members
-    set role = v_role, is_active = true
+    set role = v_role, is_active = true, updated_at = now()
     where restaurant_id = p_restaurant_id and user_id = v_user_id;
   else
     insert into public.restaurant_members(restaurant_id,user_id,role,is_active)
@@ -119,24 +117,28 @@ begin
   end if;
 
   update public.restaurant_members
-  set is_active = coalesce(p_is_active,false)
+  set is_active = coalesce(p_is_active,false), updated_at = now()
   where restaurant_id = p_restaurant_id and user_id = p_user_id;
 
   if not found then raise exception 'member not found'; end if;
 
-  return jsonb_build_object('ok',true,'restaurant_id',p_restaurant_id,'user_id',p_user_id,'is_active',coalesce(p_is_active,false));
+  return jsonb_build_object(
+    'ok',true,
+    'restaurant_id',p_restaurant_id,
+    'user_id',p_user_id,
+    'is_active',coalesce(p_is_active,false)
+  );
 end;
 $$;
 
-revoke all on function public.admin_assign_restaurant_member(uuid,text,text) from public;
-revoke all on function public.admin_list_restaurant_members(uuid) from public;
-revoke all on function public.admin_set_restaurant_member_active(uuid,uuid,boolean) from public;
+-- SECURITY DEFINER RPCs are intentionally available only to signed-in users;
+-- each function immediately verifies private.is_platform_admin().
+revoke execute on function public.admin_assign_restaurant_member(uuid,text,text) from public, anon, authenticated;
+revoke execute on function public.admin_list_restaurant_members(uuid) from public, anon, authenticated;
+revoke execute on function public.admin_set_restaurant_member_active(uuid,uuid,boolean) from public, anon, authenticated;
 
 grant execute on function public.admin_assign_restaurant_member(uuid,text,text) to authenticated, service_role;
 grant execute on function public.admin_list_restaurant_members(uuid) to authenticated, service_role;
 grant execute on function public.admin_set_restaurant_member_active(uuid,uuid,boolean) to authenticated, service_role;
 
 commit;
-
--- Note: the user must already exist in Supabase Auth. The Admin V2 UI shows
--- a clear message when an email has not registered yet.
