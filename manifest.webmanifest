@@ -1,7 +1,7 @@
 {
-  "name": "Restaurant Menu",
-  "short_name": "Menu",
-  "description": "Restaurant menu and ordering experience",
+  "name": "RESTBR Restaurant Menu",
+  "short_name": "RESTBR",
+  "description": "Restaurant menu and ordering experience powered by RESTBR",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -10,16 +10,16 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "assets/apple-touch-icon.png",
+      "src": "assets/restbr-icon.svg",
       "sizes": "any",
-      "type": "image/png",
-      "purpose": "any maskable"
+      "type": "image/svg+xml",
+      "purpose": "any"
     },
     {
-      "src": "assets/favicon.png",
+      "src": "assets/restbr-icon.svg",
       "sizes": "any",
-      "type": "image/png",
-      "purpose": "any"
+      "type": "image/svg+xml",
+      "purpose": "maskable"
     }
   ]
 }
