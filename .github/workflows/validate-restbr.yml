@@ -57,6 +57,7 @@ jobs:
             owner/analytics-v2.js
             owner/visibility-v2.js
             owner/audit-v2.js
+            owner/qr-v2.js
             admin/session-v2.js
             admin/admin-v2.js
             admin/plan-v2.js
@@ -86,6 +87,7 @@ jobs:
           grep -q 'auth-v2.js?v=2.1' owner/config.js
           grep -q 'visibility-v2.js?v=2.0' owner/config.js
           grep -q 'audit-v2.js?v=2.0' owner/config.js
+          grep -q 'qr-v2.js?v=2.0' owner/config.js
           grep -q 'session-v2.js?v=2.0' admin/index.html
           grep -q 'plan-v2.js?v=2.2' admin/index.html
           grep -q 'restaurant-settings-v2.js?v=2.0' admin/index.html
