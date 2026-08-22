@@ -6,13 +6,19 @@ window.RESTBR_OWNER_CONFIG = {
   publishableKey: "sb_publishable_dOGkocLtn1WVvrxmu6TnJQ_8qyPyV-T"
 };
 
-// Load the schema-aware Owner V2 extension only after the dashboard shell,
-// Supabase CDN and legacy controller have finished booting.
+// Load Owner V2 extensions only after the dashboard shell, Supabase CDN and
+// legacy controller have finished booting. Each extension is isolated so a
+// failure in one does not take down the stable Owner dashboard.
 window.addEventListener('load', () => {
-  if (document.getElementById('restbrOwnerV2Script')) return;
-  const script = document.createElement('script');
-  script.id = 'restbrOwnerV2Script';
-  script.src = './owner-v2.js?v=2.0';
-  script.defer = true;
-  document.body.appendChild(script);
+  const load = (id, src) => {
+    if (document.getElementById(id)) return;
+    const script = document.createElement('script');
+    script.id = id;
+    script.src = src;
+    script.defer = true;
+    document.body.appendChild(script);
+  };
+
+  load('restbrOwnerV2Script', './owner-v2.js?v=2.0');
+  load('restbrOwnerSettingsV2Script', './owner-settings-v2.js?v=2.0');
 }, { once:true });
