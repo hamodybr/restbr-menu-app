@@ -1,5 +1,5 @@
 (() => {
-  const KEY="shorashCartV1";
+  const KEY="restbrCartV1";
   let cart=[];
   const T={
     ar:{cart:"السلة",empty:"السلة فارغة",total:"الإجمالي",continue:"متابعة الطلب",added:"تمت الإضافة للسلة",choose:"اختر النوع",add:"إضافة للسلة",close:"إغلاق",clear:"إفراغ السلة",clearConfirm:"هل تريد إفراغ السلة بالكامل؟",checkout:"إكمال الطلب",name:"الاسم",phone:"رقم الهاتف",orderType:"نوع الطلب",delivery:"توصيل",pickup:"استلام من المطعم",address:"العنوان",location:"الموقع",getLocation:"تحديد موقعي",notes:"ملاحظات الطلب (اختياري)",review:"مراجعة الطلب",send:"إرسال الطلب عبر WhatsApp",required:"يرجى إكمال الحقول المطلوبة",locationOk:"تم تحديد الموقع",locationFail:"تعذر تحديد الموقع",back:"رجوع"},
@@ -31,12 +31,12 @@
   };
   const whatsappNumber=()=>{
     const r=restaurant();
-    let raw=String(r.whatsappNumber||r.whatsapp||"9647502662002");
+    let raw=String(r.whatsappNumber||r.whatsapp||"");
     let digits=raw.replace(/\D/g,"");
     if(digits.startsWith("00"))digits=digits.slice(2);
     if(/^07\d{9}$/.test(digits))digits="964"+digits.slice(1);
     if(/^7\d{9}$/.test(digits))digits="964"+digits;
-    return digits||"9647502662002";
+    return digits||"";
   };
   function syncOrderState(){
     ensureUI();

@@ -3848,7 +3848,7 @@ async function loadMenuFromSupabase() {
       settings.whatsapp_number ||
       settings.whatsapp ||
       settings.whatsapp_url ||
-      "9647502662002"
+      ""
     );
 
   let whatsappNumber =
@@ -4169,7 +4169,7 @@ async function loadMenuFromSupabase() {
     logo:
       value(
         "logo_url",
-        "assets/shorash-logo.jpeg"
+        ""
       ),
 
     isOpen:
