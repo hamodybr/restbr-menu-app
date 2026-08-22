@@ -7,15 +7,15 @@ window.RESTBR_OWNER_CONFIG = {
 };
 
 // Load Owner V2 extensions only after the dashboard shell, Supabase CDN and
-// legacy controller have finished booting. Each extension is isolated so a
-// failure in one does not take down the stable Owner dashboard.
+// legacy controller have finished booting. async=false preserves execution
+// order: menu/editor extension first, operations/settings extension second.
 window.addEventListener('load', () => {
   const load = (id, src) => {
     if (document.getElementById(id)) return;
     const script = document.createElement('script');
     script.id = id;
     script.src = src;
-    script.defer = true;
+    script.async = false;
     document.body.appendChild(script);
   };
 
