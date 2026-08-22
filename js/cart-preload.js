@@ -1,7 +1,11 @@
 // ==========================================
-// RESTBR CART PRELOAD V1.0
+// RESTBR CART PRELOAD V1.1
 // Reconciles persisted cart rows with the live tenant menu before cart.js
 // reads localStorage. This prevents stale prices/options from being ordered.
+//
+// V1.1 prefers identity over guessing: if a saved named option no longer
+// matches a current option, the cart row is removed instead of falling back
+// to the old numeric index (which could select the wrong option after reorder).
 // ==========================================
 
 (() => {
@@ -26,12 +30,26 @@
     const options = Array.isArray(product?.options) ? product.options : [];
     if (!options.length) return -1;
 
+    // Future-proof path: if a newer cart row carries a stable option id,
+    // always prefer it over labels or array positions.
+    const savedOptionId = cleanText(item?.optionId);
+    if (savedOptionId) {
+      const byId = options.findIndex(option => cleanText(option?.id) === savedOptionId);
+      return byId;
+    }
+
     const savedSignature = optionSignature(item?.option || {});
     if (savedSignature) {
       const exact = options.findIndex(option => optionSignature(option) === savedSignature);
       if (exact >= 0) return exact;
+
+      // A named option existed in the saved cart but no longer exists now.
+      // Do not guess by index after a rename/reorder.
+      return options.length === 1 ? 0 : -1;
     }
 
+    // Legacy direct-price cart rows use an empty option name. They may safely
+    // use index only when it still resolves, with a single-option fallback.
     const savedIndex = Number(item?.optionIndex);
     if (Number.isInteger(savedIndex) && savedIndex >= 0 && options[savedIndex]) {
       return savedIndex;
@@ -90,6 +108,7 @@
       const next = {
         key,
         productId,
+        optionId: cleanText(option?.id) || undefined,
         optionIndex,
         name: {
           ar: cleanText(product?.name?.ar),
@@ -116,6 +135,7 @@
 
       if (
         item?.key !== next.key ||
+        cleanText(item?.optionId) !== cleanText(next.optionId) ||
         Number(item?.price) !== next.price ||
         Number(item?.optionIndex) !== next.optionIndex ||
         cleanText(item?.image) !== next.image ||
