@@ -1,36 +1,24 @@
 // ==========================================
-// RESTBR MENU CORE — Tenant Data Bridge V2.5
+// RESTBR MENU CORE — Tenant Data Bridge V2.6
 // ==========================================
 // Public data is supplied by the same-origin Cloudflare Worker:
 //   GET  /_restbr/bootstrap
 //   POST /_restbr/track
 //
-// V2.1 adds tenant isolation normalization so an unconfigured restaurant
-// never inherits SHORASH-specific phone numbers, socials, location or media
-// from legacy UI fallback values inside app.js.
-//
-// V2.2 normalizes product pricing. RESTBR's canonical product field is
-// base_price, while the legacy menu renderer still reads product.price when
-// it needs to build a default option for products without explicit options.
-// The bridge exposes price as a compatibility alias without changing the
-// canonical base_price field.
-//
-// V2.3 makes product-option state deterministic for the public menu:
-// - inactive product_options are removed before the legacy renderer sees them
-// - has_options is derived from the active option rows, so stale DB flags do
-//   not leak into the menu runtime
-// - base_price remains the fallback only when no active option rows exist
-//
-// V2.4 normalizes Owner Dashboard setting names used by the public runtime:
-// - background_url -> background_video/background_video_url compatibility
-// - address_* -> footer_location_* compatibility
-// - card_glass_opacity -> card_glass_transparency conversion
-//
-// V2.5 makes restaurant_name_* authoritative over legacy branding name_*.
+// V2.1 tenant isolation normalization.
+// V2.2 base_price -> legacy price compatibility.
+// V2.3 active product-option normalization + derived has_options.
+// V2.4 Owner Dashboard setting-name compatibility.
+// V2.5 restaurant_name_* becomes authoritative over legacy branding name_*.
+// V2.6 adds a tenant-scoped, time-limited bootstrap cache for true offline
+// fallback so the app never replaces a previously loaded menu with the empty
+// static data/menu.json fallback during a temporary network/router outage.
 
 (() => {
   const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
   const RESTBR_TRACK_URL = '/_restbr/track';
+  const BOOTSTRAP_CACHE_PREFIX = 'RESTBR_BOOTSTRAP_CACHE_V1';
+  const BOOTSTRAP_CACHE_MAX_AGE = 24 * 60 * 60 * 1000;
 
   let bootstrapPromise = null;
 
@@ -66,6 +54,10 @@
   function clampPercent(value) {
     const n = Number(value);
     return Number.isFinite(n) ? Math.max(0, Math.min(100, n)) : null;
+  }
+
+  function bootstrapCacheKey() {
+    return `${BOOTSTRAP_CACHE_PREFIX}:${location.hostname}:${location.port || 'default'}`;
   }
 
   function normalizeProduct(raw = {}, hasActiveOptions = false) {
@@ -191,52 +183,115 @@
     };
   }
 
+  function normalizeBootstrapPayload(rawPayload = {}) {
+    const payload = { ...(rawPayload || {}) };
+
+    payload.settings = normalizeTenantSettings(payload.settings || {});
+
+    payload.product_options = cloneRows(payload.product_options)
+      .filter(option => option?.is_active !== false);
+
+    const productIdsWithActiveOptions = new Set(
+      payload.product_options
+        .map(option => String(option?.product_id || '').trim())
+        .filter(Boolean)
+    );
+
+    payload.products = cloneRows(payload.products).map(product =>
+      normalizeProduct(
+        product,
+        productIdsWithActiveOptions.has(String(product?.id || '').trim())
+      )
+    );
+
+    payload.categories = cloneRows(payload.categories);
+    return payload;
+  }
+
+  function saveCachedBootstrap(payload) {
+    try {
+      localStorage.setItem(
+        bootstrapCacheKey(),
+        JSON.stringify({ saved_at: Date.now(), payload })
+      );
+    } catch (_) {}
+  }
+
+  function loadCachedBootstrap() {
+    try {
+      const raw = localStorage.getItem(bootstrapCacheKey());
+      if (!raw) return null;
+
+      const cached = JSON.parse(raw);
+      const age = Date.now() - Number(cached?.saved_at || 0);
+
+      if (
+        !cached?.payload?.ok ||
+        age < 0 ||
+        age > BOOTSTRAP_CACHE_MAX_AGE ||
+        !Array.isArray(cached.payload.products) ||
+        !Array.isArray(cached.payload.categories) ||
+        !Array.isArray(cached.payload.product_options)
+      ) {
+        return null;
+      }
+
+      return normalizeBootstrapPayload(cached.payload);
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function publishBootstrap(payload, offline = false) {
+    window.RESTBR_TENANT = payload.restaurant || null;
+    window.RESTBR_BOOTSTRAP = payload;
+    window.RESTBR_OFFLINE_BOOTSTRAP = Boolean(offline);
+    return payload;
+  }
+
   async function loadBootstrap(force = false) {
     if (!force && bootstrapPromise) return bootstrapPromise;
 
-    bootstrapPromise = fetch(RESTBR_BOOTSTRAP_URL, {
-      method: 'GET',
-      headers: { Accept: 'application/json' },
-      cache: 'no-store'
-    })
-      .then(async response => {
+    bootstrapPromise = (async () => {
+      try {
+        const response = await fetch(RESTBR_BOOTSTRAP_URL, {
+          method: 'GET',
+          headers: { Accept: 'application/json' },
+          cache: 'no-store'
+        });
+
         const payload = await response.json().catch(() => ({}));
 
         if (!response.ok || !payload?.ok) {
-          throw new Error(
+          const error = new Error(
             payload?.message ||
             payload?.error ||
             `RESTBR bootstrap failed (${response.status})`
           );
+          error.restbrHttpStatus = response.status;
+          throw error;
         }
 
-        payload.settings = normalizeTenantSettings(payload.settings || {});
+        const normalized = normalizeBootstrapPayload(payload);
+        saveCachedBootstrap(normalized);
+        return publishBootstrap(normalized, false);
+      } catch (error) {
+        const status = Number(error?.restbrHttpStatus || 0);
+        const mayUseOfflineCache = !status || status >= 500;
 
-        payload.product_options = cloneRows(payload.product_options)
-          .filter(option => option?.is_active !== false);
+        if (mayUseOfflineCache) {
+          const cached = loadCachedBootstrap();
+          if (cached) {
+            console.warn('⚠️ RESTBR bootstrap offline fallback is active.');
+            return publishBootstrap(cached, true);
+          }
+        }
 
-        const productIdsWithActiveOptions = new Set(
-          payload.product_options
-            .map(option => String(option?.product_id || '').trim())
-            .filter(Boolean)
-        );
-
-        payload.products = cloneRows(payload.products).map(product =>
-          normalizeProduct(
-            product,
-            productIdsWithActiveOptions.has(String(product?.id || '').trim())
-          )
-        );
-
-        window.RESTBR_TENANT = payload.restaurant || null;
-        window.RESTBR_BOOTSTRAP = payload;
-        return payload;
-      })
-      .catch(error => {
         bootstrapPromise = null;
         console.error('❌ RESTBR bootstrap error:', error);
         throw error;
-      });
+      }
+    })();
 
     return bootstrapPromise;
   }
@@ -363,7 +418,7 @@
 
   window.supabaseClient = client;
   window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
-  console.log('✅ RESTBR tenant data bridge V2.5 ready');
+  console.log('✅ RESTBR tenant data bridge V2.6 ready');
 })();
 
 const supabaseClient = window.supabaseClient;
