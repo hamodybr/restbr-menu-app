@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-menu-core-v8";
+const CACHE_NAME = "restbr-menu-core-v9";
 
 const CORE = [
   "./",
@@ -38,7 +38,6 @@ self.addEventListener("activate", event => {
 
 self.addEventListener("fetch", event => {
   const request = event.request;
-
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
@@ -47,6 +46,15 @@ self.addEventListener("fetch", event => {
   if (url.pathname.startsWith("/_restbr/")) return;
 
   if (url.origin !== self.location.origin) return;
+
+  // Never serve stale management code. Owner and Super Admin are online
+  // control panels and should always receive the latest deployed version.
+  if (
+    url.pathname.includes('/owner/') ||
+    url.pathname.endsWith('/owner') ||
+    url.pathname.includes('/admin/') ||
+    url.pathname.endsWith('/admin')
+  ) return;
 
   if (request.mode === "navigate") {
     event.respondWith(
