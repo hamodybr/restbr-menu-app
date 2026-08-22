@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-menu-core-v16";
+const CACHE_NAME = "restbr-menu-core-v17";
 
 const CORE = [
   "./",
@@ -10,14 +10,15 @@ const CORE = [
   "./css/responsive-parity.css?v=1.0",
   "./js/app.js?v=17.4",
   "./js/brand-template-fix.js?v=1.0",
+  "./js/currency-policy.js?v=1.0",
   "./js/tenant-head.js?v=1.0",
   "./js/timezone-policy.js?v=1.0",
   "./js/offline-policy.js?v=1.0",
   "./js/language-policy.js?v=1.0",
   "./js/menu-policy.js?v=1.0",
-  "./js/cart-preload.js?v=1.1",
+  "./js/cart-preload.js?v=1.2",
   "./js/order-analytics.js?v=1.0",
-  "./js/cart.js?v=4.1",
+  "./js/cart.js?v=4.2",
   "./js/supabase-config.js?v=2.8"
 ];
 
