@@ -7,30 +7,24 @@
 
   <script>
     window.__smIntroBornAt=Date.now();
-
     try{
       localStorage.removeItem("SM_THEME_PREF_V1");
       document.documentElement.removeAttribute("data-sm-theme");
     }catch(_){}
   </script>
+
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
   <meta name="apple-mobile-web-app-title" content="Menu">
 
   <title>Menu</title>
-
-  <!-- SHORASH Favicon -->
-  <link rel="icon" type="image/png" href="assets/favicon.png">
-  <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
   <link rel="stylesheet" href="css/style.css?v=4.0">
   <link rel="stylesheet" href="css/cart.css?v=3.6">
 </head>
 
 <body>
-
-  <!-- Background video -->
   <video
     id="smBgVideo"
     class="sm-bg-video"
@@ -42,9 +36,7 @@
 
   <div class="sm-bg-overlay"></div>
 
-  <!-- Intro -->
   <div id="smIntro" class="sm-intro">
-
     <div class="sm-intro-logo-wrap">
       <img
         src=""
@@ -54,16 +46,11 @@
     </div>
 
     <div class="sm-intro-brand"></div>
-
     <div class="sm-intro-sub">MENU</div>
-
   </div>
 
-  <!-- Main page -->
   <main id="smApp" class="sm-app">
-
     <header class="sm-header">
-
       <div class="sm-logo-wrap">
         <img
           src=""
@@ -73,105 +60,50 @@
       </div>
 
       <h1>MENU</h1>
-
       <p id="smSubtitle"></p>
-
       <div id="smLangs" class="sm-langs"></div>
-
       <div id="smActions" class="sm-actions"></div>
-
     </header>
 
-
-    <!-- Sticky category navigation -->
     <div class="sm-cats-wrap">
-
       <div id="smCats" class="sm-cats"></div>
-
-      <div id="smProgress" class="sm-progress">
-        <span></span>
-      </div>
-
+      <div id="smProgress" class="sm-progress"><span></span></div>
     </div>
 
     <div id="smCatsSentinel"></div>
 
-
-    <!-- Menu -->
     <section id="smMenu" class="sm-menu"></section>
 
-
-    <!-- Footer -->
     <footer class="sm-footer">
-
       <div class="sm-footer-card">
-
         <div class="sm-footer-line"></div>
-
         <h2></h2>
-
-        <p class="sm-footer-location">
-          Duhok • Kurdistan
-        </p>
+        <p class="sm-footer-location"></p>
 
         <div class="sm-footer-main-actions">
-
-          <a id="smFooterLocation" href="#" target="_blank">
-            موقعنا
-          </a>
-
-          <a id="smFooterCall" href="#">
-            اتصال
-          </a>
-
-          <a id="smFooterWhatsapp" href="#" target="_blank">
-            WhatsApp Menu
-          </a>
-
+          <a id="smFooterLocation" href="#" target="_blank">موقعنا</a>
+          <a id="smFooterCall" href="#">اتصال</a>
+          <a id="smFooterWhatsapp" href="#" target="_blank">WhatsApp Menu</a>
         </div>
-
 
         <div class="sm-footer-socials">
-
-          <a id="smFacebook" href="#" target="_blank">
-            Facebook
-          </a>
-
-          <a id="smSnapchat" href="#" target="_blank">
-            Snapchat
-          </a>
-
-          <a id="smTikTok" href="#" target="_blank">
-            TikTok
-          </a>
-
-          <a id="smInstagram" href="#" target="_blank">
-            Instagram
-          </a>
-
+          <a id="smFacebook" href="#" target="_blank">Facebook</a>
+          <a id="smSnapchat" href="#" target="_blank">Snapchat</a>
+          <a id="smTikTok" href="#" target="_blank">TikTok</a>
+          <a id="smInstagram" href="#" target="_blank">Instagram</a>
         </div>
 
-
         <div class="sm-footer-phone"></div>
-
         <div class="sm-footer-copy"></div>
-
       </div>
-
     </footer>
-
   </main>
 
-
-  <!-- Back to top -->
   <button
     id="smTopBtn"
     class="sm-top-btn"
     type="button"
-    aria-label="Back to top">
-    ↑
-  </button>
-
+    aria-label="Back to top">↑</button>
 
   <script>
     (function(){
@@ -192,25 +124,21 @@
         const brand=document.querySelector(".sm-intro-brand");
         if(brand)brand.textContent=name;
 
-        document
-          .querySelectorAll(".sm-intro-logo, .sm-logo")
-          .forEach(logo=>{
-            if(logo && cached.logo){
-              logo.src=cached.logo;
-              logo.style.visibility="visible";
-            }
-          });
+        document.querySelectorAll(".sm-intro-logo, .sm-logo").forEach(logo=>{
+          if(logo && cached.logo){
+            logo.src=cached.logo;
+            logo.style.visibility="visible";
+          }
+        });
       }catch(_){}
     })();
   </script>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=1.0"></script>
+  <!-- RESTBR tenant bridge -->
+  <script src="js/supabase-config.js?v=2.0"></script>
 
   <!-- Menu + Cart -->
-  <script src="js/app.js?v=17.3"></script>
-  <script src="js/cart.js?v=4.0"></script>
-
+  <script src="js/app.js?v=17.4"></script>
+  <script src="js/cart.js?v=4.1"></script>
 </body>
 </html>
