@@ -1,12 +1,14 @@
-const CACHE_NAME = "restbr-menu-core-v9";
+const CACHE_NAME = "restbr-menu-core-v10";
 
 const CORE = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
+  "./assets/restbr-icon.svg",
   "./css/style.css?v=4.0",
   "./css/cart.css?v=3.6",
   "./js/app.js?v=17.4",
+  "./js/tenant-head.js?v=1.0",
   "./js/offline-policy.js?v=1.0",
   "./js/language-policy.js?v=1.0",
   "./js/menu-policy.js?v=1.0",
