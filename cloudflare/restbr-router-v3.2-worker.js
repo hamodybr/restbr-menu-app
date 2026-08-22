@@ -1,5 +1,6 @@
-// RESTBR Router V3.2
+// RESTBR Router V3.3
 // Multi-restaurant router + tenant menu API + RESTBR Super Admin host.
+// V3.3: short edge cache for hostname resolution + automatic Owner tenant query.
 // Required Worker bindings:
 //   SUPABASE_URL
 //   SUPABASE_PUBLISHABLE_KEY
@@ -8,6 +9,7 @@ const PLATFORM_ROOT = "restbr.com";
 const ADMIN_HOST = "admin.restbr.com";
 const ADMIN_ORIGIN = "https://hamodybr.github.io";
 const ADMIN_BASE_PATH = "/restbr-menu-app/admin";
+const ROUTE_CACHE_TTL_SECONDS = 15;
 
 function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data, null, 2), {
@@ -64,7 +66,27 @@ async function supabaseGet(env, table, params = {}) {
   return response.json();
 }
 
-async function findRestaurantByHostname(hostname, env) {
+function routeCacheRequest(hostname) {
+  return new Request(
+    `https://restbr-router-cache.invalid/tenant/${encodeURIComponent(hostname)}`,
+    { method: "GET" }
+  );
+}
+
+async function findRestaurantByHostname(hostname, env, ctx) {
+  const cache = caches.default;
+  const cacheKey = routeCacheRequest(hostname);
+
+  try {
+    const cached = await cache.match(cacheKey);
+    if (cached) {
+      const payload = await cached.json();
+      return payload?.route || null;
+    }
+  } catch (error) {
+    console.debug("RESTBR route cache read skipped:", error?.message || error);
+  }
+
   const rows = await supabaseGet(env, "restaurant_domains", {
     hostname: `eq.${hostname}`,
     status: "eq.active",
@@ -75,7 +97,23 @@ async function findRestaurantByHostname(hostname, env) {
     limit: 1,
   });
 
-  return rows?.[0] || null;
+  const route = rows?.[0] || null;
+
+  try {
+    const response = new Response(JSON.stringify({ route }), {
+      headers: {
+        "content-type": "application/json; charset=UTF-8",
+        "cache-control": `max-age=${ROUTE_CACHE_TTL_SECONDS}`,
+      },
+    });
+    const write = cache.put(cacheKey, response);
+    if (ctx?.waitUntil) ctx.waitUntil(write);
+    else await write;
+  } catch (error) {
+    console.debug("RESTBR route cache write skipped:", error?.message || error);
+  }
+
+  return route;
 }
 
 function flattenSettings(settings, restaurant) {
@@ -138,7 +176,7 @@ async function getBootstrap(route, env) {
 
   return {
     ok: true,
-    version: 3.2,
+    version: 3.3,
     restaurant: {
       id: restaurant.id,
       name: restaurant.name,
@@ -159,7 +197,7 @@ async function getStatus(route, env, hostname) {
   const data = await getBootstrap(route, env);
   return {
     ok: true,
-    routerVersion: 3.2,
+    routerVersion: 3.3,
     hostname,
     restaurant: data.restaurant,
     route: {
@@ -224,6 +262,18 @@ async function proxyStaticApp(request, origin, basePath, routerTag) {
   });
 }
 
+function requestWithTenantContext(request, restaurant) {
+  const url = new URL(request.url);
+  const isOwnerEntry = url.pathname === "/owner" || url.pathname === "/owner/";
+
+  if (!isOwnerEntry || url.searchParams.has("tenant")) {
+    return request;
+  }
+
+  url.searchParams.set("tenant", String(restaurant?.slug || ""));
+  return new Request(url.toString(), request);
+}
+
 async function proxyRestaurant(request, route) {
   const restaurant = route.restaurants;
 
@@ -231,11 +281,12 @@ async function proxyRestaurant(request, route) {
     return json({ ok: false, error: "restaurant_origin_not_configured" }, 503);
   }
 
+  const contextualRequest = requestWithTenantContext(request, restaurant);
   const response = await proxyStaticApp(
-    request,
+    contextualRequest,
     String(restaurant.router_origin),
     normalizeBasePath(restaurant.router_base_path),
-    "v3.2"
+    "v3.3"
   );
 
   const responseHeaders = new Headers(response.headers);
@@ -256,7 +307,7 @@ async function handleAdminHost(request, env) {
       ok: true,
       hostname: ADMIN_HOST,
       service: "restbr-super-admin",
-      routerVersion: 3.2,
+      routerVersion: 3.3,
     });
   }
 
@@ -269,7 +320,7 @@ async function handleAdminHost(request, env) {
       ok: true,
       supabase_url: base(env),
       publishable_key: String(env.SUPABASE_PUBLISHABLE_KEY || ""),
-      routerVersion: 3.2,
+      routerVersion: 3.3,
     });
   }
 
@@ -277,11 +328,11 @@ async function handleAdminHost(request, env) {
     return json({ ok: false, error: "admin_endpoint_not_found" }, 404);
   }
 
-  return proxyStaticApp(request, ADMIN_ORIGIN, ADMIN_BASE_PATH, "v3.2-admin");
+  return proxyStaticApp(request, ADMIN_ORIGIN, ADMIN_BASE_PATH, "v3.3-admin");
 }
 
 export default {
-  async fetch(request, env) {
+  async fetch(request, env, ctx) {
     try {
       assertBindings(env);
 
@@ -292,7 +343,7 @@ export default {
         return json({
           ok: true,
           service: "restbr-router",
-          version: 3.2,
+          version: 3.3,
           mode: "multi-tenant-menu-plus-admin",
         });
       }
@@ -305,7 +356,7 @@ export default {
         return json({ ok: false, error: "platform_root_not_handled_by_restaurant_router" }, 404);
       }
 
-      const route = await findRestaurantByHostname(hostname, env);
+      const route = await findRestaurantByHostname(hostname, env, ctx);
 
       if (!route?.restaurants) {
         return json({ ok: false, error: "restaurant_not_found", hostname }, 404);
@@ -325,7 +376,7 @@ export default {
             origin: route.restaurants.router_origin,
             basePath: route.restaurants.router_base_path,
           },
-          routerVersion: 3.2,
+          routerVersion: 3.3,
         });
       }
 
@@ -353,7 +404,7 @@ export default {
 
       return await proxyRestaurant(request, route);
     } catch (error) {
-      console.error("RESTBR Router V3.2 error:", error);
+      console.error("RESTBR Router V3.3 error:", error);
       return json(
         {
           ok: false,
