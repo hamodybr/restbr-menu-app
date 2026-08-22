@@ -1,7 +1,9 @@
 -- ============================================================
--- RESTBR PRODUCT OPTION STATE SYNC V1.2
+-- RESTBR PRODUCT OPTION STATE SYNC V1.3
 -- Keeps products.metadata.has_options synchronized with usable option rows.
 -- Trigger implementation lives in private schema and is not exposed as RPC.
+-- V1.3 uses cast-free JSON availability checks so malformed metadata cannot
+-- break product-option writes.
 -- ============================================================
 
 begin;
@@ -37,7 +39,7 @@ begin
       from public.product_options po
       where po.product_id = v_product_id
         and po.is_active is not false
-        and coalesce((po.metadata ->> 'is_available')::boolean, true) is not false
+        and lower(coalesce(po.metadata ->> 'is_available', 'true')) <> 'false'
     ) into v_has_options;
 
     update public.products p
@@ -59,7 +61,7 @@ begin
       from public.product_options po
       where po.product_id = v_old_product_id
         and po.is_active is not false
-        and coalesce((po.metadata ->> 'is_available')::boolean, true) is not false
+        and lower(coalesce(po.metadata ->> 'is_available', 'true')) <> 'false'
     ) into v_has_options;
 
     update public.products p
@@ -99,7 +101,7 @@ set
         from public.product_options po
         where po.product_id = p.id
           and po.is_active is not false
-          and coalesce((po.metadata ->> 'is_available')::boolean, true) is not false
+          and lower(coalesce(po.metadata ->> 'is_available', 'true')) <> 'false'
       )
     ),
     true
@@ -115,7 +117,7 @@ commit;
 --   coalesce((p.metadata ->> 'has_options')::boolean, false) as has_options,
 --   count(po.id) filter (
 --     where po.is_active is not false
---       and coalesce((po.metadata ->> 'is_available')::boolean, true) is not false
+--       and lower(coalesce(po.metadata ->> 'is_available', 'true')) <> 'false'
 --   ) as usable_options
 -- from public.products p
 -- left join public.product_options po on po.product_id = p.id
