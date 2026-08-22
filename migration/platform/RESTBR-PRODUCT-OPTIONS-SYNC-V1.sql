@@ -53,7 +53,8 @@ begin
     where p.id = v_old_product_id;
   end if;
 
-  return coalesce(new, old);
+  -- Return value is ignored for AFTER row triggers.
+  return null;
 end;
 $$;
 
