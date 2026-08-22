@@ -1,5 +1,5 @@
 // ==========================================
-// RESTBR MENU CORE — Tenant Data Bridge V2.1
+// RESTBR MENU CORE — Tenant Data Bridge V2.2
 // ==========================================
 // Public data is supplied by the same-origin Cloudflare Worker:
 //   GET  /_restbr/bootstrap
@@ -8,6 +8,12 @@
 // V2.1 adds tenant isolation normalization so an unconfigured restaurant
 // never inherits SHORASH-specific phone numbers, socials, location or media
 // from legacy UI fallback values inside app.js.
+//
+// V2.2 normalizes product pricing. RESTBR's canonical product field is
+// base_price, while the legacy menu renderer still reads product.price when
+// it needs to build a default option for products without explicit options.
+// The bridge exposes price as a compatibility alias without changing the
+// canonical base_price field.
 
 (() => {
   const RESTBR_BOOTSTRAP_URL = '/_restbr/bootstrap';
@@ -25,6 +31,17 @@
 
   function boolOr(value, fallback) {
     return typeof value === 'boolean' ? value : Boolean(fallback);
+  }
+
+  function normalizeProduct(raw = {}) {
+    const product = { ...(raw || {}) };
+    const basePrice = product.base_price ?? product.price ?? null;
+
+    return {
+      ...product,
+      base_price: basePrice,
+      price: basePrice
+    };
   }
 
   function normalizeTenantSettings(raw = {}) {
@@ -112,6 +129,7 @@
         }
 
         payload.settings = normalizeTenantSettings(payload.settings || {});
+        payload.products = cloneRows(payload.products).map(normalizeProduct);
 
         window.RESTBR_TENANT = payload.restaurant || null;
         window.RESTBR_BOOTSTRAP = payload;
@@ -248,7 +266,7 @@
 
   window.supabaseClient = client;
   window.RESTBR_LOAD_BOOTSTRAP = loadBootstrap;
-  console.log('✅ RESTBR tenant data bridge V2.1 ready');
+  console.log('✅ RESTBR tenant data bridge V2.2 ready');
 })();
 
 const supabaseClient = window.supabaseClient;
