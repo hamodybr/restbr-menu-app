@@ -1,6 +1,8 @@
 -- ============================================================
--- RESTBR MEMBERS V1
+-- RESTBR MEMBERS V1.1
 -- Super Admin RPCs for assigning existing Auth users to restaurants.
+-- Uses only the restaurant_members columns already required by Owner V1:
+-- restaurant_id, user_id, role, is_active.
 -- Run once in restbr-platform > Supabase SQL Editor.
 -- ============================================================
 
@@ -54,7 +56,7 @@ begin
     where m.restaurant_id = p_restaurant_id and m.user_id = v_user_id
   ) then
     update public.restaurant_members
-    set role = v_role, is_active = true, updated_at = now()
+    set role = v_role, is_active = true
     where restaurant_id = p_restaurant_id and user_id = v_user_id;
   else
     insert into public.restaurant_members(restaurant_id,user_id,role,is_active)
@@ -110,14 +112,14 @@ returns jsonb
 language plpgsql
 security definer
 set search_path = ''
-as $$
+as $$;
 begin
   if not private.is_platform_admin() then
     raise exception 'platform admin required' using errcode = '42501';
   end if;
 
   update public.restaurant_members
-  set is_active = coalesce(p_is_active,false), updated_at = now()
+  set is_active = coalesce(p_is_active,false)
   where restaurant_id = p_restaurant_id and user_id = p_user_id;
 
   if not found then raise exception 'member not found'; end if;
