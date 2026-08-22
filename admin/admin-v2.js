@@ -1,5 +1,5 @@
 // ============================================================
-// RESTBR SUPER ADMIN V2.0
+// RESTBR SUPER ADMIN V2.1
 // Tenant owner/member management + direct Owner Dashboard links.
 // Requires RESTBR-MEMBERS-V1.sql in restbr-platform.
 // ============================================================
@@ -35,6 +35,15 @@
     `;document.head.appendChild(s);
   }
 
+  function ownerUrl(hostname){
+    const clean=String(hostname||'').toLowerCase().replace(/^www\./,'');
+    if(!clean)return '';
+    const slug=clean.endsWith('.restbr.com')?clean.slice(0,-'.restbr.com'.length):'';
+    const url=new URL(`https://${clean}/owner/`);
+    if(slug)url.searchParams.set('tenant',slug);
+    return url.toString();
+  }
+
   function injectButtons(){
     document.querySelectorAll('.restaurant-card').forEach(card=>{
       if(card.dataset.rbAdminV2==='1')return;card.dataset.rbAdminV2='1';
@@ -42,7 +51,7 @@
       const menuLink=actions.querySelector('[data-action="open"]')?.dataset.url||'';
       let hostname='';try{hostname=new URL(menuLink).hostname}catch(_){}
 
-      const owner=document.createElement('button');owner.className='mini-btn';owner.type='button';owner.textContent='Owner ↗';owner.onclick=()=>window.open(`https://${hostname}/owner/`,'_blank','noopener');
+      const owner=document.createElement('button');owner.className='mini-btn';owner.type='button';owner.textContent='Owner ↗';owner.onclick=()=>{const url=ownerUrl(hostname);if(url)window.open(url,'_blank','noopener');};
       const members=document.createElement('button');members.className='mini-btn';members.type='button';members.textContent='المالك/الفريق';members.onclick=()=>openMembers(id,card.querySelector('h4')?.textContent||'',hostname);
       actions.append(owner,members);
     });
@@ -99,6 +108,6 @@
     button.disabled=true;try{const c=await client();const next=button.dataset.memberActive!=='true';const {error}=await c.rpc('admin_set_restaurant_member_active',{p_restaurant_id:state.restaurantId,p_user_id:button.dataset.memberUser,p_is_active:next});if(error)throw error;await loadMembers();}catch(error){msg(error?.message||String(error),'err');}finally{button.disabled=false;}
   }
 
-  function boot(){styles();ensureModal();injectButtons();const list=document.getElementById('restaurantList');if(list)new MutationObserver(injectButtons).observe(list,{childList:true,subtree:true});console.log('✅ RESTBR Super Admin V2.0 ready');}
+  function boot(){styles();ensureModal();injectButtons();const list=document.getElementById('restaurantList');if(list)new MutationObserver(injectButtons).observe(list,{childList:true,subtree:true});console.log('✅ RESTBR Super Admin V2.1 ready');}
   if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
 })();
