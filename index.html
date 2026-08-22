@@ -89,11 +89,12 @@
         if(!raw)return;
         const cached=JSON.parse(raw)||{};
         const lang=localStorage.getItem("shorashLang")||"ar";
-        const name=lang==="ku"
-          ? (cached.nameKu||cached.nameAr||cached.nameEn||"")
-          : lang==="en"
-            ? (cached.nameEn||cached.nameAr||cached.nameKu||"")
-            : (cached.nameAr||cached.nameKu||cached.nameEn||"");
+        const name=
+          lang==="ku"
+            ? (cached.nameKu||cached.nameAr||cached.nameEn||"")
+            : lang==="en"
+              ? (cached.nameEn||cached.nameAr||cached.nameKu||"")
+              : (cached.nameAr||cached.nameKu||cached.nameEn||"");
         const brand=document.querySelector(".sm-intro-brand");
         if(brand)brand.textContent=name;
         document.querySelectorAll(".sm-intro-logo, .sm-logo").forEach(logo=>{
@@ -108,6 +109,9 @@
 
   <!-- RESTBR tenant bridge -->
   <script src="js/supabase-config.js?v=2.1"></script>
+
+  <!-- Tenant-specific Design System -->
+  <script src="js/design-runtime.js?v=1.0"></script>
 
   <!-- Menu + Cart -->
   <script src="js/app.js?v=17.4"></script>
