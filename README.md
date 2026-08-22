@@ -1,3 +1,1 @@
-# RestBR Menu App
-
-Multi-restaurant menu core for RestBR.
+# shorash-menu-v2

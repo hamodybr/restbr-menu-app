@@ -1,0 +1,7248 @@
+{
+  "restaurant": {
+    "name": "SHORASH REST & CAFE",
+    "phone": "+9647502662002",
+    "whatsapp": "https://wa.me/c/9647502662002",
+    "location": "https://maps.app.goo.gl/WW6hq7WyYxHQUN4y8?g_st=ic",
+    "logo": "assets/shorash-logo.jpeg",
+    "backgroundVideo": "assets/background.mp4"
+  },
+  "products": [
+    {
+      "id": "NWwr5z5RE7",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "اسبريسو",
+        "ku": "اسبريسو",
+        "en": "Espresso"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4d99821a-bf16-488f-9bf2-b020607dc805.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "اسبريسو",
+          "ku": "اسبريسو",
+          "en": "Single",
+          "price": 3000
+        },
+        {
+          "ar": "اسبريسو دبل",
+          "ku": "اسبريسو دبل",
+          "en": "Double",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYKDrVk",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "كابتشينو",
+        "ku": "كابتشينو",
+        "en": "Cappuccino"
+      },
+      "image": "https://catalog.kurdunus.com/Public/1289c08f-231d-4b28-b853-1b00e802666a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كابتشينو",
+          "ku": "كابتشينو",
+          "en": "Cappuccino",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "2WeRgKVR8E",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "كافيه لاتي",
+        "ku": "كافيه لاتي",
+        "en": "Latte"
+      },
+      "image": "https://catalog.kurdunus.com/Public/cd33c671-9f08-4ef0-b4eb-9916cb72ba96.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كافيه لاتي",
+          "ku": "كافيه لاتي",
+          "en": "Latte",
+          "price": 4000
+        },
+        {
+          "ar": "لاتي فانيلا",
+          "ku": "لاتي فانيلا",
+          "en": "vanilla Latte",
+          "price": 4000
+        },
+        {
+          "ar": "كاراميل لاتي",
+          "ku": "كاراميل لاتي",
+          "en": "Caramel Latte",
+          "price": 4000
+        },
+        {
+          "ar": "سبانيش لاتي",
+          "ku": "سبانيش لاتي",
+          "en": "Spanish Latte",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "pzLdpeXrbX",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "كافيه موكا",
+        "ku": "كافيه موكا",
+        "en": "Mocha"
+      },
+      "image": "https://catalog.kurdunus.com/Public/2c41115d-6bd2-4242-a625-3fdc2252d648.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كافيه موكا",
+          "ku": "كافيه موكا",
+          "en": "Mocha",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "DXvd3vnB0o",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كون بانا",
+        "ku": "كون بانا",
+        "en": "Con Panna"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0787971d-91d4-4eb1-b82f-eb8143deae3c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كون بانا",
+          "ku": "كون بانا",
+          "en": "Con Panna",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdVXwR4P",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "ماكياتو",
+        "ku": "ماكياتو",
+        "en": "Macchiato"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f59c6419-3d2e-4038-aabb-f76aa956b436.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ماكياتو",
+          "ku": "ماكياتو",
+          "en": "Macchiato",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr2GZRm4",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "امريكانو",
+        "ku": "امريكانو",
+        "en": "Americano"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0008514a-0174-4738-b445-d5847d6eff5d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "امريكانو",
+          "ku": "امريكانو",
+          "en": "Americano",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJPOdM5",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "هوت شوكليت",
+        "ku": "هوت شوكليت",
+        "en": "Hot Chocolate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/62f868b7-a00c-4b1e-9842-d55658312e9b.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "هوت شوكليت",
+          "ku": "هوت شوكليت",
+          "en": "Hot Chocolate",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr81PR98",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "وايت شوكليت",
+        "ku": "وايت شوكليت",
+        "en": "White Chocolate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/434979b8-88d4-4d7d-bff6-9df45584fb71.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "وايت شوكليت",
+          "ku": "وايت شوكليت",
+          "en": "White Chocolate",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOmMBz2",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "سحلب",
+        "ku": "سحلب",
+        "en": "Sahlep"
+      },
+      "image": "https://catalog.kurdunus.com/Public/229d36f7-18ca-4fd5-9324-034c7d08ebdc.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سحلب",
+          "ku": "سحلب",
+          "en": "Sahlep",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "JoqdaKkR1K",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "قهوه تركيه",
+        "ku": "قەهوا تورکی",
+        "en": "Turkish Coffee"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d8c588be-6790-4f98-867f-43f70d07959a.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "قهوه تركيه",
+          "ku": "قەهوا تورکی",
+          "en": "Turkish Coffee",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "NWwr5y3rE7",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "قهوه عربي ساده",
+        "ku": "قەهوا عەرەبی ساده",
+        "en": "Arabic Coffee"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4c821a8d-78a2-4605-8a49-528eda0382c7.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "قهوه عربي ساده",
+          "ku": "قەهوا عەرەبی ساده",
+          "en": "Arabic Coffee",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "N05BbZ5Bw3",
+      "category": {
+        "order": 11,
+        "ar": "القهوة",
+        "ku": "قەهوە",
+        "en": "Coffee"
+      },
+      "name": {
+        "ar": "قهوه البطم",
+        "ku": "قەهوا کەزانا",
+        "en": "Qazwan Coffee"
+      },
+      "image": "https://catalog.kurdunus.com/Public/561da205-033c-4fde-ae12-e39ef6fc9859.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "قهوه البطم",
+          "ku": "قەهوا کەزانا",
+          "en": "Qazwan Coffee",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "AmbBY9qBVk",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "شاي اضافي",
+        "ku": "چا",
+        "en": "Tea"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d59a4396-3486-4a57-85da-5c4cbd643ef2.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "شاي",
+          "ku": "چا",
+          "en": "Tea",
+          "price": 500
+        }
+      ]
+    },
+    {
+      "id": "2WeRgZbr8E",
+      "category": {
+        "order": 12,
+        "ar": "القهوة الباردة",
+        "ku": "آیس کوفی",
+        "en": "Cold Coffee"
+      },
+      "name": {
+        "ar": "أيس لاتيه",
+        "ku": "أيس لاتيه",
+        "en": "Iced Latte"
+      },
+      "image": "https://catalog.kurdunus.com/Public/54779d9c-516a-4e1b-932b-68c803d600f5.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "أيس لاتيه",
+          "ku": "أيس لاتيه",
+          "en": "Iced Latte",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "pzLdp5arbX",
+      "category": {
+        "order": 12,
+        "ar": "القهوة الباردة",
+        "ku": "آیس کوفی",
+        "en": "Cold Coffee"
+      },
+      "name": {
+        "ar": "أيس موكا",
+        "ku": "أيس موكا",
+        "en": "Iced Mocha"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7677ecb5-ac0a-4e4d-af5f-2727e9b59830.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "أيس موكا",
+          "ku": "أيس موكا",
+          "en": "Iced Mocha",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "DXvd3PLr0o",
+      "category": {
+        "order": 12,
+        "ar": "القهوة الباردة",
+        "ku": "آیس کوفی",
+        "en": "Cold Coffee"
+      },
+      "name": {
+        "ar": "ايس أمريكانو",
+        "ku": "ايس أمريكانو",
+        "en": "Iced Americano"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e14aefb2-393e-42d9-9210-04d15dc47d78.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ايس أمريكانو",
+          "ku": "ايس أمريكانو",
+          "en": "Iced Americano",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdVMZB4P",
+      "category": {
+        "order": 12,
+        "ar": "القهوة الباردة",
+        "ku": "آیس کوفی",
+        "en": "Cold Coffee"
+      },
+      "name": {
+        "ar": "أيس كراميل لاتيه",
+        "ku": "أيس كراميل لاتيه",
+        "en": "Iced Caramel Latte"
+      },
+      "image": "https://catalog.kurdunus.com/Public/98447c84-ee50-4138-a63a-905c41709285.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "أيس كراميل لاتيه",
+          "ku": "أيس كراميل لاتيه",
+          "en": "Iced Caramel Latte",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr27xRm4",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كابتشينو الفريدو",
+        "ku": "كابتشينو الفريدو",
+        "en": "Cappuccino Al Freddo"
+      },
+      "image": "https://catalog.kurdunus.com/Public/350c53f3-fe5e-4e20-8561-a3a095c2004b.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كابتشينو الفريدو",
+          "ku": "كابتشينو الفريدو",
+          "en": "Cappuccino Al Freddo",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJM8rM5",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "أسبريسو تونيك",
+        "ku": "أسبريسو تونيك",
+        "en": "Espresso Tonic"
+      },
+      "image": "https://catalog.kurdunus.com/Public/6fcd6cdc-f2bb-40c4-90e7-295e9d219e3a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "أسبريسو تونيك",
+          "ku": "أسبريسو تونيك",
+          "en": "Espresso Tonic",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOo3rz2",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "اورانج أمريكانو",
+        "ku": "اورانج أمريكانو",
+        "en": "Orange Americano"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e94cb3d3-5792-48c4-9a70-5c5180546f83.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "اورانج أمريكانو",
+          "ku": "اورانج أمريكانو",
+          "en": "Orange Americano",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "JoqdaZAr1K",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك فانيلا",
+        "ku": "ميلك شيك فانيلا",
+        "en": "Vanilla Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d0d65aaa-c907-423a-ab84-f3bed2883192.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك فانيلا",
+          "ku": "ميلك شيك فانيلا",
+          "en": "Vanilla Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "WDYrEMVr0b",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك فراولة",
+        "ku": "ميلك شيك فراولة",
+        "en": "Strawberry Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f5e939ae-b3e0-4c62-8791-73450f70d446.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك فراولة",
+          "ku": "ميلك شيك فراولة",
+          "en": "Strawberry Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "KeXd7NDBoE",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك شكولاته",
+        "ku": "ميلك شيك شكولاته",
+        "en": "Chocolate Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c0d4806f-dbd1-4124-8ae9-ee33c01fdc94.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك شكولاته",
+          "ku": "ميلك شيك شكولاته",
+          "en": "Chocolate Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "8aYRPMzBXv",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك فستق",
+        "ku": "ميلك شيك فستق",
+        "en": "Pistachio Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d222c12c-1d2d-4ff9-bfb4-1b3a4fa92034.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك فستق",
+          "ku": "ميلك شيك فستق",
+          "en": "Pistachio Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "N3QrvVErGa",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك كرميل",
+        "ku": "ميلك شيك كرميل",
+        "en": "Caramel Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/33c9f2c5-139c-4648-bb08-fbd6bdf30bb9.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك كرميل",
+          "ku": "ميلك شيك كرميل",
+          "en": "Caramel Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "5oery8EdVb",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "ميلك شيك ليمون",
+        "ku": "ميلك شيك ليمون",
+        "en": "Lemon Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a3890f88-3d08-464d-afd3-e458f4c2933a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك ليمون",
+          "ku": "ميلك شيك ليمون",
+          "en": "Lemon Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "32WBzOYdb0",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك لوتس",
+        "ku": "ميلك شيك لوتس",
+        "en": "Lotus Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e15712f9-3e30-43d1-ac72-e5dbdb227bc6.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك لوتس",
+          "ku": "ميلك شيك لوتس",
+          "en": "Lotus Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "QJ3dNMZBPN",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك نوتيلا",
+        "ku": "ميلك شيك نوتيلا",
+        "en": "Nutella Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4f6fae4c-7d7a-4ece-9b85-f9733e0515b6.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك نوتيلا",
+          "ku": "ميلك شيك نوتيلا",
+          "en": "Nutella Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "MKYdmZDrNp",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كوكتيل فواكي",
+        "ku": "كوكتيلا فێقی",
+        "en": "Fruit Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a756ca28-3375-4eb8-955f-131314a1aeb0.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل فواكي",
+          "ku": "كوكتيلا فێقی",
+          "en": "Fruit Cocktail",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "oxmr1GeB5e",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "كوكتيل موز حليب",
+        "ku": "كوكتيلا شیر موز",
+        "en": "Banana and Milk Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/22413bfe-0ec0-47e6-8243-9544fc256d74.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل موز حليب",
+          "ku": "كوكتيلا شیر موز",
+          "en": "Banana and Milk Cocktail",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "DG0rLoldN1",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "كوكتيل موز حليب فراولة",
+        "ku": "كوكتيلا شیر موز فراولة",
+        "en": "Banana Strawberry Milk Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/043bc116-9541-4ccb-98db-d888504c15c7.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل موز حليب فراولة",
+          "ku": "كوكتيلا شیر موز فراولة",
+          "en": "Banana Strawberry Milk Cocktail",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "ve7rkZEd3k",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كوكتيل الجنة",
+        "ku": "كوكتيلا بەهەشت",
+        "en": "Heaven Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/b7f095fe-bc93-4860-88c6-06dc2fc36ea0.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل الجنة",
+          "ku": "كوكتيلا بەهەشت",
+          "en": "Heaven Cocktail",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "me8dQM4dOo",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كوكتيل بينا كولادا",
+        "ku": "كوكتيل بينا كولادا",
+        "en": "Piña Colada Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/3908f787-472b-4323-8ed4-e94df772032e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل بينا كولادا",
+          "ku": "كوكتيل بينا كولادا",
+          "en": "Piña Colada Cocktail",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "1qoBWZKRnE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كوكتيل إمبراطور",
+        "ku": "كوكتيل إمبراطور",
+        "en": "Emperor Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/244ea4b5-3c1d-434d-9381-69e34ab04c35.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل إمبراطور",
+          "ku": "كوكتيل إمبراطور",
+          "en": "Emperor Cocktail",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "qWvrxJJBGA",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "كوكتيل موز حليب نوتيلا",
+        "ku": "كوكتيلا شیر موز نوتيلا",
+        "en": "Banana Milk Nutella Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/2e8e95fe-c3c2-42a9-90b1-96b7a0cdcc57.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل موز حليب نوتيلا",
+          "ku": "كوكتيلا شیر موز نوتيلا",
+          "en": "Banana Milk Nutella Cocktail",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "5WVRlZMdAX",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "كوكتيل أڤو كاتو",
+        "ku": "كوكتيلا أڤو كاتو",
+        "en": "Avocado Cocktail"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0c5d23f1-f8f8-48f2-9635-6f1884aaa95e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كوكتيل أڤو كاتو",
+          "ku": "كوكتيلا أڤو كاتو",
+          "en": "Avocado Cocktail",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "7jQB4vDrWY",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير برتقال",
+        "ku": "شەربەتا پرتەقالێ",
+        "en": "Orange Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c7137e53-7b35-4ca2-b15c-7df77ab75304.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير برتقال",
+          "ku": "شەربەتا پرتەقالێ",
+          "en": "Orange Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "2kWd0avr9q",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير ليمون",
+        "ku": "شەربەتا نيموكێ",
+        "en": "Lemon Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/31619ac3-c61f-4670-8e64-ecfba2df3e74.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير ليمون",
+          "ku": "شەربەتا نيموكێ",
+          "en": "Lemon Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "LlaRAMmRAb",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير برتقال ليمون",
+        "ku": "شەربەتا پرتەقالو نيموكێ",
+        "en": "Orange Lemon Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/cc2d9d0e-2915-4602-bd95-fa1cd2157b0c.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير برتقال ليمون",
+          "ku": "شەربەتا پرتەقالو نيموكێ",
+          "en": "Orange Lemon Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "D0qd6z1d4x",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير ليمون زنجبيل عسل",
+        "ku": "شەربەتا نيموكو زەنجەبیلو هنگڤینی",
+        "en": "Honey Ginger Lemon Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/099fb2dc-d490-4c27-b5ae-f47cba8a8293.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير ليمون زنجبيل عسل",
+          "ku": "شەربەتا نيموكو زەنجەبیلو هنگڤینی",
+          "en": "Honey Ginger Lemon Juice",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "bZyRKMqdzO",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير فراولة",
+        "ku": "شەربەتا فراولة",
+        "en": "Strawberry Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/8433fdb4-43c5-4158-b51b-8c95aae38b52.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير فراولة",
+          "ku": "شەربەتا فراولة",
+          "en": "Strawberry Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "v7ZreZyR4O",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير رمان",
+        "ku": "شەربەتا هنارێ",
+        "en": "Pomegranate Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/b04fe5f8-3bba-4f16-80cc-2ff93e43d2de.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير رمان",
+          "ku": "شەربەتا هنارێ",
+          "en": "Pomegranate Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "Kg5rXZ5Bzx",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير اناناس",
+        "ku": "شەربەتا اناناسێ",
+        "en": "Pineapple Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f328ae37-009a-48ef-be33-5efb3ae99cdc.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير اناناس",
+          "ku": "شەربەتا اناناسێ",
+          "en": "Pineapple Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "a7pBMqoBWP",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير خوخ",
+        "ku": "شەربەتا خوخێ",
+        "en": "Peach Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7e618375-eb66-4fd4-b1a2-e15dac8b2bf3.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير خوخ",
+          "ku": "شەربەتا خوخێ",
+          "en": "Peach Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "ANOBDMVdgk",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير فرنسي",
+        "ku": "شەربەتا فەرەنسی",
+        "en": "French Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d5a4c9fd-d0fa-4bff-8d5a-594e93e475e2.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير فرنسي",
+          "ku": "شەربەتا فەرەنسی",
+          "en": "French Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "OkmrqbMRAx",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير جمايكا",
+        "ku": "شەربەتا جمايكا",
+        "en": "Jamaica Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5c9ada9d-e374-470f-a242-cd23a604ae92.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير جمايكا",
+          "ku": "شەربەتا جمايكا",
+          "en": "Jamaica Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "lOPdw25Bk6",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير كيوي",
+        "ku": "شەربەتا کیوی",
+        "en": "Kiwi Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/21d7580e-0e29-40c6-a8a7-88dcc306c6a9.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير كيوي",
+          "ku": "شەربەتا كيوي",
+          "en": "Kiwi Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "jV8dZZndOn",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير بلو هاواي",
+        "ku": "شەربەتا بلو هاواي",
+        "en": "Blue Hawaiian Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/433d2d00-229b-42f3-8d0b-32d75e2a50ad.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير بلو هاواي",
+          "ku": "شەربەتا بلو هاواي",
+          "en": "Blue Hawaiian Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "XbDd91VdeP",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير مانكا",
+        "ku": "شەربەتا مانگوی",
+        "en": "Mango Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f79130fa-fe85-47d5-8c3a-6026a9adb47c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير مانكا",
+          "ku": "شەربەتا مانگوی",
+          "en": "Mango Juice",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "4ebRjZYR1N",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير بولو",
+        "ku": "شەربەتا بولو",
+        "en": "Lemonade Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/6fda0766-6b11-45d9-8099-635e573146b4.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير بولو",
+          "ku": "شەربەتا بولو",
+          "en": "Lemonade Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "g8KdoZ0BPD",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "عصير بلو اوشن",
+        "ku": "شەربەتا بلو اوشن",
+        "en": "Blue Ocean Juice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ca9b50fa-3325-441a-a023-e283531f2fec.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عصير بلو اوشن",
+          "ku": "شەربەتا بلو اوشن",
+          "en": "Blue Ocean Juice",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "QVwRGM7dlE",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كريب نوتيلا",
+        "ku": "كرێپا نوتیلایێ",
+        "en": "Nutella Crêpe"
+      },
+      "image": "https://catalog.kurdunus.com/Public/1d6a1446-dfb6-4147-b56a-5ba669634c51.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نوتيلا",
+          "ku": "نوتیلایێ",
+          "en": "Nutella",
+          "price": 4000
+        },
+        {
+          "ar": "لوتوس",
+          "ku": "لوتوس",
+          "en": "Lotus",
+          "price": 4000
+        },
+        {
+          "ar": "كيندر",
+          "ku": "كينده ر",
+          "en": "Kinder",
+          "price": 4000
+        },
+        {
+          "ar": "فستق",
+          "ku": "بستاشيو",
+          "en": "Pistachio",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "NWwr583dE7",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كريب فواكي",
+        "ku": "كرێپا فێقی",
+        "en": "Fruit Crêpe"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ff233842-82e8-45fd-a448-6fb79cc82719.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كريب فواكي",
+          "ku": "كرێپا فێقی",
+          "en": "Fruit Crêpe",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "N05Bbj5Bw3",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كربب رول بنانا",
+        "ku": "كرێپا رۆل موز",
+        "en": "Banana Roll Crêpe"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d09325fd-9513-4bd5-ad0e-27f0999d10d5.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كربب رول بنانا",
+          "ku": "كرێپا رۆل موز",
+          "en": "Banana Roll Crêpe",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYmqBVk",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كريب فوتشيني",
+        "ku": "كرێپا فوتشيني",
+        "en": "Fettuccine Crepe"
+      },
+      "image": "https://catalog.kurdunus.com/Public/52678ed4-b70f-44cc-a2e5-461bb67041bc.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كريب فوتشيني",
+          "ku": "كرێپا فوتشيني",
+          "en": "Fettuccine Crepe",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "2WeRgGbR8E",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كريب لوتس",
+        "ku": "كرێپا لوتس",
+        "en": "Lotus Crepe"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7078cce5-1c44-47b5-b190-3b56b4491985.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كريب لوتس",
+          "ku": "كرێپا لوتس",
+          "en": "Lotus Crepe",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "pzLdpMarbX",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كريب كيندر",
+        "ku": "كرێپا كيندر",
+        "en": "Kinder Crepe"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7db89a96-d120-454c-aded-c4ecf775a830.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كريب كيندر",
+          "ku": "كرێپا كيندر",
+          "en": "Kinder Crepe",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "DXvd32LB0o",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كنافه فستق",
+        "ku": "كونافا فستەقێ",
+        "en": "Pistachio Kunafa"
+      },
+      "image": "https://catalog.kurdunus.com/Public/13a0d363-e2d4-452a-8e65-74112c90f623.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كنافه فستق",
+          "ku": "كونافا فستەقێ",
+          "en": "Pistachio Kunafa",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdVyZB4P",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "كنافة الجبن",
+        "ku": "كونافا پەنیری",
+        "en": "Cheese kunafa"
+      },
+      "image": "https://catalog.kurdunus.com/Public/07eb7367-9830-421c-9491-4cafb5c8eb65.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كنافة الجبن",
+          "ku": "كونافا پەنیری",
+          "en": "Cheese kunafa",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr2Vxrm4",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "وافل",
+        "ku": "وآفڵ",
+        "en": "Waffle"
+      },
+      "image": "https://catalog.kurdunus.com/Public/611ec38f-d3ba-47e9-a4ff-1236bd221753.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "وافل",
+          "ku": "وآفڵ",
+          "en": "Waffle",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJp8dM5",
+      "category": {
+        "order": 16,
+        "ar": "حلويات",
+        "ku": "شريناهي",
+        "en": "Sweets"
+      },
+      "name": {
+        "ar": "بان كيك",
+        "ku": "پان کێک",
+        "en": "Pancakes"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0ebbc405-c936-4b44-96c1-17cd9dac935a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بان كيك",
+          "ku": "پان کێک",
+          "en": "Pancakes",
+          "price": 6000
+        },
+        {
+          "ar": "ميني بان كيك",
+          "ku": "ميني پان کێک",
+          "en": "Mini Pancakes",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "KeXd7aDRoE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "صحن فواكه كبير",
+        "ku": "سێنیکا فێقی مەزن",
+        "en": "Large Fruit Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5e8ff1e1-127b-4b00-ab77-79dbbee0125d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صحن فواكه كبير",
+          "ku": "سێنیکا فێقی مەزن",
+          "en": "Large Fruit Plate",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "8aYRPOzrXv",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "صحن فواكه صغير",
+        "ku": "سێنیکا فێقی بجیک",
+        "en": "Small Fruit Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/75bc91bd-44e1-4468-97a2-1ea3a44386c0.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صحن فواكه صغير",
+          "ku": "سێنیکا فێقی بجیک",
+          "en": "Small Fruit Plate",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "N3QrvMEdGa",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "سلطه فواكه",
+        "ku": "سەلەتا فێقی",
+        "en": "Fruit Salad"
+      },
+      "image": "https://catalog.kurdunus.com/Public/60b83c87-f3c1-4050-bc29-11c3b49c1404.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سلطه فواكه",
+          "ku": "سەلەتا فێقی",
+          "en": "Fruit Salad",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "5oeryoEBVb",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "ريدبول مكسيكي",
+        "ku": "رێدبوڵا مەکسیکی",
+        "en": "Mexican Red Bull"
+      },
+      "image": "https://catalog.kurdunus.com/Public/29e3c896-945e-4c12-93d0-654025250f29.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ريدبول مكسيكي",
+          "ku": "رێدبوڵا مەکسیکی",
+          "en": "Mexican Red Bull",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "32WBz5YRb0",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "ببسي",
+        "ku": "ببسي",
+        "en": "PEPSI"
+      },
+      "image": "https://catalog.kurdunus.com/Public/6805b88c-e1ba-4aff-b20a-037be9c7db65.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ببسي",
+          "ku": "ببسي",
+          "en": "PEPSI",
+          "price": 500
+        },
+        {
+          "ar": "ببسي صغير",
+          "ku": "ببسي بجيك",
+          "en": "Mini PEPSI",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "QJ3dNJZdPN",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "ميرندا",
+        "ku": "مێرەندا",
+        "en": "Miranda"
+      },
+      "image": "https://catalog.kurdunus.com/Public/98c1a98d-6cfa-421f-ab98-dccf8ad05498.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميرندا",
+          "ku": "مێرەندا",
+          "en": "Miranda",
+          "price": 500
+        },
+        {
+          "ar": "ميرندا صغير",
+          "ku": "مێرەندا بجيك",
+          "en": "Mini Miranda",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "MKYdmMDdNp",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "سفن",
+        "ku": "سەڤن",
+        "en": "7up"
+      },
+      "image": "https://catalog.kurdunus.com/Public/42d6f704-6a6e-41eb-8412-1fee0c27cec4.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سفن",
+          "ku": "سەڤن",
+          "en": "7up",
+          "price": 500
+        },
+        {
+          "ar": "سفن صغير",
+          "ku": "سەڤن بجيك",
+          "en": "Mini 7up",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "oxmr13eB5e",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "صودا ساده",
+        "ku": "صودا ساده",
+        "en": "Sparkling Mineral Water"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d1a41b73-caf4-446e-b72a-6bc626b87306.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صودا ساده",
+          "ku": "صودا ساده",
+          "en": "Sparkling Mineral Water",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "DG0rLVlBN1",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "صودا ليمون",
+        "ku": "صودا نیموکێ",
+        "en": "Sparkling Lemon Mineral Water"
+      },
+      "image": "https://catalog.kurdunus.com/Public/26a759d2-fd7c-498c-81a0-2054fada9080.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صودا ليمون",
+          "ku": "صودا نیموکێ",
+          "en": "Sparkling Lemon Mineral Water",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "ve7rkMEB3k",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "بركر لحم جبن",
+        "ku": "بورگەرا گۆشتێ پەنیر",
+        "en": "Cheese Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/b19bc46e-cd89-4632-b20a-0a7543990f95.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر لحم جبن",
+          "ku": "بورگەرا گۆشتێ پەنیر",
+          "en": "Cheeseburger",
+          "price": 8000
+        },
+        {
+          "ar": "بركر لحم جبن دبل",
+          "ku": "بورگەرا گۆشتێ پەنیر دەبل",
+          "en": "Double Cheeseburger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "me8dQa4dOo",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "بركر دجاج جبن",
+        "ku": "بورگەرا مریشکێ پەنیر",
+        "en": "Chicken Cheeseburger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e470f039-5960-452a-af20-b7e0aa2ff126.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر دجاج جبن",
+          "ku": "بورگەرا مریشکێ پەنیر",
+          "en": "Chicken Cheeseburger",
+          "price": 6000
+        },
+        {
+          "ar": "بركر  دجاج دبل",
+          "ku": "بورگەرا مریشکێ پەنیر دەبل",
+          "en": "Double Chicken Cheeseburger",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "1qoBWzKRnE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بركر باربيكيو",
+        "ku": "بورگەرا باربیکیۆ",
+        "en": "Barbecue Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/09e214c1-006a-4473-b0c4-b5d5a3367d81.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر باربيكيو",
+          "ku": "بورگەرا باربیکیۆ",
+          "en": "Barbecue Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "qWvrxMJRGA",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بركر شورش",
+        "ku": "بورگەرا شۆرەش",
+        "en": "Shorash Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e0f10f7c-cb9f-4519-a798-1f64f86634c5.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر شورش",
+          "ku": "بورگەرا شۆرەش",
+          "en": "Shorash Burger",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "5WVRlMMBAX",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "بركر ماشروم",
+        "ku": "بورگەرا كڤارک",
+        "en": "Mushroom Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/50b4e8b3-6e11-4192-94f8-97129a466e32.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر ماشروم",
+          "ku": "بورگەرا كڤارک",
+          "en": "Mushroom Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "7jQB4JDrWY",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بركر هاني ماسترد",
+        "ku": "بورگەرا هانی مآستەرد",
+        "en": "Honey Mustard Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/321acd6e-42bd-418a-aeff-78ef5d47ef93.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "لحم",
+          "ku": "گوشت",
+          "en": "Meat",
+          "price": 9000
+        },
+        {
+          "ar": "دجاج",
+          "ku": "مریشک",
+          "en": "Chicken",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "2kWd0pvd9q",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "زنجر بركر بل جبن",
+        "ku": "زینجەر بورگەر پەنیر",
+        "en": "Zinger Cheeseburger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/49ad2d7d-1fac-449f-96bc-fb47f88c3d51.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": true,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "زنجر بركر بل جبن",
+          "ku": "زینجەر بورگەر پەنیر",
+          "en": "Zinger Cheeseburger",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "LlaRALmrAb",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بركر بصوص الفستق الحلبي",
+        "ku": "بورگەرا بصوصا فستەقێ",
+        "en": "Pistachio Sauce Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/970f0b83-e5a5-4d60-890d-46cfa1e1a933.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر بصوص الفستق الحلبي",
+          "ku": "بورگەرا بصوصا فستەقێ",
+          "en": "Pistachio Sauce Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "D0qd6O1r4x",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بركر جيتوز",
+        "ku": "بورگەرا چیتوس",
+        "en": "Cheetos Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/04605388-d175-4189-b5e6-071f1b9eafbd.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر جيتوز",
+          "ku": "بورگەرا چیتوس",
+          "en": "Cheetos Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "bZyRK3qRzO",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "سبيايسي بركر لحم",
+        "ku": "بورگەرا گۆشتێ يا تیژ",
+        "en": "Spicy Meat Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d8c1e066-5a3a-4bbd-aada-47d38bd2c8b8.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سبيايسي بركر لحم",
+          "ku": "بورگەرا گۆشتێ يا تیژ",
+          "en": "Spicy Meat Burger",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "v7ZreMyr4O",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "سموكي بركر لحم",
+        "ku": "بورگەرا گۆشتێ يا سموکی",
+        "en": "Smokey Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ed63f6ec-42fe-41f3-b472-1b8bf132a0d7.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سموكي بركر لحم",
+          "ku": "بورگەرا گۆشتێ يا سموکی",
+          "en": "Smokey Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "Kg5rXN5Bzx",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بركر اكسترا سبيشل",
+        "ku": "بورگەرا ئێکسترا سپێشەڵ",
+        "en": "Burger Extra Special"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d13698ed-07af-4ac1-a00f-3185495422fa.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر اكسترا سبيشل",
+          "ku": "بورگەرا ئێکسترا سپێشەڵ",
+          "en": "Burger Extra Special",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "a7pBM2odWP",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "كرسبي",
+        "ku": "كرێسبی",
+        "en": "Crispy Chicken"
+      },
+      "image": "https://catalog.kurdunus.com/Public/47f0047f-65cf-4afe-a1a8-ca9c11a6ada7.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كرسبي",
+          "ku": "كرێسبی",
+          "en": "Crispy Chicken",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "OkmrqqMrAx",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "زنجر سبايسي",
+        "ku": "سپایسی زنجەر",
+        "en": "Spicy Zinger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c1bf7c7c-8473-4745-bc28-abd51efc5687.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": true,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "زنجر سبايسي",
+          "ku": "سپایسی زنجەر",
+          "en": "Spicy Zinger",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "lOPdwM5Rk6",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "ستيك دجاج",
+        "ku": "ستێکا مریشکێ",
+        "en": "Chicken Steak"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a292e40d-0a6e-45ff-b3ce-4c0a9f4c024d.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ستيك دجاج",
+          "ku": "ستێکا مریشکێ",
+          "en": "Chicken Steak",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "jV8dZ1nBOn",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيكاتا دجاج",
+        "ku": "پیکاتا مریشک",
+        "en": "Chicken Piccata"
+      },
+      "image": "https://catalog.kurdunus.com/Public/fe1e7c20-6a09-4c9b-884b-06a1ba09604a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيكاتا دجاج",
+          "ku": "پیکاتا مریشک",
+          "en": "Chicken Piccata",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "4ebRjMYr1N",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "ريزو دجاج",
+        "ku": "ریزویا مريشکێ",
+        "en": "Chicken Rizzo"
+      },
+      "image": "https://catalog.kurdunus.com/Public/1da23b96-81d2-4dbd-a0ee-a0d4112bd58c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ريزو دجاج",
+          "ku": "ریزویا مريشکێ",
+          "en": "Chicken Rizzo",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "g8KdoM0RPD",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيكاتا لحم",
+        "ku": "پیکاتا گۆشت",
+        "en": "Meat Piccata"
+      },
+      "image": "https://catalog.kurdunus.com/Public/470863b4-0cfc-4913-9eb7-a2ee02be4617.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيكاتا لحم",
+          "ku": "پیکاتا گۆشت",
+          "en": "Meat Piccata",
+          "price": 15000
+        }
+      ]
+    },
+    {
+      "id": "PeXdnMQB5K",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "ستربس دجاج",
+        "ku": "سترێپس مریشک",
+        "en": "Chicken Strips"
+      },
+      "image": "https://catalog.kurdunus.com/Public/84cb8f3b-2e9f-4845-8cf7-fd42a2a08bac.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ستربس دجاج",
+          "ku": "سترێپس مریشک",
+          "en": "Chicken Strips",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "QVwRGb7rlE",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "تويستر دجاج رول",
+        "ku": "تویستەر رووڵ مریشک",
+        "en": "Twister Chicken Roll"
+      },
+      "image": "https://catalog.kurdunus.com/Public/16635032-c2b6-4cc8-99b2-eea78ae467f2.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "تويستر دجاج رول",
+          "ku": "تویستەر رووڵ مریشک",
+          "en": "Twister Chicken Roll",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "NWwr5D3dE7",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "مكسيكانو لحم",
+        "ku": "مەکسیکانو گوشت",
+        "en": "Mexicano Beef"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4dd241a7-8c25-435c-a7e3-2f4c36601c7e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "مكسيكانو لحم",
+          "ku": "مەکسیکانو گوشت",
+          "en": "Mexicano Beef",
+          "price": 15000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJ18rM5",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا  مشكل",
+        "ku": "پیتزا مشەکەل",
+        "en": "Mixed Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/19fc3cae-0795-431d-a202-be8e3a14c0dd.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا  مشكل",
+          "ku": "پیتزا مشەکەل",
+          "en": "Mixed Pizza",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr8YxR98",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا دجاج",
+        "ku": "پیتزا مریشکێ",
+        "en": "Chicken Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c5af56ba-bf12-4502-a3bb-4e5b5e1965e3.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا دجاج",
+          "ku": "پیتزا مریشکێ",
+          "en": "Chicken Pizza",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOx3Rz2",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا خضروات",
+        "ku": "پیتزا زەرزەواتی",
+        "en": "Vegetable Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5b59a356-552a-4777-8808-5fabcca6a15c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا خضروات",
+          "ku": "پیتزا زەرزەواتی",
+          "en": "Vegetable Pizza",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "JoqdayAd1K",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا بابروني",
+        "ku": "پیتزا پەپەرونی",
+        "en": "Pepperoni Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/abfcc67f-0e1f-48af-a843-f7d2d661c0c1.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا بابروني",
+          "ku": "پیتزا پەپەرونی",
+          "en": "Large pepperoni pizza",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "NWwr5D6dE7",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيتزا تونه",
+        "ku": "پیترا تونا",
+        "en": "Tuna Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/61ef4400-369e-40b9-9af0-f38bc7a3c5d5.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا تونه",
+          "ku": "پیترا تونا",
+          "en": "Tuna Pizza",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "N05Bbz9Bw3",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا ماركريتا",
+        "ku": "پیترا مارگرێتا",
+        "en": "Pizza Margherita"
+      },
+      "image": "https://catalog.kurdunus.com/Public/13cb3779-516b-4ef5-9730-fb21a67cf7d7.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا ماركريتا",
+          "ku": "پیترا مارگرێتا",
+          "en": "Pizza Margherita",
+          "price": 9000
+        }
+      ]
+    },
+    {
+      "id": "2WeRgkwR8E",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيدا دجاج",
+        "ku": "پیدا مریشک",
+        "en": "Chicken Pide"
+      },
+      "image": "https://catalog.kurdunus.com/Public/171af188-83e2-48db-bc91-c07a2c24c9dd.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيدا دجاج",
+          "ku": "پیدا مریشک",
+          "en": "Chicken Pide",
+          "price": 9000
+        }
+      ]
+    },
+    {
+      "id": "pzLdppgdbX",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيدا لحم",
+        "ku": "پیدا گوشتی",
+        "en": "Meat Pide"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4aad28ae-fb06-415f-b01f-6e8a9bdc85cd.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيدا لحم",
+          "ku": "پیدا گوشتی",
+          "en": "ـMeat Pide",
+          "price": 11000
+        }
+      ]
+    },
+    {
+      "id": "DXvd3DMr0o",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيدا جبن",
+        "ku": "پیدا پەنیری",
+        "en": "Cheese Pide"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5ae213f3-387a-4099-abd6-91c6ae404140.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيدا جبن",
+          "ku": "پیدا پەنیری",
+          "en": "Cheese Pide",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr8YZR98",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فنكر",
+        "ku": "فینگەر",
+        "en": "Fries"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a21a5061-2203-4dc9-a93f-fe14ce9d55da.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فنكر",
+          "ku": "فینگەر",
+          "en": "Fries",
+          "price": 4000
+        },
+        {
+          "ar": "فنكر بل جبن",
+          "ku": "فینگەر و پەنیر",
+          "en": "Cheese fries",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOxVRz2",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "فنكر بل جبن",
+        "ku": "فینگەر و پەنیر",
+        "en": "Cheese fries"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c48f54cc-a5b7-48a5-807c-f87a3a08621f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فنكر بل جبن",
+          "ku": "فینگەر و پەنیر",
+          "en": "Cheese fries",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "WDYrEvGR0b",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "سکالوب دجاج",
+        "ku": "سکالوپ مریشک",
+        "en": "Chicken Escalope"
+      },
+      "image": "https://catalog.kurdunus.com/Public/9a01b9a9-429c-4565-8705-96280f1d1c04.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سکالوب دجاج",
+          "ku": "سکالوپ مریشک",
+          "en": "Chicken Escalope",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "KeXd7bNBoE",
+      "category": {
+        "order": 1,
+        "ar": "فطور صباحي",
+        "ku": "تيشت سبيده",
+        "en": "Morning meals"
+      },
+      "name": {
+        "ar": "فطور صباحي",
+        "ku": "تێشتا سپێدا",
+        "en": "Morning Meals"
+      },
+      "image": "https://catalog.kurdunus.com/Public/06005da1-dec5-49a2-bd7f-bdf7c1a8d55a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فطور صباحي  1 شخص",
+          "ku": "1 كەس",
+          "en": "1 person",
+          "price": 8000
+        },
+        {
+          "ar": "فطور صباحي 2 شخص",
+          "ku": "2 كەس",
+          "en": "2 person",
+          "price": 16000
+        },
+        {
+          "ar": "فطور صباحي 3 شخص",
+          "ku": "3 كەس",
+          "en": "3 person",
+          "price": 24000
+        },
+        {
+          "ar": "فطور صباحي  4 شخص",
+          "ku": "4 كەس",
+          "en": "4 person",
+          "price": 32000
+        }
+      ]
+    },
+    {
+      "id": "LlaRApQrAb",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "سمارت",
+        "ku": "سمارت",
+        "en": "Smart Energy Drink"
+      },
+      "image": "https://catalog.kurdunus.com/Public/3fd514ba-6b4d-474e-b998-e511cb09fb93.jfif",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سمارت",
+          "ku": "سمارت",
+          "en": "Smart Energy Drink",
+          "price": 2000
+        }
+      ]
+    },
+    {
+      "id": "D0qd6L8R4x",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "وايت تايكر",
+        "ku": "وايت تایگەر",
+        "en": "White Tiger Energy Drink"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a0fef299-826d-496b-8e1f-ec03664ae69c.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "وايت تايكر",
+          "ku": "وايت تایگەر",
+          "en": "White Tiger Energy Drink",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "jV8dZvXdOn",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك اوريو",
+        "ku": "ميلك شيك اوريو",
+        "en": "Oreo Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a586bded-8c19-4b9d-96d1-ad42f474277b.webp",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك اوريو",
+          "ku": "ميلك شيك اوريو",
+          "en": "Oreo Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "XbDd9a8deP",
+      "category": {
+        "order": 15,
+        "ar": "ميلك شيك",
+        "ku": "ميلك شيك",
+        "en": "Milkshake"
+      },
+      "name": {
+        "ar": "ميلك شيك كيندر",
+        "ku": "ميلك شيك كيندر",
+        "en": "Kinder Milkshake"
+      },
+      "image": "https://catalog.kurdunus.com/Public/83b2e8ba-7bfc-4ebb-9363-df8ba2e6a354.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ميلك شيك كيندر",
+          "ku": "ميلك شيك كيندر",
+          "en": "Kinder Milkshake",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "4ebRjG3B1N",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "فرابي كوفي",
+        "ku": "فرابي كوفي",
+        "en": "Frappe Coffee"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4b70224f-60e5-4537-a7a6-a5b77758e6fe.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فرابي كوفي",
+          "ku": "فرابي كوفي",
+          "en": "Frappe Coffee",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "g8KdojVBPD",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "فرابي فانيلا",
+        "ku": "فرابي فانيلا",
+        "en": "Frappe Vanilla"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c916072b-1c06-4c27-85cf-42af09507c58.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فرابي فانيلا",
+          "ku": "فرابي فانيلا",
+          "en": "Frappe Vanilla",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "N05BbQ9Rw3",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيض",
+        "ku": "هێک",
+        "en": "Egg"
+      },
+      "image": "https://catalog.kurdunus.com/Public/95b2eedf-4b5c-41a0-91d7-2af923053d8e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيض",
+          "ku": "هێک",
+          "en": "Egg",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYPoRVk",
+      "category": {
+        "order": 1,
+        "ar": "فطور صباحي",
+        "ku": "تيشت سبيده",
+        "en": "Morning meals"
+      },
+      "name": {
+        "ar": "قلي",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a1909cbf-8aae-43ce-961c-f54b8d1e8d1e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "قلي",
+          "ku": "قەلی",
+          "en": "Qali",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "2WeRg0wB8E",
+      "category": {
+        "order": 1,
+        "ar": "فطور صباحي",
+        "ku": "تيشت سبيده",
+        "en": "Morning meals"
+      },
+      "name": {
+        "ar": "قلي مع بيض",
+        "ku": "قەلی هێک",
+        "en": "Qali With Egg"
+      },
+      "image": "https://catalog.kurdunus.com/Public/45f39621-02b4-4276-a275-cbf773a9848f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "قلي مع بيض",
+          "ku": "قەلی هێک",
+          "en": "Qali With Egg",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "DXvd33Md0o",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "لبن",
+        "ku": "ئافا ماست",
+        "en": "Ayran"
+      },
+      "image": "https://catalog.kurdunus.com/Public/2977d480-88ca-477d-84ad-eb9402a4b23f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "لبن",
+          "ku": "ئافا ماست",
+          "en": "Ayran",
+          "price": 500
+        }
+      ]
+    },
+    {
+      "id": "ZLYdVaAB4P",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "بلو بيري",
+        "ku": "بلو بيري",
+        "en": "Blueberry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5ecf9f8e-2a2d-42a3-8dd7-f6216254f532.webp",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بلو بيري",
+          "ku": "بلو بيري",
+          "en": "Blueberry",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr2pOBm4",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "مانكو",
+        "ku": "مانكو",
+        "en": "Mango"
+      },
+      "image": "https://catalog.kurdunus.com/Public/1075ca60-6f0b-4ef8-bb5c-a012dc441ed9.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "مانكو",
+          "ku": "مانكو",
+          "en": "Mango",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJ0kdM5",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "ايجاز",
+        "ku": "هرمیک",
+        "en": "Pear"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4d9a0d10-f3fe-4986-9255-080882474907.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ايجاز",
+          "ku": "هرمیک",
+          "en": "Pear",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr8OZd98",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "پاشن",
+        "ku": "پاشن",
+        "en": "Passion Fruit"
+      },
+      "image": "https://catalog.kurdunus.com/Public/25b6348d-7625-4a21-9da1-276e62a85a30.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "پاشن",
+          "ku": "پاشن",
+          "en": "Passion Fruit",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOpVRz2",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "رازبيري",
+        "ku": "رازبيري",
+        "en": "Raspberry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ff36219f-d414-4ebe-bb01-b77360e8b628.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "رازبيري",
+          "ku": "رازبيري",
+          "en": "Raspberry",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "JoqdaG4R1K",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "فراولة",
+        "ku": "فراولة",
+        "en": "Strawberry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/08414d45-ad7e-4e36-8862-736dd641ae72.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فراولة",
+          "ku": "فراولة",
+          "en": "Strawberry",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "NWwr52zRE7",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "خوخ",
+        "ku": "خوخ",
+        "en": "Peach"
+      },
+      "image": "https://catalog.kurdunus.com/Public/6eda306f-917b-407c-a0c3-d09731f53ac5.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "خوخ",
+          "ku": "خوخ",
+          "en": "Peach",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "N05BbQZRw3",
+      "category": {
+        "order": 14,
+        "ar": "سموذي",
+        "ku": "سموذي",
+        "en": "Smoothie"
+      },
+      "name": {
+        "ar": "ليتشي",
+        "ku": "ليتشي",
+        "en": "Lychee"
+      },
+      "image": "https://catalog.kurdunus.com/Public/8f84a25f-f240-4825-89d6-140f6d09eb70.webp",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ليتشي",
+          "ku": "ليتشي",
+          "en": "Lychee",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYPmRVk",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "نعناع",
+        "ku": "نعناع",
+        "en": "Mint"
+      },
+      "image": "https://catalog.kurdunus.com/Public/debc21dc-df37-415a-983a-5e25209cebf5.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نعناع",
+          "ku": "نعناع",
+          "en": "Mint",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "2WeRg0kB8E",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "فراولة",
+        "ku": "فراولة",
+        "en": "Strawberry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/415dbc01-e583-4320-920e-ae786514eb42.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فراولة",
+          "ku": "فراولة",
+          "en": "Strawberry",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "pzLdpjQRbX",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "تفاح اخضر",
+        "ku": "سێڤاڤا کەسک",
+        "en": "Green Apple"
+      },
+      "image": "https://catalog.kurdunus.com/Public/57a58e72-21f4-405c-8c74-0bb49bc27220.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "تفاح اخضر",
+          "ku": "سێڤاڤا کەسک",
+          "en": "Green Apple",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "DXvd333d0o",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "بلو",
+        "ku": "بلو",
+        "en": "Blue"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0282c888-7ff0-4809-8e6d-63f1ba96b712.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بلو",
+          "ku": "بلو",
+          "en": "Blue",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdVajB4P",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "رازبيري",
+        "ku": "رازبيري",
+        "en": "Raspberry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/cef0a487-7fcd-4f66-9bb4-460b07061a39.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "رازبيري",
+          "ku": "رازبيري",
+          "en": "Raspberry",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr2pXBm4",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "علك",
+        "ku": "علك",
+        "en": "Bubble Gum"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a3a4bd29-f644-4d1f-af18-28315eb67870.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "علك",
+          "ku": "علك",
+          "en": "Bubble Gum",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJ0LdM5",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "بلوبيري",
+        "ku": "بلوبيري",
+        "en": "Blueberry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/9ccc874f-6b60-4938-a06e-c071cb9ab1df.webp",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بلوبيري",
+          "ku": "بلوبيري",
+          "en": "Blueberry",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr8Obd98",
+      "category": {
+        "order": 13,
+        "ar": "موهيتو",
+        "ku": "موهيتو",
+        "en": "Mojito"
+      },
+      "name": {
+        "ar": "اناناس",
+        "ku": "اناناس",
+        "en": "Pineapple"
+      },
+      "image": "https://catalog.kurdunus.com/Public/df735a45-7502-47fc-aa7f-eda611391600.webp",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "اناناس",
+          "ku": "اناناس",
+          "en": "Pineapple",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOpDRz2",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "شوربة عدس",
+        "ku": "شوربا نیسکێ",
+        "en": "Lentil Soup"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4032811c-da58-41fd-9f6d-6a69de0b9198.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "شوربة عدس",
+          "ku": "شوربا نیسکێ",
+          "en": "Lentil Soup",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "JoqdaG5R1K",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "جرزات",
+        "ku": "چەرەزات",
+        "en": "Nuts"
+      },
+      "image": "https://catalog.kurdunus.com/Public/34f7afc4-526a-4afe-a266-8073136e7799.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "جرزات",
+          "ku": "چەرەزات",
+          "en": "Nuts",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "KeXd78nroE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "ماء زجاجي مع قدح ليمون",
+        "ku": "ئاڤا شیسەی دگەل لەیمونێ",
+        "en": "Glass bottle of water with lemon"
+      },
+      "image": "https://catalog.kurdunus.com/Public/2d170009-0e57-4ee5-bd2d-8b153b2603c4.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ماء زجاجي مع قدح ليمون",
+          "ku": "ئاڤا شیسەی دگەل لەیمونێ",
+          "en": "Glass bottle of water with lemon",
+          "price": 1000
+        }
+      ]
+    },
+    {
+      "id": "N3Qrvj0rGa",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "اجنحة دجاج",
+        "ku": "چەنگێن مریشكێ",
+        "en": "Chicken Wings"
+      },
+      "image": "https://catalog.kurdunus.com/Public/bde236e6-93af-41b2-8a17-edc588888656.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 12000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "5oeryjzRVb",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "تکە گوشت",
+        "ku": "تكه لحم",
+        "en": "Meat Tikka"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e5b0d311-0905-480c-99d8-a4cb4c50a115.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "32WBzj9Bb0",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "كباب لحم",
+        "ku": "كباب گوشت",
+        "en": "Meat Kebab"
+      },
+      "image": "https://catalog.kurdunus.com/Public/de2938fe-adc2-4958-b22b-6416465a5c0d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "QJ3dNgXrPN",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "تکە دجاج",
+        "ku": "تکێ مریشکێ",
+        "en": "Chicken Tikka"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7d31bf22-c25c-45f8-849d-e1adfdbcd441.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 12000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "MKYdmjgrNp",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "کبد",
+        "ku": "مێلاك",
+        "en": "Liver"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f36e479d-19ab-4e4d-b6ed-8ba84dbd0a0a.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نص",
+          "ku": "نيف",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "oxmr1vqR5e",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "كباب دجاج",
+        "ku": "كباب مریشك",
+        "en": "Chicken Kabab"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ce7b3aaa-cb1f-4b44-a542-f002a2ff740f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 12000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "DG0rLjJBN1",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "مشاوي مشكل",
+        "ku": "مەشویات مشەکەل",
+        "en": "Mix grills"
+      },
+      "image": "https://catalog.kurdunus.com/Public/9c162aa3-4a42-450c-939c-cd098dafc6f6.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نه فه ر",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "ve7rk72r3k",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "دجاج على الفحم",
+        "ku": "مريشكا سه ر به لا",
+        "en": "Charcoal Chicken"
+      },
+      "image": "https://catalog.kurdunus.com/Public/71208be2-66b1-408e-8b0e-45433b300c8b.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 24000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نه فه ر",
+          "en": "Half portion",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "me8dQjQrOo",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "دجاج مشوي علي تمن",
+        "ku": "مریشك سەر برنجێ",
+        "en": "Chicken on Rice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5db97fcb-4120-4848-9888-9b40bb9828e9.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ربع",
+          "ku": "چارێك",
+          "en": "Quarter",
+          "price": 6000
+        },
+        {
+          "ar": "نص",
+          "ku": "نیڤ",
+          "en": "Half",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "ANOBDjArgk",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قەلیا شڤانا",
+        "ku": "قلي شفان",
+        "en": "Qaly Shvan"
+      },
+      "image": "https://catalog.kurdunus.com/Public/111b6be0-8af4-4c93-8701-7d6977f0a7d6.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیف نەفەر",
+          "en": "Half portion",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "OkmrqmprAx",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قليه",
+        "ku": "قەلی",
+        "en": "Meat Qali"
+      },
+      "image": "https://catalog.kurdunus.com/Public/37d29ddf-39bc-432e-958b-1d3874f3a00c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیف نەفەر",
+          "en": "Half portion",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "lOPdwxyrk6",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قلية عقرة",
+        "ku": "قه لي ئاكري",
+        "en": "Qalı Akrı"
+      },
+      "image": "https://catalog.kurdunus.com/Public/56ae6a59-00f2-4d12-9a66-c1f938eae4d3.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیف نەفەر",
+          "en": "Half portion",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "jV8dZjAdOn",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قلية القرية",
+        "ku": "قه ليا  كوندا",
+        "en": "Villagers Qalı"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f1800062-7cf8-4816-aef8-38087823b12d.JPG",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیف نەفەر",
+          "en": "Half portion",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "XbDd9QzdeP",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قلي سيل",
+        "ku": "قه لي سيل",
+        "en": "Pan Qali"
+      },
+      "image": "https://catalog.kurdunus.com/Public/33bc95e5-8311-4c75-b6f2-2f911cf32bc8.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیف نەفەر",
+          "en": "Half portion",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "4ebRjE7r1N",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قلي معلاك",
+        "ku": "قه لي ميلاك",
+        "en": "Liver Qali"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0f61f1ed-0766-462c-9156-74d076666233.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیف نەفەر",
+          "en": "Half portion",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "g8Kdoz1BPD",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "جلاوي",
+        "ku": "جلاوی",
+        "en": "Chalawi"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c8403fca-6a47-4de5-b675-e54d1b29b888.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 14000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "PeXdnyvB5K",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "بيض غنم",
+        "ku": "بيض غنم",
+        "en": "Sheep testicles"
+      },
+      "image": "https://catalog.kurdunus.com/Public/78319f29-aa48-4f25-905a-cab8067332e1.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 14000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیڤ نەفەر",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "QVwRGjGrlE",
+      "category": {
+        "order": 4,
+        "ar": "مشاوي",
+        "ku": "مشویات",
+        "en": "Barbecue"
+      },
+      "name": {
+        "ar": "برزولة",
+        "ku": "پەڕزولە",
+        "en": "Ribs"
+      },
+      "image": "https://catalog.kurdunus.com/Public/39d9d312-1954-4554-8629-84bcc0bbbdd8.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 20000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نيف نەفەر",
+          "en": "Half portion",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "NWwr5mzrE7",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "گص لحم مع ارز",
+        "ku": "گەسا گوشتی لسەر برنجێ",
+        "en": "Meat Shawarma with Rice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/981bc893-2471-438d-b435-029f37d29a2c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیڤ نەفەر",
+          "en": "Half portion",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "N05BbpZrw3",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "قوزي محشي",
+        "ku": "قوزی حەشاندی",
+        "en": "Stuffed Quzi with Rise"
+      },
+      "image": "https://catalog.kurdunus.com/Public/72fdf86c-5a4f-4a64-a0ee-92fe08cd64ee.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 17000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYjmdVk",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "قوزي مع ارز",
+        "ku": "قوزی لسەر برنجێ",
+        "en": "Quzi With rise"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5a5baf16-bccb-4b8e-9d1b-6d8b68f84364.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 17000
+        }
+      ]
+    },
+    {
+      "id": "2WeRg8kB8E",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "قوزی شام",
+        "ku": "قوزی شام",
+        "en": "Quzi Sham"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7fb1aa17-23f6-4e94-9a64-b306405b5e2f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 17000
+        }
+      ]
+    },
+    {
+      "id": "pzLdpNQRbX",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "قلية مع ارز",
+        "ku": "قەلی دگەل برنجێ",
+        "en": "Qali with rice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c051a861-c546-4300-812e-93765d64388d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف",
+          "ku": "نيف",
+          "en": "Half portion",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "DXvd3z3B0o",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "كبه حامض",
+        "ku": "ترشك",
+        "en": "kibbeh"
+      },
+      "image": "https://catalog.kurdunus.com/Public/1f56f469-590b-4aaa-a3b1-47758cf7d50b.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف",
+          "ku": "نيف",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdVjjd4P",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "تشريب قوزي",
+        "ku": "تەشریبا قوزي",
+        "en": "Meet Quzi Tashrib"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e5f98df9-99fc-4744-93ae-6ea6e2128b7c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 17000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr2yXdm4",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "تشريب كص لحم",
+        "ku": "تەشریبا گەسا گوشتی",
+        "en": "Tashreb Shawrma Meet"
+      },
+      "image": "https://catalog.kurdunus.com/Public/b8d8ce07-c56b-44a4-afe9-3386fb409b92.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف",
+          "ku": "نیڤ",
+          "en": "Half portion",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJjLRM5",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "ماعون كص لحم",
+        "ku": "ماعونا گەسا گوشتی",
+        "en": "Meat Shawarma Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/0178032f-9d17-4326-a274-ccd29df25715.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 14000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیڤ نەفەر",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr8kbd98",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "ماعون شاورما دجاج",
+        "ku": "نەفەر شاورمە مریشک",
+        "en": "Chicken Shawarma plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/113c8633-097f-4a52-8c69-1286d7c680b1.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 12000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نیڤ نەفەر",
+          "en": "Half portion",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "G7XrOjDdz2",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "دیك کوردي",
+        "ku": "دیکلێ کوردی",
+        "en": "Kurdish Rooster"
+      },
+      "image": "https://catalog.kurdunus.com/Public/8f63e78f-6071-4e8d-9fac-848dc35db0d5.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نصف",
+          "ku": "نیف",
+          "en": "Half",
+          "price": 20000
+        },
+        {
+          "ar": "كامل",
+          "ku": "كامل",
+          "en": "Whole",
+          "price": 40000
+        }
+      ]
+    },
+    {
+      "id": "Joqdag5R1K",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "دولمه",
+        "ku": "یاپراخ",
+        "en": "Dolma"
+      },
+      "image": "https://catalog.kurdunus.com/Public/bcb568c1-360a-429f-a9ac-c6d925197801.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف",
+          "ku": "نيف",
+          "en": "Half portion",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "WDYrEjlR0b",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "تشريب قلية",
+        "ku": "ته شريب قه لي",
+        "en": "Qali Tashreb"
+      },
+      "image": "https://catalog.kurdunus.com/Public/50995adc-5b54-486d-8ea5-341270ee0852.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 14000
+        },
+        {
+          "ar": "نصف",
+          "ku": "نيف",
+          "en": "Half portion",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "KeXd7LnroE",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "لحم بعجين",
+        "ku": "هەڤیر گوشت",
+        "en": "Meat Lahimajeen"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5215603f-5e2c-4c03-ae61-909c034b9cca.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عادي",
+          "ku": "نور مال",
+          "en": "Normal",
+          "price": 6000
+        },
+        {
+          "ar": "مشكل جبن",
+          "ku": "مشەکەل پەنیر",
+          "en": "Mixed cheese",
+          "price": 8000
+        },
+        {
+          "ar": "بيض",
+          "ku": "هيك",
+          "en": "Egg",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "8aYRPjGdXv",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "پیتزا ایطالي",
+        "ku": "پیتزا ئیطالی",
+        "en": "Italian Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/d2e57e42-ac97-412b-96a7-4e2b78bddafb.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "عائلي",
+          "ku": "عائلي",
+          "en": "Large",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "N3QrvW0RGa",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "ستيك لحم",
+        "ku": "ستێکا گوشتی",
+        "en": "Meat steak"
+      },
+      "image": "https://catalog.kurdunus.com/Public/54a479a4-dae1-439a-8236-7543d4db0432.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 17000
+        }
+      ]
+    },
+    {
+      "id": "5oeryGzBVb",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "ماعون فلافل مشكل",
+        "ku": "ماعون فەلافل مشەکەل",
+        "en": "Mixed Falafel Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/538a4d3f-e694-4762-8159-07daf3b5a979.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نەفەر",
+          "en": "One portion",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "32WBz09rb0",
+      "category": {
+        "order": 10,
+        "ar": "مشروبات بارده",
+        "ku": "فەخارنێن سار",
+        "en": "Cold drinks"
+      },
+      "name": {
+        "ar": "ماء",
+        "ku": "ئاڤ",
+        "en": "Water"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f44c1112-85f6-4df2-91eb-54542413b621.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ماء",
+          "ku": "ئاڤ",
+          "en": "Water",
+          "price": 250
+        }
+      ]
+    },
+    {
+      "id": "QJ3dNjXdPN",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "كص دجاج مع ارز",
+        "ku": "گەسا مریشکێ لسەر برنجێ",
+        "en": "Shawarma with rice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/1b4e0424-a938-4673-95e9-f8fef6003142.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ماعون",
+          "ku": "كامل",
+          "en": "One Portion",
+          "price": 15000
+        },
+        {
+          "ar": "نصف ماعون",
+          "ku": "نيف",
+          "en": "Half Portion",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "MKYdmvgrNp",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "نودلز لحم",
+        "ku": "نودلز گوشت",
+        "en": "Meat Noodles"
+      },
+      "image": "https://catalog.kurdunus.com/Public/779529df-916b-4fa2-be59-9f8e49ec615c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نودلز لحم",
+          "ku": "نودلز گوشت",
+          "en": "Meat Noodles",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "oxmr1Xqd5e",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "نودلز دجاج",
+        "ku": "نودلز مریشک",
+        "en": "Chicken Noodles"
+      },
+      "image": "https://catalog.kurdunus.com/Public/6e84f07b-1908-4d93-825b-c87267344339.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نودلز دجاج",
+          "ku": "نودلز مریشک",
+          "en": "Chicken Noodles",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "DG0rLeJRN1",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "نودلز دجاج خضار",
+        "ku": "نودلز مریشک زەرزەوات",
+        "en": "Chicken Noodles Vegetables"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7f2f03e0-817b-41bb-a060-e5401c66df9d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نودلز دجاج خضار",
+          "ku": "نودلز مریشک زەرزەوات",
+          "en": "Chicken Noodles Vegetables",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "ve7rkQ2B3k",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فيتوتشيني ألفريدو",
+        "ku": "فيتوتشيني ألفريدو",
+        "en": "Fettuccine Alfredo"
+      },
+      "image": "https://catalog.kurdunus.com/Public/02462836-d496-49c6-a640-eec185587136.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فيتوتشيني ألفريدو",
+          "ku": "فيتوتشيني ألفريدو",
+          "en": "Fettuccine Alfredo",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "me8dQZQrOo",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "باستا مكسيكي دجاج",
+        "ku": "پاستا مەکسیکی مریشک",
+        "en": "Mexican Chicken Pasta"
+      },
+      "image": "https://catalog.kurdunus.com/Public/2e1f0262-8f5c-4c25-8e10-b4eefe09815d.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "باستا مكسيكي دجاج",
+          "ku": "پاستا مەکسیکی مریشک",
+          "en": "Mexican Chicken Pasta",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "1qoBWg6BnE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيستو باستا",
+        "ku": "بيستو باستا",
+        "en": "Pesto Pasta"
+      },
+      "image": "https://catalog.kurdunus.com/Public/97d263ef-a76c-4847-9b57-51edcf8d16c8.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيستو باستا",
+          "ku": "بيستو باستا",
+          "en": "Pesto Pasta",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "qWvrxqoRGA",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "باستا دجاد بصوص البشاميل",
+        "ku": "پاستا مریشکێ بصوصا بەشەمێل",
+        "en": "Bechamel Chicken Pasta"
+      },
+      "image": "https://catalog.kurdunus.com/Public/35f9a37a-581a-41b5-bd45-93c9e6a74288.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "باستا دجاد بصوص البشاميل",
+          "ku": "پاستا مریشکێ بصوصا بەشەمێل",
+          "en": "Bechamel  Chicken Pasta",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "ANOBDeAdgk",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فنكر",
+        "ku": "فینگەر",
+        "en": "French fries"
+      },
+      "image": "https://catalog.kurdunus.com/Public/58ab8673-c632-4538-a82c-91e8d37f1190.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فنكر",
+          "ku": "فینگەر",
+          "en": "French fries",
+          "price": 4000
+        },
+        {
+          "ar": "فنكر بالجبن",
+          "ku": "فینگەر پەنیر",
+          "en": "French fries with Cheese",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "OkmrqAprAx",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بيف ستروغونوف",
+        "ku": "بيف ستروغونوف",
+        "en": "Beef Stroganoff"
+      },
+      "image": "https://catalog.kurdunus.com/Public/e3600256-3e12-4bc8-a962-509f3e2723ff.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيف ستروغونوف",
+          "ku": "بيف ستروغونوف",
+          "en": "Beef Stroganoff",
+          "price": 15000
+        }
+      ]
+    },
+    {
+      "id": "lOPdwoydk6",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا كوردي",
+        "ku": "بيتزا كوردي",
+        "en": "Kurdish pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/aab31fb9-f87a-4f69-9795-71d87a4ce1a7.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا كوردي طويل مشكل",
+          "ku": "بيتزا كوردي طويل مشكل",
+          "en": "Long Kurdish pizza — mixed",
+          "price": 8000
+        },
+        {
+          "ar": "بيتزا كوردي طويل بيض",
+          "ku": "بيتزا كوردي طويل بيض",
+          "en": "Long Kurdish pizza — with egg",
+          "price": 7000
+        },
+        {
+          "ar": "بيتزا كوردي طويل",
+          "ku": "بيتزا كوردي طويل",
+          "en": "Long Kurdish pizza",
+          "price": 6000
+        },
+        {
+          "ar": "بيتزا كوردي دائري مشكل",
+          "ku": "بيتزا كوردي دائري مشكل",
+          "en": "Round Kurdish pizza — mixed",
+          "price": 8000
+        },
+        {
+          "ar": "بيتزا كوردي دائري بيض",
+          "ku": "بيتزا كوردي دائري بيض",
+          "en": "Round Kurdish pizza — with egg",
+          "price": 7000
+        },
+        {
+          "ar": "بيتزا كوردي دائري",
+          "ku": "بيتزا كوردي دائري",
+          "en": "Round Kurdish pizza",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "jV8dZVAdOn",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "بيتزا قمبلة",
+        "ku": "بيتزا قومبلة",
+        "en": "Qumbala Pizza"
+      },
+      "image": "https://catalog.kurdunus.com/Public/483fa5f4-23a5-4e8c-bb31-cddd7c0d8162.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بيتزا قمبلة",
+          "ku": "بيتزا قومبلة",
+          "en": "Qumbala Pizza",
+          "price": 20000
+        }
+      ]
+    },
+    {
+      "id": "XbDd9ezdeP",
+      "category": {
+        "order": 9,
+        "ar": "السندويشات",
+        "ku": "السندويشات",
+        "en": "Sandwiches"
+      },
+      "name": {
+        "ar": "وجبة عربي شاورما",
+        "ku": "وەجبا شاورمێ عەرەبی",
+        "en": "Arabic Shawarma meal"
+      },
+      "image": "https://catalog.kurdunus.com/Public/3263d3fe-4c4f-40ac-b168-5184067e906f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "وجبة عربي شاورما دجاج",
+          "ku": "وەجبا شاورمێ عەرەبی",
+          "en": "Arabic Shawarma meal",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "4ebRjk7B1N",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "صاج شاورما",
+        "ku": "صاجا شاورمێ",
+        "en": "Shawarma Wrap"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7ff610c1-b078-416e-8500-f0566ff01a6e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صاج شاورما",
+          "ku": "صاجا شاورمێ",
+          "en": "Shawarma Wrap",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "g8Kdo41rPD",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "شاورما",
+        "ku": "شاورمە",
+        "en": "Shawarma"
+      },
+      "image": "https://catalog.kurdunus.com/Public/9a89cc50-d029-4462-ba3b-d2d25cd14672.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "شاورما",
+          "ku": "شاورمە",
+          "en": "Shawarma",
+          "price": 2500
+        }
+      ]
+    },
+    {
+      "id": "QVwRGeGdlE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "بوكس شاورما",
+        "ku": "بوکسا شاورمێ",
+        "en": "Chicken Box"
+      },
+      "image": "https://catalog.kurdunus.com/Public/cf122801-43ce-4bb1-a2ac-ea16b4f62772.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بوكس شاورما",
+          "ku": "بوکسا شاورمێ",
+          "en": "Chicken Box",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "NWwr5ezrE7",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "دونر دجاج",
+        "ku": "دونەرا گەسا مریشکێ",
+        "en": "Chicken Doner"
+      },
+      "image": "https://catalog.kurdunus.com/Public/979f093f-4db9-48c5-8da1-d66864d0304c.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "دونر دجاج",
+          "ku": "دونەرا گەسا مریشکێ",
+          "en": "Chicken Doner",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "N05BbPZrw3",
+      "category": {
+        "order": 3,
+        "ar": "لأطباق الشرقيه",
+        "ku": "خوارنێن شەرقی",
+        "en": "Oriental cuisine"
+      },
+      "name": {
+        "ar": "تشريب شاورما",
+        "ku": "تشريب شاورما",
+        "en": "Shawarma Tashreeb"
+      },
+      "image": "https://catalog.kurdunus.com/Public/b8aa4521-419d-43a7-a103-ad897ea65c4e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "نفر",
+          "ku": "نفر",
+          "en": "One portion",
+          "price": 14000
+        },
+        {
+          "ar": "نصف نفر",
+          "ku": "نصف نفر",
+          "en": "Half portion",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "4ebRj4pd1N",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "سموك بركر",
+        "ku": "سموك بركر",
+        "en": "Smoked burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/27540479-ec56-4a88-be81-5808144186d9.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سموك بركر",
+          "ku": "سموك بركر",
+          "en": "Smoked burger",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "g8Kdoe8RPD",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "كرانشي بركر دجاج",
+        "ku": "كرانشي بركر مريشك",
+        "en": "Crunchy Chicken Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/035d0f9a-ffee-4669-9023-e2425a5e46ff.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كرانشي بركر دجاج",
+          "ku": "كرانشي بركر مريشك",
+          "en": "Crunchy Chicken Burger",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "PeXdnK8r5K",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "فلافل",
+        "ku": "فەلافل",
+        "en": "Falafel"
+      },
+      "image": "https://catalog.kurdunus.com/Public/17fb09a7-f6c6-4994-9713-d27a5cf57fda.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فلافل",
+          "ku": "فەلافل",
+          "en": "Falafel",
+          "price": 2500
+        }
+      ]
+    },
+    {
+      "id": "QVwRG03BlE",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "شيش طاوق",
+        "ku": "شيش طاوق",
+        "en": "Shesh Tawq"
+      },
+      "image": "https://catalog.kurdunus.com/Public/549daa7d-4f3d-463b-b3fa-95522322159d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "شيش طاوق",
+          "ku": "شيش طاوق",
+          "en": "Shesh Tawq",
+          "price": 2500
+        }
+      ]
+    },
+    {
+      "id": "NWwr5OVBE7",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "كص لحم",
+        "ku": "کەسا گوشتی",
+        "en": "Meat Shawrma"
+      },
+      "image": "https://catalog.kurdunus.com/Public/9970f7d6-0ac0-41e0-b4b1-3ed44780581d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كص لحم",
+          "ku": "کەسا گوشتی",
+          "en": "Meat Shawarma",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "N05BbmVRw3",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "شوربة المرضى",
+        "ku": "شوربا نەساخا",
+        "en": "Patient soup"
+      },
+      "image": "https://catalog.kurdunus.com/Public/66a9aaed-fc69-42f2-8f75-c37ab862e301.jpeg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "شوربة المرضى",
+          "ku": "شوربا نەساخا",
+          "en": "Patient soup",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYOXrVk",
+      "category": {
+        "order": 1,
+        "ar": "فطور صباحي",
+        "ku": "تيشت سبيده",
+        "en": "Morning meals"
+      },
+      "name": {
+        "ar": "مخلمة",
+        "ku": "مەخلەمە",
+        "en": "Makhlama"
+      },
+      "image": "https://catalog.kurdunus.com/Public/7c41f7ec-b287-48a3-be01-1c12660f9bbc.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "مخلمة لحم",
+          "ku": "مەخلەما گوشتی",
+          "en": "Makhlama with meat",
+          "price": 7000
+        },
+        {
+          "ar": "مخلمة بدون لحم",
+          "ku": "مەخلەما بێ گوشت",
+          "en": "Makhlama without meat",
+          "price": 4000
+        }
+      ]
+    },
+    {
+      "id": "2WeRgWgR8E",
+      "category": {
+        "order": 2,
+        "ar": "منسف",
+        "ku": "مەنسەف",
+        "en": "Large portions"
+      },
+      "name": {
+        "ar": "ديك كامل تمن",
+        "ku": "دیکل کامل سەر برنجێ",
+        "en": "Whole rooster with rice"
+      },
+      "image": "https://catalog.kurdunus.com/Public/88ab2a4c-a9bd-488d-92ad-d297d89e3ca8.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ديك كامل",
+          "ku": "دیکل کامل",
+          "en": "whole rooster",
+          "price": 40000
+        },
+        {
+          "ar": "نصف ديك",
+          "ku": "نیڤ دیکل",
+          "en": "Half rooster",
+          "price": 20000
+        },
+        {
+          "ar": "ربع ديك",
+          "ku": "ربع دیکل",
+          "en": "Quarter rooster",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "pzLdpXldbX",
+      "category": {
+        "order": 2,
+        "ar": "منسف",
+        "ku": "مەنسەف",
+        "en": "Large portions"
+      },
+      "name": {
+        "ar": "منسف قوزی",
+        "ku": "مەنسەفا قوزي",
+        "en": "Large Quzi plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/613eba07-81c5-4f7c-961f-9ecf5648e4d0.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "2 نفر",
+          "ku": "2 نەفەر",
+          "en": "For Tow",
+          "price": 35000
+        },
+        {
+          "ar": "3 نفر",
+          "ku": "3 نەفەر",
+          "en": "For Three",
+          "price": 50000
+        },
+        {
+          "ar": "4 نفر",
+          "ku": "4 نەفەر",
+          "en": "For Four",
+          "price": 70000
+        }
+      ]
+    },
+    {
+      "id": "DXvd3JmB0o",
+      "category": {
+        "order": 2,
+        "ar": "منسف",
+        "ku": "مەنسەف",
+        "en": "Large portions"
+      },
+      "name": {
+        "ar": "منسف دجاج شوي",
+        "ku": "مەنسفا مریشکا بژارتی",
+        "en": "Large Grilled Chicken Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/a0e5f223-724c-48ce-8ba7-1c46a108d932.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "دجاجە کاملە على منسف تمن",
+          "ku": "مریشکا بژارتی کامل سەر برنجێ",
+          "en": "Grilled Chicken On Rice",
+          "price": 30000
+        },
+        {
+          "ar": "5 عادی منسف",
+          "ku": "5 عادی منسف",
+          "en": "5 Quarter Chicken on Rice",
+          "price": 35000
+        },
+        {
+          "ar": "4 عادی منسف",
+          "ku": "4 عادی منسف",
+          "en": "4 Quarter Chicken on Rice",
+          "price": 24000
+        },
+        {
+          "ar": "3 عادی منسف",
+          "ku": "3 عادی منسف",
+          "en": "3 Quarter Chicken on Rice",
+          "price": 18000
+        },
+        {
+          "ar": "2 عادی منسف",
+          "ku": "2 عادی منسف",
+          "en": "2 Quarter Chicken on Rice",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdV2Ed4P",
+      "category": {
+        "order": 2,
+        "ar": "منسف",
+        "ku": "مەنسەف",
+        "en": "Large portions"
+      },
+      "name": {
+        "ar": "منسف دجاج محشی",
+        "ku": "مەنسەفا مریشکا حەشاندی",
+        "en": "Stuffed Chicken Large Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/08e59dce-d654-4854-aae1-0c903943a3ed.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "منسف دجاج محشی",
+          "ku": "مەنسەفا مریشکا حەشاندی",
+          "en": "Stuffed Chicken Large Plate",
+          "price": 35000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr22mrm4",
+      "category": {
+        "order": 2,
+        "ar": "منسف",
+        "ku": "مەنسەف",
+        "en": "Large portions"
+      },
+      "name": {
+        "ar": "منسف شورش",
+        "ku": "مەنسەفا شورەش",
+        "en": "Shorash Special large plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/47718d35-f955-4716-be6d-9f22c3290ae8.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "منسف شورش",
+          "ku": "مەنسەفا شورەش",
+          "en": "Shorash Special",
+          "price": 30000
+        },
+        {
+          "ar": "منسف شورش",
+          "ku": "مەنسەفا شورەش",
+          "en": "Shorash Special",
+          "price": 25000
+        },
+        {
+          "ar": "منسف شورش",
+          "ku": "مەنسەفا شورەش",
+          "en": "Shorash Special",
+          "price": 20000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJKaBM5",
+      "category": {
+        "order": 2,
+        "ar": "منسف",
+        "ku": "مەنسەف",
+        "en": "Large portions"
+      },
+      "name": {
+        "ar": "منسف مشكل",
+        "ku": "مەنسەفا تێکەل",
+        "en": "Mixed Large Plate"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c660d09c-7a9b-4430-b11f-d76a76a9cc16.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "منسف 2 عادي 2 قوزي",
+          "ku": "منسف 2 عادي 2 قوزي",
+          "en": "2 Quarter Chicken 2 Quzi",
+          "price": 45000
+        },
+        {
+          "ar": "منسف 2 عادي 2 قلي",
+          "ku": "منسف 2 عادي 2 قلي",
+          "en": "2 Quarter Chicken 2 Qaly",
+          "price": 30000
+        },
+        {
+          "ar": "منسف 1 عادي 1 قوزي",
+          "ku": "منسف 1 عادي 1 قوزي",
+          "en": "1 Quarter Chicken 1 Quzi",
+          "price": 22000
+        },
+        {
+          "ar": "منسف 1 عادي 1 قلي",
+          "ku": "منسف 1 عادي 1 قلي",
+          "en": "1 Quarter Chicken 1 Qaly",
+          "price": 16000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr876d98",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "لبن",
+        "ku": "ماست",
+        "en": "Yogurt"
+      },
+      "image": "https://catalog.kurdunus.com/Public/c6f34254-8011-4e37-aac5-e538fc1295a6.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "لبن",
+          "ku": "ماست",
+          "en": "Yogurt",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "G7XrO54Bz2",
+      "category": {
+        "order": 1,
+        "ar": "فطور صباحي",
+        "ku": "تيشت سبيده",
+        "en": "Morning meals"
+      },
+      "name": {
+        "ar": "قلي بيض",
+        "ku": "قەلی هێک",
+        "en": "Qaly With Egg"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f79a9c4b-ed0f-4a6f-a469-be6fa8aa74d3.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ماعون",
+          "ku": "ماعون",
+          "en": "One plate",
+          "price": 10000
+        },
+        {
+          "ar": "نصف ماعون",
+          "ku": "نيڤ ماعون",
+          "en": "Half plate",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "JoqdaNLr1K",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "وجبة اطفال",
+        "ku": "وه جبا زاروكا",
+        "en": "Kids Meal"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f8813136-93e6-4d4b-bdb6-de74c9642795.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "وجبة اطفال",
+          "ku": "وه جبا زاروكا",
+          "en": "Kids Meal",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "NWwr5OwBE7",
+      "category": {
+        "order": 5,
+        "ar": "قلية",
+        "ku": "قەلی",
+        "en": "Qali"
+      },
+      "name": {
+        "ar": "قلي سيل دجاج",
+        "ku": "قەلی سێلا مریشکێ",
+        "en": "Chicken Qaly Pan"
+      },
+      "image": "https://catalog.kurdunus.com/Public/960a8226-f1ff-4b36-8fe9-aea0ee579870.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "ماعون",
+          "ku": "ماعون",
+          "en": "One portion",
+          "price": 10000
+        },
+        {
+          "ar": "نصف ماعون",
+          "ku": "نیڤ ماعون",
+          "en": "Half portion",
+          "price": 6000
+        }
+      ]
+    },
+    {
+      "id": "N05BbmERw3",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "اجنحة باربيكيو",
+        "ku": "جەنک باربیکیو",
+        "en": "Barbecue chicken wings"
+      },
+      "image": "https://catalog.kurdunus.com/Public/f8476e73-827f-4e3f-b6e1-3cdb8eaf2686.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "اجنحة باربيكيو",
+          "ku": "جەنک باربیکیو",
+          "en": "Barbecue chicken wings",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "AmbBYOArVk",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "اجنحة سبايسي",
+        "ku": "جەنک سبایسی",
+        "en": "Spicy chicken wings"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5084e7ab-2786-4960-a23c-0fc67a483125.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "اجنحة سبايسي",
+          "ku": "جەنک سبایسی",
+          "en": "Spicy chicken wings",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "2WeRgWDR8E",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "اجنحة هاني ماستر",
+        "ku": "جەنک هاني ماستر",
+        "en": "Honey Mustard Chicken wings"
+      },
+      "image": "https://catalog.kurdunus.com/Public/34b8902e-9500-4a5e-94f7-7762868bbd8d.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "اجنحة هاني ماستر",
+          "ku": "جەنک هاني ماستر",
+          "en": "Honey Mustard Chicken wings",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "pzLdpXmdbX",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "جيكن كاري",
+        "ku": "جكن كاري",
+        "en": "Chicken carry"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ad60c8a7-9e2d-46cb-ba0a-d1da46142e0f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "جيكن كاري",
+          "ku": "جيكن كاري",
+          "en": "Chicken carry",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "ZLYdV27d4P",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فوتوشينو بولونيس لحم",
+        "ku": "فوتوشينو بولونيس گوشت",
+        "en": "Bolognese Meat Fettuccine"
+      },
+      "image": "https://catalog.kurdunus.com/Public/fc20c1c1-ad87-4824-bf89-55efea55baeb.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فوتوشينو بولونيس لحم",
+          "ku": "فوتوشينو بولونيس گوشت",
+          "en": "Bolognese Meat Fettuccine",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "Ygkr22vrm4",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فوتوشينو بولونيس",
+        "ku": "فوتوشينو بولونيس",
+        "en": "Bolognese Fettuccine"
+      },
+      "image": "https://catalog.kurdunus.com/Public/4f6035fd-4751-4acd-9ec1-c5ef7e8176b2.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فوتوشينو بولونيس",
+          "ku": "فوتوشينو بولونيس",
+          "en": "Bolognese Fettuccine",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "ogDRJKPBM5",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فيلي دجاج صوص الكريمة",
+        "ku": "فيلي مریشک صوصا كريمێ",
+        "en": "Chicken fillet with cream sauce"
+      },
+      "image": "https://catalog.kurdunus.com/Public/af948823-10dc-451e-8bfc-389b5ca9cb0b.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فيلي دجاج صوص الكريمة",
+          "ku": "فيلي مریشک صوصا كريمێ",
+          "en": "Chicken fillet with cream sauce",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "Dnyr87md98",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "باربيكيو بركر",
+        "ku": "باربيكيو بركر",
+        "en": "Barbecue Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ba11140c-5ab8-42fe-ab49-9599e1f61c00.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "باربيكيو بركر",
+          "ku": "باربيكيو بركر",
+          "en": "Barbecue Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "G7XrO58Bz2",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "بركر شورش",
+        "ku": "بركر شورش",
+        "en": "Shorash Burger"
+      },
+      "image": "https://catalog.kurdunus.com/Public/67014d1a-6df4-461c-b8be-bc268e8313b6.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بركر شورش",
+          "ku": "بركر شورش",
+          "en": "Shorash Burger",
+          "price": 10000
+        }
+      ]
+    },
+    {
+      "id": "JoqdaNyr1K",
+      "category": {
+        "order": 7,
+        "ar": "بركر",
+        "ku": "برگر",
+        "en": "Burger"
+      },
+      "name": {
+        "ar": "سبيشل اكسترا لحم",
+        "ku": "سبيشل اكسترا لحم",
+        "en": "Special extra meat"
+      },
+      "image": "https://catalog.kurdunus.com/Public/273c2df2-c288-4f64-b856-8ebae01fff6e.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "سبيشل اكسترا لحم",
+          "ku": "سبيشل اكسترا لحم",
+          "en": "Special extra meat",
+          "price": 12000
+        }
+      ]
+    },
+    {
+      "id": "WDYrElJd0b",
+      "category": {
+        "order": 6,
+        "ar": "الوجبات الغربي",
+        "ku": "خارنێن غەربی",
+        "en": "Western meals"
+      },
+      "name": {
+        "ar": "فنكر ويجز جبن",
+        "ku": "فنكر ويجز به نير",
+        "en": "فنكر ويجز جبن"
+      },
+      "image": "https://catalog.kurdunus.com/Public/9cd92b0e-d2b9-4261-9807-b8e3c7782bf8.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "فنكر ويجز جبن",
+          "ku": "فنكر ويجز جبن",
+          "en": "فنكر ويجز جبن",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "KeXd7E8RoE",
+      "category": {
+        "order": 9,
+        "ar": "السندويشات",
+        "ku": "السندويشات",
+        "en": "Sandwiches"
+      },
+      "name": {
+        "ar": "وجبة عربي كص",
+        "ku": "وەجبا گوشتی عەرەبی",
+        "en": "Arabic meal Meat"
+      },
+      "image": "https://catalog.kurdunus.com/Public/ec7eae5f-7674-47bd-9530-4f37b4755608.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "وجبة عربي كص",
+          "ku": "وەجبا گوشتی عەرەبی",
+          "en": "Arabic meal Meat",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "8aYRPbjdXv",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "دونر كص لحم",
+        "ku": "دونەرا گەسا گوشتی",
+        "en": "Meat Doner"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5f2d518a-95ce-466d-83fc-f84922c8422f.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "دونر كص لحم",
+          "ku": "دونەرا گەسا گوشتی",
+          "en": "Meat Doner",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "N3QrvgwRGa",
+      "category": {
+        "order": 9,
+        "ar": "السندويشات",
+        "ku": "السندويشات",
+        "en": "Sandwiches"
+      },
+      "name": {
+        "ar": "بوكس كص لحم",
+        "ku": "بوکسا گەسا گوشتی",
+        "en": "Meat Box"
+      },
+      "image": "https://catalog.kurdunus.com/Public/460b82ee-b69f-4ea6-96ee-fbd8bbbf8406.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بوكس كص لحم",
+          "ku": "بوکسا گەسا گوشتی",
+          "en": "Meat Box",
+          "price": 7000
+        }
+      ]
+    },
+    {
+      "id": "5oeryVpRVb",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "صاج كص لحم",
+        "ku": "صاجا گەسا گوشتی",
+        "en": "Meat Wrap"
+      },
+      "image": "https://catalog.kurdunus.com/Public/40c185a1-c3bf-4f11-9ff2-e0c8b197a632.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صاج كص لحم",
+          "ku": "صاجا گەسا گوشتی",
+          "en": "Meat Wrap",
+          "price": 3500
+        }
+      ]
+    },
+    {
+      "id": "32WBz2bBb0",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "صاج فلافل",
+        "ku": "صاجا فەلافلێ",
+        "en": "Falafel Wrap"
+      },
+      "image": "https://catalog.kurdunus.com/Public/41ae6ae9-1ef5-466f-860f-b3f17def5c56.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "صاج فلافل",
+          "ku": "صاجا فەلافلێ",
+          "en": "Falafel Wrap",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "QJ3dNDoRPN",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "لفة جام",
+        "ku": "ڵەفا جامێ",
+        "en": "Boiled Chicken Sandwich"
+      },
+      "image": "https://catalog.kurdunus.com/Public/93290c22-b3d8-481e-8107-4fe76ccaf8d2.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "لفة جام",
+          "ku": "ڵەفا جامێ",
+          "en": "Boiled Chicken Sandwich",
+          "price": 2500
+        }
+      ]
+    },
+    {
+      "id": "MKYdm6ErNp",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "لفة بيض",
+        "ku": "لەفا هێکێ",
+        "en": "Egg Sandwich"
+      },
+      "image": "https://catalog.kurdunus.com/Public/39d51a17-9e7f-464b-957f-c6fcf6225501.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "لفة بيض",
+          "ku": "لەفا هێکێ",
+          "en": "Egg Sandwich",
+          "price": 2500
+        }
+      ]
+    },
+    {
+      "id": "oxmr1VVR5e",
+      "category": {
+        "order": 999,
+        "ar": "",
+        "ku": "",
+        "en": ""
+      },
+      "name": {
+        "ar": "لفه قوزي",
+        "ku": "لەفا قوزی",
+        "en": "Quzi Sandwich"
+      },
+      "image": "https://catalog.kurdunus.com/Public/50ffca06-15c9-4872-b1d7-e627b7b1a8be.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "لفه قوزي",
+          "ku": "لەفا قوزی",
+          "en": "Quzi Sandwich",
+          "price": 3000
+        }
+      ]
+    },
+    {
+      "id": "DG0rLXnrN1",
+      "category": {
+        "order": 8,
+        "ar": "بيتزا",
+        "ku": "بيتزا",
+        "en": "Pizza"
+      },
+      "name": {
+        "ar": "خبز جبن",
+        "ku": "صەوکا پەنیری",
+        "en": "Cheses Bread"
+      },
+      "image": "https://catalog.kurdunus.com/Public/08575d4d-799b-47d4-b8cf-13ee98e41245.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "خبز جبن",
+          "ku": "صەوکا پەنیری",
+          "en": "Cheses Bread",
+          "price": 8000
+        }
+      ]
+    },
+    {
+      "id": "me8dQY6dOo",
+      "category": {
+        "order": 1,
+        "ar": "فطور صباحي",
+        "ku": "تيشت سبيده",
+        "en": "Morning meals"
+      },
+      "name": {
+        "ar": "كيمر",
+        "ku": "قه يماغ",
+        "en": "Kaymak"
+      },
+      "image": "https://catalog.kurdunus.com/Public/5e4b52b0-ba2f-4526-9fe3-1ceeb3685493.png",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "كيمر",
+          "ku": "قه يماغ",
+          "en": "Kaymak",
+          "price": 5000
+        }
+      ]
+    },
+    {
+      "id": "1qoBWJQRnE",
+      "category": {
+        "order": 9,
+        "ar": "السندويشات",
+        "ku": "السندويشات",
+        "en": "Sandwiches"
+      },
+      "name": {
+        "ar": "بوكس شاورما",
+        "ku": "بوکسا شاورمێ",
+        "en": "Chicken Box"
+      },
+      "image": "https://catalog.kurdunus.com/Public/b63055fa-e2fa-453f-81ef-118053036421.jpg",
+      "badges": {
+        "popular": false,
+        "new": false,
+        "hot": false,
+        "offer": false,
+        "unavailable": false
+      },
+      "options": [
+        {
+          "ar": "بوكس شاورما",
+          "ku": "بوکسا شاورمێ",
+          "en": "Chicken Box",
+          "price": 4000
+        }
+      ]
+    }
+  ]
+}

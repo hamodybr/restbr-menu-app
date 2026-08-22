@@ -1,0 +1,25 @@
+{
+  "name": "Restaurant Menu",
+  "short_name": "Menu",
+  "description": "Restaurant menu and ordering experience",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#080604",
+  "theme_color": "#080604",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "assets/favicon.png",
+      "sizes": "any",
+      "type": "image/png",
+      "purpose": "any"
+    }
+  ]
+}
