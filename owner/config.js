@@ -48,5 +48,5 @@ window.addEventListener('load', () => {
   load('restbrOwnerDesignAdvancedV2Script', './design-advanced-v2.js?v=2.0');
   load('restbrOwnerBackupResetV2Script', './backup-reset-v2.js?v=2.0');
   load('restbrOwnerAuditV2Script', './audit-v2.js?v=2.1');
-  load('restbrOwnerQrV2Script', './qr-v2.js?v=2.1');
+  load('restbrOwnerQrV2Script', './qr-v2.js?v=2.2');
 }, { once:true });
