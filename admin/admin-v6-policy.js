@@ -16,7 +16,7 @@
       const hostname = String(link?.textContent || '').trim();
       const slug = hostname.replace(/\.restbr\.com$/i,'');
       if(!slug) return;
-      button.dataset.url = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(slug)}&mode=superadmin`;
+      button.dataset.url = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(slug)}&mode=superadmin&v=6`;
     });
   }
 
