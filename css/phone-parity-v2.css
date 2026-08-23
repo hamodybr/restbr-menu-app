@@ -1,40 +1,27 @@
 /* ============================================================
-   RESTBR PHONE PARITY V2.1
-   Desktop / landscape tablet render the same 440px phone canvas and the same
-   final mobile card geometry (52/48, 155px, direction-aware image placement).
+   RESTBR PHONE PARITY V2.2
+   Desktop / landscape tablet use the same phone canvas AND the same live
+   Owner design variables as iPhone. One design system, not two layouts.
    ============================================================ */
 
 :root{--restbr-phone-canvas:440px}
 
-/* Share control always sits on the same side as the image. */
+/* Share control always stays inside the image side. */
 html[dir="rtl"] .sm-share-product{
-  inset-inline-start:7px!important;
-  inset-inline-end:auto!important;
-  right:7px!important;
-  left:auto!important;
+  inset-inline-start:7px!important;inset-inline-end:auto!important;
+  right:7px!important;left:auto!important;
 }
 html[dir="ltr"] .sm-share-product{
-  inset-inline-start:7px!important;
-  inset-inline-end:auto!important;
-  left:7px!important;
-  right:auto!important;
+  inset-inline-start:7px!important;inset-inline-end:auto!important;
+  left:7px!important;right:auto!important;
 }
 
 @media (min-width:769px){
   html,body{min-width:0!important}
 
-  /* Same background treatment as the phone build. */
-  .sm-bg-video{
-    filter:saturate(1.02) contrast(1.03) brightness(1.08)!important;
-    transform:scale(1.005)!important;
-  }
-  .sm-bg-overlay{
-    background:
-      linear-gradient(180deg,rgba(5,4,3,.48),rgba(5,4,3,.66) 40%,rgba(5,4,3,.78)),
-      radial-gradient(circle at 50% 12%,rgba(190,118,35,.14),transparent 34%)!important;
-  }
+  .sm-bg-video{filter:saturate(1.02) contrast(1.03) brightness(1.08)!important;transform:scale(1.005)!important}
+  .sm-bg-overlay{background:linear-gradient(180deg,rgba(5,4,3,.48),rgba(5,4,3,.66) 40%,rgba(5,4,3,.78)),radial-gradient(circle at 50% 12%,rgba(190,118,35,.14),transparent 34%)!important}
 
-  /* The menu itself is the physical iPhone canvas, centered on large screens. */
   .sm-app{
     width:min(100%,var(--restbr-phone-canvas))!important;
     max-width:var(--restbr-phone-canvas)!important;
@@ -42,170 +29,107 @@ html[dir="ltr"] .sm-share-product{
     overflow:visible!important;
   }
 
-  .sm-header,
-  .sm-cats-wrap,
-  #smCatsSentinel,
-  .sm-menu,
-  #smMenu,
-  .sm-news-ticker{
-    width:calc(100% - 18px)!important;
-    max-width:none!important;
-    margin-left:auto!important;
-    margin-right:auto!important;
+  .sm-header,.sm-cats-wrap,#smCatsSentinel,.sm-menu,#smMenu,.sm-news-ticker{
+    width:calc(100% - 18px)!important;max-width:none!important;
+    margin-left:auto!important;margin-right:auto!important;
   }
-
   .sm-header{padding:20px 0 12px!important}
   .sm-header-tools{top:calc(8px + env(safe-area-inset-top))!important;right:10px!important}
 
-  #smActions,
-  .sm-actions,
-  .sm-quick-actions{
-    width:100%!important;
-    max-width:none!important;
-    gap:7px!important;
-    margin:0 auto 13px!important;
+  .sm-logo{width:var(--sm-ui-logo-size,84px)!important;height:var(--sm-ui-logo-size,84px)!important}
+  .sm-header h1,.sm-title{font-size:var(--sm-ui-menu-title-font,26px)!important}
+  #smSubtitle,.sm-subtitle{font-size:var(--sm-ui-subtitle-font,12px)!important}
+
+  #smActions,.sm-actions,.sm-quick-actions{
+    width:100%!important;max-width:none!important;gap:7px!important;margin:0 auto 13px!important;
   }
   .sm-quick-actions a,#smActions a{
-    min-height:48px!important;
-    padding:7px 3px!important;
-    border-radius:15px!important;
-    font-size:11px!important;
+    min-height:var(--sm-ui-top-action-height,48px)!important;
+    height:var(--sm-ui-top-action-height,48px)!important;
+    padding:7px 3px!important;border-radius:15px!important;
+    font-size:var(--sm-ui-top-action-font,11px)!important;
   }
+  .sm-quick-actions a b,#smActions a b{font-size:var(--sm-ui-top-action-font,11px)!important}
 
   #smCats,.sm-cats{
-    display:flex!important;
-    flex-wrap:nowrap!important;
-    align-items:center!important;
-    min-height:54px!important;
-    gap:6px!important;
-    padding:7px 1px 9px!important;
-    overflow-x:auto!important;
-    overflow-y:hidden!important;
-    scrollbar-width:none!important;
-    -webkit-overflow-scrolling:touch!important;
+    display:flex!important;flex-wrap:nowrap!important;align-items:center!important;
+    min-height:54px!important;gap:var(--sm-ui-card-gap,10px)!important;
+    padding:7px 1px 9px!important;overflow-x:auto!important;overflow-y:hidden!important;
+    scrollbar-width:none!important;-webkit-overflow-scrolling:touch!important;
   }
   .sm-cats::-webkit-scrollbar{display:none!important}
   .sm-cat{
     flex:0 0 auto!important;
-    height:41px!important;
-    min-height:41px!important;
-    padding:0 14px!important;
-    border-radius:999px!important;
-    font-size:12px!important;
+    height:var(--sm-ui-category-height,41px)!important;
+    min-height:var(--sm-ui-category-height,41px)!important;
+    padding:0 14px!important;border-radius:999px!important;
+    font-size:var(--sm-ui-category-font,12px)!important;
   }
   #smCats.fixed,.sm-cats.fixed{
     width:min(calc(100% - 18px),calc(var(--restbr-phone-canvas) - 18px))!important;
-    max-width:none!important;
-    padding:7px 10px 9px!important;
+    max-width:none!important;padding:7px 10px 9px!important;
   }
 
-  .sm-section{
-    width:100%!important;
-    max-width:100%!important;
-    margin:11px 0 26px!important;
-    padding:18px 4px 26px!important;
-  }
+  .sm-section{width:100%!important;max-width:100%!important;margin:11px 0 26px!important;padding:18px 4px 26px!important}
   .sm-section-title{
-    margin:0 5px 12px!important;
-    padding-inline-start:10px!important;
-    font-size:24px!important;
-    line-height:1.2!important;
+    margin:0 5px 12px!important;padding-inline-start:10px!important;
+    font-size:var(--sm-ui-section-title-font,22px)!important;line-height:1.2!important;
   }
-
   .sm-grid{
-    width:100%!important;
-    display:flex!important;
-    flex-direction:column!important;
-    gap:9px!important;
-    margin:0!important;
-    padding:0!important;
+    width:100%!important;display:flex!important;flex-direction:column!important;
+    gap:var(--sm-ui-card-gap,10px)!important;margin:0!important;padding:0!important;
   }
 
-  /* Exact final iPhone card geometry from the mobile build. */
+  /* This is the exact same geometry app.js applies on iPhone. */
+  html[dir="rtl"] .sm-card{grid-template-columns:var(--sm-ui-info-percent,60%) var(--sm-ui-image-percent,40%)!important}
+  html[dir="ltr"] .sm-card{grid-template-columns:var(--sm-ui-image-percent,40%) var(--sm-ui-info-percent,60%)!important}
   .sm-card{
     display:grid!important;
-    grid-template-columns:52% 48%!important;
-    grid-template-rows:155px!important;
-    width:100%!important;
-    max-width:100%!important;
-    height:155px!important;
-    min-height:155px!important;
-    max-height:155px!important;
-    margin:0!important;
-    padding:0!important;
-    border-radius:17px!important;
-    overflow:hidden!important;
-    box-shadow:0 9px 24px rgba(0,0,0,.62)!important;
+    grid-template-rows:var(--sm-ui-card-height,160px)!important;
+    width:100%!important;max-width:100%!important;
+    height:var(--sm-ui-card-height,160px)!important;
+    min-height:var(--sm-ui-card-height,160px)!important;
+    max-height:var(--sm-ui-card-height,160px)!important;
+    margin:0!important;padding:0!important;
+    border-radius:var(--sm-ui-card-radius,18px)!important;
+    overflow:hidden!important;box-shadow:0 9px 24px rgba(0,0,0,.62)!important;
   }
-
   html[dir="rtl"] .sm-card .sm-info{grid-column:1!important;grid-row:1!important}
   html[dir="rtl"] .sm-card .sm-img{grid-column:2!important;grid-row:1!important}
   html[dir="ltr"] .sm-card .sm-img{grid-column:1!important;grid-row:1!important}
   html[dir="ltr"] .sm-card .sm-info{grid-column:2!important;grid-row:1!important}
 
   .sm-card .sm-img{
-    width:100%!important;
-    height:155px!important;
-    min-height:155px!important;
-    max-height:155px!important;
-    padding:0!important;
-    margin:0!important;
-    overflow:hidden!important;
+    width:100%!important;height:var(--sm-ui-card-height,160px)!important;
+    min-height:var(--sm-ui-card-height,160px)!important;max-height:var(--sm-ui-card-height,160px)!important;
+    padding:0!important;margin:0!important;overflow:hidden!important;
   }
   .sm-card .sm-img img,.sm-card .sm-product-image{
-    display:block!important;
-    width:100%!important;
-    height:100%!important;
-    min-width:0!important;
-    min-height:0!important;
-    object-fit:cover!important;
-    object-position:center!important;
-    margin:0!important;
-    padding:0!important;
+    display:block!important;width:100%!important;height:100%!important;min-width:0!important;min-height:0!important;
+    object-fit:cover!important;object-position:center!important;margin:0!important;padding:0!important;
   }
-
   .sm-card .sm-info{
-    width:100%!important;
-    height:155px!important;
-    min-height:0!important;
-    max-height:155px!important;
-    padding:10px 12px!important;
-    margin:0!important;
-    display:flex!important;
-    flex-direction:column!important;
-    justify-content:center!important;
-    overflow:hidden!important;
-    box-sizing:border-box!important;
+    width:100%!important;height:var(--sm-ui-card-height,160px)!important;
+    min-height:var(--sm-ui-card-height,160px)!important;max-height:var(--sm-ui-card-height,160px)!important;
+    padding:var(--sm-ui-info-padding,10px)!important;margin:0!important;
+    display:flex!important;flex-direction:column!important;justify-content:center!important;
+    overflow:hidden!important;box-sizing:border-box!important;
   }
-
   .sm-card .sm-name{
-    width:100%!important;
-    margin:0 0 5px!important;
-    padding:0 0 6px!important;
-    font-size:14px!important;
-    line-height:1.25!important;
-    font-weight:800!important;
-    white-space:normal!important;
-    overflow:visible!important;
-    text-align:start!important;
+    width:100%!important;margin:0 0 5px!important;padding:0 0 6px!important;
+    font-size:var(--sm-ui-product-name-font,13px)!important;line-height:1.25!important;font-weight:800!important;
+    white-space:normal!important;overflow:visible!important;text-align:start!important;
   }
   .sm-card .sm-option{
-    min-height:20px!important;
-    margin:0!important;
-    padding:3px 0!important;
-    gap:5px!important;
-    font-size:10.5px!important;
-    line-height:1.15!important;
+    min-height:20px!important;margin:0!important;padding:3px 0!important;gap:5px!important;
+    font-size:var(--sm-ui-option-font,12px)!important;line-height:1.15!important;
   }
-  .sm-card .sm-option>span{
-    flex:1 1 auto!important;
-    min-width:0!important;
-    white-space:nowrap!important;
-    overflow:hidden!important;
-    text-overflow:ellipsis!important;
+  .sm-card .sm-option>span{flex:1 1 auto!important;min-width:0!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:ellipsis!important}
+  .sm-card .sm-price{flex:0 0 auto!important;font-size:var(--sm-ui-price-font,12px)!important;line-height:1!important;white-space:nowrap!important}
+  .sm-direct-add,.sm-choose-options{
+    height:var(--sm-ui-add-button-height,30px)!important;
+    font-size:var(--sm-ui-add-button-font,10px)!important;margin-top:3px!important;
   }
-  .sm-card .sm-price{flex:0 0 auto!important;font-size:11px!important;line-height:1!important;white-space:nowrap!important}
-  .sm-direct-add,.sm-choose-options{height:25px!important;font-size:9px!important;margin-top:3px!important}
 
   .sm-badges{top:7px!important;gap:3px!important;max-width:44%!important}
   html[dir="rtl"] .sm-badges{right:7px!important;left:auto!important}
@@ -213,20 +137,17 @@ html[dir="ltr"] .sm-share-product{
   .sm-display-badge{font-size:8px!important;padding:4px 6px!important;line-height:1!important}
 
   .sm-footer{
-    width:calc(100% - 8px)!important;
-    max-width:100%!important;
-    margin:38px auto 18px!important;
-    padding:31px 12px 27px!important;
-    border-radius:27px!important;
+    width:calc(100% - 8px)!important;max-width:100%!important;
+    margin:38px auto 18px!important;padding:31px 12px 27px!important;border-radius:27px!important;
   }
   .sm-footer-line{width:105px!important;margin:0 auto 23px!important}
-  .sm-footer h2{margin:0 0 9px!important;font-size:17px!important;line-height:1.25!important;letter-spacing:1.6px!important}
+  .sm-footer h2{margin:0 0 9px!important;font-size:var(--sm-ui-footer-title-font,17px)!important;line-height:1.25!important;letter-spacing:1.6px!important}
   .sm-footer-location{margin:0!important;font-size:14px!important}
   .sm-footer-main-actions{grid-template-columns:1fr .72fr 1.3fr!important;gap:6px!important;width:100%!important;margin:22px auto 17px!important}
-  .sm-footer-main-actions a{min-height:46px!important;padding:6px 3px!important;border-radius:16px!important;font-size:10.5px!important}
+  .sm-footer-main-actions a{min-height:46px!important;padding:6px 3px!important;border-radius:16px!important;font-size:var(--sm-ui-footer-action-font,10.5px)!important}
   .sm-footer-socials{grid-template-columns:repeat(4,minmax(0,1fr))!important;width:100%!important;gap:5px!important;margin:17px auto!important}
   .sm-footer-socials a{min-height:41px!important;padding:5px 2px!important;border-radius:16px!important;font-size:9.5px!important}
-  .sm-footer-phone{margin:23px auto 16px!important;font-size:17px!important}
+  .sm-footer-phone{margin:23px auto 16px!important;font-size:var(--sm-ui-footer-phone-font,17px)!important}
   .sm-footer-copy{font-size:10px!important;line-height:1.4!important}
 
   .sm-cart-drawer,.sm-choice-sheet,.sm-checkout-sheet{width:min(var(--restbr-phone-canvas),100%)!important}
