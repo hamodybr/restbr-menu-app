@@ -1,8 +1,6 @@
 // ============================================================
-// RESTBR SUPER ADMIN SESSION V2.1
-// Reuses one Supabase client/session across Admin V1 + V2 extensions.
-// Also keeps the native HTML hidden attribute authoritative for extension UI.
-// Load after supabase-js CDN and before admin.js.
+// RESTBR SUPER ADMIN SESSION V2.2
+// Shared Supabase session + Safari-safe hidden/interaction semantics.
 // ============================================================
 (() => {
   'use strict';
@@ -10,9 +8,37 @@
   if(!document.getElementById('restbrAdminHiddenGuard')){
     const style=document.createElement('style');
     style.id='restbrAdminHiddenGuard';
-    style.textContent='[hidden]{display:none!important}';
+    style.textContent=`
+      [hidden],.hidden{display:none!important;visibility:hidden!important;pointer-events:none!important}
+      .app-view:not(.hidden),.app-view:not(.hidden) button,.app-view:not(.hidden) input,.app-view:not(.hidden) select,.app-view:not(.hidden) a{pointer-events:auto}
+    `;
     document.head.appendChild(style);
   }
+
+  const resetStaleOverlays=()=>{
+    const legacy=document.getElementById('restaurantModal');
+    const backdrop=document.getElementById('modalBackdrop');
+    if(legacy?.getAttribute('aria-hidden')!=='false'){
+      legacy?.classList.add('hidden');
+      backdrop?.classList.add('hidden');
+    }
+    [
+      'rbAdminMembersModal','rbPlanModal','rbTenantSettingsModal','rbDomainsModal','rbOnboardingModal'
+    ].forEach(id=>{
+      const el=document.getElementById(id);
+      if(el) el.hidden=true;
+    });
+    document.body.style.overflow='';
+  };
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',()=>setTimeout(resetStaleOverlays,0),{once:true});
+  }else{
+    setTimeout(resetStaleOverlays,0);
+  }
+  window.addEventListener('pageshow',event=>{
+    if(event.persisted) setTimeout(resetStaleOverlays,0);
+  });
 
   if(!window.supabase?.createClient || window.__RESTBR_ADMIN_CREATE_CLIENT_WRAPPED)return;
 
@@ -31,5 +57,5 @@
     return client;
   };
 
-  console.log('✅ RESTBR Super Admin shared session V2.1 ready');
+  console.log('✅ RESTBR Super Admin shared session V2.2 ready');
 })();
