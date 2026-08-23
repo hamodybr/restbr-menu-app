@@ -43,6 +43,7 @@ jobs:
           required=(
             css/responsive-parity.css
             css/phone-parity-v2.css
+            css/footer-glass-policy.css
             js/supabase-config.js
             js/tenant-head.js
             js/design-runtime.js
@@ -92,6 +93,7 @@ jobs:
           set -euo pipefail
           grep -q 'responsive-parity.css?v=1.0' index.html
           grep -q 'phone-parity-v2.css?v=2.1' index.html
+          grep -q 'footer-glass-policy.css?v=1.0' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
           grep -q 'design-runtime.js?v=1.2' index.html
           grep -q 'brand-cache-policy.js?v=2.0' index.html
@@ -100,8 +102,9 @@ jobs:
           grep -q 'timezone-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.2' index.html
           grep -q 'order-analytics.js?v=1.0' index.html
-          grep -q 'restbr-menu-core-v19' sw.js
+          grep -q 'restbr-menu-core-v20' sw.js
           grep -q 'phone-parity-v2.css?v=2.1' sw.js
+          grep -q 'footer-glass-policy.css?v=1.0' sw.js
           grep -q 'brand-cache-policy.js?v=2.0' sw.js
           grep -q 'design-runtime.js?v=1.2' sw.js
           grep -q 'cart-preload.js?v=1.2' sw.js
