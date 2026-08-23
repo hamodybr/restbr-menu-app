@@ -37,6 +37,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only dine-in / takeaway price controls for product options.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminTakeawayPricesScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminTakeawayPricesScript';
+  script.src = 'js/admin-takeaway-prices.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // ==========================================
 // SHORASH MENU — Supabase Connection Test
 // ==========================================
