@@ -3,9 +3,11 @@
 
   const MAX_SCALE = 2.25;
   const RESET_MS = 220;
+  const SCALE_DEADZONE = 0.008;
 
   let active = false;
   let startDistance = 0;
+  let lastScale = 1;
   let resetTimer = 0;
 
   const distance = touches => {
@@ -25,11 +27,17 @@
     clearTimeout(resetTimer);
     active = true;
     startDistance = Math.max(1, distance(event.touches));
+    lastScale = 1;
 
+    // Lock the zoom anchor once at the beginning of the gesture.
+    // We intentionally do NOT follow the fingers' midpoint afterward,
+    // because tiny hand movement makes the whole page appear to shake.
     const point = midpoint(event.touches);
+
     document.body.style.transition = 'none';
     document.body.style.transformOrigin = `${point.x}px ${point.y}px`;
     document.body.style.willChange = 'transform';
+    document.body.style.transform = 'scale(1)';
 
     if (event.cancelable) event.preventDefault();
   };
@@ -39,18 +47,22 @@
 
     if (event.cancelable) event.preventDefault();
 
-    const point = midpoint(event.touches);
     const rawScale = distance(event.touches) / startDistance;
     const scale = Math.max(1, Math.min(MAX_SCALE, rawScale));
 
-    document.body.style.transformOrigin = `${point.x}px ${point.y}px`;
-    document.body.style.transform = `scale(${scale})`;
+    // Ignore tiny scale changes caused by natural finger tremor.
+    if (Math.abs(scale - lastScale) < SCALE_DEADZONE) return;
+
+    lastScale = scale;
+    document.body.style.transform = `scale(${scale.toFixed(3)})`;
   };
 
   const reset = () => {
     if (!active) return;
+
     active = false;
     startDistance = 0;
+    lastScale = 1;
 
     document.body.style.transition = `transform ${RESET_MS}ms cubic-bezier(.22,.78,.24,1)`;
     document.body.style.transform = 'scale(1)';
