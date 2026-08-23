@@ -1,0 +1,50 @@
+name: Patch Admin No Plans V6
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-admin-no-plans-v6.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Remove plan runtime from Super Admin
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('admin/admin.js')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("    subscriptions: [],\n", "")
+          s=s.replace("      const [restaurantsResult, domainsResult, subscriptionsResult] = await Promise.all([", "      const [restaurantsResult, domainsResult] = await Promise.all([")
+          s=s.replace("        state.client\n          .from('restaurant_domains')\n          .select('restaurant_id,hostname,status,is_verified,is_primary'),\n        state.client\n          .from('subscriptions')\n          .select('restaurant_id,plan,status,starts_at,expires_at')\n", "        state.client\n          .from('restaurant_domains')\n          .select('restaurant_id,hostname,status,is_verified,is_primary')\n")
+          s=s.replace("      if (subscriptionsResult.error) throw subscriptionsResult.error;\n", "")
+          s=s.replace("      state.subscriptions = subscriptionsResult.data || [];\n", "")
+          s=s.replace("  function subscriptionFor(restaurantId) {\n    return state.subscriptions.find(s => s.restaurant_id === restaurantId) || null;\n  }\n\n", "")
+          s=s.replace("    const subs = state.subscriptions.filter(s => s.status === 'active' || s.status === 'trial').length;\n\n", "")
+          s=s.replace("    els.statSubs.textContent = subs;\n", "")
+          s=s.replace("      const sub = subscriptionFor(r.id);\n", "")
+          s=s.replace("      const manageUrl = `https://hamodybr.github.io/restbr-menu-app/owner/?tenant=${encodeURIComponent(r.slug)}&mode=superadmin`;", "      const manageUrl = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(r.slug)}&mode=superadmin`;")
+          s=s.replace("\n          <div class=\"meta\">\n            <span>الخطة</span>\n            <strong>${esc(sub?.plan || '—')}</strong>\n          </div>\n", "")
+          s=s.replace("    els.restaurantPlan.value = 'basic';", "    els.restaurantPlan.value = 'internal';")
+          s=s.replace("        p_plan: els.restaurantPlan.value", "        p_plan: 'internal'")
+          s=s.replace("    state.subscriptions = [];\n", "")
+          p.write_text(s,encoding='utf-8')
+      - name: Syntax check
+        run: node --check admin/admin.js
+      - name: Commit patch
+        shell: bash
+        run: |
+          set -e
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'HaMoDyBr'
+          git config user.email '78080184+hamodybr@users.noreply.github.com'
+          git add admin/admin.js
+          git commit -m 'Remove plan runtime from Super Admin'
+          git push
