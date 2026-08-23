@@ -9,11 +9,6 @@ window.RESTBR_OWNER_CONFIG = {
 // ---------------------------------------------------------------------------
 // Owner shell safety V1.1
 // ---------------------------------------------------------------------------
-// Several V2 extensions use the native HTML `hidden` attribute while their
-// component CSS declares display:grid/flex. Author CSS can override the UA
-// `[hidden]` rule, which caused extension sheets (Audit/Analytics/etc.) to
-// appear immediately and block the whole dashboard. Keep hidden semantics
-// authoritative across the Owner application.
 (() => {
   const style = document.createElement('style');
   style.id = 'restbrOwnerHiddenGuard';
@@ -27,9 +22,9 @@ window.RESTBR_OWNER_CONFIG = {
   }
 })();
 
-// Load Owner V2 extensions only after the dashboard shell, Supabase CDN and
-// legacy controller have finished booting. async=false preserves execution
-// order and isolates the stable dashboard from extension failures.
+// Load extensions after the stable shell/Supabase/legacy controller. async=false
+// keeps the order deterministic; Auth V2 creates the single shared client used
+// by every extension loaded after it.
 window.addEventListener('load', () => {
   const load = (id, src) => {
     if (document.getElementById(id)) return;
@@ -49,6 +44,9 @@ window.addEventListener('load', () => {
   load('restbrBulkPricingV2Script', './bulk-pricing-v2.js?v=2.1');
   load('restbrOwnerAnalyticsV2Script', './analytics-v2.js?v=2.1');
   load('restbrOwnerVisibilityV2Script', './visibility-v2.js?v=2.1');
+  load('restbrOwnerActionsV2Script', './actions-v2.js?v=2.0');
+  load('restbrOwnerDesignAdvancedV2Script', './design-advanced-v2.js?v=2.0');
+  load('restbrOwnerBackupResetV2Script', './backup-reset-v2.js?v=2.0');
   load('restbrOwnerAuditV2Script', './audit-v2.js?v=2.1');
   load('restbrOwnerQrV2Script', './qr-v2.js?v=2.1');
 }, { once:true });
