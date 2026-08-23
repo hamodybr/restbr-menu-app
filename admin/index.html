@@ -8,13 +8,41 @@
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
   <title>RESTBR • Super Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=5.0">
+  <link rel="stylesheet" href="./admin.css?v=6.0">
   <style>
     [hidden],.hidden{display:none!important;visibility:hidden!important;pointer-events:none!important}
     #appView:not(.hidden){pointer-events:auto!important}
     #appView:not(.hidden) button,#appView:not(.hidden) input,#appView:not(.hidden) select,#appView:not(.hidden) a{pointer-events:auto!important;touch-action:manipulation}
     .safe-build{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 9px;border:1px solid rgba(232,184,98,.25);border-radius:999px;color:var(--gold2);font-size:9px;font-weight:900;letter-spacing:.4px;background:rgba(232,184,98,.06)}
     .mini-btn.manage{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#160f07;border-color:transparent;font-weight:1000}
+
+    /* V6 — fixed top bar, not sticky */
+    .app-view{padding-top:calc(94px + env(safe-area-inset-top))!important}
+    .topbar{
+      position:fixed!important;
+      top:calc(10px + env(safe-area-inset-top))!important;
+      left:50%!important;
+      right:auto!important;
+      transform:translateX(-50%)!important;
+      width:min(1180px,calc(100% - 36px))!important;
+      margin:0!important;
+      z-index:70!important;
+    }
+    .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+    .restaurant-card{grid-template-columns:minmax(0,1.7fr) minmax(100px,.7fr) auto!important}
+
+    @media(max-width:800px){
+      .app-view{padding-top:calc(86px + env(safe-area-inset-top))!important}
+      .topbar{top:calc(6px + env(safe-area-inset-top))!important;width:calc(100% - 20px)!important}
+      .stats-grid{grid-template-columns:repeat(3,minmax(0,1fr))!important}
+      .restaurant-card{grid-template-columns:1fr 1fr!important}
+      .restaurant-main,.card-actions{grid-column:1/-1}
+    }
+    @media(max-width:430px){
+      .stat{min-height:88px!important;padding:12px!important}
+      .stat span{font-size:9px!important}
+      .stat strong{font-size:25px!important}
+    }
   </style>
 </head>
 <body>
@@ -26,7 +54,7 @@
       <div class="eyebrow">RESTAURANT BRAND</div>
       <h1>RESTBR</h1>
       <p>لوحة التحكم الرئيسية — Super Admin فقط</p>
-      <div class="safe-build">CONTROL CENTER V5</div>
+      <div class="safe-build">CONTROL CENTER V6</div>
       <form id="loginForm" class="form-stack" style="margin-top:18px">
         <label>البريد الإلكتروني<input id="loginEmail" type="email" autocomplete="email" required placeholder="admin@example.com"></label>
         <label>كلمة المرور<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
@@ -43,8 +71,13 @@
     </header>
 
     <main class="shell">
-      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>أنت الحساب الإداري الوحيد. اختر أي مطعم وعدّل المنيو والتصميم والإعدادات وكل تفاصيله من مكان واحد.</p><div class="safe-build">SUPER ADMIN ONLY</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
-      <section class="stats-grid"><article class="stat glass"><span>إجمالي المطاعم</span><strong id="statTotal">0</strong></article><article class="stat glass"><span>نشطة</span><strong id="statActive">0</strong></article><article class="stat glass"><span>موقوفة</span><strong id="statSuspended">0</strong></article><article class="stat glass"><span>اشتراكات فعالة</span><strong id="statSubs">0</strong></article></section>
+      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>اختر أي مطعم وعدّل المنيو والتصميم والإعدادات وكل تفاصيله بحساب Super Admin واحد.</p><div class="safe-build">SUPER ADMIN ONLY</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
+      <section class="stats-grid">
+        <article class="stat glass"><span>إجمالي المطاعم</span><strong id="statTotal">0</strong></article>
+        <article class="stat glass"><span>نشطة</span><strong id="statActive">0</strong></article>
+        <article class="stat glass"><span>موقوفة</span><strong id="statSuspended">0</strong></article>
+        <article class="stat glass" hidden><span>داخلي</span><strong id="statSubs">0</strong></article>
+      </section>
       <section class="panel glass"><div class="panel-head"><div><h3>المطاعم</h3><p id="lastUpdated">—</p></div><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث بالاسم أو الرابط..."></div></div><div id="restaurantList" class="restaurant-list"></div><div id="emptyState" class="empty hidden">لا توجد مطاعم مطابقة.</div></section>
     </main>
   </div>
@@ -55,13 +88,13 @@
     <form id="restaurantForm" class="form-grid">
       <label class="wide">اسم المطعم<input id="restaurantName" required maxlength="100" placeholder="مثال: Your Coffee"></label>
       <label>Slug<input id="restaurantSlug" required maxlength="63" dir="ltr" placeholder="yourcoffee"><small id="slugPreview">yourcoffee.restbr.com</small></label>
-      <label>الخطة<select id="restaurantPlan"><option value="basic">Basic</option><option value="pro">Pro</option><option value="premium">Premium</option><option value="internal">Internal</option></select></label>
+      <select id="restaurantPlan" hidden aria-hidden="true"><option value="internal">Internal</option><option value="basic">Basic</option></select>
       <label>الهاتف<input id="restaurantPhone" inputmode="tel" dir="ltr" placeholder="0750..."></label>
       <label>واتساب<input id="restaurantWhatsapp" inputmode="tel" dir="ltr" placeholder="964750..."></label>
       <label>اللغة الافتراضية<select id="restaurantLanguage"><option value="ar">العربية</option><option value="ku">کوردی</option><option value="en">English</option></select></label>
       <label>العملة<input id="restaurantCurrency" value="IQD" dir="ltr"></label>
       <div class="wide preview-box"><span>الرابط الذي سيتم إنشاؤه</span><strong id="urlPreview">https://yourcoffee.restbr.com</strong></div>
-      <div class="notice wide">بعد الإنشاء لا تحتاج حساب Owner. اضغط «إدارة المطعم» من البطاقة وابدأ التعديل مباشرة بحساب Super Admin.</div>
+      <div class="notice wide">بعد الإنشاء اضغط «إدارة المطعم» وابدأ التعديل مباشرة. لا يوجد حساب منفصل للمطعم.</div>
       <div id="createMsg" class="message wide"></div>
       <div class="modal-actions wide"><button id="cancelModalBtn" class="btn subtle" type="button">إلغاء</button><button id="createRestaurantBtn" class="btn primary" type="submit">إنشاء المطعم</button></div>
     </form>
@@ -70,7 +103,7 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./admin.js?v=5.0"></script>
-  <script src="./manage-link-v1.js?v=1.0"></script>
+  <script src="./admin.js?v=6.0"></script>
+  <script src="./admin-v6-policy.js?v=1.0"></script>
 </body>
 </html>
