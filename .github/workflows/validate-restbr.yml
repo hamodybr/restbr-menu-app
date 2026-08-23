@@ -15,76 +15,32 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '22'
-
       - name: Check JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
-          while IFS= read -r -d '' file; do
-            echo "Checking $file"
-            node --check "$file"
-          done < <(find . -type f -name '*.js' -not -path './node_modules/*' -print0)
-
+          while IFS= read -r -d '' file; do node --check "$file"; done < <(find . -type f -name '*.js' -not -path './node_modules/*' -print0)
       - name: Validate JSON assets
         shell: bash
         run: |
-          node -e "JSON.parse(require('fs').readFileSync('data/menu.json','utf8')); console.log('data/menu.json OK')"
-          node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8')); console.log('manifest.webmanifest OK')"
-
+          node -e "JSON.parse(require('fs').readFileSync('data/menu.json','utf8'))"
+          node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'))"
       - name: Required runtime files
         shell: bash
         run: |
           set -euo pipefail
           required=(
-            css/responsive-parity.css
-            css/phone-parity-v2.css
-            css/footer-glass-policy.css
-            js/supabase-config.js
-            js/tenant-head.js
-            js/design-runtime.js
-            js/brand-cache-policy.js
-            js/brand-template-fix.js
-            js/currency-policy.js
-            js/timezone-policy.js
-            js/offline-policy.js
-            js/language-policy.js
-            js/menu-policy.js
-            js/cart-preload.js
-            js/cart.js
-            js/order-analytics.js
-            owner/auth-v2.js
-            owner/tenant-recovery-v2.js
-            owner/permissions-v2.js
-            owner/owner-v2.js
-            owner/owner-settings-v2.js
-            owner/bulk-pricing-v2.js
-            owner/analytics-v2.js
-            owner/visibility-v2.js
-            owner/actions-v2.js
-            owner/design-advanced-v2.js
-            owner/backup-reset-v2.js
-            owner/audit-v2.js
-            owner/qr-v2.js
-            admin/session-v2.js
-            admin/admin-v2.js
-            admin/plan-v2.js
-            admin/restaurant-settings-v2.js
-            admin/domains-v2.js
-            migration/platform/RESTBR-ADMIN-V1.sql
-            migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql
-            migration/platform/RESTBR-MEMBERS-V1.sql
-            migration/platform/RESTBR-ANALYTICS-V2.sql
-            migration/platform/RESTBR-SECURITY-HARDEN-V1.sql
-            migration/platform/RESTBR-AUDIT-V1.sql
-            migration/platform/RESTBR-BACKUP-RESTORE-V1.sql
+            css/responsive-parity.css css/phone-parity-v2.css css/footer-glass-policy.css
+            js/supabase-config.js js/tenant-head.js js/design-runtime.js js/brand-cache-policy.js js/brand-template-fix.js js/currency-policy.js js/timezone-policy.js js/offline-policy.js js/language-policy.js js/menu-policy.js js/cart-preload.js js/cart.js js/order-analytics.js
+            owner/auth-v2.js owner/tenant-recovery-v2.js owner/permissions-v2.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js
+            admin/session-v2.js admin/admin-v2.js admin/plan-v2.js admin/restaurant-settings-v2.js admin/domains-v2.js
+            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-MEMBERS-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql
           )
           for file in "${required[@]}"; do test -f "$file"; done
-
       - name: Guard RESTBR runtime versions
         shell: bash
         run: |
@@ -110,7 +66,6 @@ jobs:
           grep -q 'plan-v2.js?v=2.2' admin/index.html
           grep -q 'restaurant-settings-v2.js?v=2.0' admin/index.html
           grep -q 'domains-v2.js?v=2.0' admin/index.html
-
       - name: Guard tenant isolation
         shell: bash
         run: |
@@ -122,7 +77,6 @@ jobs:
           grep -q 'RESTBR_BRAND_CACHE_V2:' js/brand-cache-policy.js
           ! grep -q 'localStorage.getItem("SHORASH_BRAND_CACHE_V1")' index.html
           ! grep -q "select('branding,custom_top_actions" owner/actions-v2.js
-
       - name: Guard parity and Owner recovery
         shell: bash
         run: |
@@ -132,7 +86,6 @@ jobs:
           grep -q 'html\[dir="ltr"\] .sm-share-product' css/phone-parity-v2.css
           grep -q '\[hidden\]{display:none!important}' owner/config.js
           grep -q '\[hidden\]{display:none!important}' admin/session-v2.js
-
       - name: Guard atomic backup implementation
         shell: bash
         run: |
@@ -141,14 +94,11 @@ jobs:
           grep -q 'owner_clear_restaurant_menu' owner/backup-reset-v2.js
           grep -q 'private.can_manage_restaurant' migration/platform/RESTBR-BACKUP-RESTORE-V1.sql
           grep -q 'backup contains product/category references outside this backup' migration/platform/RESTBR-BACKUP-RESTORE-V1.sql
-
+          grep -q 'security invoker' migration/platform/RESTBR-BACKUP-SECURITY-V1.sql
       - name: Guard migration transaction ownership
         shell: bash
         run: |
           set -euo pipefail
           for file in migration/platform/RESTBR-*.sql; do
-            if grep -Eiq '^[[:space:]]*(begin|commit);[[:space:]]*$' "$file"; then
-              echo "Nested transaction found in $file" >&2
-              exit 1
-            fi
+            if grep -Eiq '^[[:space:]]*(begin|commit);[[:space:]]*$' "$file"; then echo "Nested transaction found in $file" >&2; exit 1; fi
           done
