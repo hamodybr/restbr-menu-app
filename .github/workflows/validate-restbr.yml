@@ -91,7 +91,7 @@ jobs:
         run: |
           set -euo pipefail
           grep -q 'responsive-parity.css?v=1.0' index.html
-          grep -q 'phone-parity-v2.css?v=2.0' index.html
+          grep -q 'phone-parity-v2.css?v=2.1' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
           grep -q 'design-runtime.js?v=1.2' index.html
           grep -q 'brand-cache-policy.js?v=2.0' index.html
@@ -100,8 +100,8 @@ jobs:
           grep -q 'timezone-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.2' index.html
           grep -q 'order-analytics.js?v=1.0' index.html
-          grep -q 'restbr-menu-core-v18' sw.js
-          grep -q 'phone-parity-v2.css?v=2.0' sw.js
+          grep -q 'restbr-menu-core-v19' sw.js
+          grep -q 'phone-parity-v2.css?v=2.1' sw.js
           grep -q 'brand-cache-policy.js?v=2.0' sw.js
           grep -q 'design-runtime.js?v=1.2' sw.js
           grep -q 'cart-preload.js?v=1.2' sw.js
@@ -115,7 +115,7 @@ jobs:
           grep -q 'design-advanced-v2.js?v=2.0' owner/config.js
           grep -q 'backup-reset-v2.js?v=2.0' owner/config.js
           grep -q 'audit-v2.js?v=2.1' owner/config.js
-          grep -q 'qr-v2.js?v=2.1' owner/config.js
+          grep -q 'qr-v2.js?v=2.2' owner/config.js
           grep -q 'session-v2.js?v=2.1' admin/index.html
           grep -q 'admin-v2.js?v=2.1' admin/index.html
           grep -q 'plan-v2.js?v=2.2' admin/index.html
@@ -138,7 +138,8 @@ jobs:
         run: |
           set -euo pipefail
           grep -q -- '--restbr-phone-canvas:440px' css/phone-parity-v2.css
-          grep -q 'right:7px!important' css/phone-parity-v2.css
+          grep -q 'grid-template-columns:52% 48%' css/phone-parity-v2.css
+          grep -q 'html\[dir="ltr"\] .sm-share-product' css/phone-parity-v2.css
 
       - name: Guard management hidden semantics
         shell: bash
