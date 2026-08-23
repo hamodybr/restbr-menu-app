@@ -1,0 +1,75 @@
+/* SHORASH — ENGLISH CARD LTR V1
+   English only: image left -> information right -> actions at the bottom.
+   Arabic and Kurdish are intentionally untouched. */
+
+html[dir="ltr"] body #smMenu .sm-card{
+  direction:ltr!important;
+}
+
+/* Mobile/tablet: preserve the configured image/info percentages, only mirror their order. */
+@media (max-width:768px){
+  html[dir="ltr"] body #smMenu .sm-card{
+    grid-template-columns:var(--sm-ui-image-percent,40%) var(--sm-ui-info-percent,60%)!important;
+  }
+}
+
+/* Desktop currently mirrors the tested phone geometry: 40% photo / 60% info in English. */
+@media (min-width:769px){
+  html[dir="ltr"] body #smMenu .sm-card{
+    grid-template-columns:40% 60%!important;
+  }
+}
+
+html[dir="ltr"] body #smMenu .sm-card .sm-img{
+  grid-column:1!important;
+  grid-row:1!important;
+}
+
+html[dir="ltr"] body #smMenu .sm-card .sm-info{
+  grid-column:2!important;
+  grid-row:1!important;
+  direction:ltr!important;
+  text-align:left!important;
+  position:relative!important;
+  /* Keep a clean action row under the name/options. */
+  padding-bottom:39px!important;
+}
+
+html[dir="ltr"] body #smMenu .sm-card .sm-name{
+  text-align:left!important;
+  padding-inline-start:0!important;
+  padding-inline-end:0!important;
+}
+
+html[dir="ltr"] body #smMenu .sm-card .sm-option{
+  direction:ltr!important;
+  text-align:left!important;
+}
+
+/* Share + Add/Choose live after the information instead of covering the title. */
+html[dir="ltr"] body #smMenu .sm-card .sm-share-product{
+  top:auto!important;
+  bottom:8px!important;
+  left:auto!important;
+  right:9px!important;
+  inset-inline-start:auto!important;
+  inset-inline-end:9px!important;
+}
+
+html[dir="ltr"] body #smMenu .sm-card .sm-direct-add,
+html[dir="ltr"] body #smMenu .sm-card .sm-choose-options{
+  position:absolute!important;
+  left:10px!important;
+  right:auto!important;
+  bottom:8px!important;
+  margin:0!important;
+  align-self:auto!important;
+}
+
+/* Badges stay with the photo after the English card is mirrored. */
+html[dir="ltr"] body #smMenu .sm-card .sm-badges{
+  left:6px!important;
+  right:auto!important;
+  inset-inline-start:6px!important;
+  inset-inline-end:auto!important;
+}
