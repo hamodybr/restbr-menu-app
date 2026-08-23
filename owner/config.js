@@ -13,33 +13,27 @@ window.RESTBR_OWNER_CONFIG = {
   document.head.appendChild(style);
   const params = new URLSearchParams(location.search);
   window.RESTBR_OWNER_TENANT_SLUG = String(params.get('tenant') || '').trim().toLowerCase();
-  if(window.RESTBR_OWNER_TENANT_SLUG){
-    try{localStorage.setItem('RESTBR_OWNER_LAST_TENANT',window.RESTBR_OWNER_TENANT_SLUG);}catch(_){}
-  }
+  if(window.RESTBR_OWNER_TENANT_SLUG){try{localStorage.setItem('RESTBR_OWNER_LAST_TENANT',window.RESTBR_OWNER_TENANT_SLUG);}catch(_){} }
 })();
 
 window.addEventListener('load', () => {
   const load = (id, src) => {
     if (document.getElementById(id)) return;
-    const script = document.createElement('script');
-    script.id = id;
-    script.src = src;
-    script.async = false;
-    script.onerror = () => console.error(`RESTBR Owner extension failed: ${src}`);
+    const script = document.createElement('script');script.id=id;script.src=src;script.async=false;
+    script.onerror=()=>console.error(`RESTBR Owner extension failed: ${src}`);
     document.body.appendChild(script);
   };
-
-  load('restbrOwnerAuthV2Script', './auth-v2.js?v=2.1');
-  load('restbrOwnerTenantRecoveryV2Script', './tenant-recovery-v2.js?v=2.1');
-  load('restbrOwnerPermissionsV2Script', './permissions-v2.js?v=2.1');
-  load('restbrOwnerV2Script', './owner-v2.js?v=2.1');
-  load('restbrOwnerSettingsV2Script', './owner-settings-v2.js?v=2.1');
-  load('restbrBulkPricingV2Script', './bulk-pricing-v2.js?v=2.1');
-  load('restbrOwnerAnalyticsV2Script', './analytics-v2.js?v=2.1');
-  load('restbrOwnerVisibilityV2Script', './visibility-v2.js?v=2.1');
-  load('restbrOwnerActionsV2Script', './actions-v2.js?v=2.0');
-  load('restbrOwnerDesignAdvancedV2Script', './design-advanced-v2.js?v=2.0');
-  load('restbrOwnerBackupResetV2Script', './backup-reset-v2.js?v=2.1');
-  load('restbrOwnerAuditV2Script', './audit-v2.js?v=2.1');
-  load('restbrOwnerQrV2Script', './qr-v2.js?v=2.2');
+  load('restbrOwnerAuthV2Script','./auth-v2.js?v=2.1');
+  load('restbrOwnerTenantRecoveryV2Script','./tenant-recovery-v2.js?v=2.1');
+  load('restbrOwnerPermissionsV2Script','./permissions-v2.js?v=2.1');
+  load('restbrOwnerV2Script','./owner-v2.js?v=2.1');
+  load('restbrOwnerSettingsV2Script','./owner-settings-v2.js?v=2.1');
+  load('restbrBulkPricingV2Script','./bulk-pricing-v2.js?v=2.1');
+  load('restbrOwnerAnalyticsV2Script','./analytics-v2.js?v=2.1');
+  load('restbrOwnerVisibilityV2Script','./visibility-v2.js?v=2.1');
+  load('restbrOwnerActionsV2Script','./actions-v2.js?v=2.1');
+  load('restbrOwnerDesignAdvancedV2Script','./design-advanced-v2.js?v=2.0');
+  load('restbrOwnerBackupResetV2Script','./backup-reset-v2.js?v=2.1');
+  load('restbrOwnerAuditV2Script','./audit-v2.js?v=2.1');
+  load('restbrOwnerQrV2Script','./qr-v2.js?v=2.2');
 }, { once:true });
