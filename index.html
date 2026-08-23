@@ -24,6 +24,7 @@
   <link rel="stylesheet" href="css/style.css?v=4.0">
   <link rel="stylesheet" href="css/cart.css?v=3.6">
   <link rel="stylesheet" href="css/responsive-parity.css?v=1.0">
+  <link rel="stylesheet" href="css/phone-parity-v2.css?v=2.0">
 </head>
 
 <body>
@@ -87,23 +88,16 @@
   <script>
     (function(){
       try{
-        const raw=localStorage.getItem("SHORASH_BRAND_CACHE_V1");
+        const host=location.hostname.toLowerCase().replace(/^www\./,'');
+        const raw=localStorage.getItem(`RESTBR_BRAND_CACHE_V2:${host}`);
         if(!raw)return;
         const cached=JSON.parse(raw)||{};
         const lang=localStorage.getItem("shorashLang")||"ar";
-        const name=
-          lang==="ku"
-            ? (cached.nameKu||cached.nameAr||cached.nameEn||"")
-            : lang==="en"
-              ? (cached.nameEn||cached.nameAr||cached.nameKu||"")
-              : (cached.nameAr||cached.nameKu||cached.nameEn||"");
+        const name=lang==="ku"?(cached.nameKu||cached.nameAr||cached.nameEn||""):lang==="en"?(cached.nameEn||cached.nameAr||cached.nameKu||""):(cached.nameAr||cached.nameKu||cached.nameEn||"");
         const brand=document.querySelector(".sm-intro-brand");
         if(brand)brand.textContent=name;
         document.querySelectorAll(".sm-intro-logo, .sm-logo").forEach(logo=>{
-          if(logo && cached.logo){
-            logo.src=cached.logo;
-            logo.style.visibility="visible";
-          }
+          if(logo&&cached.logo){logo.src=cached.logo;logo.style.visibility="visible";}
         });
       }catch(_){}
     })();
@@ -114,10 +108,11 @@
   <script src="js/tenant-head.js?v=1.0"></script>
 
   <!-- Tenant-specific Design System -->
-  <script src="js/design-runtime.js?v=1.0"></script>
+  <script src="js/design-runtime.js?v=1.2"></script>
 
   <!-- Menu + tenant runtime policies + reconciled cart -->
   <script src="js/app.js?v=17.4"></script>
+  <script src="js/brand-cache-policy.js?v=2.0"></script>
   <script src="js/brand-template-fix.js?v=1.0"></script>
   <script src="js/currency-policy.js?v=1.0"></script>
   <script src="js/timezone-policy.js?v=1.0"></script>
