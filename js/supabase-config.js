@@ -14,6 +14,17 @@ const supabaseClient = window.supabase.createClient(
 
 console.log('✅ SHORASH Supabase connected');
 
+// Load the shared menu-language policy for both the public menu and admin.
+(() => {
+  if (document.getElementById('shorashLanguageSettingsScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashLanguageSettingsScript';
+  script.src = 'js/language-settings.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // ==========================================
 // SHORASH MENU — Supabase Connection Test
 // ==========================================
