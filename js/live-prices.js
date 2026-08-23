@@ -3,6 +3,11 @@
   let started = false;
   let activeChoiceProductId = null;
 
+  const client = () =>
+    typeof supabaseClient !== "undefined"
+      ? supabaseClient
+      : null;
+
   const lang = () =>
     window.SHORASH_LANG
       ? window.SHORASH_LANG()
@@ -93,9 +98,10 @@
   }
 
   async function syncAllPrices() {
-    if (!window.supabaseClient || !db()?.products) return;
+    const sb = client();
+    if (!sb || !db()?.products) return;
 
-    const { data, error } = await window.supabaseClient
+    const { data, error } = await sb
       .from("product_options")
       .select("id,product_id,price");
 
@@ -120,12 +126,13 @@
   }
 
   function start() {
-    if (started || !window.supabaseClient || !db()?.products) return;
+    const sb = client();
+    if (started || !sb || !db()?.products) return;
     started = true;
 
     syncAllPrices();
 
-    channel = window.supabaseClient
+    channel = sb
       .channel("shorash-live-prices-v1")
       .on(
         "postgres_changes",
