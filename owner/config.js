@@ -1,4 +1,4 @@
-// RESTBR Owner Dashboard — public browser configuration.
+// RESTBR Restaurant Manager — browser configuration.
 // Supabase Publishable keys are intended for client-side use.
 // NEVER put sb_secret / service_role / database passwords in this file.
 window.RESTBR_OWNER_CONFIG = {
@@ -13,19 +13,25 @@ window.RESTBR_OWNER_CONFIG = {
   document.head.appendChild(style);
   const params = new URLSearchParams(location.search);
   window.RESTBR_OWNER_TENANT_SLUG = String(params.get('tenant') || '').trim().toLowerCase();
-  if(window.RESTBR_OWNER_TENANT_SLUG){try{localStorage.setItem('RESTBR_OWNER_LAST_TENANT',window.RESTBR_OWNER_TENANT_SLUG);}catch(_){} }
+  if(window.RESTBR_OWNER_TENANT_SLUG){
+    try{localStorage.setItem('RESTBR_OWNER_LAST_TENANT',window.RESTBR_OWNER_TENANT_SLUG);}catch(_){}
+  }
 })();
 
 window.addEventListener('load', () => {
   const load = (id, src) => {
     if (document.getElementById(id)) return;
-    const script = document.createElement('script');script.id=id;script.src=src;script.async=false;
-    script.onerror=()=>console.error(`RESTBR Owner extension failed: ${src}`);
+    const script = document.createElement('script');
+    script.id=id;
+    script.src=src;
+    script.async=false;
+    script.onerror=()=>console.error(`RESTBR Manager extension failed: ${src}`);
     document.body.appendChild(script);
   };
-  load('restbrOwnerAuthV2Script','./auth-v2.js?v=2.2');
-  load('restbrOwnerTenantRecoveryV2Script','./tenant-recovery-v2.js?v=2.1');
-  load('restbrOwnerPermissionsV2Script','./permissions-v2.js?v=2.1');
+
+  // IMPORTANT: no Owner signup, tenant membership recovery or role UI.
+  // The dashboard is now an internal Super Admin tool only.
+  load('restbrManagerModeV1Script','./manager-mode-v1.js?v=1.0');
   load('restbrOwnerV2Script','./owner-v2.js?v=2.1');
   load('restbrOwnerSettingsV2Script','./owner-settings-v2.js?v=2.1');
   load('restbrBulkPricingV2Script','./bulk-pricing-v2.js?v=2.1');
