@@ -37,7 +37,7 @@ jobs:
             css/responsive-parity.css css/phone-parity-v2.css css/footer-glass-policy.css
             js/supabase-config.js js/tenant-head.js js/design-runtime.js js/share-placement-policy.js js/brand-cache-policy.js js/brand-template-fix.js js/currency-policy.js js/timezone-policy.js js/offline-policy.js js/language-policy.js js/menu-policy.js js/cart-preload.js js/cart.js js/order-analytics.js
             owner/auth-v2.js owner/tenant-recovery-v2.js owner/permissions-v2.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/design-controls-v3.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js owner/media-policy-v2.js owner/settings-organizer-v3.js
-            admin/session-v2.js admin/admin-v2.js admin/runtime-v3.js admin/plan-v2.js admin/restaurant-settings-v2.js admin/domains-v2.js admin/onboarding-v3.js
+            admin/admin.js admin/session-v2.js admin/admin-v2.js admin/runtime-v3.js admin/plan-v2.js admin/restaurant-settings-v2.js admin/domains-v2.js admin/onboarding-v3.js
             migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-MEMBERS-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql migration/platform/RESTBR-SCOPED-BACKUP-V1.sql migration/platform/RESTBR-MEDIA-LIMITS-V1.sql migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql
           )
           for file in "${required[@]}"; do test -f "$file"; done
@@ -67,15 +67,16 @@ jobs:
           grep -q 'media-policy-v2.js?v=2.0' owner/config.js
           grep -q 'settings-organizer-v3.js?v=3.1' owner/config.js
           grep -q 'qr-v2.js?v=2.2' owner/config.js
-          grep -q 'admin.css?v=1.1' admin/index.html
-          grep -q 'session-v2.js?v=2.2' admin/index.html
-          grep -q 'admin.js?v=1.1' admin/index.html
-          grep -q 'runtime-v3.js?v=3.0' admin/index.html
-          grep -q 'admin-v2.js?v=2.2' admin/index.html
-          grep -q 'plan-v2.js?v=2.3' admin/index.html
-          grep -q 'restaurant-settings-v2.js?v=2.1' admin/index.html
-          grep -q 'domains-v2.js?v=2.1' admin/index.html
-          grep -q 'onboarding-v3.js?v=3.1' admin/index.html
+          grep -q 'admin.css?v=4.0' admin/index.html
+          grep -q 'admin.js?v=4.0' admin/index.html
+          grep -q 'SAFE V4 • SINGLE RUNTIME' admin/index.html
+          ! grep -q '<script src="./session-v2.js' admin/index.html
+          ! grep -q '<script src="./runtime-v3.js' admin/index.html
+          ! grep -q '<script src="./admin-v2.js' admin/index.html
+          ! grep -q '<script src="./plan-v2.js' admin/index.html
+          ! grep -q '<script src="./restaurant-settings-v2.js' admin/index.html
+          ! grep -q '<script src="./domains-v2.js' admin/index.html
+          ! grep -q '<script src="./onboarding-v3.js' admin/index.html
       - name: Guard tenant isolation
         shell: bash
         run: |
@@ -95,12 +96,13 @@ jobs:
           grep -q -- '--sm-ui-image-percent' css/phone-parity-v2.css
           grep -q 'image.appendChild(share)' js/share-placement-policy.js
           grep -q '\[hidden\]{display:none!important}' owner/config.js
-      - name: Guard Super Admin interaction and access
+      - name: Guard Super Admin Safe V4
         shell: bash
         run: |
           set -euo pipefail
-          grep -q 'pointer-events:none!important' admin/session-v2.js
-          grep -q 'hydrate(force=false)' admin/runtime-v3.js
+          grep -q 'Cache-Control' admin/index.html
+          grep -q 'pointer-events:none!important' admin/index.html
+          grep -q 'admin.js?v=4.0' admin/index.html
           grep -q 'subscriptions_platform_admin_read' migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql
           grep -q 'restaurant_members_platform_admin_read' migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql
       - name: Guard full design controls and reset UX
