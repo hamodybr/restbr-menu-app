@@ -1,0 +1,41 @@
+name: Patch CI Super Admin V6
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-ci-superadmin-v6.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Update validation guards
+        shell: python
+        run: |
+          from pathlib import Path
+          p=Path('.github/workflows/validate-restbr.yml')
+          s=p.read_text(encoding='utf-8')
+          s=s.replace("admin/admin.js admin/session-v2.js", "admin/admin.js admin/admin-v6-policy.js admin/session-v2.js")
+          s=s.replace("grep -q 'admin.css?v=4.0' admin/index.html", "grep -q 'admin.css?v=6.0' admin/index.html")
+          s=s.replace("grep -q 'admin.js?v=4.0' admin/index.html", "grep -q 'admin.js?v=6.0' admin/index.html")
+          s=s.replace("grep -q 'SAFE V4 • SINGLE RUNTIME' admin/index.html", "grep -q 'CONTROL CENTER V6' admin/index.html")
+          s=s.replace("- name: Guard Super Admin Safe V4", "- name: Guard Super Admin V6")
+          s=s.replace("grep -q 'admin.js?v=4.0' admin/index.html", "grep -q 'admin.js?v=6.0' admin/index.html")
+          s=s.replace("grep -q 'pointer-events:none!important' admin/index.html", "grep -q 'pointer-events:none!important' admin/index.html\n          grep -q 'position:fixed!important' admin/index.html\n          grep -q 'admin-v6-policy.js?v=1.0' admin/index.html\n          grep -q 'admin.restbr.com/manage/' admin/admin.js\n          grep -q \"hostname === 'hamodybr.github.io' || hostname === 'admin.restbr.com'\" admin/manage/index.html")
+          p.write_text(s,encoding='utf-8')
+      - name: Commit patch
+        shell: bash
+        run: |
+          set -e
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'HaMoDyBr'
+          git config user.email '78080184+hamodybr@users.noreply.github.com'
+          git add .github/workflows/validate-restbr.yml
+          git commit -m 'Validate Super Admin V6 flow'
+          git push
