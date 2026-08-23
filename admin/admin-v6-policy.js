@@ -1,4 +1,4 @@
-// RESTBR Super Admin V6 — single-admin UX policy
+// RESTBR Super Admin V6.1 — single-admin UX policy
 (() => {
   'use strict';
 
@@ -16,7 +16,7 @@
       const hostname = String(link?.textContent || '').trim();
       const slug = hostname.replace(/\.restbr\.com$/i,'');
       if(!slug) return;
-      button.dataset.url = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(slug)}&mode=superadmin&v=6`;
+      button.dataset.url = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(slug)}&mode=superadmin&v=6.1`;
     });
   }
 
@@ -26,6 +26,16 @@
       if(String(label?.textContent || '').trim() === 'الخطة') meta.remove();
     });
     rewriteManageLinks();
+  }
+
+  function handleManageClick(event){
+    const button = event.target.closest?.('[data-action="manage"]');
+    if(!button) return;
+    event.preventDefault();
+    event.stopPropagation();
+    event.stopImmediatePropagation();
+    const url = button.dataset.url;
+    if(url) location.assign(url);
   }
 
   function boot(){
@@ -43,7 +53,8 @@
       new MutationObserver(cleanPlanUi).observe(list,{childList:true,subtree:true});
     }
 
-    console.log('✅ RESTBR Super Admin V6 policy active — no plan UI, same-origin manager');
+    document.addEventListener('click', handleManageClick, true);
+    console.log('✅ RESTBR Super Admin V6.1 — same-tab manager');
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
