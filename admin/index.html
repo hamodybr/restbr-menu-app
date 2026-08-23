@@ -4,8 +4,17 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b0907">
-  <title>RESTBR Admin</title>
-  <link rel="stylesheet" href="./admin.css?v=1.1">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content="no-cache">
+  <meta http-equiv="Expires" content="0">
+  <title>RESTBR Admin • Safe V4</title>
+  <link rel="stylesheet" href="./admin.css?v=4.0">
+  <style>
+    [hidden],.hidden{display:none!important;visibility:hidden!important;pointer-events:none!important}
+    #appView:not(.hidden){pointer-events:auto!important}
+    #appView:not(.hidden) button,#appView:not(.hidden) input,#appView:not(.hidden) select,#appView:not(.hidden) a{pointer-events:auto!important;touch-action:manipulation}
+    .safe-build{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 9px;border:1px solid rgba(232,184,98,.25);border-radius:999px;color:var(--gold2);font-size:9px;font-weight:900;letter-spacing:.4px;background:rgba(232,184,98,.06)}
+  </style>
 </head>
 <body>
   <div class="bg"></div>
@@ -16,7 +25,8 @@
       <div class="eyebrow">RESTAURANT BRAND</div>
       <h1>RESTBR</h1>
       <p>لوحة إدارة المنصة</p>
-      <form id="loginForm" class="form-stack">
+      <div class="safe-build">SAFE V4 • CORE ONLY</div>
+      <form id="loginForm" class="form-stack" style="margin-top:18px">
         <label>البريد الإلكتروني<input id="loginEmail" type="email" autocomplete="email" required placeholder="admin@example.com"></label>
         <label>كلمة المرور<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
         <button id="loginBtn" class="btn primary" type="submit">تسجيل الدخول</button>
@@ -27,12 +37,12 @@
 
   <div id="appView" class="app-view hidden">
     <header class="topbar glass">
-      <div class="brand-inline"><div class="brand-mark small">RB</div><div><strong>RESTBR</strong><span>Super Admin</span></div></div>
+      <div class="brand-inline"><div class="brand-mark small">RB</div><div><strong>RESTBR</strong><span>Super Admin • Safe V4</span></div></div>
       <div class="top-actions"><button id="themeBtn" class="icon-btn" type="button" title="الوضع الليلي / النهاري">◐</button><button id="refreshBtn" class="icon-btn" type="button" title="تحديث">↻</button><button id="logoutBtn" class="btn subtle" type="button">خروج</button></div>
     </header>
 
     <main class="shell">
-      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>أضف مطعم جديد، فعّل أو أوقف الخدمة، وافتح المنيو مباشرة من مكان واحد.</p></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
+      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>نسخة تشغيل مستقرة بدون إضافات Modals الخارجية. الأساسيات فقط إلى أن نثبت Safari بالكامل.</p><div class="safe-build">SAFE V4 • SINGLE RUNTIME</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
       <section class="stats-grid"><article class="stat glass"><span>إجمالي المطاعم</span><strong id="statTotal">0</strong></article><article class="stat glass"><span>نشطة</span><strong id="statActive">0</strong></article><article class="stat glass"><span>موقوفة</span><strong id="statSuspended">0</strong></article><article class="stat glass"><span>اشتراكات فعالة</span><strong id="statSubs">0</strong></article></section>
       <section class="panel glass"><div class="panel-head"><div><h3>المطاعم</h3><p id="lastUpdated">—</p></div><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث بالاسم أو الرابط..."></div></div><div id="restaurantList" class="restaurant-list"></div><div id="emptyState" class="empty hidden">لا توجد مطاعم مطابقة.</div></section>
     </main>
@@ -58,13 +68,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./session-v2.js?v=2.2"></script>
-  <script src="./admin.js?v=1.1"></script>
-  <script src="./runtime-v3.js?v=3.0"></script>
-  <script src="./admin-v2.js?v=2.2"></script>
-  <script src="./plan-v2.js?v=2.3"></script>
-  <script src="./restaurant-settings-v2.js?v=2.1"></script>
-  <script src="./domains-v2.js?v=2.1"></script>
-  <script src="./onboarding-v3.js?v=3.1"></script>
+  <script src="./admin.js?v=4.0"></script>
 </body>
 </html>
