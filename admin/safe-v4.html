@@ -7,8 +7,8 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>RESTBR Admin • Safe V4</title>
-  <link rel="stylesheet" href="./admin.css?v=4.0-safe">
+  <title>RESTBR Admin • Safe V4.1</title>
+  <link rel="stylesheet" href="./admin.css?v=4.1-safe">
   <style>
     [hidden],.hidden{display:none!important;visibility:hidden!important;pointer-events:none!important}
     #appView:not(.hidden){pointer-events:auto!important}
@@ -25,7 +25,7 @@
       <div class="eyebrow">RESTAURANT BRAND</div>
       <h1>RESTBR</h1>
       <p>لوحة إدارة المنصة</p>
-      <div class="safe-build">SAFE V4 • FRESH ENTRY</div>
+      <div class="safe-build">SAFE V4.1 • OWNER FLOW</div>
       <form id="loginForm" class="form-stack" style="margin-top:18px">
         <label>البريد الإلكتروني<input id="loginEmail" type="email" autocomplete="email" required placeholder="admin@example.com"></label>
         <label>كلمة المرور<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
@@ -37,12 +37,12 @@
 
   <div id="appView" class="app-view hidden">
     <header class="topbar glass">
-      <div class="brand-inline"><div class="brand-mark small">RB</div><div><strong>RESTBR</strong><span>Super Admin • Safe V4</span></div></div>
+      <div class="brand-inline"><div class="brand-mark small">RB</div><div><strong>RESTBR</strong><span>Super Admin • Safe V4.1</span></div></div>
       <div class="top-actions"><button id="themeBtn" class="icon-btn" type="button" title="الوضع الليلي / النهاري">◐</button><button id="refreshBtn" class="icon-btn" type="button" title="تحديث">↻</button><button id="logoutBtn" class="btn subtle" type="button">خروج</button></div>
     </header>
 
     <main class="shell">
-      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>نسخة اختبار مستقرة بملف تشغيل واحد وبدون Extensions إضافية.</p><div class="safe-build">SAFE V4 • FRESH ENTRY</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
+      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>نسخة اختبار مستقرة بملف تشغيل واحد، مع إنشاء المطعم وربط حساب المالك.</p><div class="safe-build">SAFE V4.1 • OWNER FLOW</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
       <section class="stats-grid"><article class="stat glass"><span>إجمالي المطاعم</span><strong id="statTotal">0</strong></article><article class="stat glass"><span>نشطة</span><strong id="statActive">0</strong></article><article class="stat glass"><span>موقوفة</span><strong id="statSuspended">0</strong></article><article class="stat glass"><span>اشتراكات فعالة</span><strong id="statSubs">0</strong></article></section>
       <section class="panel glass"><div class="panel-head"><div><h3>المطاعم</h3><p id="lastUpdated">—</p></div><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث بالاسم أو الرابط..."></div></div><div id="restaurantList" class="restaurant-list"></div><div id="emptyState" class="empty hidden">لا توجد مطاعم مطابقة.</div></section>
     </main>
@@ -68,6 +68,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./admin.js?v=4.0-safe"></script>
+  <script src="./safe-v4.js?v=4.1-owner"></script>
 </body>
 </html>
