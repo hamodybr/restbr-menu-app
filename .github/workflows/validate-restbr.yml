@@ -42,7 +42,7 @@ jobs:
             js/supabase-config.js js/tenant-head.js js/design-runtime.js js/share-placement-policy.js js/brand-cache-policy.js js/brand-template-fix.js js/currency-policy.js js/timezone-policy.js js/offline-policy.js js/language-policy.js js/menu-policy.js js/cart-preload.js js/cart.js js/order-analytics.js
             owner/manager-mode-v1.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/design-controls-v3.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js owner/media-policy-v2.js owner/settings-organizer-v3.js
             admin/admin.js
-            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql migration/platform/RESTBR-SCOPED-BACKUP-V1.sql migration/platform/RESTBR-MEDIA-LIMITS-V1.sql migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
+            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql migration/platform/RESTBR-SCOPED-BACKUP-V1.sql migration/platform/RESTBR-MEDIA-LIMITS-V1.sql migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql migration/platform/RESTBR-DISABLE-MEMBER-RPCS-V1.sql
           )
           for file in "${required[@]}"; do test -f "$file"; done
 
@@ -89,6 +89,7 @@ jobs:
           grep -q 'private.is_platform_admin()' migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
           grep -q 'update public.restaurant_members' migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
           grep -q 'select private.is_platform_admin();' migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
+          grep -q 'restaurant member accounts are disabled' migration/platform/RESTBR-DISABLE-MEMBER-RPCS-V1.sql
 
       - name: Guard tenant isolation
         shell: bash
