@@ -1,7 +1,7 @@
 // ============================================================
-// RESTBR RESTAURANT MANAGER V1
+// RESTBR RESTAURANT MANAGER V1.1
 // Internal dashboard mode: Platform Admin only.
-// No restaurant Owner/Manager/Editor accounts are supported.
+// Restores the Super Admin session handoff on iOS/in-app browsers.
 // ============================================================
 (() => {
   'use strict';
@@ -13,7 +13,7 @@
     document.title = 'RESTBR • Restaurant Manager';
 
     document.querySelectorAll('h1').forEach(el => {
-      if(String(el.textContent || '').trim() === 'RESTBR Owner') el.textContent = 'RESTBR Manager';
+      if(/RESTBR Owner|RESTBR Manager/i.test(String(el.textContent || '').trim())) el.textContent = 'RESTBR Manager';
     });
 
     const loginTenant = $('loginTenant');
@@ -27,7 +27,6 @@
 
     const createAccount = $('rbOwnerCreateAccount');
     if(createAccount) createAccount.remove();
-
     const signupModal = $('rbOwnerSignupModal');
     if(signupModal) signupModal.remove();
 
@@ -39,7 +38,7 @@
       back.className = 'icon-btn';
       back.title = 'العودة إلى Super Admin';
       back.textContent = '←';
-      back.onclick = () => { location.href = 'https://admin.restbr.com'; };
+      back.onclick = () => { location.href = 'https://admin.restbr.com/control-v7/'; };
       topActions.prepend(back);
     }
 
@@ -47,19 +46,67 @@
     if(roleBadge) roleBadge.textContent = 'Super Admin';
   }
 
+  function makeClient(){
+    if(!cfg.supabaseUrl || !cfg.publishableKey || !window.supabase) return null;
+    const sb = window.RESTBR_OWNER_V2_CLIENT || window.supabase.createClient(
+      cfg.supabaseUrl,
+      cfg.publishableKey,
+      { auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:true } }
+    );
+    window.RESTBR_OWNER_V2_CLIENT = sb;
+    return sb;
+  }
+
+  async function restoreHandoffIfNeeded(){
+    const sb=makeClient();
+    if(!sb) return false;
+    try{
+      const current=await sb.auth.getSession();
+      if(current.data?.session?.user) return false;
+
+      const raw=sessionStorage.getItem('RESTBR_SUPERADMIN_HANDOFF');
+      if(!raw) return false;
+      const handoff=JSON.parse(raw);
+      const fresh=Date.now()-Number(handoff?.created_at||0) < 2*60*1000;
+      if(!fresh || !handoff?.access_token || !handoff?.refresh_token){
+        sessionStorage.removeItem('RESTBR_SUPERADMIN_HANDOFF');
+        return false;
+      }
+
+      const {data,error}=await sb.auth.setSession({
+        access_token:handoff.access_token,
+        refresh_token:handoff.refresh_token
+      });
+      if(error) throw error;
+      sessionStorage.removeItem('RESTBR_SUPERADMIN_HANDOFF');
+
+      if(data?.session?.user){
+        // The legacy inline manager boot already ran before this extension.
+        // Reload once so it sees the restored session immediately.
+        const url=new URL(location.href);
+        url.searchParams.set('restored','1');
+        location.replace(url.toString());
+        return true;
+      }
+    }catch(error){
+      console.warn('RESTBR Manager session restore:',error);
+      sessionStorage.removeItem('RESTBR_SUPERADMIN_HANDOFF');
+    }
+    return false;
+  }
+
   async function enforcePlatformAdmin(){
-    if(!cfg.supabaseUrl || !cfg.publishableKey || !window.supabase) return;
+    const sb=makeClient();
+    if(!sb) return;
 
     try{
-      const sb = window.RESTBR_OWNER_V2_CLIENT || window.supabase.createClient(
-        cfg.supabaseUrl,
-        cfg.publishableKey,
-        { auth:{ persistSession:true, autoRefreshToken:true, detectSessionInUrl:true } }
-      );
-      window.RESTBR_OWNER_V2_CLIENT = sb;
-
       const { data:{ session } } = await sb.auth.getSession();
-      if(!session?.user) return;
+      if(!session?.user){
+        // No second login page in Super Admin mode. Go back to the single login.
+        const target=location.href;
+        location.replace(`https://admin.restbr.com/control-v7/?return=${encodeURIComponent(target)}`);
+        return;
+      }
 
       const { data, error } = await sb
         .from('platform_admins')
@@ -72,27 +119,21 @@
       if(data?.user_id) return;
 
       await sb.auth.signOut();
-      const app = $('app');
-      const login = $('loginScreen');
-      if(app) app.classList.add('hidden');
-      if(login) login.classList.remove('hidden');
-      const msg = $('loginMsg');
-      if(msg){
-        msg.textContent = 'هذه اللوحة مخصصة لحساب Super Admin فقط.';
-        msg.className = 'status err';
-      }
+      location.replace('https://admin.restbr.com/control-v7/');
     }catch(error){
       console.warn('RESTBR Manager access check:', error);
     }
   }
 
-  function boot(){
+  async function boot(){
     renameUi();
-    void enforcePlatformAdmin();
+    const restored=await restoreHandoffIfNeeded();
+    if(restored) return;
+    await enforcePlatformAdmin();
     new MutationObserver(renameUi).observe(document.body,{childList:true,subtree:true});
-    console.log('✅ RESTBR Restaurant Manager V1 — Super Admin only');
+    console.log('✅ RESTBR Restaurant Manager V1.1 — Super Admin session only');
   }
 
-  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true});
-  else boot();
+  if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
+  else void boot();
 })();
