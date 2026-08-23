@@ -1,0 +1,41 @@
+name: Patch Super Admin V6
+
+on:
+  push:
+    paths:
+      - '.github/workflows/patch-superadmin-v6.yml'
+
+permissions:
+  contents: write
+
+jobs:
+  patch:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+      - name: Patch manager tenant resolution
+        shell: python
+        run: |
+          from pathlib import Path
+          p = Path('admin/manage/index.html')
+          s = p.read_text(encoding='utf-8')
+          old = "if(hostname === 'hamodybr.github.io'){"
+          new = "if(hostname === 'hamodybr.github.io' || hostname === 'admin.restbr.com'){"
+          if old not in s and new not in s:
+              raise SystemExit('resolveTenant marker not found')
+          s = s.replace(old, new)
+          s = s.replace('<title>RESTBR Owner</title>', '<title>RESTBR • Restaurant Manager</title>')
+          s = s.replace('<script src="./config.js?v=1.1"></script>', '<script src="./config.js?v=2.0"></script>')
+          p.write_text(s, encoding='utf-8')
+      - name: Commit patch
+        shell: bash
+        run: |
+          set -e
+          if git diff --quiet; then exit 0; fi
+          git config user.name 'HaMoDyBr'
+          git config user.email '78080184+hamodybr@users.noreply.github.com'
+          git add admin/manage/index.html
+          git commit -m 'Fix same-origin Super Admin restaurant manager'
+          git push
