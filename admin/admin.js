@@ -102,7 +102,7 @@
     });
     const data = await response.json().catch(() => ({}));
     if (!response.ok || !data?.ok || !data?.supabase_url || !data?.publishable_key) {
-      throw new Error(data?.message || 'تعذر تحميل إعدادات المنصة. تأكد من نشر Router V3.2.');
+      throw new Error(data?.message || 'تعذر تحميل إعدادات المنصة. تأكد من نشر RESTBR Router.');
     }
     return data;
   }
@@ -165,7 +165,7 @@
         showLogin();
       }
 
-      state.client.auth.onAuthStateChange((event, session) => {
+      state.client.auth.onAuthStateChange((event) => {
         if (event === 'SIGNED_OUT') {
           state.user = null;
           showLogin();
@@ -284,6 +284,7 @@
       const sub = subscriptionFor(r.id);
       const hostname = domain?.hostname || `${r.slug}.restbr.com`;
       const url = `https://${hostname}`;
+      const manageUrl = `https://hamodybr.github.io/restbr-menu-app/owner/?tenant=${encodeURIComponent(r.slug)}&mode=superadmin`;
       const nextStatus = r.status === 'active' ? 'suspended' : 'active';
       const nextLabel = r.status === 'active' ? 'إيقاف' : 'تفعيل';
 
@@ -305,6 +306,7 @@
           </div>
 
           <div class="card-actions">
+            <button class="mini-btn manage" data-action="manage" data-url="${esc(manageUrl)}">⚙ إدارة المطعم</button>
             <button class="mini-btn" data-action="open" data-url="${esc(url)}">فتح المنيو</button>
             <button class="mini-btn" data-action="copy" data-url="${esc(url)}">نسخ الرابط</button>
             <button class="mini-btn ${nextStatus === 'suspended' ? 'danger' : ''}" data-action="status" data-id="${esc(r.id)}" data-status="${nextStatus}">${nextLabel}</button>
@@ -376,7 +378,7 @@
 
       if (error) throw error;
       setMessage(els.createMsg, `تم إنشاء ${data?.hostname || `${slug}.restbr.com`} بنجاح.`, 'success');
-      toast('تم إنشاء المطعم والرابط تلقائيًا ✅');
+      toast('تم إنشاء المطعم وهو جاهز للإدارة مباشرة ✅');
       await loadDashboard();
       setTimeout(closeModal, 850);
     } catch (error) {
@@ -385,7 +387,7 @@
       let friendly = msg;
       if (/duplicate key|unique/i.test(msg)) friendly = 'هذا الـSlug أو الدومين مستخدم مسبقًا.';
       if (/reserved slug/i.test(msg)) friendly = 'هذا الـSlug محجوز للمنصة. اختر اسمًا آخر.';
-      if (/function .*admin_create_restaurant.* does not exist/i.test(msg)) friendly = 'شغّل ملف RESTBR-ADMIN-V1.sql في Supabase أولاً.';
+      if (/function .*admin_create_restaurant.* does not exist/i.test(msg)) friendly = 'وظيفة إنشاء المطعم غير موجودة في Supabase.';
       setMessage(els.createMsg, friendly, 'error');
     } finally {
       els.createRestaurantBtn.disabled = false;
@@ -415,6 +417,11 @@
     const button = event.target.closest('[data-action]');
     if (!button) return;
     const action = button.dataset.action;
+
+    if (action === 'manage') {
+      window.open(button.dataset.url, '_blank', 'noopener');
+      return;
+    }
 
     if (action === 'open') {
       window.open(button.dataset.url, '_blank', 'noopener');
