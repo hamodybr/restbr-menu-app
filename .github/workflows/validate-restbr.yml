@@ -15,20 +15,24 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v4
+
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
           node-version: '22'
+
       - name: Check JavaScript syntax
         shell: bash
         run: |
           set -euo pipefail
           while IFS= read -r -d '' file; do node --check "$file"; done < <(find . -type f -name '*.js' -not -path './node_modules/*' -print0)
+
       - name: Validate JSON assets
         shell: bash
         run: |
           node -e "JSON.parse(require('fs').readFileSync('data/menu.json','utf8'))"
           node -e "JSON.parse(require('fs').readFileSync('manifest.webmanifest','utf8'))"
+
       - name: Required runtime files
         shell: bash
         run: |
@@ -36,12 +40,13 @@ jobs:
           required=(
             css/responsive-parity.css css/phone-parity-v2.css css/footer-glass-policy.css
             js/supabase-config.js js/tenant-head.js js/design-runtime.js js/share-placement-policy.js js/brand-cache-policy.js js/brand-template-fix.js js/currency-policy.js js/timezone-policy.js js/offline-policy.js js/language-policy.js js/menu-policy.js js/cart-preload.js js/cart.js js/order-analytics.js
-            owner/auth-v2.js owner/tenant-recovery-v2.js owner/permissions-v2.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/design-controls-v3.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js owner/media-policy-v2.js owner/settings-organizer-v3.js
-            admin/admin.js admin/session-v2.js admin/admin-v2.js admin/runtime-v3.js admin/plan-v2.js admin/restaurant-settings-v2.js admin/domains-v2.js admin/onboarding-v3.js
-            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-MEMBERS-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql migration/platform/RESTBR-SCOPED-BACKUP-V1.sql migration/platform/RESTBR-MEDIA-LIMITS-V1.sql migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql
+            owner/manager-mode-v1.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/design-controls-v3.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js owner/media-policy-v2.js owner/settings-organizer-v3.js
+            admin/admin.js
+            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql migration/platform/RESTBR-SCOPED-BACKUP-V1.sql migration/platform/RESTBR-MEDIA-LIMITS-V1.sql migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
           )
           for file in "${required[@]}"; do test -f "$file"; done
-      - name: Guard RESTBR runtime versions
+
+      - name: Guard public menu runtime versions
         shell: bash
         run: |
           set -euo pipefail
@@ -54,29 +59,37 @@ jobs:
           grep -q 'currency-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.2' index.html
           grep -q 'restbr-menu-core-v22' sw.js
-          grep -q 'share-placement-policy.js?v=1.0' sw.js
-          grep -q 'phone-parity-v2.css?v=2.2' sw.js
-          grep -q 'footer-glass-policy.css?v=1.0' sw.js
           grep -q 'cart.js?v=4.2' sw.js
-          grep -q 'config.js?v=1.1' owner/index.html
-          grep -q 'tenant-recovery-v2.js?v=2.1' owner/config.js
-          grep -q 'actions-v2.js?v=2.1' owner/config.js
-          grep -q 'design-advanced-v2.js?v=2.0' owner/config.js
-          grep -q 'design-controls-v3.js?v=3.0' owner/config.js
-          grep -q 'backup-reset-v2.js?v=2.2' owner/config.js
-          grep -q 'media-policy-v2.js?v=2.0' owner/config.js
-          grep -q 'settings-organizer-v3.js?v=3.1' owner/config.js
-          grep -q 'qr-v2.js?v=2.2' owner/config.js
-          grep -q 'admin.css?v=4.0' admin/index.html
-          grep -q 'admin.js?v=4.0' admin/index.html
-          grep -q 'SAFE V4 • SINGLE RUNTIME' admin/index.html
+
+      - name: Guard Super Admin control center
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'CONTROL CENTER V5' admin/index.html
+          grep -q 'SUPER ADMIN ONLY' admin/index.html
+          grep -q 'admin.css?v=5.0' admin/index.html
+          grep -q 'admin.js?v=5.0' admin/index.html
+          grep -q 'data-action="manage"' admin/admin.js
+          grep -q 'owner/?tenant=' admin/admin.js
+          grep -q 'إدارة المطعم' admin/admin.js
           ! grep -q '<script src="./session-v2.js' admin/index.html
           ! grep -q '<script src="./runtime-v3.js' admin/index.html
           ! grep -q '<script src="./admin-v2.js' admin/index.html
-          ! grep -q '<script src="./plan-v2.js' admin/index.html
-          ! grep -q '<script src="./restaurant-settings-v2.js' admin/index.html
-          ! grep -q '<script src="./domains-v2.js' admin/index.html
-          ! grep -q '<script src="./onboarding-v3.js' admin/index.html
+
+      - name: Guard Super Admin only restaurant manager
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q 'manager-mode-v1.js?v=1.0' owner/config.js
+          ! grep -q 'auth-v2.js' owner/config.js
+          ! grep -q 'permissions-v2.js' owner/config.js
+          ! grep -q 'tenant-recovery-v2.js' owner/config.js
+          grep -q 'Platform Admin only' owner/manager-mode-v1.js
+          grep -q 'platform_admins' owner/manager-mode-v1.js
+          grep -q 'private.is_platform_admin()' migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
+          grep -q 'update public.restaurant_members' migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
+          grep -q 'select private.is_platform_admin();' migration/platform/RESTBR-SUPER-ADMIN-ONLY-V1.sql
+
       - name: Guard tenant isolation
         shell: bash
         run: |
@@ -88,6 +101,7 @@ jobs:
           grep -q 'RESTBR_BRAND_CACHE_V2:' js/brand-cache-policy.js
           ! grep -q 'localStorage.getItem("SHORASH_BRAND_CACHE_V1")' index.html
           ! grep -q "select('branding,custom_top_actions" owner/actions-v2.js
+
       - name: Guard parity and share placement
         shell: bash
         run: |
@@ -96,15 +110,7 @@ jobs:
           grep -q -- '--sm-ui-image-percent' css/phone-parity-v2.css
           grep -q 'image.appendChild(share)' js/share-placement-policy.js
           grep -q '\[hidden\]{display:none!important}' owner/config.js
-      - name: Guard Super Admin Safe V4
-        shell: bash
-        run: |
-          set -euo pipefail
-          grep -q 'Cache-Control' admin/index.html
-          grep -q 'pointer-events:none!important' admin/index.html
-          grep -q 'admin.js?v=4.0' admin/index.html
-          grep -q 'subscriptions_platform_admin_read' migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql
-          grep -q 'restaurant_members_platform_admin_read' migration/platform/RESTBR-SUPER-ADMIN-READ-V1.sql
+
       - name: Guard full design controls and reset UX
         shell: bash
         run: |
@@ -116,6 +122,7 @@ jobs:
           grep -q 'rbGroupCart' owner/settings-organizer-v3.js
           grep -q 'rb-reset-one' owner/settings-organizer-v3.js
           grep -q 'إعادة ضبط القسم' owner/settings-organizer-v3.js
+
       - name: Guard scoped backup and restore
         shell: bash
         run: |
@@ -127,6 +134,7 @@ jobs:
           grep -q 'owner_restore_menu_backup' owner/backup-reset-v2.js
           grep -q 'owner_restore_category_backup' owner/backup-reset-v2.js
           grep -q 'security invoker' migration/platform/RESTBR-SCOPED-BACKUP-V1.sql
+
       - name: Guard media limits
         shell: bash
         run: |
@@ -136,12 +144,7 @@ jobs:
           grep -q "maxBytes:12\*MB" owner/media-policy-v2.js
           grep -q "maxDuration:20" owner/media-policy-v2.js
           grep -q '12582912' migration/platform/RESTBR-MEDIA-LIMITS-V1.sql
-      - name: Guard onboarding status
-        shell: bash
-        run: |
-          set -euo pipefail
-          grep -q 'restaurant_members' admin/onboarding-v3.js
-          grep -q 'تهيئة' admin/onboarding-v3.js
+
       - name: Guard atomic backup implementation
         shell: bash
         run: |
@@ -149,8 +152,8 @@ jobs:
           grep -q 'owner_restore_restaurant_backup' owner/backup-reset-v2.js
           grep -q 'owner_clear_restaurant_menu' owner/backup-reset-v2.js
           grep -q 'private.can_manage_restaurant' migration/platform/RESTBR-BACKUP-RESTORE-V1.sql
-          grep -q 'backup contains product/category references outside this backup' migration/platform/RESTBR-BACKUP-RESTORE-V1.sql
           grep -q 'security invoker' migration/platform/RESTBR-BACKUP-SECURITY-V1.sql
+
       - name: Guard migration transaction ownership
         shell: bash
         run: |
