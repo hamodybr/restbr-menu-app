@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v3";
+const CACHE_NAME = "shorash-menu-restored-v4";
 
 const CORE = [
   "./",
@@ -6,6 +6,8 @@ const CORE = [
   "./manifest.webmanifest",
   "./css/style.css?v=4.0",
   "./css/cart.css?v=3.6",
+  "./css/desktop-phone-parity.css?v=1.0",
+  "./css/english-card-ltr.css?v=1.0",
   "./js/app.js?v=17.3",
   "./js/cart.js?v=4.1",
   "./js/supabase-config.js?v=1.0",
