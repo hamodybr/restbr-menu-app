@@ -1,0 +1,131 @@
+/* ============================================================
+   RESTBR PHONE PARITY V2.0
+   One visual system on every device. Desktop/landscape tablet render the
+   same 440px phone canvas (centered) while the cinematic background remains
+   full-viewport. Also keeps the product share control on the image side in
+   both RTL and LTR so English titles never sit underneath it.
+   ============================================================ */
+
+:root{--restbr-phone-canvas:440px}
+
+/* Share belongs to the image edge, never to the text edge. */
+.sm-share-product{
+  inset-inline-start:auto!important;
+  inset-inline-end:auto!important;
+  left:auto!important;
+  right:7px!important;
+}
+
+@media (min-width:769px){
+  html,body{min-width:0!important}
+
+  /* The actual menu is now the same physical canvas as the iPhone UI. */
+  .sm-app{
+    width:min(100%,var(--restbr-phone-canvas))!important;
+    max-width:var(--restbr-phone-canvas)!important;
+    margin:0 auto!important;
+    overflow:visible!important;
+  }
+
+  .sm-header,
+  .sm-cats-wrap,
+  #smCatsSentinel,
+  .sm-menu,
+  #smMenu,
+  .sm-news-ticker{
+    width:calc(100% - 18px)!important;
+    max-width:none!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  .sm-header{
+    padding:20px 0 12px!important;
+  }
+
+  .sm-header-tools{
+    top:calc(8px + env(safe-area-inset-top))!important;
+    right:10px!important;
+  }
+
+  #smActions,
+  .sm-actions,
+  .sm-quick-actions{
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  /* Match phone category behavior: horizontal strip, no desktop wrapping. */
+  #smCats,
+  .sm-cats{
+    display:flex!important;
+    flex-wrap:nowrap!important;
+    overflow-x:auto!important;
+    overflow-y:hidden!important;
+    scroll-snap-type:x proximity;
+    -webkit-overflow-scrolling:touch!important;
+  }
+  .sm-cat{flex:0 0 auto!important;scroll-snap-align:start}
+
+  #smCats.fixed,
+  .sm-cats.fixed{
+    width:min(calc(100% - 18px),calc(var(--restbr-phone-canvas) - 18px))!important;
+    max-width:none!important;
+  }
+
+  .sm-section{
+    width:100%!important;
+    margin:10px auto 22px!important;
+  }
+
+  .sm-grid{
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:var(--sm-ui-card-gap,10px)!important;
+  }
+
+  .sm-card{
+    width:100%!important;
+    max-width:none!important;
+    height:var(--sm-ui-card-height,160px)!important;
+    min-height:var(--sm-ui-card-height,160px)!important;
+    max-height:var(--sm-ui-card-height,160px)!important;
+    grid-template-columns:var(--sm-ui-info-percent,60%) var(--sm-ui-image-percent,40%)!important;
+    grid-template-rows:var(--sm-ui-card-height,160px)!important;
+    margin:0!important;
+  }
+
+  .sm-card .sm-info,
+  .sm-card .sm-img{
+    height:var(--sm-ui-card-height,160px)!important;
+    min-height:var(--sm-ui-card-height,160px)!important;
+    max-height:var(--sm-ui-card-height,160px)!important;
+  }
+
+  /* Keep phone typography/controls rather than desktop-enlarged variants. */
+  .sm-card .sm-name{font-size:var(--sm-ui-product-name-font,13px)!important}
+  .sm-card .sm-option{font-size:var(--sm-ui-option-font,10px)!important}
+  .sm-card .sm-price{font-size:var(--sm-ui-price-font,11px)!important}
+  .sm-direct-add,.sm-choose-options{height:25px!important;font-size:9px!important;margin-top:3px!important}
+
+  .sm-footer{
+    width:calc(100% - 24px)!important;
+    max-width:none!important;
+    margin:34px auto 18px!important;
+    padding:0!important;
+  }
+
+  .sm-footer-card{
+    width:100%!important;
+    max-width:none!important;
+  }
+
+  /* Bottom sheets keep the same phone experience but remain centered. */
+  .sm-cart-drawer{width:min(var(--restbr-phone-canvas),100%)!important}
+  .sm-choice-sheet{width:min(var(--restbr-phone-canvas),100%)!important}
+  .sm-checkout-sheet{width:min(var(--restbr-phone-canvas),100%)!important}
+
+  /* A mouse may hover, but layout/motion stays phone-like. */
+  .sm-card:hover{transform:none!important}
+}
