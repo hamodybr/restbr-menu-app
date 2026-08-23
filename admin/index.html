@@ -7,13 +7,14 @@
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
   <meta http-equiv="Pragma" content="no-cache">
   <meta http-equiv="Expires" content="0">
-  <title>RESTBR Admin • Safe V4</title>
-  <link rel="stylesheet" href="./admin.css?v=4.0">
+  <title>RESTBR • Super Admin</title>
+  <link rel="stylesheet" href="./admin.css?v=5.0">
   <style>
     [hidden],.hidden{display:none!important;visibility:hidden!important;pointer-events:none!important}
     #appView:not(.hidden){pointer-events:auto!important}
     #appView:not(.hidden) button,#appView:not(.hidden) input,#appView:not(.hidden) select,#appView:not(.hidden) a{pointer-events:auto!important;touch-action:manipulation}
     .safe-build{display:inline-flex;align-items:center;gap:5px;margin-top:8px;padding:5px 9px;border:1px solid rgba(232,184,98,.25);border-radius:999px;color:var(--gold2);font-size:9px;font-weight:900;letter-spacing:.4px;background:rgba(232,184,98,.06)}
+    .mini-btn.manage{background:linear-gradient(135deg,var(--gold),var(--gold2));color:#160f07;border-color:transparent;font-weight:1000}
   </style>
 </head>
 <body>
@@ -24,8 +25,8 @@
       <div class="brand-mark">RB</div>
       <div class="eyebrow">RESTAURANT BRAND</div>
       <h1>RESTBR</h1>
-      <p>لوحة إدارة المنصة</p>
-      <div class="safe-build">SAFE V4 • CORE ONLY</div>
+      <p>لوحة التحكم الرئيسية — Super Admin فقط</p>
+      <div class="safe-build">CONTROL CENTER V5</div>
       <form id="loginForm" class="form-stack" style="margin-top:18px">
         <label>البريد الإلكتروني<input id="loginEmail" type="email" autocomplete="email" required placeholder="admin@example.com"></label>
         <label>كلمة المرور<input id="loginPassword" type="password" autocomplete="current-password" required placeholder="••••••••"></label>
@@ -37,12 +38,12 @@
 
   <div id="appView" class="app-view hidden">
     <header class="topbar glass">
-      <div class="brand-inline"><div class="brand-mark small">RB</div><div><strong>RESTBR</strong><span>Super Admin • Safe V4</span></div></div>
+      <div class="brand-inline"><div class="brand-mark small">RB</div><div><strong>RESTBR</strong><span>Super Admin • Control Center</span></div></div>
       <div class="top-actions"><button id="themeBtn" class="icon-btn" type="button" title="الوضع الليلي / النهاري">◐</button><button id="refreshBtn" class="icon-btn" type="button" title="تحديث">↻</button><button id="logoutBtn" class="btn subtle" type="button">خروج</button></div>
     </header>
 
     <main class="shell">
-      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>نسخة تشغيل مستقرة بدون إضافات Modals الخارجية. الأساسيات فقط إلى أن نثبت Safari بالكامل.</p><div class="safe-build">SAFE V4 • SINGLE RUNTIME</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
+      <section class="hero"><div><div class="eyebrow">RESTBR PLATFORM</div><h2>إدارة المطاعم</h2><p>أنت الحساب الإداري الوحيد. اختر أي مطعم وعدّل المنيو والتصميم والإعدادات وكل تفاصيله من مكان واحد.</p><div class="safe-build">SUPER ADMIN ONLY</div></div><button id="addRestaurantBtn" class="btn primary big" type="button">＋ إضافة مطعم</button></section>
       <section class="stats-grid"><article class="stat glass"><span>إجمالي المطاعم</span><strong id="statTotal">0</strong></article><article class="stat glass"><span>نشطة</span><strong id="statActive">0</strong></article><article class="stat glass"><span>موقوفة</span><strong id="statSuspended">0</strong></article><article class="stat glass"><span>اشتراكات فعالة</span><strong id="statSubs">0</strong></article></section>
       <section class="panel glass"><div class="panel-head"><div><h3>المطاعم</h3><p id="lastUpdated">—</p></div><div class="search-wrap"><span>⌕</span><input id="searchInput" type="search" placeholder="ابحث بالاسم أو الرابط..."></div></div><div id="restaurantList" class="restaurant-list"></div><div id="emptyState" class="empty hidden">لا توجد مطاعم مطابقة.</div></section>
     </main>
@@ -50,7 +51,7 @@
 
   <div id="modalBackdrop" class="modal-backdrop hidden"></div>
   <section id="restaurantModal" class="modal glass hidden" aria-hidden="true">
-    <div class="modal-head"><div><div class="eyebrow">NEW TENANT</div><h3>إضافة مطعم جديد</h3></div><button id="closeModalBtn" class="icon-btn" type="button">×</button></div>
+    <div class="modal-head"><div><div class="eyebrow">NEW RESTAURANT</div><h3>إضافة مطعم جديد</h3></div><button id="closeModalBtn" class="icon-btn" type="button">×</button></div>
     <form id="restaurantForm" class="form-grid">
       <label class="wide">اسم المطعم<input id="restaurantName" required maxlength="100" placeholder="مثال: Your Coffee"></label>
       <label>Slug<input id="restaurantSlug" required maxlength="63" dir="ltr" placeholder="yourcoffee"><small id="slugPreview">yourcoffee.restbr.com</small></label>
@@ -60,6 +61,7 @@
       <label>اللغة الافتراضية<select id="restaurantLanguage"><option value="ar">العربية</option><option value="ku">کوردی</option><option value="en">English</option></select></label>
       <label>العملة<input id="restaurantCurrency" value="IQD" dir="ltr"></label>
       <div class="wide preview-box"><span>الرابط الذي سيتم إنشاؤه</span><strong id="urlPreview">https://yourcoffee.restbr.com</strong></div>
+      <div class="notice wide">بعد الإنشاء لا تحتاج حساب Owner. اضغط «إدارة المطعم» من البطاقة وابدأ التعديل مباشرة بحساب Super Admin.</div>
       <div id="createMsg" class="message wide"></div>
       <div class="modal-actions wide"><button id="cancelModalBtn" class="btn subtle" type="button">إلغاء</button><button id="createRestaurantBtn" class="btn primary" type="submit">إنشاء المطعم</button></div>
     </form>
@@ -68,6 +70,6 @@
   <div id="toast" class="toast hidden"></div>
 
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="./admin.js?v=4.0"></script>
+  <script src="./admin.js?v=5.0"></script>
 </body>
 </html>
