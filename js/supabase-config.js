@@ -25,6 +25,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only native category filter inside the existing products filter system.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminProductCategoryFilterScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminProductCategoryFilterScript';
+  script.src = 'js/admin-product-category-filter.js?v=2.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // ==========================================
 // SHORASH MENU — Supabase Connection Test
 // ==========================================
