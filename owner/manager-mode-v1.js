@@ -1,7 +1,7 @@
 // ============================================================
-// RESTBR RESTAURANT MANAGER V1
+// RESTBR RESTAURANT MANAGER V1.2
 // Internal dashboard mode: Platform Admin only.
-// No restaurant Owner/Manager/Editor accounts are supported.
+// Fixes the previous MutationObserver feedback loop.
 // ============================================================
 (() => {
   'use strict';
@@ -10,26 +10,29 @@
   const $ = id => document.getElementById(id);
 
   function renameUi(){
-    document.title = 'RESTBR • Restaurant Manager';
+    if(document.title !== 'RESTBR • Restaurant Manager'){
+      document.title = 'RESTBR • Restaurant Manager';
+    }
 
     document.querySelectorAll('h1').forEach(el => {
-      if(String(el.textContent || '').trim() === 'RESTBR Owner') el.textContent = 'RESTBR Manager';
+      const text = String(el.textContent || '').trim();
+      if(text === 'RESTBR Owner') el.textContent = 'RESTBR Manager';
     });
 
     const loginTenant = $('loginTenant');
     if(loginTenant && /لوحة إدارة المطعم|Owner/i.test(loginTenant.textContent || '')){
-      loginTenant.textContent = 'إدارة المطعم — Super Admin فقط';
+      const next = 'إدارة المطعم — Super Admin فقط';
+      if(loginTenant.textContent !== next) loginTenant.textContent = next;
     }
 
     document.querySelectorAll('.panel-head small').forEach(el => {
-      if(String(el.textContent || '').includes('مطعمك فقط')) el.textContent = 'المطعم المحدد';
+      if(String(el.textContent || '').includes('مطعمك فقط') && el.textContent !== 'المطعم المحدد'){
+        el.textContent = 'المطعم المحدد';
+      }
     });
 
-    const createAccount = $('rbOwnerCreateAccount');
-    if(createAccount) createAccount.remove();
-
-    const signupModal = $('rbOwnerSignupModal');
-    if(signupModal) signupModal.remove();
+    $('rbOwnerCreateAccount')?.remove();
+    $('rbOwnerSignupModal')?.remove();
 
     const topActions = document.querySelector('.top-actions');
     if(topActions && !$('backToSuperAdminBtn')){
@@ -44,7 +47,7 @@
     }
 
     const roleBadge = $('roleBadge');
-    if(roleBadge) roleBadge.textContent = 'Super Admin';
+    if(roleBadge && roleBadge.textContent !== 'Super Admin') roleBadge.textContent = 'Super Admin';
   }
 
   async function enforcePlatformAdmin(){
@@ -89,8 +92,9 @@
   function boot(){
     renameUi();
     void enforcePlatformAdmin();
-    new MutationObserver(renameUi).observe(document.body,{childList:true,subtree:true});
-    console.log('✅ RESTBR Restaurant Manager V1 — Super Admin only');
+    setTimeout(renameUi, 250);
+    setTimeout(renameUi, 1000);
+    console.log('✅ RESTBR Restaurant Manager V1.2 — loop fixed');
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, {once:true});
