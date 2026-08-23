@@ -1,0 +1,44 @@
+{
+  "slug": "restaurant-name",
+  "name": {
+    "ar": "اسم المطعم",
+    "ku": "ناوی چێشتخانە",
+    "en": "Restaurant Name"
+  },
+  "subtitle": {
+    "ar": "اكتشف منيو مطعمنا",
+    "ku": "مینیوی چێشتخانەکەمان ببینە",
+    "en": "Discover our menu"
+  },
+  "footerText": {
+    "ar": "نتمنى لكم تجربة شهية",
+    "ku": "بەخێربێن",
+    "en": "Enjoy your meal"
+  },
+  "logo": "assets/logo.png",
+  "phone": "07500000000",
+  "whatsapp": "9647500000000",
+  "locationUrl": "",
+  "currency": "IQD",
+  "languages": ["ar", "ku", "en"],
+  "defaultLanguage": "ar",
+  "announcement": {
+    "ar": "",
+    "ku": "",
+    "en": ""
+  },
+  "background": {
+    "image": "assets/background.jpg",
+    "video": ""
+  },
+  "theme": {
+    "accent": "#d8a958",
+    "glass": "rgba(10,8,6,.38)",
+    "border": "rgba(216,169,88,.44)",
+    "blur": 14,
+    "cardHeight": 155,
+    "cardRadius": 20,
+    "imagePercent": 48
+  },
+  "qrEnabled": true
+}
