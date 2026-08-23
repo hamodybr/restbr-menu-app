@@ -31,7 +31,7 @@ window.addEventListener('load', () => {
 
   // IMPORTANT: no Owner signup, tenant membership recovery or role UI.
   // The dashboard is now an internal Super Admin tool only.
-  load('restbrManagerModeV1Script','./manager-mode-v1.js?v=1.0');
+  load('restbrManagerModeV1Script','./manager-mode-v1.js?v=1.2');
   load('restbrOwnerV2Script','./owner-v2.js?v=2.1');
   load('restbrOwnerSettingsV2Script','./owner-settings-v2.js?v=2.1');
   load('restbrBulkPricingV2Script','./bulk-pricing-v2.js?v=2.1');
