@@ -33,7 +33,9 @@ window.addEventListener('load', () => {
   load('restbrOwnerVisibilityV2Script','./visibility-v2.js?v=2.1');
   load('restbrOwnerActionsV2Script','./actions-v2.js?v=2.1');
   load('restbrOwnerDesignAdvancedV2Script','./design-advanced-v2.js?v=2.0');
-  load('restbrOwnerBackupResetV2Script','./backup-reset-v2.js?v=2.1');
+  load('restbrOwnerBackupResetV2Script','./backup-reset-v2.js?v=2.2');
   load('restbrOwnerAuditV2Script','./audit-v2.js?v=2.1');
   load('restbrOwnerQrV2Script','./qr-v2.js?v=2.2');
+  load('restbrOwnerMediaPolicyV2Script','./media-policy-v2.js?v=2.0');
+  load('restbrOwnerSettingsOrganizerV3Script','./settings-organizer-v3.js?v=3.0');
 }, { once:true });
