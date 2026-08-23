@@ -1,6 +1,7 @@
 // ==========================================
-// RESTBR DESIGN SYSTEM V1.1
+// RESTBR DESIGN SYSTEM V1.2
 // Tenant-specific visual settings + animated background effect
+// Independent product-card and footer glass controls.
 // ==========================================
 
 (() => {
@@ -59,11 +60,11 @@
   }
 
   function ensureStyle() {
-    let injected = document.getElementById('restbrDesignSystemV11');
+    let injected = document.getElementById('restbrDesignSystemV12');
     if (injected) return injected;
 
     injected = document.createElement('style');
-    injected.id = 'restbrDesignSystemV11';
+    injected.id = 'restbrDesignSystemV12';
     injected.textContent = `
       :root {
         --restbr-accent: #d7a64a;
@@ -74,6 +75,8 @@
         --restbr-button-border: rgba(215,166,74,.58);
         --restbr-card-blur: 14px;
         --restbr-card-shadow: 0 14px 42px rgba(0,0,0,.28);
+        --restbr-footer-bg: var(--restbr-card-bg);
+        --restbr-footer-blur: var(--restbr-card-blur);
       }
 
       body {
@@ -89,13 +92,22 @@
 
       .sm-card,
       .sm-footer-card {
-        background: var(--restbr-card-bg) !important;
         border-color: var(--restbr-card-border) !important;
-        backdrop-filter: blur(var(--restbr-card-blur)) saturate(132%) !important;
-        -webkit-backdrop-filter: blur(var(--restbr-card-blur)) saturate(132%) !important;
         box-shadow: var(--restbr-card-shadow) !important;
         position: relative;
         overflow: hidden;
+      }
+
+      .sm-card {
+        background: var(--restbr-card-bg) !important;
+        backdrop-filter: blur(var(--restbr-card-blur)) saturate(132%) !important;
+        -webkit-backdrop-filter: blur(var(--restbr-card-blur)) saturate(132%) !important;
+      }
+
+      .sm-footer-card {
+        background: var(--restbr-footer-bg) !important;
+        backdrop-filter: blur(var(--restbr-footer-blur)) saturate(132%) !important;
+        -webkit-backdrop-filter: blur(var(--restbr-footer-blur)) saturate(132%) !important;
       }
 
       .sm-card::before,
@@ -150,7 +162,6 @@
         background: var(--restbr-accent) !important;
       }
 
-      /* Animated test background for a single tenant only. */
       html[data-restbr-bg="coffee-aurora"] .sm-bg-video {
         opacity: 0 !important;
       }
@@ -172,34 +183,19 @@
         position: absolute;
         inset: 0;
         background:
-          repeating-linear-gradient(
-            118deg,
-            rgba(255,255,255,.018) 0 1px,
-            transparent 1px 7px
-          ),
+          repeating-linear-gradient(118deg,rgba(255,255,255,.018) 0 1px,transparent 1px 7px),
           radial-gradient(circle at 50% 50%, transparent 0 42%, rgba(0,0,0,.38) 100%);
         pointer-events: none;
       }
 
       @keyframes restbrCoffeeAurora {
-        0% {
-          background-position: 0% 0%, 100% 0%, 30% 100%, 100% 100%, 0 0;
-          filter: saturate(1.05) brightness(.92);
-        }
-        50% {
-          background-position: 22% 14%, 82% 20%, 55% 76%, 72% 88%, 0 0;
-          filter: saturate(1.18) brightness(1.02);
-        }
-        100% {
-          background-position: 38% 26%, 64% 36%, 72% 58%, 54% 70%, 0 0;
-          filter: saturate(1.1) brightness(.96);
-        }
+        0% {background-position:0% 0%,100% 0%,30% 100%,100% 100%,0 0;filter:saturate(1.05) brightness(.92)}
+        50% {background-position:22% 14%,82% 20%,55% 76%,72% 88%,0 0;filter:saturate(1.18) brightness(1.02)}
+        100% {background-position:38% 26%,64% 36%,72% 58%,54% 70%,0 0;filter:saturate(1.1) brightness(.96)}
       }
 
       @media (prefers-reduced-motion: reduce) {
-        html[data-restbr-bg="coffee-aurora"] .sm-bg-overlay {
-          animation: none !important;
-        }
+        html[data-restbr-bg="coffee-aurora"] .sm-bg-overlay {animation:none!important}
       }
     `;
     document.head.appendChild(injected);
@@ -214,14 +210,10 @@
     if (!Object.keys(ui).length) return;
 
     ensureStyle();
-
     root.dataset.restbrTheme = ui.preset || 'custom';
 
-    if (has(ui.background_effect)) {
-      root.dataset.restbrBg = String(ui.background_effect);
-    } else {
-      delete root.dataset.restbrBg;
-    }
+    if (has(ui.background_effect)) root.dataset.restbrBg = String(ui.background_effect);
+    else delete root.dataset.restbrBg;
 
     px('--sm-ui-card-height', ui.card_height, 100, 420);
     pct('--sm-ui-image-percent', ui.image_percent, 20, 80);
@@ -267,6 +259,19 @@
     const blur = num(ui.card_glass_blur, 0, 40);
     if (blur !== null) css('--restbr-card-blur', `${blur}px`);
 
+    const footerOpacity = alpha(ui.footer_glass_opacity ?? ui.footer_glass_transparency);
+    const footerBase = has(ui.footer_glass_color) ? ui.footer_glass_color : glassBase;
+    if (footerOpacity !== null) {
+      const value = rgba(footerBase, footerOpacity);
+      if (value) css('--restbr-footer-bg', value);
+    } else {
+      css('--restbr-footer-bg', 'var(--restbr-card-bg)');
+    }
+
+    const footerBlur = num(ui.footer_glass_blur, 0, 40);
+    if (footerBlur !== null) css('--restbr-footer-blur', `${footerBlur}px`);
+    else css('--restbr-footer-blur', 'var(--restbr-card-blur)');
+
     const shadow = num(ui.card_shadow_strength, 0, 100);
     if (shadow !== null) css('--restbr-card-shadow', `0 14px 42px rgba(0,0,0,${shadow / 100})`);
 
@@ -283,15 +288,12 @@
       const payload = await window.RESTBR_LOAD_BOOTSTRAP();
       apply(payload?.settings || {});
     } catch (error) {
-      console.warn('RESTBR Design System V1.1 could not apply:', error);
+      console.warn('RESTBR Design System V1.2 could not apply:', error);
     }
   }
 
   window.RESTBR_APPLY_DESIGN = apply;
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
-  } else {
-    boot();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot, { once:true });
+  else boot();
 })();
