@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-menu-core-v19";
+const CACHE_NAME = "restbr-menu-core-v20";
 
 const CORE = [
   "./",
@@ -9,6 +9,7 @@ const CORE = [
   "./css/cart.css?v=3.6",
   "./css/responsive-parity.css?v=1.0",
   "./css/phone-parity-v2.css?v=2.1",
+  "./css/footer-glass-policy.css?v=1.0",
   "./js/app.js?v=17.4",
   "./js/brand-cache-policy.js?v=2.0",
   "./js/brand-template-fix.js?v=1.0",
