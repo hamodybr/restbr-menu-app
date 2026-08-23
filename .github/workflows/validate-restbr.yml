@@ -42,8 +42,11 @@ jobs:
           set -euo pipefail
           required=(
             css/responsive-parity.css
+            css/phone-parity-v2.css
             js/supabase-config.js
             js/tenant-head.js
+            js/design-runtime.js
+            js/brand-cache-policy.js
             js/brand-template-fix.js
             js/currency-policy.js
             js/timezone-policy.js
@@ -61,6 +64,9 @@ jobs:
             owner/bulk-pricing-v2.js
             owner/analytics-v2.js
             owner/visibility-v2.js
+            owner/actions-v2.js
+            owner/design-advanced-v2.js
+            owner/backup-reset-v2.js
             owner/audit-v2.js
             owner/qr-v2.js
             admin/session-v2.js
@@ -68,6 +74,7 @@ jobs:
             admin/plan-v2.js
             admin/restaurant-settings-v2.js
             admin/domains-v2.js
+            migration/platform/RESTBR-ADMIN-V1.sql
             migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql
             migration/platform/RESTBR-MEMBERS-V1.sql
             migration/platform/RESTBR-ANALYTICS-V2.sql
@@ -84,16 +91,19 @@ jobs:
         run: |
           set -euo pipefail
           grep -q 'responsive-parity.css?v=1.0' index.html
+          grep -q 'phone-parity-v2.css?v=2.0' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
+          grep -q 'design-runtime.js?v=1.2' index.html
+          grep -q 'brand-cache-policy.js?v=2.0' index.html
           grep -q 'brand-template-fix.js?v=1.0' index.html
           grep -q 'currency-policy.js?v=1.0' index.html
           grep -q 'timezone-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.2' index.html
           grep -q 'order-analytics.js?v=1.0' index.html
-          grep -q 'restbr-menu-core-v17' sw.js
-          grep -q 'responsive-parity.css?v=1.0' sw.js
-          grep -q 'brand-template-fix.js?v=1.0' sw.js
-          grep -q 'currency-policy.js?v=1.0' sw.js
+          grep -q 'restbr-menu-core-v18' sw.js
+          grep -q 'phone-parity-v2.css?v=2.0' sw.js
+          grep -q 'brand-cache-policy.js?v=2.0' sw.js
+          grep -q 'design-runtime.js?v=1.2' sw.js
           grep -q 'cart-preload.js?v=1.2' sw.js
           grep -q 'cart.js?v=4.2' sw.js
           grep -q 'supabase-config.js?v=2.8' sw.js
@@ -101,6 +111,9 @@ jobs:
           grep -q 'tenant-recovery-v2.js?v=2.1' owner/config.js
           grep -q 'permissions-v2.js?v=2.1' owner/config.js
           grep -q 'visibility-v2.js?v=2.1' owner/config.js
+          grep -q 'actions-v2.js?v=2.0' owner/config.js
+          grep -q 'design-advanced-v2.js?v=2.0' owner/config.js
+          grep -q 'backup-reset-v2.js?v=2.0' owner/config.js
           grep -q 'audit-v2.js?v=2.1' owner/config.js
           grep -q 'qr-v2.js?v=2.1' owner/config.js
           grep -q 'session-v2.js?v=2.1' admin/index.html
@@ -109,13 +122,23 @@ jobs:
           grep -q 'restaurant-settings-v2.js?v=2.0' admin/index.html
           grep -q 'domains-v2.js?v=2.0' admin/index.html
 
-      - name: Guard tenant cart isolation
+      - name: Guard tenant cart and brand isolation
         shell: bash
         run: |
           set -euo pipefail
           grep -q 'restbrCartV2:' js/cart-preload.js
           grep -q 'restbrCartV2:' js/cart.js
           grep -q 'optionId' js/cart.js
+          grep -q 'RESTBR_BRAND_CACHE_V2:' index.html
+          grep -q 'RESTBR_BRAND_CACHE_V2:' js/brand-cache-policy.js
+          ! grep -q 'localStorage.getItem("SHORASH_BRAND_CACHE_V1")' index.html
+
+      - name: Guard phone parity and share placement
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q -- '--restbr-phone-canvas:440px' css/phone-parity-v2.css
+          grep -q 'right:7px!important' css/phone-parity-v2.css
 
       - name: Guard management hidden semantics
         shell: bash
@@ -129,6 +152,7 @@ jobs:
         run: |
           set -euo pipefail
           for file in \
+            migration/platform/RESTBR-ADMIN-V1.sql \
             migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql \
             migration/platform/RESTBR-MEMBERS-V1.sql \
             migration/platform/RESTBR-ANALYTICS-V2.sql \
