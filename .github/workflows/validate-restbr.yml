@@ -35,10 +35,10 @@ jobs:
           set -euo pipefail
           required=(
             css/responsive-parity.css css/phone-parity-v2.css css/footer-glass-policy.css
-            js/supabase-config.js js/tenant-head.js js/design-runtime.js js/brand-cache-policy.js js/brand-template-fix.js js/currency-policy.js js/timezone-policy.js js/offline-policy.js js/language-policy.js js/menu-policy.js js/cart-preload.js js/cart.js js/order-analytics.js
-            owner/auth-v2.js owner/tenant-recovery-v2.js owner/permissions-v2.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js
+            js/supabase-config.js js/tenant-head.js js/design-runtime.js js/share-placement-policy.js js/brand-cache-policy.js js/brand-template-fix.js js/currency-policy.js js/timezone-policy.js js/offline-policy.js js/language-policy.js js/menu-policy.js js/cart-preload.js js/cart.js js/order-analytics.js
+            owner/auth-v2.js owner/tenant-recovery-v2.js owner/permissions-v2.js owner/owner-v2.js owner/owner-settings-v2.js owner/bulk-pricing-v2.js owner/analytics-v2.js owner/visibility-v2.js owner/actions-v2.js owner/design-advanced-v2.js owner/backup-reset-v2.js owner/audit-v2.js owner/qr-v2.js owner/media-policy-v2.js owner/settings-organizer-v3.js
             admin/session-v2.js admin/admin-v2.js admin/plan-v2.js admin/restaurant-settings-v2.js admin/domains-v2.js
-            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-MEMBERS-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql
+            migration/platform/RESTBR-ADMIN-V1.sql migration/platform/RESTBR-PRODUCT-OPTIONS-SYNC-V1.sql migration/platform/RESTBR-MEMBERS-V1.sql migration/platform/RESTBR-ANALYTICS-V2.sql migration/platform/RESTBR-SECURITY-HARDEN-V1.sql migration/platform/RESTBR-AUDIT-V1.sql migration/platform/RESTBR-BACKUP-RESTORE-V1.sql migration/platform/RESTBR-BACKUP-SECURITY-V1.sql migration/platform/RESTBR-SCOPED-BACKUP-V1.sql
           )
           for file in "${required[@]}"; do test -f "$file"; done
       - name: Guard RESTBR runtime versions
@@ -47,12 +47,14 @@ jobs:
           set -euo pipefail
           grep -q 'phone-parity-v2.css?v=2.2' index.html
           grep -q 'footer-glass-policy.css?v=1.0' index.html
+          grep -q 'share-placement-policy.js?v=1.0' index.html
           grep -q 'supabase-config.js?v=2.8' index.html
           grep -q 'design-runtime.js?v=1.2' index.html
           grep -q 'brand-cache-policy.js?v=2.0' index.html
           grep -q 'currency-policy.js?v=1.0' index.html
           grep -q 'cart-preload.js?v=1.2' index.html
-          grep -q 'restbr-menu-core-v21' sw.js
+          grep -q 'restbr-menu-core-v22' sw.js
+          grep -q 'share-placement-policy.js?v=1.0' sw.js
           grep -q 'phone-parity-v2.css?v=2.2' sw.js
           grep -q 'footer-glass-policy.css?v=1.0' sw.js
           grep -q 'cart.js?v=4.2' sw.js
@@ -60,7 +62,9 @@ jobs:
           grep -q 'tenant-recovery-v2.js?v=2.1' owner/config.js
           grep -q 'actions-v2.js?v=2.1' owner/config.js
           grep -q 'design-advanced-v2.js?v=2.0' owner/config.js
-          grep -q 'backup-reset-v2.js?v=2.1' owner/config.js
+          grep -q 'backup-reset-v2.js?v=2.2' owner/config.js
+          grep -q 'media-policy-v2.js?v=2.0' owner/config.js
+          grep -q 'settings-organizer-v3.js?v=3.0' owner/config.js
           grep -q 'qr-v2.js?v=2.2' owner/config.js
           grep -q 'admin-v2.js?v=2.1' admin/index.html
           grep -q 'plan-v2.js?v=2.2' admin/index.html
@@ -77,15 +81,36 @@ jobs:
           grep -q 'RESTBR_BRAND_CACHE_V2:' js/brand-cache-policy.js
           ! grep -q 'localStorage.getItem("SHORASH_BRAND_CACHE_V1")' index.html
           ! grep -q "select('branding,custom_top_actions" owner/actions-v2.js
-      - name: Guard parity and Owner recovery
+      - name: Guard parity and share placement
         shell: bash
         run: |
           set -euo pipefail
           grep -q -- '--restbr-phone-canvas:440px' css/phone-parity-v2.css
           grep -q -- '--sm-ui-image-percent' css/phone-parity-v2.css
-          grep -q 'html\[dir="ltr"\] .sm-share-product' css/phone-parity-v2.css
+          grep -q 'image.appendChild(share)' js/share-placement-policy.js
           grep -q '\[hidden\]{display:none!important}' owner/config.js
           grep -q '\[hidden\]{display:none!important}' admin/session-v2.js
+      - name: Guard scoped backup and reset UX
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "backup('settings')" owner/backup-reset-v2.js
+          grep -q "backup('menu')" owner/backup-reset-v2.js
+          grep -q "backup('category')" owner/backup-reset-v2.js
+          grep -q 'owner_restore_settings_backup' owner/backup-reset-v2.js
+          grep -q 'owner_restore_menu_backup' owner/backup-reset-v2.js
+          grep -q 'owner_restore_category_backup' owner/backup-reset-v2.js
+          grep -q 'security invoker' migration/platform/RESTBR-SCOPED-BACKUP-V1.sql
+          grep -q 'rb-reset-one' owner/settings-organizer-v3.js
+          grep -q 'إعادة ضبط القسم' owner/settings-organizer-v3.js
+      - name: Guard media limits
+        shell: bash
+        run: |
+          set -euo pipefail
+          grep -q "maxBytes:2\*MB" owner/media-policy-v2.js
+          grep -q "maxBytes:1\*MB" owner/media-policy-v2.js
+          grep -q "maxBytes:12\*MB" owner/media-policy-v2.js
+          grep -q "maxDuration:20" owner/media-policy-v2.js
       - name: Guard atomic backup implementation
         shell: bash
         run: |
