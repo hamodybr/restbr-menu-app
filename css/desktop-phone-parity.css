@@ -1,0 +1,309 @@
+/* SHORASH — DESKTOP = PHONE PARITY V1
+   Desktop only. Keeps the tested mobile CSS untouched and renders
+   the desktop site as the same centered phone canvas/layout. */
+
+@media (min-width:769px){
+  :root{--sm-desktop-phone-canvas:440px}
+
+  html,body{
+    width:100%!important;
+    max-width:100%!important;
+    overflow-x:hidden!important;
+  }
+
+  body{background-color:#070503!important}
+
+  .sm-app{
+    width:min(100%,var(--sm-desktop-phone-canvas))!important;
+    max-width:var(--sm-desktop-phone-canvas)!important;
+    margin:0 auto!important;
+    overflow:hidden!important;
+  }
+
+  /* Match the current phone background treatment. */
+  .sm-bg-video{
+    filter:saturate(1.04) contrast(1.02) brightness(1.15)!important;
+  }
+  .sm-bg-overlay{
+    background:
+      linear-gradient(180deg,rgba(5,4,3,.25),rgba(5,4,3,.38) 40%,rgba(5,4,3,.50)),
+      radial-gradient(circle at 50% 12%,rgba(190,118,35,.08),transparent 34%)!important;
+  }
+
+  /* Exact phone header geometry and centering. */
+  .sm-header{
+    width:94%!important;
+    max-width:none!important;
+    margin:0 auto!important;
+    padding:22px 0 14px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    align-items:center!important;
+    justify-content:center!important;
+    text-align:center!important;
+  }
+  .sm-logo-wrap{
+    width:96px!important;
+    height:96px!important;
+    margin:0 auto 15px!important;
+    padding:0!important;
+    display:block!important;
+    position:relative!important;
+    inset:auto!important;
+    transform:none!important;
+    float:none!important;
+  }
+  .sm-header .sm-logo{
+    display:block!important;
+    position:static!important;
+    float:none!important;
+    inset:auto!important;
+    transform:none!important;
+    width:96px!important;
+    height:96px!important;
+    max-width:96px!important;
+    margin:0 auto!important;
+    object-fit:cover!important;
+    border-radius:50%!important;
+  }
+  .sm-header>h1{
+    display:block!important;
+    position:static!important;
+    inset:auto!important;
+    transform:none!important;
+    width:100%!important;
+    margin:0 auto 9px!important;
+    padding:0!important;
+    text-align:center!important;
+    font-size:22px!important;
+    line-height:1.15!important;
+    letter-spacing:1.5px!important;
+    white-space:nowrap!important;
+  }
+  .sm-header>#smSubtitle{
+    width:100%!important;
+    margin:0 auto 14px!important;
+    padding:0!important;
+    text-align:center!important;
+    font-size:11px!important;
+  }
+
+  #smLangs.sm-langs{
+    width:min(82%,320px)!important;
+    margin:0 auto 13px!important;
+  }
+  #smActions.sm-actions{
+    width:100%!important;
+    max-width:100%!important;
+    margin-left:auto!important;
+    margin-right:auto!important;
+  }
+
+  #smCats .sm-cat,.sm-cats .sm-cat{
+    color:#f3eee6!important;
+    background:rgba(18,17,15,.54)!important;
+    border-color:rgba(180,145,96,.34)!important;
+    opacity:1!important;
+    -webkit-text-fill-color:currentColor!important;
+  }
+  #smCats .sm-cat.active,.sm-cats .sm-cat.active{
+    color:#120c05!important;
+    -webkit-text-fill-color:#120c05!important;
+    background:linear-gradient(135deg,#f0c66e,#c98a35)!important;
+    border-color:#e0ad55!important;
+    opacity:1!important;
+    text-shadow:none!important;
+    box-shadow:0 0 18px rgba(211,153,62,.20)!important;
+  }
+  .sm-cats.fixed{
+    left:50%!important;
+    right:auto!important;
+    width:min(100%,var(--sm-desktop-phone-canvas))!important;
+    transform:translateX(-50%)!important;
+    padding:6px 10px 8px!important;
+  }
+
+  .sm-menu,#smMenu{
+    width:94%!important;
+    max-width:none!important;
+    margin:0 auto!important;
+  }
+  .sm-section{
+    width:100%!important;
+    margin:10px auto 24px!important;
+    padding:7px 0 12px!important;
+  }
+  .sm-section-title{
+    font-size:21px!important;
+    margin:0 2px 11px!important;
+    padding-inline-start:8px!important;
+  }
+  .sm-grid{
+    width:100%!important;
+    display:flex!important;
+    flex-direction:column!important;
+    gap:10px!important;
+  }
+
+  /* Same physical phone card: info 60% left, image 40% right. */
+  .sm-card{
+    display:grid!important;
+    grid-template-columns:60% 40%!important;
+    grid-template-rows:145px!important;
+    direction:ltr!important;
+    width:100%!important;
+    height:145px!important;
+    min-height:145px!important;
+    max-height:145px!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+    border-radius:17px!important;
+    border:1px solid rgba(190,137,67,.48)!important;
+    background:rgba(8,7,6,.22)!important;
+    box-shadow:0 8px 22px rgba(0,0,0,.25)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  .sm-card .sm-info,
+  html[dir="rtl"] .sm-card .sm-info,
+  html[dir="ltr"] .sm-card .sm-info{
+    grid-column:1!important;
+    grid-row:1!important;
+    width:100%!important;
+    height:145px!important;
+    min-height:145px!important;
+    max-height:145px!important;
+    margin:0!important;
+    padding:9px 11px!important;
+    display:flex!important;
+    flex-direction:column!important;
+    justify-content:center!important;
+    overflow:hidden!important;
+    background:rgba(7,6,5,.28)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+  html[dir="rtl"] .sm-card .sm-info{direction:rtl!important;text-align:right!important}
+  html[dir="ltr"] .sm-card .sm-info{direction:ltr!important;text-align:left!important}
+  .sm-card .sm-info:after{display:none!important;content:none!important}
+
+  .sm-card .sm-img,
+  html[dir="rtl"] .sm-card .sm-img,
+  html[dir="ltr"] .sm-card .sm-img{
+    grid-column:2!important;
+    grid-row:1!important;
+    width:100%!important;
+    height:145px!important;
+    min-height:145px!important;
+    max-height:145px!important;
+    margin:0!important;
+    padding:0!important;
+    overflow:hidden!important;
+  }
+  .sm-card .sm-img img{
+    display:block!important;
+    width:100%!important;
+    height:100%!important;
+    min-width:0!important;
+    min-height:0!important;
+    object-fit:cover!important;
+    object-position:center!important;
+  }
+
+  .sm-card .sm-name{
+    margin:0 0 4px!important;
+    padding:0 0 6px!important;
+    font-size:13.5px!important;
+    line-height:1.2!important;
+    background:transparent!important;
+  }
+  .sm-card .sm-option{
+    min-height:19px!important;
+    padding:2.5px 0!important;
+    gap:5px!important;
+    font-size:9.5px!important;
+    line-height:1.1!important;
+    background:transparent!important;
+    border-bottom-color:rgba(120,106,87,.20)!important;
+  }
+  .sm-card .sm-option>span{
+    min-width:0!important;
+    white-space:nowrap!important;
+    overflow:hidden!important;
+    text-overflow:ellipsis!important;
+  }
+  .sm-card .sm-price{font-size:10px!important;white-space:nowrap!important}
+
+  .sm-badges,
+  html[dir="rtl"] .sm-badges,
+  html[dir="ltr"] .sm-badges{
+    top:6px!important;
+    right:6px!important;
+    left:auto!important;
+    inset-inline-start:auto!important;
+    max-width:38%!important;
+  }
+  .sm-display-badge{font-size:7.5px!important;padding:4px 5px!important}
+
+  .sm-breakfast-card,.sm-mansaf-card,.sm-eastern-card,.sm-qalya-card,
+  .sm-western-card,.sm-burger-card,.sm-pizza-card,.sm-sandwich-card,
+  .sm-coffee-card,.sm-icedcoffee-card,.sm-mojito-card,.sm-smoothie-card,
+  .sm-dessert-card,.sm-milkshake-card,.sm-cold-card{
+    background:rgba(8,7,6,.22)!important;
+  }
+  .sm-cold-card .sm-info{
+    background:rgba(7,13,16,.30)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+  }
+
+  /* Exact phone footer proportions. */
+  .sm-footer{
+    width:88%!important;
+    max-width:none!important;
+    margin:34px auto 16px!important;
+    padding:22px 11px 19px!important;
+    border-radius:22px!important;
+    border:1px solid rgba(215,166,84,.68)!important;
+    background:rgba(0,0,0,.08)!important;
+    backdrop-filter:none!important;
+    -webkit-backdrop-filter:none!important;
+    box-shadow:none!important;
+  }
+  .sm-footer-line{width:88px!important;margin:0 auto 16px!important}
+  .sm-footer h2{margin:0 0 7px!important;font-size:15px!important;letter-spacing:1.4px!important}
+  .sm-footer-location{font-size:11px!important}
+  .sm-footer-main-actions{gap:5px!important;margin:15px auto 11px!important}
+  .sm-footer-main-actions a{min-height:37px!important;padding:4px 2px!important;border-radius:13px!important;font-size:8.5px!important;background:rgba(0,0,0,.08)!important}
+  .sm-footer-socials{gap:4px!important;margin:11px auto!important}
+  .sm-footer-socials a{min-height:32px!important;padding:3px 1px!important;border-radius:13px!important;font-size:7.8px!important;background:rgba(0,0,0,.06)!important}
+  .sm-footer-phone{margin:15px auto 10px!important;font-size:14px!important}
+  .sm-footer-copy{font-size:7.5px!important}
+
+  /* Phone-sized cart / chooser / checkout on desktop too. */
+  #smCartFab{
+    width:var(--sm-ui-cart-width,180px)!important;
+    min-width:var(--sm-ui-cart-width,180px)!important;
+    max-width:min(var(--sm-ui-cart-width,180px),92vw)!important;
+    height:var(--sm-ui-cart-height,56px)!important;
+    min-height:var(--sm-ui-cart-height,56px)!important;
+    font-size:var(--sm-ui-cart-font,13px)!important;
+    left:50%!important;
+    right:auto!important;
+    bottom:calc(var(--sm-ui-cart-bottom,16px) + env(safe-area-inset-bottom))!important;
+    transform:translateX(-50%)!important;
+  }
+  .sm-cart-drawer,
+  .sm-choice-sheet,
+  .sm-checkout-sheet{
+    width:min(100%,var(--sm-desktop-phone-canvas))!important;
+    max-width:var(--sm-desktop-phone-canvas)!important;
+  }
+  .sm-option-buy{gap:4px!important}
+  .sm-add-cart{width:20px!important;height:20px!important;font-size:14px!important}
+  .sm-choose-options{height:25px!important;min-width:70px!important;font-size:9px!important;margin-top:3px!important}
+  .sm-direct-add{height:25px!important;min-width:88px!important;font-size:9px!important;margin-top:3px!important}
+  .sm-cart-clear{height:28px!important;padding:0 8px!important;font-size:9px!important}
+  #smTopBtn{bottom:70px!important}
+}
