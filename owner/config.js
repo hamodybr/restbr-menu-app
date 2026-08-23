@@ -6,15 +6,11 @@ window.RESTBR_OWNER_CONFIG = {
   publishableKey: "sb_publishable_dOGkocLtn1WVvrxmu6TnJQ_8qyPyV-T"
 };
 
-// ---------------------------------------------------------------------------
-// Owner shell safety V1.1
-// ---------------------------------------------------------------------------
 (() => {
   const style = document.createElement('style');
   style.id = 'restbrOwnerHiddenGuard';
   style.textContent = '[hidden]{display:none!important}';
   document.head.appendChild(style);
-
   const params = new URLSearchParams(location.search);
   window.RESTBR_OWNER_TENANT_SLUG = String(params.get('tenant') || '').trim().toLowerCase();
   if(window.RESTBR_OWNER_TENANT_SLUG){
@@ -22,9 +18,6 @@ window.RESTBR_OWNER_CONFIG = {
   }
 })();
 
-// Load extensions after the stable shell/Supabase/legacy controller. async=false
-// keeps the order deterministic; Auth V2 creates the single shared client used
-// by every extension loaded after it.
 window.addEventListener('load', () => {
   const load = (id, src) => {
     if (document.getElementById(id)) return;
@@ -46,7 +39,7 @@ window.addEventListener('load', () => {
   load('restbrOwnerVisibilityV2Script', './visibility-v2.js?v=2.1');
   load('restbrOwnerActionsV2Script', './actions-v2.js?v=2.0');
   load('restbrOwnerDesignAdvancedV2Script', './design-advanced-v2.js?v=2.0');
-  load('restbrOwnerBackupResetV2Script', './backup-reset-v2.js?v=2.0');
+  load('restbrOwnerBackupResetV2Script', './backup-reset-v2.js?v=2.1');
   load('restbrOwnerAuditV2Script', './audit-v2.js?v=2.1');
   load('restbrOwnerQrV2Script', './qr-v2.js?v=2.2');
 }, { once:true });
