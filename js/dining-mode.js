@@ -128,7 +128,10 @@
       if (!card) return;
       const nodes = [...card.querySelectorAll('.sm-price')];
       (product.options || []).forEach((option, index) => {
-        if (nodes[index]) nodes[index].textContent = money(option.price);
+        if (nodes[index]) {
+          const next = money(option.price);
+          if (nodes[index].textContent !== next) nodes[index].textContent = next;
+        }
       });
     });
   }
@@ -233,7 +236,7 @@
   function start() {
     createGate();
     const menu = document.getElementById('smMenu');
-    if (menu) rerenderObserver.observe(menu, { childList: true, subtree: true });
+    if (menu) rerenderObserver.observe(menu, { childList: true });
     subscribePrices();
   }
 
