@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#0b0907">
-  <title>RESTBR Owner</title>
+  <title>RESTBR • Restaurant Manager</title>
   <style>
     :root{
       --bg:#090807;--panel:#11100e;--panel2:#171512;--text:#f8f4ed;--muted:#9b9389;
@@ -317,7 +317,7 @@
   </div>
 </div>
 
-<script src="./config.js?v=1.1"></script>
+<script src="./config.js?v=2.0"></script>
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
 (() => {
@@ -366,7 +366,7 @@
 
   async function resolveTenant(){
     const hostname=currentHostname();
-    if(hostname === 'hamodybr.github.io'){
+    if(hostname === 'hamodybr.github.io' || hostname === 'admin.restbr.com'){
       const slug=new URLSearchParams(location.search).get('tenant');
       if(!slug) throw new Error('افتح لوحة المالك من subdomain المطعم، أو استخدم ?tenant=slug للاختبار.');
       const {data,error}=await sb.from('restaurants').select('id,name,slug,status,default_language,currency').eq('slug',slug).maybeSingle();
