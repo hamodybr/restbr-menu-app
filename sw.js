@@ -1,4 +1,4 @@
-const CACHE_NAME = "restaurant-menu-v4-5-3";
+const CACHE_NAME = "shorash-menu-restored-v1";
 
 const CORE = [
   "./",
