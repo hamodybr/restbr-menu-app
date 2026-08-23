@@ -20,7 +20,7 @@ console.log('✅ SHORASH Supabase connected');
 
   const script = document.createElement('script');
   script.id = 'shorashLanguageSettingsScript';
-  script.src = 'js/language-settings.js?v=1.0';
+  script.src = 'js/language-settings.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
