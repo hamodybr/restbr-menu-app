@@ -1,0 +1,16 @@
+/* RESTBR FOOTER GLASS POLICY V1.0
+   The legacy theme paints glass on .sm-footer, while Design System V1.2 stores
+   footer variables for the card. Make the visible outer footer use those vars
+   and keep the inner wrapper transparent so opacity is not doubled. */
+.sm-footer{
+  background:var(--restbr-footer-bg,var(--restbr-card-bg,rgba(8,6,4,.14)))!important;
+  backdrop-filter:blur(var(--restbr-footer-blur,var(--restbr-card-blur,18px))) saturate(132%)!important;
+  -webkit-backdrop-filter:blur(var(--restbr-footer-blur,var(--restbr-card-blur,18px))) saturate(132%)!important;
+}
+body .sm-footer>.sm-footer-card{
+  background:transparent!important;
+  backdrop-filter:none!important;
+  -webkit-backdrop-filter:none!important;
+  box-shadow:none!important;
+  border:0!important;
+}
