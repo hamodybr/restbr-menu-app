@@ -8,7 +8,6 @@
     user: null,
     restaurants: [],
     domains: [],
-    subscriptions: [],
     loading: false
   };
 
@@ -207,26 +206,21 @@
     els.refreshBtn.disabled = true;
 
     try {
-      const [restaurantsResult, domainsResult, subscriptionsResult] = await Promise.all([
+      const [restaurantsResult, domainsResult] = await Promise.all([
         state.client
           .from('restaurants')
           .select('id,name,slug,status,default_language,timezone,currency,created_at,updated_at')
           .order('created_at', { ascending: false }),
         state.client
           .from('restaurant_domains')
-          .select('restaurant_id,hostname,status,is_verified,is_primary'),
-        state.client
-          .from('subscriptions')
-          .select('restaurant_id,plan,status,starts_at,expires_at')
+          .select('restaurant_id,hostname,status,is_verified,is_primary')
       ]);
 
       if (restaurantsResult.error) throw restaurantsResult.error;
       if (domainsResult.error) throw domainsResult.error;
-      if (subscriptionsResult.error) throw subscriptionsResult.error;
 
       state.restaurants = restaurantsResult.data || [];
       state.domains = domainsResult.data || [];
-      state.subscriptions = subscriptionsResult.data || [];
 
       render();
       els.lastUpdated.textContent = `آخر تحديث: ${new Date().toLocaleTimeString('ar-IQ', { hour: '2-digit', minute: '2-digit' })}`;
@@ -245,10 +239,6 @@
       || null;
   }
 
-  function subscriptionFor(restaurantId) {
-    return state.subscriptions.find(s => s.restaurant_id === restaurantId) || null;
-  }
-
   function statusLabel(status) {
     return ({
       active: 'نشط',
@@ -262,12 +252,9 @@
     const total = state.restaurants.length;
     const active = state.restaurants.filter(r => r.status === 'active').length;
     const suspended = state.restaurants.filter(r => r.status === 'suspended').length;
-    const subs = state.subscriptions.filter(s => s.status === 'active' || s.status === 'trial').length;
-
     els.statTotal.textContent = total;
     els.statActive.textContent = active;
     els.statSuspended.textContent = suspended;
-    els.statSubs.textContent = subs;
   }
 
   function renderRestaurants() {
@@ -281,10 +268,9 @@
     els.emptyState.classList.toggle('hidden', rows.length > 0);
     els.restaurantList.innerHTML = rows.map(r => {
       const domain = domainFor(r.id);
-      const sub = subscriptionFor(r.id);
       const hostname = domain?.hostname || `${r.slug}.restbr.com`;
       const url = `https://${hostname}`;
-      const manageUrl = `https://hamodybr.github.io/restbr-menu-app/owner/?tenant=${encodeURIComponent(r.slug)}&mode=superadmin`;
+      const manageUrl = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(r.slug)}&mode=superadmin`;
       const nextStatus = r.status === 'active' ? 'suspended' : 'active';
       const nextLabel = r.status === 'active' ? 'إيقاف' : 'تفعيل';
 
@@ -298,11 +284,6 @@
           <div class="meta">
             <span>الحالة</span>
             <strong class="status-pill status-${esc(r.status)}">${esc(statusLabel(r.status))}</strong>
-          </div>
-
-          <div class="meta">
-            <span>الخطة</span>
-            <strong>${esc(sub?.plan || '—')}</strong>
           </div>
 
           <div class="card-actions">
@@ -323,7 +304,7 @@
 
   function openModal() {
     els.restaurantForm.reset();
-    els.restaurantPlan.value = 'basic';
+    els.restaurantPlan.value = 'internal';
     els.restaurantLanguage.value = 'ar';
     els.restaurantCurrency.value = 'IQD';
     setMessage(els.createMsg, '');
@@ -373,7 +354,7 @@
         p_currency: els.restaurantCurrency.value.trim() || 'IQD',
         p_phone: els.restaurantPhone.value.trim(),
         p_whatsapp: els.restaurantWhatsapp.value.trim(),
-        p_plan: els.restaurantPlan.value
+        p_plan: 'internal'
       });
 
       if (error) throw error;
@@ -453,7 +434,6 @@
     await state.client.auth.signOut();
     state.restaurants = [];
     state.domains = [];
-    state.subscriptions = [];
     showLogin();
   }
 
