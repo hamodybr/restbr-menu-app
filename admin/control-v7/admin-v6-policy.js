@@ -4,6 +4,8 @@
   const $ = s => document.querySelector(s);
   function forceInternalPlan(){ const plan=$('#restaurantPlan'); if(plan) plan.value='internal'; }
   function rewrite(){
+    const badge=document.querySelector('.login-card .safe-build');
+    if(badge) badge.textContent='CONTROL CENTER V7';
     document.querySelectorAll('[data-action="manage"]').forEach(button=>{
       const card=button.closest('.restaurant-card');
       const link=card?.querySelector('.restaurant-main a');
