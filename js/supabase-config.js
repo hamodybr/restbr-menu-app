@@ -80,7 +80,7 @@ console.log('✅ SHORASH Supabase connected');
 
   const script = document.createElement('script');
   script.id = 'shorashAdminOptionOrderScript';
-  script.src = 'js/admin-option-order.js?v=1.0';
+  script.src = 'js/admin-option-order.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
