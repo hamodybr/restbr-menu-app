@@ -2,34 +2,18 @@
   if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
 
   const PRICE_TABLE = 'product_options';
+  const SETTINGS_TABLE = 'restaurant_settings';
   const priceMap = new Map();
   let selectedMode = '';
   let ready = false;
   let gate = null;
   let channel = null;
+  let gateTexts = {};
 
   const lang = () => localStorage.getItem('shorashLang') || 'ar';
-  const copy = () => {
-    const l = lang();
-    if (l === 'en') return {
-      title: 'How will you enjoy your meal?',
-      sub: 'Choose before viewing the menu',
-      dinein: 'Dine in',
-      dineinSub: 'View dine-in prices',
-      takeaway: 'Takeaway',
-      takeawaySub: 'View takeaway prices',
-      loading: 'Loading prices...'
-    };
-    if (l === 'ku') return {
-      title: 'چۆن دەتەوێت خواردنەکەت؟',
-      sub: 'پێش بینینی مینیو هەڵبژێرە',
-      dinein: 'لە ناو چێشتخانە',
-      dineinSub: 'نرخی ناو چێشتخانە',
-      takeaway: 'سەفەری',
-      takeawaySub: 'نرخی سەفەری',
-      loading: 'نرخەکان بار دەکرێن...'
-    };
-    return {
+
+  const DEFAULT_COPY = {
+    ar: {
       title: 'طلبك وين؟',
       sub: 'اختر قبل عرض المنيو',
       dinein: 'داخل المطعم',
@@ -37,8 +21,73 @@
       takeaway: 'سفري',
       takeawaySub: 'عرض أسعار السفري',
       loading: 'جاري تحميل الأسعار...'
+    },
+    ku: {
+      title: 'چۆن دەتەوێت خواردنەکەت؟',
+      sub: 'پێش بینینی مینیو هەڵبژێرە',
+      dinein: 'لە ناو چێشتخانە',
+      dineinSub: 'نرخی ناو چێشتخانە',
+      takeaway: 'سەفەری',
+      takeawaySub: 'نرخی سەفەری',
+      loading: 'نرخەکان بار دەکرێن...'
+    },
+    en: {
+      title: 'How will you enjoy your meal?',
+      sub: 'Choose before viewing the menu',
+      dinein: 'Dine in',
+      dineinSub: 'View dine-in prices',
+      takeaway: 'Takeaway',
+      takeawaySub: 'View takeaway prices',
+      loading: 'Loading prices...'
+    }
+  };
+
+  function objectValue(value) {
+    if (value && typeof value === 'object' && !Array.isArray(value)) return value;
+    if (typeof value === 'string') {
+      try {
+        const parsed = JSON.parse(value);
+        return parsed && typeof parsed === 'object' && !Array.isArray(parsed) ? parsed : {};
+      } catch (_) {
+        return {};
+      }
+    }
+    return {};
+  }
+
+  function savedText(language, key, fallback) {
+    const value = objectValue(gateTexts?.[language])?.[key];
+    const text = String(value ?? '').trim();
+    return text || fallback;
+  }
+
+  const copy = () => {
+    const l = ['ar', 'ku', 'en'].includes(lang()) ? lang() : 'ar';
+    const base = DEFAULT_COPY[l] || DEFAULT_COPY.ar;
+    return {
+      title: savedText(l, 'title', base.title),
+      sub: savedText(l, 'subtitle', base.sub),
+      dinein: savedText(l, 'dinein', base.dinein),
+      dineinSub: savedText(l, 'dinein_sub', base.dineinSub),
+      takeaway: savedText(l, 'takeaway', base.takeaway),
+      takeawaySub: savedText(l, 'takeaway_sub', base.takeawaySub),
+      loading: savedText(l, 'loading', base.loading)
     };
   };
+
+  async function fetchGateTexts() {
+    if (typeof supabaseClient === 'undefined' || !supabaseClient) return;
+
+    const { data, error } = await supabaseClient
+      .from(SETTINGS_TABLE)
+      .select('dining_gate_texts,updated_at')
+      .order('updated_at', { ascending: false })
+      .limit(1)
+      .maybeSingle();
+
+    if (error) throw error;
+    gateTexts = objectValue(data?.dining_gate_texts);
+  }
 
   function installStyles() {
     if (document.getElementById('smDiningModeStyles')) return;
@@ -94,17 +143,17 @@
     gate.innerHTML = `
       <div class="sm-dining-card">
         <div class="sm-dining-mark">🍽️</div>
-        <h2>${t.title}</h2>
-        <p>${t.sub}</p>
+        <h2>${escapeHtml(t.title)}</h2>
+        <p>${escapeHtml(t.sub)}</p>
         <div class="sm-dining-options">
           <button class="sm-dining-choice" type="button" data-sm-mode="dinein">
-            <span class="icon">🍴</span><strong>${t.dinein}</strong><small>${t.dineinSub}</small>
+            <span class="icon">🍴</span><strong>${escapeHtml(t.dinein)}</strong><small>${escapeHtml(t.dineinSub)}</small>
           </button>
           <button class="sm-dining-choice" type="button" data-sm-mode="takeaway">
-            <span class="icon">🥡</span><strong>${t.takeaway}</strong><small>${t.takeawaySub}</small>
+            <span class="icon">🥡</span><strong>${escapeHtml(t.takeaway)}</strong><small>${escapeHtml(t.takeawaySub)}</small>
           </button>
         </div>
-        <div class="sm-dining-loading">${t.loading}</div>
+        <div class="sm-dining-loading">${escapeHtml(t.loading)}</div>
       </div>`;
     document.body.appendChild(gate);
 
@@ -113,6 +162,15 @@
       if (!button) return;
       chooseMode(button.dataset.smMode);
     });
+  }
+
+  function escapeHtml(value) {
+    return String(value ?? '')
+      .replaceAll('&', '&amp;')
+      .replaceAll('<', '&lt;')
+      .replaceAll('>', '&gt;')
+      .replaceAll('"', '&quot;')
+      .replaceAll("'", '&#039;');
   }
 
   function money(value) {
@@ -233,7 +291,13 @@
     });
   });
 
-  function start() {
+  async function start() {
+    try {
+      await fetchGateTexts();
+    } catch (error) {
+      console.debug('Dining gate settings fallback:', error?.message || error);
+    }
+
     createGate();
     const menu = document.getElementById('smMenu');
     if (menu) rerenderObserver.observe(menu, { childList: true });
@@ -241,8 +305,8 @@
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', start, { once: true });
+    document.addEventListener('DOMContentLoaded', () => void start(), { once: true });
   } else {
-    start();
+    void start();
   }
 })();
