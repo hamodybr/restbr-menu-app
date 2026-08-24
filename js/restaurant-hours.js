@@ -8,9 +8,9 @@
   };
 
   let settings = {
-    manualOpen: true,
-    mode: 'always',
-    schedule: {}
+    manualOpen:true,
+    mode:'always',
+    schedule:{}
   };
   let loaded = false;
   let lastEffective = null;
@@ -38,17 +38,17 @@
 
   function baghdadNow() {
     const parts = new Intl.DateTimeFormat('en-US', {
-      timeZone: TIMEZONE,
-      weekday: 'short',
-      hour: '2-digit',
-      minute: '2-digit',
-      hourCycle: 'h23'
+      timeZone:TIMEZONE,
+      weekday:'short',
+      hour:'2-digit',
+      minute:'2-digit',
+      hourCycle:'h23'
     }).formatToParts(new Date());
 
     const get = type => parts.find(part => part.type === type)?.value || '';
     return {
-      day: DAY_FROM_SHORT[get('weekday')] || 'sun',
-      minute: Number(get('hour') || 0) * 60 + Number(get('minute') || 0)
+      day:DAY_FROM_SHORT[get('weekday')] || 'sun',
+      minute:Number(get('hour') || 0) * 60 + Number(get('minute') || 0)
     };
   }
 
@@ -77,7 +77,7 @@
 
     if (mode === 'daily') {
       const slot = safeObject(schedule.daily);
-      if (!slot || slot.enabled === false) return false;
+      if (slot.enabled === false) return false;
       const start = minutes(slot.open);
       const end = minutes(slot.close);
       if (start === null || end === null) return false;
@@ -102,6 +102,89 @@
     return true;
   }
 
+  function lang() {
+    return localStorage.getItem('shorashLang') || 'ar';
+  }
+
+  function closedText(scheduleOpen) {
+    const restaurant = window.SHORASH_DB?.restaurant || {};
+    const custom = safeObject(restaurant.closedMessage);
+    const current = lang();
+    const customText = custom[current] || custom.ar || custom.en || '';
+    if (customText) return customText;
+
+    if (!settings.manualOpen) {
+      if (current === 'en') return 'The restaurant is currently closed.';
+      if (current === 'ku') return 'چێشتخانە لە ئێستادا داخراوە.';
+      return 'المطعم مغلق حالياً.';
+    }
+
+    if (!scheduleOpen) {
+      if (current === 'en') return 'The restaurant is currently closed according to opening hours.';
+      if (current === 'ku') return 'چێشتخانە بەپێی کاتەکانی کارکردن لە ئێستادا داخراوە.';
+      return 'المطعم مغلق حالياً حسب أوقات الدوام.';
+    }
+
+    return '';
+  }
+
+  function ensureBanner() {
+    let banner = document.getElementById('smRestaurantClosedBanner');
+    if (banner) return banner;
+
+    if (!document.getElementById('smRestaurantClosedBannerStyle')) {
+      const style = document.createElement('style');
+      style.id = 'smRestaurantClosedBannerStyle';
+      style.textContent = `
+        #smRestaurantClosedBanner{
+          width:min(calc(100% - 24px),680px);
+          margin:10px auto 4px;
+          padding:10px 12px;
+          box-sizing:border-box;
+          border:1px solid rgba(232,184,98,.28);
+          border-radius:12px;
+          background:rgba(37,21,8,.9);
+          color:#f1c774;
+          text-align:center;
+          font-size:11px;
+          line-height:1.6;
+          box-shadow:0 8px 24px rgba(0,0,0,.18);
+          backdrop-filter:blur(12px);
+          -webkit-backdrop-filter:blur(12px);
+        }
+        #smRestaurantClosedBanner[hidden]{display:none!important}
+        body.sm-hours-closed #smOrderStateBanner{display:none!important}
+      `;
+      document.head.appendChild(style);
+    }
+
+    banner = document.createElement('div');
+    banner.id = 'smRestaurantClosedBanner';
+    banner.hidden = true;
+    banner.setAttribute('role', 'status');
+    banner.setAttribute('aria-live', 'polite');
+
+    const header = document.querySelector('.sm-header');
+    if (header?.parentNode) header.insertAdjacentElement('afterend', banner);
+    else document.body.prepend(banner);
+
+    return banner;
+  }
+
+  function renderBanner(effective, scheduleOpen) {
+    const banner = ensureBanner();
+    document.body.classList.toggle('sm-hours-closed', !effective);
+
+    if (effective) {
+      banner.hidden = true;
+      banner.textContent = '';
+      return;
+    }
+
+    banner.textContent = '⏰ ' + closedText(scheduleOpen);
+    banner.hidden = false;
+  }
+
   function applyToMenu({ broadcast = false } = {}) {
     const restaurant = window.SHORASH_DB?.restaurant;
     if (!restaurant || !loaded) return false;
@@ -116,13 +199,14 @@
     restaurant.isOpen = effective;
     restaurant.restaurantSchedule = settings.schedule;
 
+    renderBanner(effective, scheduleOpen);
     lastEffective = effective;
 
     if (changed && broadcast && !broadcastLock) {
       broadcastLock = true;
       setTimeout(() => {
         window.dispatchEvent(new CustomEvent('shorash:ready', {
-          detail: { reason: 'restaurant-hours' }
+          detail:{ reason:'restaurant-hours' }
         }));
         broadcastLock = false;
       }, 0);
@@ -138,35 +222,36 @@
       const { data, error } = await supabaseClient
         .from('restaurant_settings')
         .select('is_open,restaurant_schedule_mode,restaurant_schedule,updated_at')
-        .order('updated_at', { ascending: false })
+        .order('updated_at', { ascending:false })
         .limit(1)
         .maybeSingle();
 
       if (error) throw error;
 
       settings = {
-        manualOpen: data?.is_open !== false,
-        mode: ['always','daily','weekly'].includes(data?.restaurant_schedule_mode)
+        manualOpen:data?.is_open !== false,
+        mode:['always','daily','weekly'].includes(data?.restaurant_schedule_mode)
           ? data.restaurant_schedule_mode
           : 'always',
-        schedule: safeObject(data?.restaurant_schedule)
+        schedule:safeObject(data?.restaurant_schedule)
       };
       loaded = true;
-      applyToMenu({ broadcast: true });
+      applyToMenu({ broadcast:true });
     } catch (error) {
       console.warn('Restaurant hours could not be loaded:', error);
     }
   }
 
   window.addEventListener('shorash:ready', () => {
-    applyToMenu({ broadcast: false });
+    applyToMenu({ broadcast:false });
+  });
+
+  document.addEventListener('click', event => {
+    if (!event.target.closest('[data-lang]')) return;
+    setTimeout(() => applyToMenu({ broadcast:false }), 40);
   });
 
   loadSettings();
-
-  // Re-evaluate locally around opening/closing boundaries.
-  setInterval(() => applyToMenu({ broadcast: true }), 30000);
-
-  // Pick up admin schedule/manual changes without requiring a long-lived tab refresh.
+  setInterval(() => applyToMenu({ broadcast:true }), 30000);
   setInterval(loadSettings, 60000);
 })();
