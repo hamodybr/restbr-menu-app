@@ -1,47 +1,68 @@
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
 
-  console.log('✅ ADMIN OPTION ORDER V1.2 LOADED');
+  console.log('✅ ADMIN OPTION ORDER V1.3 LOADED');
 
-  let patched = false;
-  let sortable = null;
+  let savePatched = false;
+  let lockedScrollY = 0;
+  let modalIsLocked = false;
 
   function installStyles() {
-    if (document.getElementById('smAdminOptionOrderStyles')) return;
+    let style = document.getElementById('smAdminOptionOrderStyles');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'smAdminOptionOrderStyles';
+      document.head.appendChild(style);
+    }
 
-    const style = document.createElement('style');
-    style.id = 'smAdminOptionOrderStyles';
     style.textContent = `
       #optionsEditor .option-editor{position:relative}
-      .sm-option-order-bar{display:flex;align-items:center;gap:7px;margin:-2px 0 10px;padding:8px;border:1px dashed rgba(216,169,88,.34);border-radius:11px;background:rgba(216,169,88,.08);color:#9d9388;font-size:10px;line-height:1;user-select:none;-webkit-user-select:none}
-      .sm-option-drag,.sm-option-move{height:34px;display:grid;place-items:center;flex:0 0 auto;padding:0;border:1px solid rgba(216,169,88,.45);border-radius:9px;background:#17130f;color:#e3c58e;font-weight:900;-webkit-tap-highlight-color:transparent}
-      .sm-option-drag{width:38px;font-size:18px;cursor:grab;touch-action:none}
-      .sm-option-drag:active{cursor:grabbing}
-      .sm-option-move{width:36px;font-size:17px;cursor:pointer;touch-action:manipulation}
-      .sm-option-move:active{transform:scale(.94)}
-      .sm-option-move:disabled{opacity:.28;cursor:not-allowed;transform:none}
-      .sm-option-order-number{min-width:58px;color:#e3c58e;font-weight:900;font-size:11px}
-      .sm-option-order-hint{flex:1;min-width:0;line-height:1.35}
-      #optionsEditor .sm-option-sort-ghost{opacity:.38;outline:2px dashed rgba(216,169,88,.65)}
-      #optionsEditor .sm-option-sort-chosen{box-shadow:0 12px 32px rgba(0,0,0,.34)}
-      body.admin-light-mode .sm-option-order-bar,body.sm-admin-light .sm-option-order-bar,html[data-admin-theme="light"] .sm-option-order-bar{background:#fff8ed;border-color:rgba(139,94,30,.28);color:#776b5f}
-      body.admin-light-mode .sm-option-drag,body.admin-light-mode .sm-option-move,body.sm-admin-light .sm-option-drag,body.sm-admin-light .sm-option-move,html[data-admin-theme="light"] .sm-option-drag,html[data-admin-theme="light"] .sm-option-move{background:#fff;color:#9b691f;border-color:rgba(139,94,30,.3)}
+      .sm-option-order-bar{
+        display:flex;align-items:center;gap:8px;margin:-2px 0 10px;padding:8px;
+        border:1px solid rgba(216,169,88,.28);border-radius:11px;
+        background:rgba(216,169,88,.075);color:#9d9388;font-size:10px;
+        line-height:1;user-select:none;-webkit-user-select:none
+      }
+      .sm-option-order-number{flex:1;min-width:0;color:#e3c58e;font-weight:900;font-size:11px}
+      .sm-option-order-actions{display:flex;gap:6px;direction:ltr}
+      .sm-option-move{
+        width:44px;height:38px;display:grid;place-items:center;padding:0;
+        border:1px solid rgba(216,169,88,.46);border-radius:10px;
+        background:#17130f;color:#e3c58e;font-size:20px;font-weight:900;
+        cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent
+      }
+      .sm-option-move:active{transform:scale(.92);background:#21180e}
+      .sm-option-move:disabled{opacity:.25;cursor:not-allowed;transform:none}
+      .sm-option-order-hint{color:#817970;font-size:9px;margin-inline-start:4px}
+      .admin-modal{overscroll-behavior:none!important}
+      .admin-modal-card{
+        overscroll-behavior:contain!important;
+        -webkit-overflow-scrolling:touch!important;
+        touch-action:pan-y!important
+      }
+      body.sm-admin-modal-locked{overflow:hidden!important}
+      body.admin-light-mode .sm-option-order-bar,
+      body.sm-admin-light .sm-option-order-bar,
+      html[data-admin-theme="light"] .sm-option-order-bar{
+        background:#fff8ed;border-color:rgba(139,94,30,.24);color:#776b5f
+      }
+      body.admin-light-mode .sm-option-move,
+      body.sm-admin-light .sm-option-move,
+      html[data-admin-theme="light"] .sm-option-move{
+        background:#fff;color:#9b691f;border-color:rgba(139,94,30,.28)
+      }
       @media(max-width:650px){
-        .sm-option-order-bar{padding:7px;gap:6px;flex-wrap:wrap}
-        .sm-option-order-number{min-width:54px}
-        .sm-option-order-hint{order:5;flex-basis:100%;font-size:9px;padding-top:2px}
-        .sm-option-drag{width:40px;height:38px}
-        .sm-option-move{width:40px;height:38px;font-size:19px}
+        .sm-option-order-bar{padding:8px;gap:7px;flex-wrap:wrap}
+        .sm-option-order-number{font-size:11px}
+        .sm-option-order-hint{order:3;flex-basis:100%;margin:2px 0 0;line-height:1.45}
+        .sm-option-move{width:48px;height:42px;font-size:22px}
       }
     `;
-
-    document.head.appendChild(style);
   }
 
   function activeRows() {
     const holder = document.getElementById('optionsEditor');
     if (!holder) return [];
-
     return [...holder.children]
       .filter(row => row instanceof Element && row.classList.contains('option-editor'))
       .filter(row => row.dataset.deleted !== '1' && row.style.display !== 'none');
@@ -49,16 +70,52 @@
 
   function updatePositionLabels() {
     const rows = activeRows();
-
     rows.forEach((row, index) => {
       const label = row.querySelector('.sm-option-order-number');
-      if (label) label.textContent = `الخيار ${index + 1}`;
+      if (label) label.textContent = `الخيار ${index + 1} من ${rows.length}`;
 
       const up = row.querySelector('[data-sm-option-move="up"]');
       const down = row.querySelector('[data-sm-option-move="down"]');
       if (up) up.disabled = index === 0;
       if (down) down.disabled = index === rows.length - 1;
     });
+  }
+
+  function installRowControls(row) {
+    if (!(row instanceof Element) || !row.classList.contains('option-editor')) return;
+
+    // Replace any older drag/order toolbar so stale versions cannot remain.
+    row.querySelectorAll(':scope > .sm-option-order-bar').forEach(old => old.remove());
+
+    const bar = document.createElement('div');
+    bar.className = 'sm-option-order-bar';
+    bar.dataset.smOptionOrderVersion = '1.3';
+    bar.innerHTML = `
+      <span class="sm-option-order-number"></span>
+      <span class="sm-option-order-actions">
+        <button class="sm-option-move" type="button" data-sm-option-move="up" aria-label="نقل الخيار للأعلى" title="نقل للأعلى">↑</button>
+        <button class="sm-option-move" type="button" data-sm-option-move="down" aria-label="نقل الخيار للأسفل" title="نقل للأسفل">↓</button>
+      </span>
+      <span class="sm-option-order-hint">اضغط الأسهم لتغيير ترتيب الخيار</span>
+    `;
+
+    row.insertBefore(bar, row.firstChild);
+  }
+
+  function enhanceEditor() {
+    const holder = document.getElementById('optionsEditor');
+    if (!holder) return false;
+
+    [...holder.children].forEach(row => {
+      if (!(row instanceof Element) || !row.classList.contains('option-editor')) return;
+      const current = row.querySelector(':scope > .sm-option-order-bar');
+      if (!current || current.dataset.smOptionOrderVersion !== '1.3') {
+        installRowControls(row);
+      }
+    });
+
+    updatePositionLabels();
+    return true;
   }
 
   function moveRow(row, direction) {
@@ -80,70 +137,21 @@
 
     updatePositionLabels();
 
-    row.animate?.(
-      [
-        { transform: 'scale(.985)', opacity: .72 },
-        { transform: 'scale(1)', opacity: 1 }
-      ],
-      { duration: 180, easing: 'ease-out' }
-    );
-  }
-
-  function enhanceRow(row) {
-    if (!(row instanceof Element) || !row.classList.contains('option-editor')) return;
-    if (row.querySelector('.sm-option-order-bar')) return;
-
-    const bar = document.createElement('div');
-    bar.className = 'sm-option-order-bar';
-    bar.innerHTML = `
-      <button class="sm-option-drag" type="button" aria-label="اسحب لتغيير ترتيب الخيار" title="اسحب لتغيير الترتيب">☰</button>
-      <span class="sm-option-order-number"></span>
-      <button class="sm-option-move" type="button" data-sm-option-move="up" aria-label="نقل الخيار للأعلى" title="نقل للأعلى">↑</button>
-      <button class="sm-option-move" type="button" data-sm-option-move="down" aria-label="نقل الخيار للأسفل" title="نقل للأسفل">↓</button>
-      <span class="sm-option-order-hint">اضغط ↑ ↓ أو اسحب من ☰ لتغيير ترتيب الظهور</span>
-    `;
-
-    row.insertBefore(bar, row.firstChild);
-  }
-
-  function enhanceEditor() {
-    const holder = document.getElementById('optionsEditor');
-    if (!holder) return false;
-
-    [...holder.children].forEach(enhanceRow);
-    updatePositionLabels();
-
-    if (sortable) {
-      try { sortable.destroy(); } catch (_) {}
-      sortable = null;
-    }
-
-    if (window.Sortable) {
-      sortable = new window.Sortable(holder, {
-        animation: 180,
-        handle: '.sm-option-drag',
-        draggable: '.option-editor:not([data-deleted="1"])',
-        ghostClass: 'sm-option-sort-ghost',
-        chosenClass: 'sm-option-sort-chosen',
-        delay: 70,
-        delayOnTouchOnly: true,
-        touchStartThreshold: 3,
-        onEnd: updatePositionLabels
-      });
-    } else {
-      console.warn('Sortable is not ready yet for option ordering');
-    }
-
-    return true;
+    try {
+      row.animate(
+        [{ transform:'scale(.985)', opacity:.72 }, { transform:'scale(1)', opacity:1 }],
+        { duration:170, easing:'ease-out' }
+      );
+    } catch (_) {}
   }
 
   function captureOrder() {
     return activeRows()
       .map((row, index) => ({
-        position: index + 1,
-        id: row.dataset.optionId || '',
-        name: row.querySelector('.oe-name')?.value.trim() || '',
-        price: Number(row.querySelector('.oe-price')?.value || 0)
+        position:index + 1,
+        id:row.dataset.optionId || '',
+        name:row.querySelector('.oe-name')?.value.trim() || '',
+        price:Number(row.querySelector('.oe-price')?.value || 0)
       }))
       .filter(item => item.id || item.name);
   }
@@ -160,8 +168,8 @@
       .from('product_options')
       .select('id,name_ar,price,sort_order,created_at')
       .eq('product_id', productId)
-      .order('sort_order', { ascending: true })
-      .order('created_at', { ascending: true });
+      .order('sort_order', { ascending:true })
+      .order('created_at', { ascending:true });
 
     if (error) throw error;
 
@@ -170,18 +178,28 @@
     const resolved = [];
 
     for (const item of snapshot) {
-      let target = item.id ? serverRows.find(row => String(row.id) === String(item.id)) : null;
+      let target = item.id
+        ? serverRows.find(row => String(row.id) === String(item.id))
+        : null;
 
       if (!target && item.name) {
-        target = serverRows.find(row => !used.has(String(row.id)) && String(row.name_ar || '').trim() === item.name && sameNumber(row.price, item.price));
+        target = serverRows.find(row =>
+          !used.has(String(row.id)) &&
+          String(row.name_ar || '').trim() === item.name &&
+          sameNumber(row.price, item.price)
+        );
       }
+
       if (!target && item.name) {
-        target = serverRows.find(row => !used.has(String(row.id)) && String(row.name_ar || '').trim() === item.name);
+        target = serverRows.find(row =>
+          !used.has(String(row.id)) &&
+          String(row.name_ar || '').trim() === item.name
+        );
       }
+
       if (!target) continue;
-
       used.add(String(target.id));
-      resolved.push({ id: target.id, position: item.position });
+      resolved.push({ id:target.id, position:item.position });
     }
 
     if (resolved.length !== snapshot.length) {
@@ -189,16 +207,16 @@
     }
 
     for (const item of resolved) {
-      const { error: updateError } = await supabaseClient
+      const { error:updateError } = await supabaseClient
         .from('product_options')
-        .update({ sort_order: item.position, updated_at: new Date().toISOString() })
+        .update({ sort_order:item.position, updated_at:new Date().toISOString() })
         .eq('id', item.id);
       if (updateError) throw updateError;
     }
   }
 
   function patchSaveFunction() {
-    if (patched) return true;
+    if (savePatched) return true;
     if (typeof window.saveAdminProduct !== 'function') return false;
 
     const oldSaveAdminProduct = window.saveAdminProduct;
@@ -213,17 +231,71 @@
       try {
         await persistOrder(productId, snapshot);
         if (typeof window.loadAdminDashboard === 'function') await window.loadAdminDashboard();
-        if (typeof window.showEditorMsg === 'function') window.showEditorMsg('تم حفظ الصنف وترتيب الخيارات بنجاح ✓', true);
+        if (typeof window.showEditorMsg === 'function') {
+          window.showEditorMsg('تم حفظ الصنف وترتيب الخيارات بنجاح ✓', true);
+        }
       } catch (error) {
         console.error('OPTION ORDER SAVE ERROR:', error);
-        if (typeof window.showEditorMsg === 'function') window.showEditorMsg('تم حفظ الصنف لكن فشل حفظ ترتيب الخيارات: ' + (error.message || error), false);
+        if (typeof window.showEditorMsg === 'function') {
+          window.showEditorMsg('تم حفظ الصنف لكن فشل حفظ ترتيب الخيارات: ' + (error.message || error), false);
+        }
       }
 
       return result;
     };
 
-    patched = true;
+    savePatched = true;
     return true;
+  }
+
+  function lockBackgroundScroll() {
+    if (modalIsLocked) return;
+    modalIsLocked = true;
+    lockedScrollY = window.scrollY || document.documentElement.scrollTop || 0;
+
+    document.body.classList.add('sm-admin-modal-locked');
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${lockedScrollY}px`;
+    document.body.style.left = '0';
+    document.body.style.right = '0';
+    document.body.style.width = '100%';
+  }
+
+  function unlockBackgroundScroll() {
+    if (!modalIsLocked) return;
+    modalIsLocked = false;
+
+    document.body.classList.remove('sm-admin-modal-locked');
+    document.body.style.position = '';
+    document.body.style.top = '';
+    document.body.style.left = '';
+    document.body.style.right = '';
+    document.body.style.width = '';
+    document.body.style.overflow = '';
+
+    window.scrollTo(0, lockedScrollY);
+  }
+
+  function syncModalScrollLock() {
+    const modal = document.getElementById('editorModal');
+    if (!modal) return;
+    if (modal.classList.contains('open')) lockBackgroundScroll();
+    else unlockBackgroundScroll();
+  }
+
+  function bindModalScrollLock() {
+    const modal = document.getElementById('editorModal');
+    if (!modal || modal.dataset.smScrollLockBound === '1') return;
+    modal.dataset.smScrollLockBound = '1';
+
+    new MutationObserver(syncModalScrollLock)
+      .observe(modal, { attributes:true, attributeFilter:['class','aria-hidden'] });
+
+    modal.addEventListener('touchmove', event => {
+      if (event.target === modal) event.preventDefault();
+    }, { passive:false });
+
+    syncModalScrollLock();
   }
 
   document.addEventListener('click', event => {
@@ -232,38 +304,38 @@
 
     event.preventDefault();
     event.stopPropagation();
-
     if (button.disabled) return;
 
     const row = button.closest('.option-editor');
     if (!row) return;
-
     moveRow(row, button.dataset.smOptionMove);
-  });
+  }, true);
 
   function boot() {
     installStyles();
     patchSaveFunction();
+    bindModalScrollLock();
     enhanceEditor();
 
     const observer = new MutationObserver(() => {
-      if (document.getElementById('optionsEditor')) requestAnimationFrame(enhanceEditor);
       patchSaveFunction();
+      bindModalScrollLock();
+      if (document.getElementById('optionsEditor')) requestAnimationFrame(enhanceEditor);
     });
 
-    observer.observe(document.body, { childList: true, subtree: true });
+    observer.observe(document.body, { childList:true, subtree:true });
 
     const timer = setInterval(() => {
       patchSaveFunction();
-      if (document.getElementById('optionsEditor')) enhanceEditor();
-      if (patched && window.Sortable) clearInterval(timer);
-    }, 250);
+      bindModalScrollLock();
+      enhanceEditor();
+    }, 300);
 
     setTimeout(() => clearInterval(timer), 30000);
   }
 
   if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', boot, { once: true });
+    document.addEventListener('DOMContentLoaded', boot, { once:true });
   } else {
     boot();
   }
