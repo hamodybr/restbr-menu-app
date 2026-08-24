@@ -3,7 +3,11 @@
 
   const PRICE_TABLE = 'product_options';
   const SETTINGS_TABLE = 'restaurant_settings';
+  const DISCOUNTS_TABLE = 'discounts';
+  const PRODUCTS_TABLE = 'products';
   const priceMap = new Map();
+  const productCategoryMap = new Map();
+  let discounts = [];
   let selectedMode = '';
   let ready = false;
   let gate = null;
@@ -116,6 +120,16 @@
       .sm-dining-loading{display:none;padding:22px 8px 6px;color:#c9a25e;font-size:12px}
       .sm-dining-gate.loading .sm-dining-options{display:none}.sm-dining-gate.loading .sm-dining-loading{display:block}
 
+      .sm-price.sm-price-discounted{
+        display:inline-flex;align-items:baseline;justify-content:flex-end;flex-wrap:wrap;gap:4px 6px;
+      }
+      .sm-price .sm-price-before{
+        color:#8f8880;font-size:.76em;font-weight:700;text-decoration:line-through;text-decoration-thickness:1px;white-space:nowrap;
+      }
+      .sm-price .sm-price-after{
+        color:inherit;font-size:1em;font-weight:inherit;white-space:nowrap;
+      }
+
       html.sm-mode-dinein .sm-add-cart,
       html.sm-mode-dinein .sm-direct-add,
       html.sm-mode-dinein .sm-choose-options,
@@ -178,6 +192,50 @@
     return Number(value || 0).toLocaleString('en-US') + ' ' + (l === 'en' ? 'IQD' : 'د.ع');
   }
 
+  function discountForProduct(product) {
+    if (!selectedMode || !product) return 0;
+
+    const productId = String(product.id ?? '');
+    const categoryId = String(
+      productCategoryMap.get(productId) ??
+      product.category?.id ??
+      product.category_id ??
+      ''
+    );
+
+    let bestRank = 0;
+    let bestPercent = 0;
+
+    discounts.forEach(row => {
+      if (!row || row.is_active === false) return;
+      if (row.price_mode !== 'both' && row.price_mode !== selectedMode) return;
+
+      const percent = Number(row.discount_percent);
+      if (!Number.isFinite(percent) || percent <= 0 || percent > 100) return;
+
+      let rank = 0;
+      if (row.scope_type === 'product' && String(row.target_id ?? '') === productId) rank = 3;
+      else if (row.scope_type === 'category' && categoryId && String(row.target_id ?? '') === categoryId) rank = 2;
+      else if (row.scope_type === 'restaurant') rank = 1;
+      else return;
+
+      if (rank > bestRank || (rank === bestRank && percent > bestPercent)) {
+        bestRank = rank;
+        bestPercent = percent;
+      }
+    });
+
+    return bestPercent;
+  }
+
+  function discountedPrice(basePrice, percent) {
+    const base = Number(basePrice);
+    const pct = Number(percent);
+    if (!Number.isFinite(base)) return 0;
+    if (!Number.isFinite(pct) || pct <= 0) return base;
+    return Math.max(0, Math.round(base * (100 - pct) / 100));
+  }
+
   function updateVisiblePrices() {
     const db = window.SHORASH_DB;
     if (!db?.products) return;
@@ -186,9 +244,21 @@
       if (!card) return;
       const nodes = [...card.querySelectorAll('.sm-price')];
       (product.options || []).forEach((option, index) => {
-        if (nodes[index]) {
-          const next = money(option.price);
-          if (nodes[index].textContent !== next) nodes[index].textContent = next;
+        const node = nodes[index];
+        if (!node) return;
+
+        const current = Number(option.price || 0);
+        const original = Number(option._modeOriginalPrice ?? current);
+        const percent = Number(option._discountPercent || 0);
+
+        if (percent > 0 && original > current) {
+          const next = `<span class="sm-price-before">${escapeHtml(money(original))}</span><span class="sm-price-after">${escapeHtml(money(current))}</span>`;
+          node.classList.add('sm-price-discounted');
+          if (node.innerHTML !== next) node.innerHTML = next;
+        } else {
+          const next = money(current);
+          node.classList.remove('sm-price-discounted');
+          if (node.textContent !== next || node.children.length) node.textContent = next;
         }
       });
     });
@@ -199,6 +269,8 @@
     if (!db?.products || !selectedMode) return;
 
     db.products.forEach(product => {
+      const percent = discountForProduct(product);
+
       (product.options || []).forEach(option => {
         const row = priceMap.get(String(option.id));
         const inside = Number(row?.price ?? option._insidePrice ?? option.price ?? 0);
@@ -209,7 +281,11 @@
 
         option._insidePrice = Number.isFinite(inside) ? inside : 0;
         option._takeawayPrice = Number.isFinite(takeaway) ? takeaway : option._insidePrice;
-        option.price = selectedMode === 'takeaway' ? option._takeawayPrice : option._insidePrice;
+
+        const original = selectedMode === 'takeaway' ? option._takeawayPrice : option._insidePrice;
+        option._modeOriginalPrice = original;
+        option._discountPercent = percent;
+        option.price = discountedPrice(original, percent);
       });
     });
 
@@ -217,7 +293,7 @@
 
     if (notify) {
       window.dispatchEvent(new CustomEvent('shorash:prices-updated', {
-        detail: { source: 'dining-mode', mode: selectedMode }
+        detail: { source: 'dining-mode', mode: selectedMode, discounts: true }
       }));
     }
   }
@@ -232,6 +308,28 @@
     (data || []).forEach(row => priceMap.set(String(row.id), row));
   }
 
+  async function fetchDiscounts() {
+    if (typeof supabaseClient === 'undefined' || !supabaseClient) return;
+
+    const [{ data: discountData, error: discountError }, { data: productData, error: productError }] = await Promise.all([
+      supabaseClient
+        .from(DISCOUNTS_TABLE)
+        .select('id,discount_percent,price_mode,scope_type,target_id,is_active,created_at'),
+      supabaseClient
+        .from(PRODUCTS_TABLE)
+        .select('id,category_id')
+    ]);
+
+    if (discountError) throw discountError;
+    if (productError) throw productError;
+
+    discounts = (discountData || []).filter(row => row?.is_active !== false);
+    productCategoryMap.clear();
+    (productData || []).forEach(row => {
+      if (row?.id) productCategoryMap.set(String(row.id), row.category_id ?? null);
+    });
+  }
+
   function applyModeClass() {
     document.documentElement.classList.toggle('sm-mode-dinein', selectedMode === 'dinein');
     document.documentElement.classList.toggle('sm-mode-takeaway', selectedMode === 'takeaway');
@@ -242,9 +340,9 @@
   async function finishSelection() {
     if (!selectedMode || !window.SHORASH_DB) return;
     try {
-      await fetchPrices();
+      await Promise.all([fetchPrices(), fetchDiscounts()]);
     } catch (error) {
-      console.debug('Dining prices fallback:', error?.message || error);
+      console.debug('Dining prices/discounts fallback:', error?.message || error);
     }
     applyModeClass();
     applyModePrices(true);
@@ -270,6 +368,13 @@
         if (row?.id) priceMap.set(String(row.id), row);
         if (payload.eventType === 'DELETE' && payload.old?.id) priceMap.delete(String(payload.old.id));
         if (ready) applyModePrices(true);
+      })
+      .on('postgres_changes', { event: '*', schema: 'public', table: DISCOUNTS_TABLE }, () => {
+        void fetchDiscounts()
+          .then(() => {
+            if (ready) applyModePrices(true);
+          })
+          .catch(error => console.debug('Discount refresh fallback:', error?.message || error));
       })
       .subscribe();
   }
