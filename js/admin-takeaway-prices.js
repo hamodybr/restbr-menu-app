@@ -2,6 +2,7 @@
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
 
   let patched = false;
+  let activeNewSnapshot = [];
 
   function installStyles() {
     if (document.getElementById('smTakeawayAdminStyles')) return;
@@ -114,6 +115,7 @@
     if (
       typeof window.optionEditorHtml !== 'function' ||
       typeof window.newOptionEditorHtml !== 'function' ||
+      typeof window.buildNewOptionPayload !== 'function' ||
       typeof window.saveAdminProduct !== 'function' ||
       typeof window.createAdminProduct !== 'function'
     ) return false;
@@ -134,6 +136,16 @@
     window.newOptionEditorHtml = function() {
       const html = oldNewOptionEditorHtml.apply(this, arguments);
       return injectField(html, 'noe-takeaway-price', 0);
+    };
+
+    // Save the takeaway value in the SAME insert that creates a new option.
+    // This prevents the admin reload from briefly reading the inside price as takeaway.
+    const oldBuildNewOptionPayload = window.buildNewOptionPayload;
+    window.buildNewOptionPayload = function(productId, name, price, index) {
+      const payload = oldBuildNewOptionPayload.apply(this, arguments);
+      const item = activeNewSnapshot[Number(index)] || null;
+      payload.takeaway_price = item ? safeNumber(item.takeaway, safeNumber(price, 0)) : safeNumber(price, 0);
+      return payload;
     };
 
     const oldSaveAdminProduct = window.saveAdminProduct;
@@ -158,8 +170,15 @@
       const snapshot = captureRows('#newOptionsEditor .option-editor', '.noe-name', '.noe-price', '.noe-takeaway-price');
       const beforeIds = new Set(await productIdsByName(nameAr, categoryId));
 
-      const result = await oldCreateAdminProduct.apply(this, arguments);
+      activeNewSnapshot = snapshot;
+      let result;
+      try {
+        result = await oldCreateAdminProduct.apply(this, arguments);
+      } finally {
+        activeNewSnapshot = [];
+      }
 
+      // Keep this as a safety sync for any legacy/default option path.
       try {
         const afterIds = await productIdsByName(nameAr, categoryId);
         const newId = afterIds.find(id => !beforeIds.has(id));
