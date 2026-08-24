@@ -49,18 +49,18 @@
     DAY_ORDER.forEach(day => {
       const slot = safeObject(weeklyIncoming[day]);
       weekly[day] = {
-        enabled: slot.enabled !== false,
-        open: /^\d{2}:\d{2}$/.test(String(slot.open || '')) ? slot.open : fallback.weekly[day].open,
-        close: /^\d{2}:\d{2}$/.test(String(slot.close || '')) ? slot.close : fallback.weekly[day].close
+        enabled:slot.enabled !== false,
+        open:/^\d{2}:\d{2}$/.test(String(slot.open || '')) ? slot.open : fallback.weekly[day].open,
+        close:/^\d{2}:\d{2}$/.test(String(slot.close || '')) ? slot.close : fallback.weekly[day].close
       };
     });
 
     return {
       timezone:TIMEZONE,
       daily:{
-        enabled: daily.enabled !== false,
-        open: /^\d{2}:\d{2}$/.test(String(daily.open || '')) ? daily.open : fallback.daily.open,
-        close: /^\d{2}:\d{2}$/.test(String(daily.close || '')) ? daily.close : fallback.daily.close
+        enabled:daily.enabled !== false,
+        open:/^\d{2}:\d{2}$/.test(String(daily.open || '')) ? daily.open : fallback.daily.open,
+        close:/^\d{2}:\d{2}$/.test(String(daily.close || '')) ? daily.close : fallback.daily.close
       },
       weekly
     };
@@ -69,7 +69,8 @@
   function minutes(value) {
     const match = String(value || '').match(/^(\d{1,2}):(\d{2})$/);
     if (!match) return null;
-    const h = Number(match[1]), m = Number(match[2]);
+    const h = Number(match[1]);
+    const m = Number(match[2]);
     if (h < 0 || h > 23 || m < 0 || m > 59) return null;
     return h * 60 + m;
   }
@@ -91,7 +92,8 @@
 
   function slotOpenSameDay(slot, nowMinute) {
     if (!slot || slot.enabled === false) return false;
-    const start = minutes(slot.open), end = minutes(slot.close);
+    const start = minutes(slot.open);
+    const end = minutes(slot.close);
     if (start === null || end === null) return false;
     if (start === end) return true;
     if (start < end) return nowMinute >= start && nowMinute < end;
@@ -100,7 +102,8 @@
 
   function carryFromPrevious(slot, nowMinute) {
     if (!slot || slot.enabled === false) return false;
-    const start = minutes(slot.open), end = minutes(slot.close);
+    const start = minutes(slot.open);
+    const end = minutes(slot.close);
     if (start === null || end === null || start === end) return false;
     return start > end && nowMinute < end;
   }
@@ -111,7 +114,8 @@
 
     if (mode === 'daily') {
       const slot = schedule.daily;
-      const start = minutes(slot.open), end = minutes(slot.close);
+      const start = minutes(slot.open);
+      const end = minutes(slot.close);
       if (slot.enabled === false || start === null || end === null) return false;
       if (start === end) return true;
       return start < end
@@ -128,40 +132,110 @@
   }
 
   function injectStyles() {
-    if (document.getElementById('smRestaurantHoursStyles')) return;
-    const style = document.createElement('style');
-    style.id = 'smRestaurantHoursStyles';
+    let style = document.getElementById('smRestaurantHoursStyles');
+    if (!style) {
+      style = document.createElement('style');
+      style.id = 'smRestaurantHoursStyles';
+      document.head.appendChild(style);
+    }
+
     style.textContent = `
-      .sm-hours-box{margin-top:12px;padding:12px;border:1px solid rgba(216,169,88,.16);border-radius:14px;background:rgba(216,169,88,.035)}
-      .sm-hours-head{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:10px}
-      .sm-hours-head strong{display:block;color:#e2b55e;font-size:12px}.sm-hours-head small{display:block;color:#817a72;font-size:9px;margin-top:3px;line-height:1.5}
-      .sm-hours-mode{width:100%;border:1px solid rgba(255,255,255,.09);background:#050403;color:#fff;border-radius:11px;padding:11px;font:inherit;font-size:16px;outline:none}
-      .sm-hours-pane{display:none;margin-top:10px}.sm-hours-pane.active{display:block}
-      .sm-hours-times{display:grid;grid-template-columns:1fr 1fr;gap:8px}
-      .sm-hours-times label,.sm-hours-day label{display:grid;gap:5px;color:#918981;font-size:9px}
-      .sm-hours-times input,.sm-hours-day input[type="time"]{width:100%;min-width:0;border:1px solid rgba(255,255,255,.085);background:#030201;color:#f2eee8;border-radius:10px;padding:10px;font:inherit;font-size:16px;outline:none;box-sizing:border-box}
-      .sm-hours-week{display:grid;gap:7px}
-      .sm-hours-day{display:grid;grid-template-columns:auto 72px minmax(0,1fr) minmax(0,1fr);gap:7px;align-items:end;padding:9px;border:1px solid rgba(255,255,255,.06);border-radius:11px;background:#070503}
-      .sm-hours-day-name{align-self:center;color:#d8d1c8;font-size:10px;font-weight:800;white-space:nowrap}
-      .sm-hours-day-toggle{align-self:center;display:flex;align-items:center;gap:5px;color:#928a82;font-size:9px;white-space:nowrap}
-      .sm-hours-day.is-off{opacity:.48}
+      .sm-hours-box{
+        margin-top:12px;padding:12px;border:1px solid rgba(216,169,88,.16);
+        border-radius:14px;background:rgba(216,169,88,.035)
+      }
+      .sm-hours-head{margin-bottom:10px}
+      .sm-hours-head strong{display:block;color:#e2b55e;font-size:12px}
+      .sm-hours-head small{display:block;color:#817a72;font-size:9px;margin-top:3px;line-height:1.55}
+      .sm-hours-mode{
+        width:100%;border:1px solid rgba(255,255,255,.09);background:#050403;color:#fff;
+        border-radius:11px;padding:11px;font:inherit;font-size:16px;outline:none
+      }
+      .sm-hours-pane{display:none;margin-top:10px}
+      .sm-hours-pane.active{display:block}
+      .sm-hours-times,.sm-hours-day-times{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+      .sm-hours-times label,.sm-hours-day-times label{display:grid;gap:5px;color:#918981;font-size:9px}
+      .sm-hours-times input,.sm-hours-day-times input{
+        width:100%;min-width:0;border:1px solid rgba(255,255,255,.085);background:#030201;
+        color:#f2eee8;border-radius:10px;padding:10px;font:inherit;font-size:16px;
+        outline:none;box-sizing:border-box
+      }
+      .sm-hours-week{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+      .sm-hours-day{
+        min-width:0;padding:10px;border:1px solid rgba(255,255,255,.065);
+        border-radius:12px;background:#070503;transition:opacity .16s ease,border-color .16s ease
+      }
+      .sm-hours-day-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
+      .sm-hours-day-name{color:#ddd5cc;font-size:11px;font-weight:900}
+      .sm-hours-day-toggle{
+        display:flex;align-items:center;gap:6px;margin:0;color:#cbbda9;font-size:10px;
+        cursor:pointer;white-space:nowrap
+      }
+      .sm-hours-day-toggle input{width:17px;height:17px;margin:0;accent-color:#d8a958}
+      .sm-hours-day-state{min-width:34px;text-align:start}
+      .sm-hours-day-times{margin-top:9px}
+      .sm-hours-day.is-off{opacity:.6}
+      .sm-hours-day.is-off .sm-hours-day-times{display:none}
+      .sm-hours-day.is-off .sm-hours-day-state{color:#9b9289}
       .sm-hours-note{margin-top:9px;color:#817970;font-size:9px;line-height:1.7}
-      .sm-hours-preview{margin-top:10px;padding:9px 10px;border-radius:10px;background:#080604;border:1px solid rgba(255,255,255,.06);font-size:10px;line-height:1.6;color:#aaa198}
-      .sm-hours-preview.open{color:#baf3d7;border-color:rgba(52,211,153,.18)}.sm-hours-preview.closed{color:#fecaca;border-color:rgba(248,113,113,.18)}
-      .sm-hours-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}.sm-hours-actions .btn{min-width:150px}.sm-hours-status{font-size:10px;color:#8d867e}
-      body.admin-light-mode .sm-hours-box,body.sm-admin-light .sm-hours-box,html[data-admin-theme="light"] .sm-hours-box{background:#fffaf3;border-color:rgba(112,79,34,.16)}
-      body.admin-light-mode .sm-hours-mode,body.admin-light-mode .sm-hours-times input,body.admin-light-mode .sm-hours-day input[type="time"],body.sm-admin-light .sm-hours-mode,body.sm-admin-light .sm-hours-times input,body.sm-admin-light .sm-hours-day input[type="time"],html[data-admin-theme="light"] .sm-hours-mode,html[data-admin-theme="light"] .sm-hours-times input,html[data-admin-theme="light"] .sm-hours-day input[type="time"]{background:#fff;color:#2c251e;border-color:rgba(104,74,34,.18)}
-      body.admin-light-mode .sm-hours-day,body.admin-light-mode .sm-hours-preview,body.sm-admin-light .sm-hours-day,body.sm-admin-light .sm-hours-preview,html[data-admin-theme="light"] .sm-hours-day,html[data-admin-theme="light"] .sm-hours-preview{background:#fff;border-color:rgba(104,74,34,.12)}
-      @media(max-width:650px){.sm-hours-day{grid-template-columns:1fr auto}.sm-hours-day label{grid-column:auto}.sm-hours-day label:nth-of-type(1),.sm-hours-day label:nth-of-type(2){grid-row:2}.sm-hours-times{grid-template-columns:1fr 1fr}}
+      .sm-hours-preview{
+        margin-top:10px;padding:9px 10px;border-radius:10px;background:#080604;
+        border:1px solid rgba(255,255,255,.06);font-size:10px;line-height:1.6;color:#aaa198
+      }
+      .sm-hours-preview.open{color:#baf3d7;border-color:rgba(52,211,153,.18)}
+      .sm-hours-preview.closed{color:#fecaca;border-color:rgba(248,113,113,.18)}
+      .sm-hours-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap;margin-top:10px}
+      .sm-hours-actions .btn{min-width:150px}
+      .sm-hours-status{font-size:10px;color:#8d867e}
+
+      body.admin-light-mode .sm-hours-box,
+      body.sm-admin-light .sm-hours-box,
+      html[data-admin-theme="light"] .sm-hours-box{
+        background:#fffaf3;border-color:rgba(112,79,34,.16)
+      }
+      body.admin-light-mode .sm-hours-mode,
+      body.admin-light-mode .sm-hours-times input,
+      body.admin-light-mode .sm-hours-day-times input,
+      body.sm-admin-light .sm-hours-mode,
+      body.sm-admin-light .sm-hours-times input,
+      body.sm-admin-light .sm-hours-day-times input,
+      html[data-admin-theme="light"] .sm-hours-mode,
+      html[data-admin-theme="light"] .sm-hours-times input,
+      html[data-admin-theme="light"] .sm-hours-day-times input{
+        background:#fff;color:#2c251e;border-color:rgba(104,74,34,.18)
+      }
+      body.admin-light-mode .sm-hours-day,
+      body.admin-light-mode .sm-hours-preview,
+      body.sm-admin-light .sm-hours-day,
+      body.sm-admin-light .sm-hours-preview,
+      html[data-admin-theme="light"] .sm-hours-day,
+      html[data-admin-theme="light"] .sm-hours-preview{
+        background:#fff;border-color:rgba(104,74,34,.12)
+      }
+      body.admin-light-mode .sm-hours-day-name,
+      body.sm-admin-light .sm-hours-day-name,
+      html[data-admin-theme="light"] .sm-hours-day-name{color:#332a20}
+      body.admin-light-mode .sm-hours-day-toggle,
+      body.sm-admin-light .sm-hours-day-toggle,
+      html[data-admin-theme="light"] .sm-hours-day-toggle{color:#695d51}
+
+      @media(max-width:650px){
+        .sm-hours-box{padding:10px}
+        .sm-hours-week{grid-template-columns:1fr;gap:7px}
+        .sm-hours-day{padding:9px 10px}
+        .sm-hours-day-times{gap:7px}
+        .sm-hours-times{grid-template-columns:1fr 1fr}
+        .sm-hours-actions .btn{width:100%;min-width:0}
+      }
     `;
-    document.head.appendChild(style);
   }
 
   function buildHtml() {
     return `
       <div class="sm-hours-box" id="smRestaurantHoursBox">
         <div class="sm-hours-head">
-          <div><strong>🕒 أوقات عمل المطعم</strong><small>توقيت العراق — زر «المطعم مفتوح» أعلاه يبقى إغلاق يدوي فوري.</small></div>
+          <strong>🕒 أوقات عمل المطعم</strong>
+          <small>حسب توقيت العراق. زر «المطعم مفتوح» أعلاه يبقى إغلاق يدوي فوري.</small>
         </div>
 
         <select id="smHoursMode" class="sm-hours-mode">
@@ -171,7 +245,7 @@
         </select>
 
         <div class="sm-hours-pane" data-sm-hours-pane="always">
-          <div class="sm-hours-note">إذا كان زر «المطعم مفتوح» مفعلاً، يبقى الطلب مفتوح 24 ساعة طوال الأسبوع.</div>
+          <div class="sm-hours-note">إذا كان زر «المطعم مفتوح» مفعلاً، يبقى استقبال الطلبات مفتوحاً طوال الأسبوع.</div>
         </div>
 
         <div class="sm-hours-pane" data-sm-hours-pane="daily">
@@ -179,21 +253,28 @@
             <label><span>يفتح</span><input id="smDailyOpen" type="time"></label>
             <label><span>يغلق</span><input id="smDailyClose" type="time"></label>
           </div>
-          <div class="sm-hours-note">يدعم عبور منتصف الليل، مثلاً 10:00 → 02:00. إذا كان وقت الفتح والإغلاق نفسه يعتبر 24 ساعة.</div>
+          <div class="sm-hours-note">مثال: 10:00 → 02:00 يعني يستمر الدوام بعد منتصف الليل.</div>
         </div>
 
         <div class="sm-hours-pane" data-sm-hours-pane="weekly">
           <div class="sm-hours-week" id="smHoursWeek">
             ${DAY_ORDER.map(day => `
               <div class="sm-hours-day" data-sm-day="${day}">
-                <div class="sm-hours-day-name">${DAYS[day]}</div>
-                <label class="sm-hours-day-toggle"><input type="checkbox" data-sm-day-enabled="${day}"> مفتوح</label>
-                <label><span>يفتح</span><input type="time" data-sm-day-open="${day}"></label>
-                <label><span>يغلق</span><input type="time" data-sm-day-close="${day}"></label>
+                <div class="sm-hours-day-head">
+                  <strong class="sm-hours-day-name">${DAYS[day]}</strong>
+                  <label class="sm-hours-day-toggle">
+                    <input type="checkbox" data-sm-day-enabled="${day}">
+                    <span class="sm-hours-day-state" data-sm-day-state="${day}">مفتوح</span>
+                  </label>
+                </div>
+                <div class="sm-hours-day-times">
+                  <label><span>يفتح</span><input type="time" data-sm-day-open="${day}"></label>
+                  <label><span>يغلق</span><input type="time" data-sm-day-close="${day}"></label>
+                </div>
               </div>
             `).join('')}
           </div>
-          <div class="sm-hours-note">اليوم غير المحدد = مغلق. ويدعم عبور منتصف الليل مثل الجمعة 18:00 → 02:00.</div>
+          <div class="sm-hours-note">إذا أغلقت يوماً، تختفي حقول الوقت لذلك اليوم. والفترات مثل 18:00 → 02:00 مدعومة.</div>
         </div>
 
         <div id="smHoursPreview" class="sm-hours-preview"></div>
@@ -266,12 +347,16 @@
 
   function updateDayDisabled(day) {
     const row = document.querySelector(`[data-sm-day="${day}"]`);
-    const enabled = document.querySelector(`[data-sm-day-enabled="${day}"]`)?.checked !== false;
+    const toggle = document.querySelector(`[data-sm-day-enabled="${day}"]`);
+    const enabled = toggle?.checked !== false;
     row?.classList.toggle('is-off', !enabled);
+
     const open = document.querySelector(`[data-sm-day-open="${day}"]`);
     const close = document.querySelector(`[data-sm-day-close="${day}"]`);
+    const state = document.querySelector(`[data-sm-day-state="${day}"]`);
     if (open) open.disabled = !enabled;
     if (close) close.disabled = !enabled;
+    if (state) state.textContent = enabled ? 'مفتوح' : 'مغلق';
   }
 
   function collect() {
@@ -282,9 +367,9 @@
 
     DAY_ORDER.forEach(day => {
       schedule.weekly[day] = {
-        enabled: document.querySelector(`[data-sm-day-enabled="${day}"]`)?.checked !== false,
-        open: document.querySelector(`[data-sm-day-open="${day}"]`)?.value || '10:00',
-        close: document.querySelector(`[data-sm-day-close="${day}"]`)?.value || '02:00'
+        enabled:document.querySelector(`[data-sm-day-enabled="${day}"]`)?.checked !== false,
+        open:document.querySelector(`[data-sm-day-open="${day}"]`)?.value || '10:00',
+        close:document.querySelector(`[data-sm-day-close="${day}"]`)?.value || '02:00'
       };
     });
 
@@ -302,7 +387,7 @@
     preview.classList.toggle('closed', !effective);
 
     if (!manualOpen) {
-      preview.textContent = '🔴 الآن مغلق — لأن زر «المطعم مفتوح» مطفأ يدوياً.';
+      preview.textContent = '🔴 الآن مغلق — زر «المطعم مفتوح» مطفأ يدوياً.';
     } else if (draft.mode === 'always') {
       preview.textContent = '🟢 الآن مفتوح — وضع 24/7.';
     } else {
@@ -340,6 +425,7 @@
   async function loadHours() {
     try {
       if (typeof supabaseClient === 'undefined' || !supabaseClient) return;
+
       const { data, error } = await supabaseClient
         .from('restaurant_settings')
         .select('id,is_open,restaurant_schedule_mode,restaurant_schedule,updated_at')
@@ -411,7 +497,6 @@
     loadHours();
   }
 
-  // Admin inline UI may be rendered/refreshed after this plugin loads.
   const observer = new MutationObserver(() => injectUi());
   observer.observe(document.documentElement, { childList:true, subtree:true });
 })();
