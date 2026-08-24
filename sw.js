@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v16";
+const CACHE_NAME = "shorash-menu-restored-v17";
 
 const CORE = [
   "./",
@@ -10,7 +10,7 @@ const CORE = [
   "./css/english-card-ltr.css?v=1.0",
   "./js/app.js?v=17.3",
   "./js/cart.js?v=4.1",
-  "./js/cart-fab-effects.js?v=1.0",
+  "./js/cart-fab-effects.js?v=1.1",
   "./js/supabase-config.js?v=1.2",
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
