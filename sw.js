@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v35";
+const CACHE_NAME = "shorash-menu-restored-v36";
 
 const CORE = [
   "./",
@@ -27,6 +27,7 @@ const CORE = [
   "./js/admin-light-theme-complete.js?v=1.0",
   "./js/admin-product-category-filter.js?v=2.0",
   "./js/admin-takeaway-prices.js?v=1.1",
+  "./js/admin-option-order.js?v=1.0",
   "./js/admin-dining-gate-settings.js?v=1.0",
   "./js/admin-discounts.js?v=1.0",
   "./js/dining-mode.js?v=1.3",
