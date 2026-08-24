@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v41";
+const CACHE_NAME = "shorash-menu-restored-v42";
 
 const CORE = [
   "./",
@@ -21,7 +21,7 @@ const CORE = [
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
   "./js/discount-choice-price-sync.js?v=1.0",
-  "./js/restaurant-hours.js?v=1.0",
+  "./js/restaurant-hours.js?v=1.1",
   "./js/english-news-ticker.js?v=1.0",
   "./js/card-life-effects.js?v=1.0",
   "./js/admin-theme-toolbar.js?v=1.1",
@@ -29,7 +29,7 @@ const CORE = [
   "./js/admin-product-category-filter.js?v=2.0",
   "./js/admin-takeaway-prices.js?v=1.1",
   "./js/admin-option-order.js?v=1.4",
-  "./js/admin-restaurant-hours.js?v=1.0",
+  "./js/admin-restaurant-hours.js?v=1.1",
   "./js/admin-dining-gate-settings.js?v=1.0",
   "./js/admin-discounts.js?v=1.0",
   "./js/dining-mode.js?v=1.3",
