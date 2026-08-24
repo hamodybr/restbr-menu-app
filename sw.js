@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v36";
+const CACHE_NAME = "shorash-menu-restored-v37";
 
 const CORE = [
   "./",
@@ -27,7 +27,7 @@ const CORE = [
   "./js/admin-light-theme-complete.js?v=1.0",
   "./js/admin-product-category-filter.js?v=2.0",
   "./js/admin-takeaway-prices.js?v=1.1",
-  "./js/admin-option-order.js?v=1.0",
+  "./js/admin-option-order.js?v=1.1",
   "./js/admin-dining-gate-settings.js?v=1.0",
   "./js/admin-discounts.js?v=1.0",
   "./js/dining-mode.js?v=1.3",
@@ -53,8 +53,6 @@ self.addEventListener("install", event => {
   event.waitUntil((async () => {
     const cache = await caches.open(CACHE_NAME);
 
-    // Cache the navigation shell first. A missing optional file must never
-    // prevent the menu itself from working offline.
     await cacheOne(cache, "./index.html");
     await cacheOne(cache, "./");
 
@@ -87,8 +85,30 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
 
-  // Supabase/API and unrelated third-party requests are never written to this cache.
   if (url.origin !== self.location.origin) return;
+
+  const isAdminPage = /\/admin\.html$/i.test(url.pathname);
+  const isAdminAsset =
+    /\/js\/admin-[^/]+\.js$/i.test(url.pathname) ||
+    /\/js\/supabase-config\.js$/i.test(url.pathname);
+
+  // Admin must always prefer the newest online code. This prevents stale
+  // dashboard plugins from being served after a deployment.
+  if (isAdminPage || isAdminAsset) {
+    event.respondWith((async () => {
+      try {
+        return await fetch(request, { cache: "no-store" });
+      } catch (_) {
+        return (
+          await caches.match(request, { ignoreSearch: true }) ||
+          (isAdminPage
+            ? await caches.match("./index.html", { ignoreSearch: true })
+            : Response.error())
+        );
+      }
+    })());
+    return;
+  }
 
   if (request.mode === "navigate") {
     event.respondWith((async () => {
@@ -127,7 +147,6 @@ self.addEventListener("fetch", event => {
     })
     .catch(() => null);
 
-  // Keep the stale-while-revalidate update alive without delaying the response.
   event.waitUntil(networkUpdate.then(() => {}).catch(() => {}));
 
   event.respondWith((async () => {
