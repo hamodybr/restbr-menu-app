@@ -143,11 +143,12 @@
       style.id = 'smRestaurantClosedBannerStyle';
       style.textContent = `
         #smRestaurantClosedBanner{
-          position:sticky;
-          z-index:96;
-          top:calc(7px + env(safe-area-inset-top));
+          position:fixed;
+          z-index:999;
+          top:calc(8px + env(safe-area-inset-top));
+          left:50%;
           width:min(calc(100% - 20px),680px);
-          margin:10px auto 6px;
+          margin:0;
           padding:11px 13px;
           box-sizing:border-box;
           border:1px solid rgba(244,184,82,.58);
@@ -162,13 +163,14 @@
           box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 0 rgba(244,184,82,.48);
           backdrop-filter:blur(14px);
           -webkit-backdrop-filter:blur(14px);
+          transform:translateX(-50%) scale(1);
           transform-origin:center;
           animation:smRestaurantClosedPulse 1.05s ease-in-out infinite;
           pointer-events:none;
         }
         #smRestaurantClosedBanner[hidden]{display:none!important}
         body.sm-hours-closed #smOrderStateBanner{display:none!important}
-        body.sm-hours-closed .sm-cats-wrap{top:calc(52px + env(safe-area-inset-top))!important}
+        body.sm-hours-closed .sm-cats-wrap{top:calc(64px + env(safe-area-inset-top))!important}
         body.sm-hours-closed .sm-add-cart,
         body.sm-hours-closed .sm-direct-add,
         body.sm-hours-closed .sm-choose-options,
@@ -181,12 +183,12 @@
         }
         @keyframes smRestaurantClosedPulse{
           0%,100%{
-            transform:scale(1);
+            transform:translateX(-50%) scale(1);
             box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 0 rgba(244,184,82,.42);
             background:rgba(63,29,8,.96)
           }
           50%{
-            transform:scale(1.018);
+            transform:translateX(-50%) scale(1.018);
             box-shadow:0 13px 34px rgba(0,0,0,.36),0 0 0 6px rgba(244,184,82,.12),0 0 24px rgba(244,184,82,.28);
             background:rgba(91,37,8,.98)
           }
