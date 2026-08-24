@@ -157,6 +157,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only: allow takeaway_price updates during Excel import.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminExcelImportTakeawayScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminExcelImportTakeawayScript';
+  script.src = 'js/admin-excel-import-takeaway.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only restaurant opening-hours editor.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
