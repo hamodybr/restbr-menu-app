@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v28";
+const CACHE_NAME = "shorash-menu-restored-v29";
 
 const CORE = [
   "./",
@@ -9,7 +9,7 @@ const CORE = [
   "./css/desktop-phone-parity.css?v=1.0",
   "./css/english-card-ltr.css?v=1.0",
   "./css/mobile-card-image-fix.css?v=1.1",
-  "./js/offline-status.js?v=1.0",
+  "./js/offline-status.js?v=1.1",
   "./js/app.js?v=17.3",
   "./js/cart.js?v=4.1",
   "./js/cart-fab-effects.js?v=1.2",
@@ -112,24 +112,22 @@ self.addEventListener("fetch", event => {
 
   if (!isStatic) return;
 
+  const networkUpdate = fetch(request)
+    .then(async response => {
+      if (response && response.ok) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(request, response.clone()).catch(() => {});
+      }
+      return response;
+    })
+    .catch(() => null);
+
+  // Keep the stale-while-revalidate update alive without delaying the response.
+  event.waitUntil(networkUpdate.then(() => {}).catch(() => {}));
+
   event.respondWith((async () => {
     const cached = await caches.match(request);
-
-    const network = fetch(request)
-      .then(async response => {
-        if (response && response.ok) {
-          const cache = await caches.open(CACHE_NAME);
-          cache.put(request, response.clone()).catch(() => {});
-        }
-        return response;
-      })
-      .catch(() => null);
-
-    if (cached) {
-      event.waitUntil(network.then(() => {}).catch(() => {}));
-      return cached;
-    }
-
-    return (await network) || Response.error();
+    if (cached) return cached;
+    return (await networkUpdate) || Response.error();
   })());
 });
