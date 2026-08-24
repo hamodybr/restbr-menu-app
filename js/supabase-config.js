@@ -145,6 +145,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only: include dine-in and takeaway prices in Excel export.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminExcelExportTakeawayScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminExcelExportTakeawayScript';
+  script.src = 'js/admin-excel-export-takeaway.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only restaurant opening-hours editor.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
