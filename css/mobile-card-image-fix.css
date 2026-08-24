@@ -6,6 +6,8 @@
     -webkit-mask-image:-webkit-radial-gradient(white,black);
   }
 
+  /* Arabic/Kurdish: photo is on the RIGHT. */
+  html[dir="rtl"] .sm-card .sm-img,
   .sm-card .sm-img{
     min-width:0 !important;
     max-width:100% !important;
@@ -14,6 +16,12 @@
     border-radius:0 16px 16px 0 !important;
     clip-path:inset(0 round 0 16px 16px 0);
     transform:translateZ(0);
+  }
+
+  /* English: photo is mirrored to the LEFT, so its OUTER corners are the left ones. */
+  html[dir="ltr"] body #smMenu .sm-card .sm-img{
+    border-radius:16px 0 0 16px !important;
+    clip-path:inset(0 round 16px 0 0 16px) !important;
   }
 
   .sm-card .sm-img img,
@@ -31,8 +39,14 @@
 }
 
 @media (max-width:390px){
+  html[dir="rtl"] .sm-card .sm-img,
   .sm-card .sm-img{
     border-radius:0 15px 15px 0 !important;
     clip-path:inset(0 round 0 15px 15px 0);
+  }
+
+  html[dir="ltr"] body #smMenu .sm-card .sm-img{
+    border-radius:15px 0 0 15px !important;
+    clip-path:inset(0 round 15px 0 0 15px) !important;
   }
 }
