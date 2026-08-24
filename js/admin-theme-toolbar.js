@@ -75,27 +75,191 @@
       .admin-settings-top-hidden{display:none !important}
       #adminSettingsThemeBtn{display:none !important}
 
-      /* Make the old save bar a quiet reminder after its button is moved. */
-      #viewTools .settings-save-bar{
-        min-height:auto !important;
-      }
+      #viewTools .settings-save-bar{min-height:auto !important}
 
-      /* Smooth theme transition only for dashboard surfaces. */
-      #viewTools,
+      body,
+      .admin-header,
+      .admin-main,
+      .admin-view,
+      .bottom-nav,
+      .panel,
+      .stat-card,
+      .category-row,
+      .product-row,
+      .connection-box,
+      .search-box,
+      .admin-modal-card,
+      .modal-head,
+      .modal-actions,
+      .field input,
+      .field textarea,
+      .field select,
+      .check-card,
+      .option-editor,
       #viewTools .settings-accordion,
       #viewTools .settings-element,
       #viewTools input,
       #viewTools textarea,
-      #viewTools select,
-      .admin-header{
+      #viewTools select{
         transition:background-color .2s ease,border-color .2s ease,color .2s ease,box-shadow .2s ease !important;
       }
 
-      /* Complete light mode for every settings section, including dynamically injected panels. */
-      body.admin-global-light #viewTools{
+      /* =========================================================
+         GLOBAL LIGHT THEME — WHOLE ADMIN DASHBOARD
+         ========================================================= */
+      body.admin-global-light{
+        background:
+          radial-gradient(circle at top,#fff8ed 0%,#f5ede2 44%,#eee4d7 100%) !important;
         color:#30281f !important;
       }
 
+      body.admin-global-light .admin-main,
+      body.admin-global-light .admin-view{
+        color:#30281f !important;
+      }
+
+      body.admin-global-light .admin-header{
+        background:rgba(255,250,243,.96) !important;
+        border-bottom-color:rgba(117,80,31,.16) !important;
+        box-shadow:0 10px 28px rgba(86,57,19,.09) !important;
+      }
+
+      body.admin-global-light .admin-header h1{color:#8d5e1b !important}
+      body.admin-global-light .admin-header p{color:#75695d !important}
+
+      body.admin-global-light .admin-header-actions .header-refresh,
+      body.admin-global-light .admin-global-theme-btn{
+        background:#fffdf8 !important;
+        color:#7a5319 !important;
+        border-color:rgba(99,69,27,.18) !important;
+        box-shadow:0 5px 16px rgba(86,57,19,.07) !important;
+      }
+
+      body.admin-global-light .bottom-nav{
+        background:rgba(255,250,243,.96) !important;
+        border-color:rgba(117,80,31,.15) !important;
+        box-shadow:0 16px 38px rgba(86,57,19,.12) !important;
+      }
+
+      body.admin-global-light .bottom-nav .nav-btn{
+        color:#786b5d !important;
+      }
+
+      body.admin-global-light .bottom-nav .nav-btn.active{
+        color:#8d5e1b !important;
+        background:rgba(182,126,45,.1) !important;
+      }
+
+      body.admin-global-light .panel,
+      body.admin-global-light .stat-card,
+      body.admin-global-light .category-row,
+      body.admin-global-light .product-row,
+      body.admin-global-light .connection-box,
+      body.admin-global-light .tools-card,
+      body.admin-global-light .analytics-card,
+      body.admin-global-light .metric-card,
+      body.admin-global-light .chart-card,
+      body.admin-global-light .backup-card,
+      body.admin-global-light .bulk-price-card,
+      body.admin-global-light .dynamic-manager,
+      body.admin-global-light .dynamic-item,
+      body.admin-global-light .admin-card,
+      body.admin-global-light .home-card,
+      body.admin-global-light .quick-card,
+      body.admin-global-light .activity-card{
+        background:#fffaf3 !important;
+        border-color:rgba(112,79,34,.16) !important;
+        color:#30281f !important;
+        box-shadow:0 8px 24px rgba(83,58,26,.05) !important;
+      }
+
+      body.admin-global-light .panel-header{
+        border-bottom-color:rgba(112,79,34,.11) !important;
+      }
+
+      body.admin-global-light .panel-header h2,
+      body.admin-global-light .stat-card strong,
+      body.admin-global-light .product-price,
+      body.admin-global-light .view-title,
+      body.admin-global-light .admin-view h2,
+      body.admin-global-light .admin-view h3,
+      body.admin-global-light .admin-view h4{
+        color:#8d5e1b !important;
+      }
+
+      body.admin-global-light .category-name,
+      body.admin-global-light .product-name,
+      body.admin-global-light .admin-view strong,
+      body.admin-global-light .admin-view label{
+        color:#33291f !important;
+      }
+
+      body.admin-global-light .category-meta,
+      body.admin-global-light .product-meta,
+      body.admin-global-light .stat-card span,
+      body.admin-global-light .view-subtitle,
+      body.admin-global-light .loading,
+      body.admin-global-light .empty,
+      body.admin-global-light .admin-view small,
+      body.admin-global-light .admin-view p{
+        color:#776b5f !important;
+      }
+
+      body.admin-global-light .search-box,
+      body.admin-global-light .admin-view input:not([type="checkbox"]):not([type="radio"]),
+      body.admin-global-light .admin-view textarea,
+      body.admin-global-light .admin-view select{
+        background:#fffdf9 !important;
+        color:#30281f !important;
+        border-color:rgba(112,79,34,.2) !important;
+        box-shadow:inset 0 1px 0 rgba(255,255,255,.8) !important;
+      }
+
+      body.admin-global-light .search-box::placeholder,
+      body.admin-global-light .admin-view input::placeholder,
+      body.admin-global-light .admin-view textarea::placeholder{
+        color:#9b9187 !important;
+      }
+
+      body.admin-global-light .btn-dark,
+      body.admin-global-light .mini-btn,
+      body.admin-global-light .edit-product-btn,
+      body.admin-global-light .admin-view button:not(.btn-gold):not(.danger-action-btn):not(.danger-mini):not(.danger):not(.nav-btn){
+        background:#fffaf2 !important;
+        color:#6f4b1b !important;
+        border-color:rgba(112,79,34,.18) !important;
+      }
+
+      body.admin-global-light .danger,
+      body.admin-global-light .danger-mini,
+      body.admin-global-light .danger-action-btn{
+        background:#fff2f0 !important;
+        color:#a63c34 !important;
+        border-color:rgba(166,60,52,.22) !important;
+      }
+
+      body.admin-global-light .admin-modal{
+        background:rgba(77,59,39,.34) !important;
+      }
+
+      body.admin-global-light .admin-modal-card,
+      body.admin-global-light .modal-head,
+      body.admin-global-light .modal-actions,
+      body.admin-global-light .check-card,
+      body.admin-global-light .option-editor{
+        background:#fffaf3 !important;
+        color:#30281f !important;
+        border-color:rgba(112,79,34,.16) !important;
+      }
+
+      body.admin-global-light .modal-close{
+        background:#fffdf8 !important;
+        color:#6f4b1b !important;
+        border-color:rgba(112,79,34,.18) !important;
+      }
+
+      /* Settings-specific surfaces, including dynamic plugins. */
+      body.admin-global-light #viewTools,
       body.admin-global-light #viewTools .settings-clean-wrap,
       body.admin-global-light #viewTools .settings-accordion-body{
         color:#30281f !important;
@@ -132,40 +296,6 @@
         border-color:rgba(112,79,34,.12) !important;
       }
 
-      body.admin-global-light #viewTools strong,
-      body.admin-global-light #viewTools h2,
-      body.admin-global-light #viewTools h3,
-      body.admin-global-light #viewTools h4,
-      body.admin-global-light #viewTools label{
-        color:#33291f !important;
-      }
-
-      body.admin-global-light #viewTools small,
-      body.admin-global-light #viewTools p,
-      body.admin-global-light #viewTools .view-subtitle,
-      body.admin-global-light #viewTools .settings-element-head small,
-      body.admin-global-light #viewTools .settings-accordion-title small,
-      body.admin-global-light #viewTools .settings-toggle-copy span,
-      body.admin-global-light #viewTools .ui-design-note,
-      body.admin-global-light #viewTools .excel-note,
-      body.admin-global-light #viewTools .sm-discount-row small{
-        color:#776b5f !important;
-      }
-
-      body.admin-global-light #viewTools input:not([type="checkbox"]):not([type="radio"]),
-      body.admin-global-light #viewTools textarea,
-      body.admin-global-light #viewTools select{
-        background:#fffdf9 !important;
-        color:#30281f !important;
-        border-color:rgba(112,79,34,.2) !important;
-        box-shadow:inset 0 1px 0 rgba(255,255,255,.8) !important;
-      }
-
-      body.admin-global-light #viewTools input::placeholder,
-      body.admin-global-light #viewTools textarea::placeholder{
-        color:#9b9187 !important;
-      }
-
       body.admin-global-light #viewTools .tri-tabs,
       body.admin-global-light #viewTools .settings-tabs{
         background:#eee5d9 !important;
@@ -183,41 +313,9 @@
         color:#9b691f !important;
       }
 
-      body.admin-global-light #viewTools button:not(.btn-gold):not(.danger-action-btn):not(.danger-mini):not(.danger){
-        border-color:rgba(112,79,34,.18) !important;
-        background:#fffaf2 !important;
-        color:#6f4b1b !important;
-      }
-
-      body.admin-global-light #viewTools .danger,
-      body.admin-global-light #viewTools .danger-mini,
-      body.admin-global-light #viewTools .danger-action-btn{
-        background:#fff2f0 !important;
-        color:#a63c34 !important;
-        border-color:rgba(166,60,52,.22) !important;
-      }
-
       body.admin-global-light #viewTools .settings-msg,
       body.admin-global-light #viewTools .settings-main-msg{
         color:#6d6258;
-      }
-
-      /* Header follows settings theme while the settings page is open. */
-      body.admin-global-light .admin-header{
-        background:rgba(255,250,243,.94) !important;
-        border-bottom-color:rgba(117,80,31,.16) !important;
-        box-shadow:0 10px 28px rgba(86,57,19,.09) !important;
-      }
-
-      body.admin-global-light .admin-header h1{color:#8d5e1b !important}
-      body.admin-global-light .admin-header p{color:#75695d !important}
-
-      body.admin-global-light .admin-header-actions .header-refresh,
-      body.admin-global-light .admin-global-theme-btn{
-        background:#fffdf8 !important;
-        color:#7a5319 !important;
-        border-color:rgba(99,69,27,.18) !important;
-        box-shadow:0 5px 16px rgba(86,57,19,.07) !important;
       }
 
       @media(max-width:650px){
@@ -261,18 +359,25 @@
     return document.getElementById('viewTools')?.classList.contains('active') === true;
   }
 
-  function syncTopControlsVisibility(){
-    const active = settingsActive();
-    document.getElementById('adminGlobalThemeBtn')?.classList.toggle('admin-settings-top-hidden', !active);
-    document.getElementById('saveRestaurantSettingsBtn')?.classList.toggle('admin-settings-top-hidden', !active);
-
-    if (!active) {
-      document.body.classList.remove('admin-global-light');
-      document.body.classList.remove('admin-global-dark');
-    } else {
-      const mode = localStorage.getItem(THEME_KEY) || localStorage.getItem(LEGACY_THEME_KEY) || 'dark';
-      applyTheme(mode, false);
+  function savedTheme(){
+    try {
+      return localStorage.getItem(THEME_KEY) || localStorage.getItem(LEGACY_THEME_KEY) || 'dark';
+    } catch (_) {
+      return 'dark';
     }
+  }
+
+  function syncTopControlsVisibility(){
+    /* Theme toggle is global and stays visible on every dashboard page. */
+    document.getElementById('adminGlobalThemeBtn')?.classList.remove('admin-settings-top-hidden');
+
+    /* Restaurant save button is only relevant inside Settings. */
+    document.getElementById('saveRestaurantSettingsBtn')?.classList.toggle(
+      'admin-settings-top-hidden',
+      !settingsActive()
+    );
+
+    applyTheme(savedTheme(), false);
   }
 
   function applyTheme(mode, persist = true){
@@ -281,14 +386,17 @@
     const view = document.getElementById('viewTools');
     const button = document.getElementById('adminGlobalThemeBtn');
 
-    document.body.classList.toggle('admin-global-light', light && settingsActive());
-    document.body.classList.toggle('admin-global-dark', !light && settingsActive());
+    /* GLOBAL: never remove the theme when changing dashboard pages. */
+    document.body.classList.toggle('admin-global-light', light);
+    document.body.classList.toggle('admin-global-dark', !light);
+
+    /* Keep legacy settings selectors compatible. */
     view?.classList.toggle('admin-settings-light', light);
 
     document.documentElement.style.colorScheme = light ? 'light' : 'dark';
 
     const meta = document.querySelector('meta[name="theme-color"]');
-    if (meta && settingsActive()) meta.setAttribute('content', light ? '#fffaf3' : '#080604');
+    if (meta) meta.setAttribute('content', light ? '#fffaf3' : '#080604');
 
     if (button) {
       button.textContent = light ? '🌙' : '☀️';
@@ -327,7 +435,7 @@
       theme.type = 'button';
       actions.appendChild(theme);
       theme.addEventListener('click', () => {
-        const current = localStorage.getItem(THEME_KEY) || localStorage.getItem(LEGACY_THEME_KEY) || 'dark';
+        const current = savedTheme();
         applyTheme(current === 'light' ? 'dark' : 'light');
       });
     }
@@ -342,12 +450,11 @@
     return true;
   }
 
-  function watchSettingsView(){
-    const view = document.getElementById('viewTools');
-    if (!view) return;
-
-    const observer = new MutationObserver(syncTopControlsVisibility);
-    observer.observe(view, { attributes:true, attributeFilter:['class'] });
+  function watchDashboardViews(){
+    document.querySelectorAll('.admin-view').forEach(view => {
+      const observer = new MutationObserver(syncTopControlsVisibility);
+      observer.observe(view, { attributes:true, attributeFilter:['class'] });
+    });
 
     document.querySelectorAll('[data-admin-nav]').forEach(button => {
       button.addEventListener('click', () => requestAnimationFrame(syncTopControlsVisibility));
@@ -357,7 +464,8 @@
   function start(){
     installStyles();
     if (!buildToolbar()) return;
-    watchSettingsView();
+    watchDashboardViews();
+    applyTheme(savedTheme(), false);
     syncTopControlsVisibility();
   }
 
