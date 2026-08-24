@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v34";
+const CACHE_NAME = "shorash-menu-restored-v35";
 
 const CORE = [
   "./",
@@ -10,12 +10,12 @@ const CORE = [
   "./css/english-card-ltr.css?v=1.0",
   "./css/mobile-card-image-fix.css?v=1.1",
   "./js/offline-status.js?v=1.1",
-  "./js/unavailable-card-state.js?v=1.0",
+  "./js/unavailable-card-state.js?v=1.1",
   "./js/app.js?v=17.3",
   "./js/product-image-fallback.js?v=1.1",
   "./js/price-safety.js?v=1.0",
   "./js/cart.js?v=4.1",
-  "./js/cart-stale-item-guard.js?v=1.0",
+  "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.2",
   "./js/supabase-config.js?v=1.2",
   "./js/language-settings.js?v=1.1",
