@@ -1,0 +1,38 @@
+/* SHORASH — mobile product image clipping fix */
+@media (max-width:768px){
+  .sm-card{
+    overflow:hidden !important;
+    contain:paint;
+    -webkit-mask-image:-webkit-radial-gradient(white,black);
+  }
+
+  .sm-card .sm-img{
+    min-width:0 !important;
+    max-width:100% !important;
+    box-sizing:border-box !important;
+    overflow:hidden !important;
+    border-radius:0 16px 16px 0 !important;
+    clip-path:inset(0 round 0 16px 16px 0);
+    transform:translateZ(0);
+  }
+
+  .sm-card .sm-img img,
+  .sm-card:hover .sm-img img,
+  .sm-card:active .sm-img img{
+    display:block !important;
+    width:100% !important;
+    max-width:100% !important;
+    height:100% !important;
+    margin:0 !important;
+    padding:0 !important;
+    object-fit:cover !important;
+    transform:none !important;
+  }
+}
+
+@media (max-width:390px){
+  .sm-card .sm-img{
+    border-radius:0 15px 15px 0 !important;
+    clip-path:inset(0 round 0 15px 15px 0);
+  }
+}
