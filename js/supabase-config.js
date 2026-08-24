@@ -37,14 +37,14 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
-// Admin-only sticky settings toolbar + complete settings light/dark theme.
+// Admin-only sticky toolbar + GLOBAL dashboard light/dark theme.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
   if (document.getElementById('shorashAdminThemeToolbarScript')) return;
 
   const script = document.createElement('script');
   script.id = 'shorashAdminThemeToolbarScript';
-  script.src = 'js/admin-theme-toolbar.js?v=1.0';
+  script.src = 'js/admin-theme-toolbar.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
