@@ -73,6 +73,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only: slightly increase all dashboard text without changing layout sizing.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminFontScaleScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminFontScaleScript';
+  script.src = 'js/admin-font-scale.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only native category filter inside the existing products filter system.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
