@@ -121,6 +121,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only: enhanced full backup includes discounts too.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminFullBackupDiscountsScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminFullBackupDiscountsScript';
+  script.src = 'js/admin-full-backup-discounts.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only restaurant opening-hours editor.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
