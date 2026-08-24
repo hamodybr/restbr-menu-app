@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
 
-  console.log('✅ ADMIN OPTION ORDER V1.3 LOADED');
+  console.log('✅ ADMIN OPTION ORDER V1.4 LOADED');
 
   let savePatched = false;
   let lockedScrollY = 0;
@@ -17,45 +17,115 @@
 
     style.textContent = `
       #optionsEditor .option-editor{position:relative}
+
+      /* Compact native-looking order row: label + two arrows only. */
       .sm-option-order-bar{
-        display:flex;align-items:center;gap:8px;margin:-2px 0 10px;padding:8px;
-        border:1px solid rgba(216,169,88,.28);border-radius:11px;
-        background:rgba(216,169,88,.075);color:#9d9388;font-size:10px;
-        line-height:1;user-select:none;-webkit-user-select:none
+        display:flex;
+        align-items:center;
+        justify-content:space-between;
+        gap:10px;
+        margin:0 0 10px;
+        padding:2px 1px 8px;
+        border:0;
+        border-bottom:1px solid rgba(216,169,88,.12);
+        border-radius:0;
+        background:transparent;
+        color:#9d9388;
+        line-height:1;
+        user-select:none;
+        -webkit-user-select:none;
       }
-      .sm-option-order-number{flex:1;min-width:0;color:#e3c58e;font-weight:900;font-size:11px}
-      .sm-option-order-actions{display:flex;gap:6px;direction:ltr}
+
+      /* Hide leftovers from older cached versions. */
+      .sm-option-order-bar .sm-option-drag,
+      .sm-option-order-bar .sm-option-order-hint{
+        display:none!important;
+      }
+
+      .sm-option-order-number{
+        color:#d9c196;
+        font-weight:800;
+        font-size:12px;
+        white-space:nowrap;
+      }
+
+      .sm-option-order-actions{
+        display:inline-flex;
+        align-items:center;
+        gap:5px;
+        direction:ltr;
+        flex:0 0 auto;
+      }
+
       .sm-option-move{
-        width:44px;height:38px;display:grid;place-items:center;padding:0;
-        border:1px solid rgba(216,169,88,.46);border-radius:10px;
-        background:#17130f;color:#e3c58e;font-size:20px;font-weight:900;
-        cursor:pointer;touch-action:manipulation;-webkit-tap-highlight-color:transparent
+        width:34px;
+        height:32px;
+        display:grid;
+        place-items:center;
+        padding:0;
+        border:1px solid rgba(216,169,88,.28);
+        border-radius:9px;
+        background:rgba(216,169,88,.055);
+        color:#e3c58e;
+        font-size:17px;
+        line-height:1;
+        font-weight:900;
+        cursor:pointer;
+        touch-action:manipulation;
+        -webkit-tap-highlight-color:transparent;
       }
-      .sm-option-move:active{transform:scale(.92);background:#21180e}
-      .sm-option-move:disabled{opacity:.25;cursor:not-allowed;transform:none}
-      .sm-option-order-hint{color:#817970;font-size:9px;margin-inline-start:4px}
+
+      .sm-option-move:active{
+        transform:scale(.93);
+        background:rgba(216,169,88,.13);
+      }
+
+      .sm-option-move:disabled{
+        opacity:.2;
+        cursor:not-allowed;
+        transform:none;
+      }
+
       .admin-modal{overscroll-behavior:none!important}
       .admin-modal-card{
         overscroll-behavior:contain!important;
         -webkit-overflow-scrolling:touch!important;
-        touch-action:pan-y!important
+        touch-action:pan-y!important;
       }
       body.sm-admin-modal-locked{overflow:hidden!important}
+
       body.admin-light-mode .sm-option-order-bar,
       body.sm-admin-light .sm-option-order-bar,
       html[data-admin-theme="light"] .sm-option-order-bar{
-        background:#fff8ed;border-color:rgba(139,94,30,.24);color:#776b5f
+        background:transparent;
+        border-bottom-color:rgba(139,94,30,.12);
       }
+
+      body.admin-light-mode .sm-option-order-number,
+      body.sm-admin-light .sm-option-order-number,
+      html[data-admin-theme="light"] .sm-option-order-number{
+        color:#77541f;
+      }
+
       body.admin-light-mode .sm-option-move,
       body.sm-admin-light .sm-option-move,
       html[data-admin-theme="light"] .sm-option-move{
-        background:#fff;color:#9b691f;border-color:rgba(139,94,30,.28)
+        background:#fffaf2;
+        color:#8d5d18;
+        border-color:rgba(139,94,30,.2);
       }
+
       @media(max-width:650px){
-        .sm-option-order-bar{padding:8px;gap:7px;flex-wrap:wrap}
+        .sm-option-order-bar{
+          margin-bottom:9px;
+          padding:1px 0 7px;
+        }
         .sm-option-order-number{font-size:11px}
-        .sm-option-order-hint{order:3;flex-basis:100%;margin:2px 0 0;line-height:1.45}
-        .sm-option-move{width:48px;height:42px;font-size:22px}
+        .sm-option-move{
+          width:36px;
+          height:34px;
+          font-size:18px;
+        }
       }
     `;
   }
@@ -72,7 +142,7 @@
     const rows = activeRows();
     rows.forEach((row, index) => {
       const label = row.querySelector('.sm-option-order-number');
-      if (label) label.textContent = `الخيار ${index + 1} من ${rows.length}`;
+      if (label) label.textContent = `الخيار ${index + 1}`;
 
       const up = row.querySelector('[data-sm-option-move="up"]');
       const down = row.querySelector('[data-sm-option-move="down"]');
@@ -84,19 +154,18 @@
   function installRowControls(row) {
     if (!(row instanceof Element) || !row.classList.contains('option-editor')) return;
 
-    // Replace any older drag/order toolbar so stale versions cannot remain.
+    // Remove every toolbar from older versions, including the drag handle/hint.
     row.querySelectorAll(':scope > .sm-option-order-bar').forEach(old => old.remove());
 
     const bar = document.createElement('div');
     bar.className = 'sm-option-order-bar';
-    bar.dataset.smOptionOrderVersion = '1.3';
+    bar.dataset.smOptionOrderVersion = '1.4';
     bar.innerHTML = `
       <span class="sm-option-order-number"></span>
       <span class="sm-option-order-actions">
         <button class="sm-option-move" type="button" data-sm-option-move="up" aria-label="نقل الخيار للأعلى" title="نقل للأعلى">↑</button>
         <button class="sm-option-move" type="button" data-sm-option-move="down" aria-label="نقل الخيار للأسفل" title="نقل للأسفل">↓</button>
       </span>
-      <span class="sm-option-order-hint">اضغط الأسهم لتغيير ترتيب الخيار</span>
     `;
 
     row.insertBefore(bar, row.firstChild);
@@ -109,7 +178,7 @@
     [...holder.children].forEach(row => {
       if (!(row instanceof Element) || !row.classList.contains('option-editor')) return;
       const current = row.querySelector(':scope > .sm-option-order-bar');
-      if (!current || current.dataset.smOptionOrderVersion !== '1.3') {
+      if (!current || current.dataset.smOptionOrderVersion !== '1.4') {
         installRowControls(row);
       }
     });
@@ -139,8 +208,8 @@
 
     try {
       row.animate(
-        [{ transform:'scale(.985)', opacity:.72 }, { transform:'scale(1)', opacity:1 }],
-        { duration:170, easing:'ease-out' }
+        [{ transform:'scale(.99)', opacity:.78 }, { transform:'scale(1)', opacity:1 }],
+        { duration:150, easing:'ease-out' }
       );
     } catch (_) {}
   }
