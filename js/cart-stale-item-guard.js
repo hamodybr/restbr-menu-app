@@ -34,6 +34,17 @@
     return Number.isInteger(index) && index >= 0 && !!options[index];
   }
 
+  function itemMustBeRemoved(product, item){
+    if (!product) return true;
+
+    // A product can still be visible in the menu while being temporarily
+    // unavailable. It must not remain in an existing cart in that state.
+    if (product.badges?.unavailable === true) return true;
+    if (product.manualUnavailable === true) return true;
+
+    return !optionStillExists(product, item);
+  }
+
   function staleKeys(){
     const DB = window.SHORASH_DB;
     if (!DB || !Array.isArray(DB.products)) return [];
@@ -44,8 +55,7 @@
           p => String(p.id) === String(item.productId)
         );
 
-        if (!product) return true;
-        return !optionStillExists(product, item);
+        return itemMustBeRemoved(product, item);
       })
       .map(item => String(item.key));
   }
@@ -59,7 +69,7 @@
     clearTimeout(window.__smStaleCartToastTimer);
     window.__smStaleCartToastTimer = setTimeout(
       () => toast.classList.remove('show'),
-      2200
+      2400
     );
   }
 
@@ -86,7 +96,11 @@
       const stale = new Set(keys);
       const clean = readCart().filter(item => !stale.has(String(item.key)));
       localStorage.setItem(KEY, JSON.stringify(clean));
-      return false;
+
+      // Cart UI may not be open yet, so ask the existing cart code to refresh
+      // on the next menu event and still show the notice when possible.
+      showNotice();
+      return true;
     }
 
     showNotice();
@@ -96,6 +110,7 @@
   function schedule(){
     setTimeout(sanitize, 0);
     setTimeout(sanitize, 120);
+    setTimeout(sanitize, 450);
   }
 
   window.addEventListener('shorash:ready', schedule);
