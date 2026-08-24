@@ -97,6 +97,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Final admin-only light-theme completion layer for hard-coded dark components.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminLightThemeCompleteScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminLightThemeCompleteScript';
+  script.src = 'js/admin-light-theme-complete.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // ==========================================
 // SHORASH MENU — Supabase Connection Test
 // ==========================================
