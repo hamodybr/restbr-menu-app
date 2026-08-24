@@ -73,14 +73,14 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
-// Admin-only drag ordering for product options inside the product editor.
+// Admin-only drag/tap ordering for product options inside the product editor.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
   if (document.getElementById('shorashAdminOptionOrderScript')) return;
 
   const script = document.createElement('script');
   script.id = 'shorashAdminOptionOrderScript';
-  script.src = 'js/admin-option-order.js?v=1.1';
+  script.src = 'js/admin-option-order.js?v=1.2';
   script.async = false;
   document.head.appendChild(script);
 })();
