@@ -44,7 +44,7 @@ console.log('✅ SHORASH Supabase connected');
 
   const script = document.createElement('script');
   script.id = 'shorashAdminTakeawayPricesScript';
-  script.src = 'js/admin-takeaway-prices.js?v=1.0';
+  script.src = 'js/admin-takeaway-prices.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
