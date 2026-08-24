@@ -97,6 +97,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only: use the current restaurant logo when a product has no image.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminProductImageFallbackScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminProductImageFallbackScript';
+  script.src = 'js/admin-product-image-fallback.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only restaurant opening-hours editor.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
