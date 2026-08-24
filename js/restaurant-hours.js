@@ -6,6 +6,12 @@
   const DAY_FROM_SHORT = {
     Sun:'sun', Mon:'mon', Tue:'tue', Wed:'wed', Thu:'thu', Fri:'fri', Sat:'sat'
   };
+  const ORDER_SELECTOR = '.sm-add-cart,.sm-direct-add,.sm-choose-options,[data-choice-product],#smCartContinue,#smSendWhatsApp';
+
+  // Fail closed during the short startup window until the real opening-hours
+  // state has been loaded and applied to SHORASH_DB.
+  window.SHORASH_HOURS_READY = false;
+  document.documentElement.classList.add('sm-hours-pending');
 
   let settings = {
     manualOpen:true,
@@ -137,23 +143,57 @@
       style.id = 'smRestaurantClosedBannerStyle';
       style.textContent = `
         #smRestaurantClosedBanner{
-          width:min(calc(100% - 24px),680px);
-          margin:10px auto 4px;
-          padding:10px 12px;
+          position:sticky;
+          z-index:96;
+          top:calc(7px + env(safe-area-inset-top));
+          width:min(calc(100% - 20px),680px);
+          margin:10px auto 6px;
+          padding:11px 13px;
           box-sizing:border-box;
-          border:1px solid rgba(232,184,98,.28);
-          border-radius:12px;
-          background:rgba(37,21,8,.9);
-          color:#f1c774;
+          border:1px solid rgba(244,184,82,.58);
+          border-radius:13px;
+          background:rgba(63,29,8,.96);
+          color:#ffd67e;
           text-align:center;
-          font-size:11px;
-          line-height:1.6;
-          box-shadow:0 8px 24px rgba(0,0,0,.18);
-          backdrop-filter:blur(12px);
-          -webkit-backdrop-filter:blur(12px);
+          font-size:12px;
+          font-weight:900;
+          line-height:1.55;
+          letter-spacing:.1px;
+          box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 0 rgba(244,184,82,.48);
+          backdrop-filter:blur(14px);
+          -webkit-backdrop-filter:blur(14px);
+          transform-origin:center;
+          animation:smRestaurantClosedPulse 1.05s ease-in-out infinite;
+          pointer-events:none;
         }
         #smRestaurantClosedBanner[hidden]{display:none!important}
         body.sm-hours-closed #smOrderStateBanner{display:none!important}
+        body.sm-hours-closed .sm-cats-wrap{top:calc(52px + env(safe-area-inset-top))!important}
+        body.sm-hours-closed .sm-add-cart,
+        body.sm-hours-closed .sm-direct-add,
+        body.sm-hours-closed .sm-choose-options,
+        body.sm-hours-closed [data-choice-product],
+        body.sm-hours-closed #smCartContinue,
+        body.sm-hours-closed #smSendWhatsApp{
+          pointer-events:none!important;
+          opacity:.46!important;
+          filter:saturate(.55)!important;
+        }
+        @keyframes smRestaurantClosedPulse{
+          0%,100%{
+            transform:scale(1);
+            box-shadow:0 10px 28px rgba(0,0,0,.28),0 0 0 0 rgba(244,184,82,.42);
+            background:rgba(63,29,8,.96)
+          }
+          50%{
+            transform:scale(1.018);
+            box-shadow:0 13px 34px rgba(0,0,0,.36),0 0 0 6px rgba(244,184,82,.12),0 0 24px rgba(244,184,82,.28);
+            background:rgba(91,37,8,.98)
+          }
+        }
+        @media(prefers-reduced-motion:reduce){
+          #smRestaurantClosedBanner{animation:none}
+        }
       `;
       document.head.appendChild(style);
     }
@@ -161,8 +201,8 @@
     banner = document.createElement('div');
     banner.id = 'smRestaurantClosedBanner';
     banner.hidden = true;
-    banner.setAttribute('role', 'status');
-    banner.setAttribute('aria-live', 'polite');
+    banner.setAttribute('role', 'alert');
+    banner.setAttribute('aria-live', 'assertive');
 
     const header = document.querySelector('.sm-header');
     if (header?.parentNode) header.insertAdjacentElement('afterend', banner);
@@ -185,6 +225,13 @@
     banner.hidden = false;
   }
 
+  function markResolved() {
+    if (window.SHORASH_HOURS_READY === true) return;
+    window.SHORASH_HOURS_READY = true;
+    document.documentElement.classList.remove('sm-hours-pending');
+    window.dispatchEvent(new CustomEvent('shorash:hours-ready'));
+  }
+
   function applyToMenu({ broadcast = false } = {}) {
     const restaurant = window.SHORASH_DB?.restaurant;
     if (!restaurant || !loaded) return false;
@@ -201,6 +248,10 @@
 
     renderBanner(effective, scheduleOpen);
     lastEffective = effective;
+
+    // Only release the startup order lock after the real state has already
+    // been written to the shared restaurant model and the closed class/banner.
+    markResolved();
 
     if (changed && broadcast && !broadcastLock) {
       broadcastLock = true;
@@ -239,8 +290,21 @@
       applyToMenu({ broadcast:true });
     } catch (error) {
       console.warn('Restaurant hours could not be loaded:', error);
+      // Keep ordering locked when the current opening-hours state is unknown.
     }
   }
+
+  // Hard click guard: CSS handles appearance, this capture listener prevents
+  // accidental ordering even during render/event timing races.
+  document.addEventListener('click', event => {
+    const orderControl = event.target.closest?.(ORDER_SELECTOR);
+    if (!orderControl) return;
+
+    if (window.SHORASH_HOURS_READY !== true || document.body.classList.contains('sm-hours-closed')) {
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    }
+  }, true);
 
   window.addEventListener('shorash:ready', () => {
     applyToMenu({ broadcast:false });
