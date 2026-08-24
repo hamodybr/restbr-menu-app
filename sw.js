@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v19";
+const CACHE_NAME = "shorash-menu-restored-v20";
 
 const CORE = [
   "./",
@@ -8,7 +8,7 @@ const CORE = [
   "./css/cart.css?v=3.6",
   "./css/desktop-phone-parity.css?v=1.0",
   "./css/english-card-ltr.css?v=1.0",
-  "./css/mobile-card-image-fix.css?v=1.0",
+  "./css/mobile-card-image-fix.css?v=1.1",
   "./js/app.js?v=17.3",
   "./js/cart.js?v=4.1",
   "./js/cart-fab-effects.js?v=1.2",
