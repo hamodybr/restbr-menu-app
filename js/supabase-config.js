@@ -25,6 +25,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Public-menu only: keep the open options sheet synced after live price refreshes.
+(() => {
+  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashDiscountChoicePriceSyncScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashDiscountChoicePriceSyncScript';
+  script.src = 'js/discount-choice-price-sync.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only native category filter inside the existing products filter system.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
