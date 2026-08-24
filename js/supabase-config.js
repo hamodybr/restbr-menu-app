@@ -37,6 +37,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Public-menu only: automatic restaurant opening hours.
+(() => {
+  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashRestaurantHoursScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashRestaurantHoursScript';
+  script.src = 'js/restaurant-hours.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only sticky toolbar + GLOBAL dashboard light/dark theme.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
@@ -81,6 +93,18 @@ console.log('✅ SHORASH Supabase connected');
   const script = document.createElement('script');
   script.id = 'shorashAdminOptionOrderScript';
   script.src = 'js/admin-option-order.js?v=1.4';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
+// Admin-only restaurant opening-hours editor.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminRestaurantHoursScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminRestaurantHoursScript';
+  script.src = 'js/admin-restaurant-hours.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
 })();
