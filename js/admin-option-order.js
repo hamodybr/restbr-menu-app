@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
 
-  console.log('✅ ADMIN OPTION ORDER V1.1 LOADED');
+  console.log('✅ ADMIN OPTION ORDER V1.2 LOADED');
 
   let patched = false;
   let sortable = null;
@@ -13,16 +13,26 @@
     style.id = 'smAdminOptionOrderStyles';
     style.textContent = `
       #optionsEditor .option-editor{position:relative}
-      .sm-option-order-bar{display:flex;align-items:center;gap:8px;margin:-2px 0 10px;padding:8px;border:1px dashed rgba(216,169,88,.34);border-radius:11px;background:rgba(216,169,88,.08);color:#9d9388;font-size:10px;line-height:1;user-select:none;-webkit-user-select:none}
-      .sm-option-drag{width:38px;height:34px;display:grid;place-items:center;flex:0 0 auto;padding:0;border:1px solid rgba(216,169,88,.45);border-radius:9px;background:#17130f;color:#e3c58e;font-size:18px;cursor:grab;touch-action:none;-webkit-tap-highlight-color:transparent}
+      .sm-option-order-bar{display:flex;align-items:center;gap:7px;margin:-2px 0 10px;padding:8px;border:1px dashed rgba(216,169,88,.34);border-radius:11px;background:rgba(216,169,88,.08);color:#9d9388;font-size:10px;line-height:1;user-select:none;-webkit-user-select:none}
+      .sm-option-drag,.sm-option-move{height:34px;display:grid;place-items:center;flex:0 0 auto;padding:0;border:1px solid rgba(216,169,88,.45);border-radius:9px;background:#17130f;color:#e3c58e;font-weight:900;-webkit-tap-highlight-color:transparent}
+      .sm-option-drag{width:38px;font-size:18px;cursor:grab;touch-action:none}
       .sm-option-drag:active{cursor:grabbing}
-      .sm-option-order-number{min-width:62px;color:#e3c58e;font-weight:900;font-size:11px}
-      .sm-option-order-hint{flex:1;min-width:0}
+      .sm-option-move{width:36px;font-size:17px;cursor:pointer;touch-action:manipulation}
+      .sm-option-move:active{transform:scale(.94)}
+      .sm-option-move:disabled{opacity:.28;cursor:not-allowed;transform:none}
+      .sm-option-order-number{min-width:58px;color:#e3c58e;font-weight:900;font-size:11px}
+      .sm-option-order-hint{flex:1;min-width:0;line-height:1.35}
       #optionsEditor .sm-option-sort-ghost{opacity:.38;outline:2px dashed rgba(216,169,88,.65)}
       #optionsEditor .sm-option-sort-chosen{box-shadow:0 12px 32px rgba(0,0,0,.34)}
       body.admin-light-mode .sm-option-order-bar,body.sm-admin-light .sm-option-order-bar,html[data-admin-theme="light"] .sm-option-order-bar{background:#fff8ed;border-color:rgba(139,94,30,.28);color:#776b5f}
-      body.admin-light-mode .sm-option-drag,body.sm-admin-light .sm-option-drag,html[data-admin-theme="light"] .sm-option-drag{background:#fff;color:#9b691f;border-color:rgba(139,94,30,.3)}
-      @media(max-width:650px){.sm-option-order-bar{padding:7px}.sm-option-order-hint{font-size:9px}.sm-option-drag{width:40px;height:36px}}
+      body.admin-light-mode .sm-option-drag,body.admin-light-mode .sm-option-move,body.sm-admin-light .sm-option-drag,body.sm-admin-light .sm-option-move,html[data-admin-theme="light"] .sm-option-drag,html[data-admin-theme="light"] .sm-option-move{background:#fff;color:#9b691f;border-color:rgba(139,94,30,.3)}
+      @media(max-width:650px){
+        .sm-option-order-bar{padding:7px;gap:6px;flex-wrap:wrap}
+        .sm-option-order-number{min-width:54px}
+        .sm-option-order-hint{order:5;flex-basis:100%;font-size:9px;padding-top:2px}
+        .sm-option-drag{width:40px;height:38px}
+        .sm-option-move{width:40px;height:38px;font-size:19px}
+      }
     `;
 
     document.head.appendChild(style);
@@ -38,10 +48,45 @@
   }
 
   function updatePositionLabels() {
-    activeRows().forEach((row, index) => {
+    const rows = activeRows();
+
+    rows.forEach((row, index) => {
       const label = row.querySelector('.sm-option-order-number');
       if (label) label.textContent = `الخيار ${index + 1}`;
+
+      const up = row.querySelector('[data-sm-option-move="up"]');
+      const down = row.querySelector('[data-sm-option-move="down"]');
+      if (up) up.disabled = index === 0;
+      if (down) down.disabled = index === rows.length - 1;
     });
+  }
+
+  function moveRow(row, direction) {
+    const holder = document.getElementById('optionsEditor');
+    if (!holder || !row) return;
+
+    const rows = activeRows();
+    const index = rows.indexOf(row);
+    if (index < 0) return;
+
+    if (direction === 'up' && index > 0) {
+      holder.insertBefore(row, rows[index - 1]);
+    } else if (direction === 'down' && index < rows.length - 1) {
+      const afterNext = rows[index + 2] || null;
+      holder.insertBefore(row, afterNext);
+    } else {
+      return;
+    }
+
+    updatePositionLabels();
+
+    row.animate?.(
+      [
+        { transform: 'scale(.985)', opacity: .72 },
+        { transform: 'scale(1)', opacity: 1 }
+      ],
+      { duration: 180, easing: 'ease-out' }
+    );
   }
 
   function enhanceRow(row) {
@@ -53,7 +98,9 @@
     bar.innerHTML = `
       <button class="sm-option-drag" type="button" aria-label="اسحب لتغيير ترتيب الخيار" title="اسحب لتغيير الترتيب">☰</button>
       <span class="sm-option-order-number"></span>
-      <span class="sm-option-order-hint">اسحب هذا الخيار للأعلى أو للأسفل</span>
+      <button class="sm-option-move" type="button" data-sm-option-move="up" aria-label="نقل الخيار للأعلى" title="نقل للأعلى">↑</button>
+      <button class="sm-option-move" type="button" data-sm-option-move="down" aria-label="نقل الخيار للأسفل" title="نقل للأسفل">↓</button>
+      <span class="sm-option-order-hint">اضغط ↑ ↓ أو اسحب من ☰ لتغيير ترتيب الظهور</span>
     `;
 
     row.insertBefore(bar, row.firstChild);
@@ -178,6 +225,21 @@
     patched = true;
     return true;
   }
+
+  document.addEventListener('click', event => {
+    const button = event.target.closest('[data-sm-option-move]');
+    if (!button) return;
+
+    event.preventDefault();
+    event.stopPropagation();
+
+    if (button.disabled) return;
+
+    const row = button.closest('.option-editor');
+    if (!row) return;
+
+    moveRow(row, button.dataset.smOptionMove);
+  });
 
   function boot() {
     installStyles();
