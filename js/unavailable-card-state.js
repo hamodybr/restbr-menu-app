@@ -18,8 +18,8 @@
           inactiveCategoryIds.add(id);
           return {
             ...row,
-            // Public-menu policy: inactive + visible means unavailable,
-            // not hidden. Keep is_visible as the actual hide switch.
+            // Category policy: inactive + visible means the category stays
+            // visible, but every product inside it becomes unavailable.
             is_active: true
           };
         }
@@ -37,18 +37,22 @@
 
         const visible = row.is_visible !== false;
         const productInactive = visible && row.is_active === false;
+
+        // Product policy: "active" is the master switch. When it is off,
+        // keep the original row untouched so app.js filters the product out.
+        if (productInactive) return row;
+
         const categoryInactive =
           visible &&
           row.category_id != null &&
           inactiveCategoryIds.has(String(row.category_id));
 
-        if (!productInactive && !categoryInactive) return row;
+        if (!categoryInactive) return row;
 
         return {
           ...row,
-          // Let the existing menu renderer keep the card visible while using
-          // its tested unavailable/order-blocking path.
-          is_active: true,
+          // The category is inactive but visible: keep this active product in
+          // the menu and route it through the existing unavailable state.
           is_available: false
         };
       });
@@ -140,10 +144,18 @@
         inset:0;
         z-index:40;
         border-radius:inherit;
-        background:rgba(6,5,4,.30);
-        backdrop-filter:saturate(.72) brightness(.86);
-        -webkit-backdrop-filter:saturate(.72) brightness(.86);
+        background:rgba(2,2,2,.58);
+        backdrop-filter:grayscale(.58) saturate(.44) brightness(.58);
+        -webkit-backdrop-filter:grayscale(.58) saturate(.44) brightness(.58);
+        box-shadow:inset 0 0 0 1px rgba(255,255,255,.025);
         pointer-events:none;
+      }
+
+      .sm-card.sm-unavailable-card .sm-img,
+      .sm-card.sm-unavailable-card .sm-info,
+      .sm-card.sm-unavailable-card .sm-badges,
+      .sm-card.sm-unavailable-card .sm-share-product{
+        filter:saturate(.48) brightness(.70);
       }
 
       .sm-card.sm-unavailable-card .sm-off{
@@ -157,24 +169,21 @@
         width:max-content !important;
         max-width:calc(100% - 28px) !important;
         margin:0 !important;
-        padding:8px 14px !important;
-        border:1px solid rgba(238,199,116,.48) !important;
+        padding:9px 16px !important;
+        border:1px solid rgba(238,199,116,.62) !important;
         border-radius:999px !important;
-        background:rgba(11,8,5,.88) !important;
-        color:#f0cb7b !important;
-        box-shadow:0 8px 24px rgba(0,0,0,.32) !important;
-        font-size:11px !important;
-        font-weight:800 !important;
+        background:rgba(8,6,4,.94) !important;
+        color:#f2cf82 !important;
+        box-shadow:0 10px 30px rgba(0,0,0,.52) !important;
+        font-size:11.5px !important;
+        font-weight:900 !important;
         line-height:1.35 !important;
         text-align:center !important;
         white-space:nowrap;
         pointer-events:none;
-        backdrop-filter:blur(10px);
-        -webkit-backdrop-filter:blur(10px);
-      }
-
-      .sm-card.sm-unavailable-card .sm-share-product{
-        z-index:55 !important;
+        filter:none !important;
+        backdrop-filter:blur(12px);
+        -webkit-backdrop-filter:blur(12px);
       }
     `;
 
