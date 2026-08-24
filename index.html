@@ -8,6 +8,22 @@
   <script>
     window.__smIntroBornAt=Date.now();
 
+    // Ordering starts fail-closed until the restaurant opening-hours policy
+    // has loaded and applied the real state. This removes the first-render
+    // window where an add button could briefly be clickable.
+    window.SHORASH_HOURS_READY=false;
+    document.documentElement.classList.add("sm-hours-pending");
+
+    document.addEventListener("click",function(event){
+      if(window.SHORASH_HOURS_READY===true)return;
+      const target=event.target.closest?.(
+        ".sm-add-cart,.sm-direct-add,.sm-choose-options,[data-choice-product],#smCartContinue,#smSendWhatsApp"
+      );
+      if(!target)return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+    },true);
+
     try{
       localStorage.removeItem("SM_THEME_PREF_V1");
       document.documentElement.removeAttribute("data-sm-theme");
@@ -30,6 +46,17 @@
   <style>
     html[dir="ltr"] .sm-card .sm-name{
       padding-inline-start:38px !important;
+    }
+
+    html.sm-hours-pending .sm-add-cart,
+    html.sm-hours-pending .sm-direct-add,
+    html.sm-hours-pending .sm-choose-options,
+    html.sm-hours-pending [data-choice-product],
+    html.sm-hours-pending #smCartContinue,
+    html.sm-hours-pending #smSendWhatsApp{
+      pointer-events:none !important;
+      opacity:.42 !important;
+      filter:saturate(.55) !important;
     }
   </style>
 </head>
