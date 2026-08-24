@@ -44,7 +44,7 @@ console.log('✅ SHORASH Supabase connected');
 
   const script = document.createElement('script');
   script.id = 'shorashRestaurantHoursScript';
-  script.src = 'js/restaurant-hours.js?v=1.0';
+  script.src = 'js/restaurant-hours.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
@@ -104,7 +104,7 @@ console.log('✅ SHORASH Supabase connected');
 
   const script = document.createElement('script');
   script.id = 'shorashAdminRestaurantHoursScript';
-  script.src = 'js/admin-restaurant-hours.js?v=1.0';
+  script.src = 'js/admin-restaurant-hours.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
