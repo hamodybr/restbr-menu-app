@@ -132,7 +132,7 @@
         {transform:"scale(.94) rotate(6deg)",offset:.7},
         {transform:"scale(1) rotate(0deg)"}
       ],{
-        duration:520,
+        duration:560,
         easing:"cubic-bezier(.2,.85,.25,1)"
       });
     }
@@ -143,7 +143,7 @@
         {filter:"brightness(1.28)",boxShadow:"0 0 0 7px rgba(226,177,92,.22), 0 14px 38px rgba(0,0,0,.48)",offset:.42},
         {filter:"brightness(1)",boxShadow:"0 12px 34px rgba(0,0,0,.45)"}
       ],{
-        duration:620,
+        duration:680,
         easing:"ease-out"
       });
     }
@@ -166,7 +166,7 @@
       {transform:"scale(1.85)",opacity:.72,offset:.55},
       {transform:"scale(2.5)",opacity:0}
     ],{
-      duration:500,
+      duration:540,
       easing:"cubic-bezier(.2,.75,.2,1)"
     });
 
@@ -222,7 +222,7 @@
         opacity:.15
       }
     ],{
-      duration:820,
+      duration:960,
       easing:"cubic-bezier(.22,.72,.24,1)"
     });
 
