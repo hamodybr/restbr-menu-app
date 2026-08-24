@@ -109,6 +109,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Admin-only: UI-only selector for choosing which price type a bulk change targets.
+(() => {
+  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashAdminBulkPriceTargetUiScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashAdminBulkPriceTargetUiScript';
+  script.src = 'js/admin-bulk-price-target-ui.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only restaurant opening-hours editor.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
