@@ -1,7 +1,23 @@
 (() => {
   if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
 
-  const FALLBACK = 'assets/shorash-logo.jpeg';
+  function restaurantLogo(){
+    const liveLogo = String(
+      window.SHORASH_DB?.restaurant?.logo ||
+      document.querySelector('.sm-logo')?.getAttribute('src') ||
+      document.querySelector('.sm-intro-logo')?.getAttribute('src') ||
+      ''
+    ).trim();
+
+    if (liveLogo) return liveLogo;
+
+    try{
+      const cached = JSON.parse(localStorage.getItem('SHORASH_BRAND_CACHE_V1') || '{}');
+      return String(cached?.logo || '').trim();
+    }catch(_){
+      return '';
+    }
+  }
 
   function installStyles(){
     if (document.getElementById('smProductImageFallbackStyles')) return;
@@ -16,6 +32,12 @@
         background:rgba(8,6,4,.72) !important;
         filter:none !important;
       }
+      .sm-img.sm-image-fallback-empty{
+        background:rgba(8,6,4,.72) !important;
+      }
+      .sm-img.sm-image-fallback-empty .sm-product-image{
+        visibility:hidden !important;
+      }
     `;
     document.head.appendChild(style);
   }
@@ -27,8 +49,16 @@
 
     img.dataset.smFallbackApplied = '1';
     img.classList.add('sm-image-fallback');
-    img.dataset.fullImage = FALLBACK;
-    img.src = FALLBACK;
+
+    const fallback = restaurantLogo();
+
+    if (fallback) {
+      img.dataset.fullImage = fallback;
+      img.src = fallback;
+      return;
+    }
+
+    img.closest('.sm-img')?.classList.add('sm-image-fallback-empty');
   }
 
   function inspect(img){
@@ -54,9 +84,14 @@
 
   document.addEventListener('error', event => {
     const img = event.target;
-    if (img instanceof HTMLImageElement && img.classList.contains('sm-product-image')) {
-      applyFallback(img);
+    if (!(img instanceof HTMLImageElement) || !img.classList.contains('sm-product-image')) return;
+
+    if (img.dataset.smFallbackApplied === '1') {
+      img.closest('.sm-img')?.classList.add('sm-image-fallback-empty');
+      return;
     }
+
+    applyFallback(img);
   }, true);
 
   const observer = new MutationObserver(records => {
