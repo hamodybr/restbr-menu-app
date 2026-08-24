@@ -49,6 +49,18 @@ console.log('✅ SHORASH Supabase connected');
   document.head.appendChild(script);
 })();
 
+// Public-menu only: use bullets instead of numeric sequencing in WhatsApp order items.
+(() => {
+  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (document.getElementById('shorashWhatsappOrderBulletsScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'shorashWhatsappOrderBulletsScript';
+  script.src = 'js/whatsapp-order-bullets.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only sticky toolbar + GLOBAL dashboard light/dark theme.
 (() => {
   if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
