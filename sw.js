@@ -1,4 +1,4 @@
-const CACHE_NAME = "shorash-menu-restored-v27";
+const CACHE_NAME = "shorash-menu-restored-v28";
 
 const CORE = [
   "./",
@@ -9,6 +9,7 @@ const CORE = [
   "./css/desktop-phone-parity.css?v=1.0",
   "./css/english-card-ltr.css?v=1.0",
   "./css/mobile-card-image-fix.css?v=1.1",
+  "./js/offline-status.js?v=1.0",
   "./js/app.js?v=17.3",
   "./js/cart.js?v=4.1",
   "./js/cart-fab-effects.js?v=1.2",
@@ -26,30 +27,52 @@ const CORE = [
   "./js/admin-discounts.js?v=1.0",
   "./js/dining-mode.js?v=1.3",
   "./js/dining-gate-language.js?v=1.0",
+  "./data/menu.json?v=32",
   "./assets/favicon.png",
   "./assets/apple-touch-icon.png",
   "./assets/shorash-logo.jpeg"
 ];
 
+async function cacheOne(cache, path) {
+  try {
+    const response = await fetch(path, { cache: "reload" });
+    if (response && response.ok) {
+      await cache.put(path, response.clone());
+      return true;
+    }
+  } catch (_) {}
+  return false;
+}
+
 self.addEventListener("install", event => {
-  event.waitUntil(
-    caches.open(CACHE_NAME)
-      .then(cache => cache.addAll(CORE))
-      .then(() => self.skipWaiting())
-      .catch(() => {})
-  );
+  event.waitUntil((async () => {
+    const cache = await caches.open(CACHE_NAME);
+
+    // Cache the navigation shell first. A missing optional file must never
+    // prevent the menu itself from working offline.
+    await cacheOne(cache, "./index.html");
+    await cacheOne(cache, "./");
+
+    await Promise.allSettled(
+      CORE
+        .filter(path => path !== "./" && path !== "./index.html")
+        .map(path => cacheOne(cache, path))
+    );
+
+    await self.skipWaiting();
+  })());
 });
 
 self.addEventListener("activate", event => {
-  event.waitUntil(
-    caches.keys()
-      .then(keys => Promise.all(
-        keys
-          .filter(key => key !== CACHE_NAME)
-          .map(key => caches.delete(key))
-      ))
-      .then(() => self.clients.claim())
-  );
+  event.waitUntil((async () => {
+    const keys = await caches.keys();
+    await Promise.all(
+      keys
+        .filter(key => key !== CACHE_NAME)
+        .map(key => caches.delete(key))
+    );
+    await self.clients.claim();
+  })());
 });
 
 self.addEventListener("fetch", event => {
@@ -59,25 +82,27 @@ self.addEventListener("fetch", event => {
 
   const url = new URL(request.url);
 
-  // Never cache Supabase/API or unrelated third-party requests.
+  // Supabase/API and unrelated third-party requests are never written to this cache.
   if (url.origin !== self.location.origin) return;
 
   if (request.mode === "navigate") {
-    event.respondWith(
-      fetch(request)
-        .then(response => {
-          const copy = response.clone();
-          caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-          return response;
-        })
-        .catch(async () => {
-          return (
-            await caches.match(request) ||
-            await caches.match("./index.html") ||
-            await caches.match("./")
-          );
-        })
-    );
+    event.respondWith((async () => {
+      try {
+        const response = await fetch(request);
+        if (response && response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(request, response.clone()).catch(() => {});
+        }
+        return response;
+      } catch (_) {
+        return (
+          await caches.match(request, { ignoreSearch: true }) ||
+          await caches.match("./index.html", { ignoreSearch: true }) ||
+          await caches.match("./", { ignoreSearch: true }) ||
+          Response.error()
+        );
+      }
+    })());
     return;
   }
 
@@ -87,20 +112,24 @@ self.addEventListener("fetch", event => {
 
   if (!isStatic) return;
 
-  event.respondWith(
-    caches.match(request)
-      .then(cached => {
-        const network = fetch(request)
-          .then(response => {
-            if (response && response.ok) {
-              const copy = response.clone();
-              caches.open(CACHE_NAME).then(cache => cache.put(request, copy));
-            }
-            return response;
-          })
-          .catch(() => cached);
+  event.respondWith((async () => {
+    const cached = await caches.match(request);
 
-        return cached || network;
+    const network = fetch(request)
+      .then(async response => {
+        if (response && response.ok) {
+          const cache = await caches.open(CACHE_NAME);
+          cache.put(request, response.clone()).catch(() => {});
+        }
+        return response;
       })
-  );
+      .catch(() => null);
+
+    if (cached) {
+      event.waitUntil(network.then(() => {}).catch(() => {}));
+      return cached;
+    }
+
+    return (await network) || Response.error();
+  })());
 });
