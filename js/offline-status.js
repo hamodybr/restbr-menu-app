@@ -18,6 +18,9 @@
     const style = document.createElement('style');
     style.id = 'smOfflineStatusStyle';
     style.textContent = `
+      /* The old temporary fallback notice is replaced by this single persistent status. */
+      #smOfflineBanner{display:none!important}
+
       #smOfflineStatus{
         position:fixed;
         z-index:12050;
