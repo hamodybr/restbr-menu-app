@@ -80,3 +80,14 @@ jobs:
           grep -q "restbr.activation_authorized" "$file"
           grep -q "draft restaurant activation requires admin_activate_restaurant" "$file"
           grep -q "set_config('restbr.activation_authorized','1',true)" "$file"
+
+      - name: Guard tenant deletion audit history
+        run: |
+          set -euo pipefail
+          file=migration/platform/RESTBR-AUDIT-TENANT-DELETE-V1.sql
+          test -f "$file"
+          grep -q "tenant_id_snapshot" "$file"
+          grep -q "on delete set null" "$file"
+          grep -q "audit_logs_tenant_id_snapshot_idx" "$file"
+          grep -q "v_live_restaurant_id" "$file"
+          grep -q "private.log_restbr_audit_change" "$file"
