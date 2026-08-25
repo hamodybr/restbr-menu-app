@@ -41,11 +41,11 @@
     document.head.appendChild(script);
   }
 
-  // Owner / super-admin only: read-only user management list for staged rollout.
+  // Owner / super-admin only: list and create dashboard users.
   if (!document.getElementById('restbrAdminUsersListScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminUsersListScript';
-    script.src = 'js/admin-users-list.js?v=1.0';
+    script.src = 'js/admin-users-list.js?v=1.1';
     script.async = false;
     document.head.appendChild(script);
   }
