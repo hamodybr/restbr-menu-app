@@ -41,11 +41,11 @@
     document.head.appendChild(script);
   }
 
-  // Owner / super-admin only: list and create dashboard users.
+  // Owner / super-admin only: create users, change roles, and enable/disable access.
   if (!document.getElementById('restbrAdminUsersListScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminUsersListScript';
-    script.src = 'js/admin-users-list.js?v=1.1';
+    script.src = 'js/admin-users-list.js?v=1.2';
     script.async = false;
     document.head.appendChild(script);
   }
