@@ -31,4 +31,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // Admin-only: allow every authenticated dashboard user to request changing their own email.
+  if (!document.getElementById('restbrAdminAccountEmailScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrAdminAccountEmailScript';
+    script.src = 'js/admin-account-email.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
