@@ -1,4 +1,4 @@
-// RESTBR Super Admin V6.1 — single-admin UX policy
+// RESTBR Super Admin V6.2 — single-admin UX policy + onboarding preflight
 (() => {
   'use strict';
 
@@ -9,6 +9,15 @@
     if(plan) plan.value = 'internal';
   }
 
+  function loadOnboardingPreflight(){
+    if(document.getElementById('restbrOnboardingPreflightV1')) return;
+    const script = document.createElement('script');
+    script.id = 'restbrOnboardingPreflightV1';
+    script.src = './onboarding-preflight-v1.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
+
   function rewriteManageLinks(){
     document.querySelectorAll('[data-action="manage"]').forEach(button => {
       const card = button.closest('.restaurant-card');
@@ -16,7 +25,7 @@
       const hostname = String(link?.textContent || '').trim();
       const slug = hostname.replace(/\.restbr\.com$/i,'');
       if(!slug) return;
-      button.dataset.url = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(slug)}&mode=superadmin&v=6.1`;
+      button.dataset.url = `https://admin.restbr.com/manage/?tenant=${encodeURIComponent(slug)}&mode=superadmin&v=6.2`;
     });
   }
 
@@ -40,6 +49,7 @@
 
   function boot(){
     forceInternalPlan();
+    loadOnboardingPreflight();
 
     const add = $('#addRestaurantBtn');
     if(add) add.addEventListener('click', () => setTimeout(forceInternalPlan, 0));
@@ -54,7 +64,7 @@
     }
 
     document.addEventListener('click', handleManageClick, true);
-    console.log('✅ RESTBR Super Admin V6.1 — same-tab manager');
+    console.log('✅ RESTBR Super Admin V6.2 — same-tab manager + onboarding preflight');
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
