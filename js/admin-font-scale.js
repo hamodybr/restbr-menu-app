@@ -36,7 +36,7 @@
   if (!document.getElementById('restbrAdminAccountEmailScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminAccountEmailScript';
-    script.src = 'js/admin-account-email.js?v=1.0';
+    script.src = 'js/admin-account-email.js?v=1.1';
     script.async = false;
     document.head.appendChild(script);
   }
