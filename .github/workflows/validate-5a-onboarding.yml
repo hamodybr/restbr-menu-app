@@ -1,0 +1,50 @@
+name: Validate RESTBR 5A Onboarding
+
+on:
+  push:
+    branches: [tmp-5a-multitenant-recovery]
+  pull_request:
+    branches: [tmp-5a-multitenant-recovery]
+
+permissions:
+  contents: read
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+
+      - name: Check onboarding JavaScript syntax
+        run: |
+          node --check admin/onboarding-preflight-v1.js
+          node --check admin/admin-v6-policy.js
+
+      - name: Guard preflight runtime
+        run: |
+          set -euo pipefail
+          test -f admin/onboarding-preflight-v1.js
+          grep -q "admin_create_restaurant_preview" admin/onboarding-preflight-v1.js
+          grep -q "form.addEventListener('submit', runPreflight, true)" admin/onboarding-preflight-v1.js
+          grep -q "form.requestSubmit()" admin/onboarding-preflight-v1.js
+          grep -q "window.confirm" admin/onboarding-preflight-v1.js
+          grep -q "onboarding-preflight-v1.js?v=1.0" admin/admin-v6-policy.js
+
+      - name: Guard preflight migration
+        run: |
+          set -euo pipefail
+          file=migration/platform/RESTBR-ONBOARDING-PREFLIGHT-V1.sql
+          test -f "$file"
+          grep -q "security definer" "$file"
+          grep -q "private.is_platform_admin()" "$file"
+          grep -q "dry_run" "$file"
+          grep -q "slug_already_exists" "$file"
+          grep -q "hostname_already_exists" "$file"
+          grep -q "grant execute.*authenticated" "$file"
+          ! grep -Eiq "^[[:space:]]*(insert|update|delete|truncate)[[:space:]]" "$file"
