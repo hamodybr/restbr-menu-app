@@ -137,7 +137,11 @@
       });
       if (verifyError) throw verifyError;
 
-      const { data, error } = await supabaseClient.auth.updateUser({ email: newEmail });
+      const emailRedirectTo = `${window.location.origin}${window.location.pathname}`;
+      const { data, error } = await supabaseClient.auth.updateUser(
+        { email: newEmail },
+        { emailRedirectTo }
+      );
       if (error) throw error;
 
       clearFields();
