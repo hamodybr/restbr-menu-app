@@ -68,3 +68,15 @@ jobs:
           grep -q "domain must be pending before activation" "$file"
           grep -q "private.is_platform_admin()" "$file"
           grep -q "grant execute.*authenticated" "$file"
+
+      - name: Guard server-side activation gate
+        run: |
+          set -euo pipefail
+          file=migration/platform/RESTBR-ONBOARDING-ACTIVATION-GUARD-V1.sql
+          test -f "$file"
+          grep -q "guard_restaurant_activation" "$file"
+          grep -q "old.status = 'draft'" "$file"
+          grep -q "new.status = 'active'" "$file"
+          grep -q "restbr.activation_authorized" "$file"
+          grep -q "draft restaurant activation requires admin_activate_restaurant" "$file"
+          grep -q "set_config('restbr.activation_authorized','1',true)" "$file"
