@@ -67,4 +67,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // Super-admin only: 4B mandatory full backup gate before any future destructive reset.
+  if (!document.getElementById('restbrRestaurantResetBackupScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrRestaurantResetBackupScript';
+    script.src = 'js/admin-restaurant-reset-backup.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
