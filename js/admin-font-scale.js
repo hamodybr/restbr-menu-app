@@ -49,4 +49,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // Owner / super-admin only: permanently delete eligible dashboard users with confirmation.
+  if (!document.getElementById('restbrAdminUserDeleteScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrAdminUserDeleteScript';
+    script.src = 'js/admin-user-delete.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
