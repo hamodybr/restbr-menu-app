@@ -63,7 +63,7 @@
   if (!document.getElementById('restbrRestaurantResetPreviewScript')) {
     const script = document.createElement('script');
     script.id = 'restbrRestaurantResetPreviewScript';
-    script.src = 'js/admin-restaurant-reset-preview.js?v=1.0';
+    script.src = 'js/admin-restaurant-reset-preview.js?v=1.1';
     script.async = false;
     document.head.appendChild(script);
   }
