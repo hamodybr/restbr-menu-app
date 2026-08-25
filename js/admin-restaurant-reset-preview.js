@@ -153,8 +153,8 @@
     if (btn) btn.disabled = true;
     setStatus('جاري حساب بيانات المطعم...');
     try {
-      if (typeof supabaseClient === 'undefined' || !supabaseClient?.functions) throw new Error('Supabase غير جاهز.');
-      const { data, error } = await supabaseClient.functions.invoke('restaurant-reset', { method: 'GET' });
+      if (typeof supabaseClient === 'undefined' || !supabaseClient?.rpc) throw new Error('Supabase غير جاهز.');
+      const { data, error } = await supabaseClient.rpc('restaurant_reset_preview');
       if (error) throw error;
       if (!data?.ok || data?.dry_run !== true) throw new Error(data?.error || 'تعذر تحميل المعاينة.');
       render(data);
