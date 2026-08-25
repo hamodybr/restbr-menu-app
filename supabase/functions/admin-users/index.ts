@@ -15,14 +15,20 @@ function json(body: unknown, status = 200) {
 }
 
 Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
-  if (req.method !== "GET") return json({ ok: false, error: "Method not allowed" }, 405);
+  if (req.method === "OPTIONS") {
+    return new Response("ok", { headers: corsHeaders });
+  }
+
+  if (req.method !== "GET") {
+    return json({ ok: false, error: "Method not allowed" }, 405);
+  }
 
   try {
     const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
-    const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
+    const authHeader = req.headers.get("Authorization") || "";
+    const token = authHeader.replace(/^Bearer\s+/i, "").trim();
 
     if (!supabaseUrl || !anonKey || !serviceRoleKey || !token) {
       return json({ ok: false, error: "Unauthorized" }, 401);
@@ -35,20 +41,23 @@ Deno.serve(async (req) => {
 
     const { data: userData, error: userError } = await userClient.auth.getUser(token);
     const caller = userData?.user;
-    if (userError || !caller?.id) return json({ ok: false, error: "Unauthorized" }, 401);
+    if (userError || !caller?.id) {
+      return json({ ok: false, error: "Unauthorized" }, 401);
+    }
 
-    const adminClient = createClient(supabaseUrl, serviceRoleKey, {
-      auth: { persistSession: false, autoRefreshToken: false },
-    });
-
-    const { data: callerProfile, error: callerProfileError } = await adminClient
+    // Read the caller's role through the same authenticated/RLS path used by the dashboard.
+    const { data: callerProfile, error: callerProfileError } = await userClient
       .from("admin_users")
       .select("role,is_active")
       .eq("user_id", caller.id)
       .maybeSingle();
 
+    if (callerProfileError) {
+      console.error("admin-users caller profile error", callerProfileError);
+      return json({ ok: false, error: "Forbidden" }, 403);
+    }
+
     if (
-      callerProfileError ||
       !callerProfile ||
       callerProfile.is_active !== true ||
       !["super_admin", "owner"].includes(callerProfile.role)
@@ -56,15 +65,25 @@ Deno.serve(async (req) => {
       return json({ ok: false, error: "Forbidden" }, 403);
     }
 
-    const { data: authData, error: authError } = await adminClient.auth.admin.listUsers({ page: 1, perPage: 1000 });
-    if (authError) throw authError;
-
-    const { data: profiles, error: profilesError } = await adminClient
+    // Owner/Super Admin RLS permits reading the admin directory.
+    const { data: profiles, error: profilesError } = await userClient
       .from("admin_users")
       .select("user_id,display_name,role,is_active,created_at");
     if (profilesError) throw profilesError;
 
+    // Auth user metadata is server-only and requires the service role.
+    const adminClient = createClient(supabaseUrl, serviceRoleKey, {
+      auth: { persistSession: false, autoRefreshToken: false },
+    });
+
+    const { data: authData, error: authError } = await adminClient.auth.admin.listUsers({
+      page: 1,
+      perPage: 1000,
+    });
+    if (authError) throw authError;
+
     const profileMap = new Map((profiles || []).map((p) => [p.user_id, p]));
+
     const users = (authData?.users || [])
       .map((u) => {
         const p = profileMap.get(u.id);
@@ -89,6 +108,9 @@ Deno.serve(async (req) => {
     return json({ ok: true, users });
   } catch (error) {
     console.error("admin-users error", error);
-    return json({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500);
+    return json(
+      { ok: false, error: error instanceof Error ? error.message : String(error) },
+      500,
+    );
   }
 });
