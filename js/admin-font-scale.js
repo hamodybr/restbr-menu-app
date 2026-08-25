@@ -58,4 +58,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // Super-admin only: safe dry-run preview for preparing the system for a new restaurant.
+  if (!document.getElementById('restbrRestaurantResetPreviewScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrRestaurantResetPreviewScript';
+    script.src = 'js/admin-restaurant-reset-preview.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
