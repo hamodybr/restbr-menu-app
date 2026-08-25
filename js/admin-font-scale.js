@@ -85,4 +85,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // 4D safety hardening: bind each Full Backup/Challenge to a SHA-256 state fingerprint.
+  if (!document.getElementById('restbrResetFingerprintPatchScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrResetFingerprintPatchScript';
+    script.src = 'js/admin-reset-fingerprint-patch.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
