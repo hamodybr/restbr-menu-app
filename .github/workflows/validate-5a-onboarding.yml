@@ -26,15 +26,21 @@ jobs:
           node --check admin/onboarding-preflight-v1.js
           node --check admin/admin-v6-policy.js
 
-      - name: Guard preflight runtime
+      - name: Guard staged onboarding runtime
         run: |
           set -euo pipefail
-          test -f admin/onboarding-preflight-v1.js
-          grep -q "admin_create_restaurant_preview" admin/onboarding-preflight-v1.js
-          grep -q "form.addEventListener('submit', runPreflight, true)" admin/onboarding-preflight-v1.js
-          grep -q "form.requestSubmit()" admin/onboarding-preflight-v1.js
-          grep -q "window.confirm" admin/onboarding-preflight-v1.js
-          grep -q "onboarding-preflight-v1.js?v=1.0" admin/admin-v6-policy.js
+          file=admin/onboarding-preflight-v1.js
+          test -f "$file"
+          grep -q "admin_create_restaurant_preview" "$file"
+          grep -q "admin_provision_restaurant" "$file"
+          grep -q "admin_restaurant_provision_status" "$file"
+          grep -q "admin_activate_restaurant" "$file"
+          grep -q "form.addEventListener('submit', runOnboarding, true)" "$file"
+          grep -q "handleDraftActivation" "$file"
+          grep -q "window.confirm" "$file"
+          ! grep -q "form.requestSubmit()" "$file"
+          ! grep -q "rpc('admin_create_restaurant'" "$file"
+          grep -q "onboarding-preflight-v1.js?v=1.2" admin/admin-v6-policy.js
 
       - name: Guard preflight migration
         run: |
@@ -48,3 +54,17 @@ jobs:
           grep -q "hostname_already_exists" "$file"
           grep -q "grant execute.*authenticated" "$file"
           ! grep -Eiq "^[[:space:]]*(insert|update|delete|truncate)[[:space:]]" "$file"
+
+      - name: Guard staged provisioning migration
+        run: |
+          set -euo pipefail
+          file=migration/platform/RESTBR-ONBOARDING-STAGED-V1.sql
+          test -f "$file"
+          grep -q "admin_provision_restaurant" "$file"
+          grep -q "admin_restaurant_provision_status" "$file"
+          grep -q "admin_activate_restaurant" "$file"
+          grep -q "'draft'" "$file"
+          grep -q "'pending'" "$file"
+          grep -q "domain must be pending before activation" "$file"
+          grep -q "private.is_platform_admin()" "$file"
+          grep -q "grant execute.*authenticated" "$file"
