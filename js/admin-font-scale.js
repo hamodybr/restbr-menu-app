@@ -76,4 +76,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // Super-admin only: 4C guarded destructive reset, unlocked only by a fresh 4B gate.
+  if (!document.getElementById('restbrRestaurantResetExecuteScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrRestaurantResetExecuteScript';
+    script.src = 'js/admin-restaurant-reset-execute.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
