@@ -22,4 +22,13 @@
     script.async = false;
     document.head.appendChild(script);
   }
+
+  // Admin-only: allow every authenticated dashboard user to change their own password.
+  if (!document.getElementById('restbrAdminAccountPasswordScript')) {
+    const script = document.createElement('script');
+    script.id = 'restbrAdminAccountPasswordScript';
+    script.src = 'js/admin-account-password.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
 })();
