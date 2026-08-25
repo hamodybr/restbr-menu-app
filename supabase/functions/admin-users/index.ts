@@ -4,8 +4,10 @@ import { createClient } from "npm:@supabase/supabase-js@2";
 const corsHeaders = {
   "Access-Control-Allow-Origin": "*",
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type",
-  "Access-Control-Allow-Methods": "GET, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
 };
+
+const CREATE_ROLES = ["owner", "manager", "menu_editor", "viewer"];
 
 function json(body: unknown, status = 200) {
   return new Response(JSON.stringify(body), {
@@ -14,12 +16,13 @@ function json(body: unknown, status = 200) {
   });
 }
 
-Deno.serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response("ok", { headers: corsHeaders });
-  }
+function cleanText(value: unknown, max = 120) {
+  return String(value ?? "").trim().slice(0, max);
+}
 
-  if (req.method !== "GET") {
+Deno.serve(async (req) => {
+  if (req.method === "OPTIONS") return new Response("ok", { headers: corsHeaders });
+  if (!["GET", "POST"].includes(req.method)) {
     return json({ ok: false, error: "Method not allowed" }, 405);
   }
 
@@ -27,8 +30,7 @@ Deno.serve(async (req) => {
     const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
     const anonKey = Deno.env.get("SUPABASE_ANON_KEY") || "";
     const serviceRoleKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
-    const authHeader = req.headers.get("Authorization") || "";
-    const token = authHeader.replace(/^Bearer\s+/i, "").trim();
+    const token = (req.headers.get("Authorization") || "").replace(/^Bearer\s+/i, "").trim();
 
     if (!supabaseUrl || !anonKey || !serviceRoleKey || !token) {
       return json({ ok: false, error: "Unauthorized" }, 401);
@@ -41,23 +43,16 @@ Deno.serve(async (req) => {
 
     const { data: userData, error: userError } = await userClient.auth.getUser(token);
     const caller = userData?.user;
-    if (userError || !caller?.id) {
-      return json({ ok: false, error: "Unauthorized" }, 401);
-    }
+    if (userError || !caller?.id) return json({ ok: false, error: "Unauthorized" }, 401);
 
-    // Read the caller's role through the same authenticated/RLS path used by the dashboard.
     const { data: callerProfile, error: callerProfileError } = await userClient
       .from("admin_users")
       .select("role,is_active")
       .eq("user_id", caller.id)
       .maybeSingle();
 
-    if (callerProfileError) {
-      console.error("admin-users caller profile error", callerProfileError);
-      return json({ ok: false, error: "Forbidden" }, 403);
-    }
-
     if (
+      callerProfileError ||
       !callerProfile ||
       callerProfile.is_active !== true ||
       !["super_admin", "owner"].includes(callerProfile.role)
@@ -65,16 +60,75 @@ Deno.serve(async (req) => {
       return json({ ok: false, error: "Forbidden" }, 403);
     }
 
-    // Owner/Super Admin RLS permits reading the admin directory.
-    const { data: profiles, error: profilesError } = await userClient
-      .from("admin_users")
-      .select("user_id,display_name,role,is_active,created_at");
-    if (profilesError) throw profilesError;
-
-    // Auth user metadata is server-only and requires the service role.
     const adminClient = createClient(supabaseUrl, serviceRoleKey, {
       auth: { persistSession: false, autoRefreshToken: false },
     });
+
+    if (req.method === "POST") {
+      let body: Record<string, unknown> = {};
+      try {
+        body = await req.json();
+      } catch {
+        return json({ ok: false, error: "Invalid JSON" }, 400);
+      }
+
+      const displayName = cleanText(body.display_name, 80);
+      const email = cleanText(body.email, 254).toLowerCase();
+      const password = String(body.password ?? "");
+      const role = cleanText(body.role, 40);
+
+      if (!displayName) return json({ ok: false, error: "Display name is required" }, 400);
+      if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+        return json({ ok: false, error: "Valid email is required" }, 400);
+      }
+      if (password.length < 8) {
+        return json({ ok: false, error: "Password must be at least 8 characters" }, 400);
+      }
+      if (!CREATE_ROLES.includes(role)) {
+        return json({ ok: false, error: "Invalid role" }, 400);
+      }
+
+      const { data: createdAuth, error: createError } = await adminClient.auth.admin.createUser({
+        email,
+        password,
+        email_confirm: true,
+        user_metadata: { display_name: displayName },
+      });
+
+      if (createError || !createdAuth?.user?.id) {
+        return json({ ok: false, error: createError?.message || "Failed to create auth user" }, 400);
+      }
+
+      const newUserId = createdAuth.user.id;
+      const { error: profileError } = await adminClient
+        .from("admin_users")
+        .insert({
+          user_id: newUserId,
+          display_name: displayName,
+          role,
+          is_active: true,
+        });
+
+      if (profileError) {
+        try {
+          await adminClient.auth.admin.deleteUser(newUserId);
+        } catch (_) {}
+        return json({ ok: false, error: profileError.message || "Failed to create admin profile" }, 500);
+      }
+
+      return json({
+        ok: true,
+        user: {
+          user_id: newUserId,
+          email,
+          display_name: displayName,
+          role,
+          is_active: true,
+          email_confirmed: true,
+          is_current_user: false,
+        },
+      }, 201);
+    }
 
     const { data: authData, error: authError } = await adminClient.auth.admin.listUsers({
       page: 1,
@@ -82,8 +136,12 @@ Deno.serve(async (req) => {
     });
     if (authError) throw authError;
 
-    const profileMap = new Map((profiles || []).map((p) => [p.user_id, p]));
+    const { data: profiles, error: profilesError } = await userClient
+      .from("admin_users")
+      .select("user_id,display_name,role,is_active,created_at");
+    if (profilesError) throw profilesError;
 
+    const profileMap = new Map((profiles || []).map((p) => [p.user_id, p]));
     const users = (authData?.users || [])
       .map((u) => {
         const p = profileMap.get(u.id);
@@ -108,9 +166,6 @@ Deno.serve(async (req) => {
     return json({ ok: true, users });
   } catch (error) {
     console.error("admin-users error", error);
-    return json(
-      { ok: false, error: error instanceof Error ? error.message : String(error) },
-      500,
-    );
+    return json({ ok: false, error: error instanceof Error ? error.message : String(error) }, 500);
   }
 });
