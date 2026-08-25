@@ -1,4 +1,4 @@
-// RESTBR Super Admin V6.2 — single-admin UX policy + onboarding preflight
+// RESTBR Super Admin V6.2 — single-admin UX policy + staged onboarding
 (() => {
   'use strict';
 
@@ -13,7 +13,7 @@
     if(document.getElementById('restbrOnboardingPreflightV1')) return;
     const script = document.createElement('script');
     script.id = 'restbrOnboardingPreflightV1';
-    script.src = './onboarding-preflight-v1.js?v=1.0';
+    script.src = './onboarding-preflight-v1.js?v=1.2';
     script.async = false;
     document.head.appendChild(script);
   }
@@ -64,7 +64,7 @@
     }
 
     document.addEventListener('click', handleManageClick, true);
-    console.log('✅ RESTBR Super Admin V6.2 — same-tab manager + onboarding preflight');
+    console.log('✅ RESTBR Super Admin V6.2 — staged onboarding enabled');
   }
 
   if(document.readyState === 'loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
