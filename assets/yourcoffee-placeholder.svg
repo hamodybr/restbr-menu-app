@@ -1,0 +1,8 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" role="img" aria-labelledby="title">
+  <title id="title">YourCoffee placeholder</title>
+  <rect width="512" height="512" rx="112" fill="#18120f"/>
+  <circle cx="256" cy="256" r="154" fill="#c89a65"/>
+  <path d="M160 205h176v72c0 62-42 105-88 105s-88-43-88-105v-72Z" fill="#fff8ef"/>
+  <path d="M336 226h20c40 0 40 72 0 72h-23" fill="none" stroke="#fff8ef" stroke-width="26" stroke-linecap="round"/>
+  <path d="M205 151c-18 25 19 35 0 61M255 139c-18 25 19 35 0 61M305 151c-18 25 19 35 0 61" fill="none" stroke="#fff8ef" stroke-width="18" stroke-linecap="round"/>
+</svg>

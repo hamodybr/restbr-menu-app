@@ -4169,7 +4169,7 @@ async function loadMenuFromSupabase() {
     logo:
       value(
         "logo_url",
-        "assets/shorash-logo.jpeg"
+        "assets/yourcoffee-placeholder.svg"
       ),
 
     isOpen:

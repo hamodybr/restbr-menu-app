@@ -37,7 +37,7 @@ const CORE = [
   "./data/menu.json?v=32",
   "./assets/favicon.png",
   "./assets/apple-touch-icon.png",
-  "./assets/shorash-logo.jpeg"
+  "./assets/yourcoffee-placeholder.svg"
 ];
 
 async function cacheOne(cache, path) {
