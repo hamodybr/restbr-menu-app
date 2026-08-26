@@ -1,5 +1,5 @@
 // ==========================================
-// SHORASH MENU — Supabase Configuration
+// RESTBR single-restaurant menu — Supabase configuration
 // ==========================================
 
 const SUPABASE_URL = 'https://pklzxpivnoqnrzyjryqz.supabase.co';
@@ -12,7 +12,7 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
 
-console.log('✅ SHORASH Supabase connected');
+console.log('✅ YourCoffee Supabase connected');
 
 // Load the shared menu-language policy for both the public menu and admin.
 (() => {

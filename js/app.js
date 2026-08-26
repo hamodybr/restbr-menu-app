@@ -4047,25 +4047,25 @@ async function loadMenuFromSupabase() {
       instagram:
         value(
           "instagram_url",
-          "https://www.instagram.com/shorashrest"
+          ""
         ),
 
       facebook:
         value(
           "facebook_url",
-          "https://facebook.com/shorashrest"
+          ""
         ),
 
       tiktok:
         value(
           "tiktok_url",
-          "https://www.tiktok.com/@shorashrest"
+          ""
         ),
 
       snapchat:
         value(
           "snapchat_url",
-          "https://www.snapchat.com/add/shorest2000"
+          ""
         )
     },
 
