@@ -1,7 +1,7 @@
 {
-  "name": "Restaurant Menu",
-  "short_name": "Restaurant",
-  "description": "Restaurant menu and ordering experience",
+  "name": "Nawroz Palace Menu",
+  "short_name": "Nawroz Palace",
+  "description": "Nawroz Palace menu and ordering experience",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",

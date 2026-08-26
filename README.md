@@ -1,6 +1,10 @@
-# RESTBR Single-Restaurant Template
+# RESTBR / Nawroz Palace
 
-A reusable menu and admin dashboard for one restaurant per deployment.
+Dedicated single-restaurant deployment for **Nawroz Palace — نوروز بالاس**.
+
+- Domain: `nawrozpalace.restbr.com`
+- Supabase: separate project owned by the restaurant account
+- Source template: `template/single-restaurant`
 
 ## Isolation model
 
