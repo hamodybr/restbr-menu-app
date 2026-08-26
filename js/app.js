@@ -3928,7 +3928,7 @@ async function loadMenuFromSupabase() {
     phone:
       value(
         "phone",
-        "07502662002"
+        ""
       ),
 
     whatsappNumber:

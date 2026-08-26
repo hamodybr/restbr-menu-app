@@ -1,4 +1,4 @@
-const CACHE_NAME = "yourcoffee-menu-v1";
+const CACHE_NAME = "yourcoffee-menu-v2";
 
 const CORE = [
   "./",
