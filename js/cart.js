@@ -16,7 +16,7 @@
   const anyOrderMethodAllowed=()=>deliveryAllowed()||pickupAllowed();
   const ordersAllowed=()=>{
     const r=restaurant();
-    return r.isOpen!==false && r.ordersEnabled!==false && anyOrderMethodAllowed();
+    return r.isOpen!==false && r.ordersEnabled!==false && anyOrderMethodAllowed() && Boolean(whatsappNumber());
   };
   const closedMessage=()=>{
     const r=restaurant();
@@ -31,12 +31,12 @@
   };
   const whatsappNumber=()=>{
     const r=restaurant();
-    let raw=String(r.whatsappNumber||r.whatsapp||"9647502662002");
+    let raw=String(r.whatsappNumber||r.whatsapp||"");
     let digits=raw.replace(/\D/g,"");
     if(digits.startsWith("00"))digits=digits.slice(2);
     if(/^07\d{9}$/.test(digits))digits="964"+digits.slice(1);
     if(/^7\d{9}$/.test(digits))digits="964"+digits;
-    return digits||"9647502662002";
+    return digits;
   };
   function syncOrderState(){
     ensureUI();

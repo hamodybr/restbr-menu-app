@@ -3848,7 +3848,7 @@ async function loadMenuFromSupabase() {
       settings.whatsapp_number ||
       settings.whatsapp ||
       settings.whatsapp_url ||
-      "9647502662002"
+      ""
     );
 
   let whatsappNumber =
@@ -4027,19 +4027,19 @@ async function loadMenuFromSupabase() {
       ar:
         value(
           "footer_location_ar",
-          "دهوك • كوردستان"
+          ""
         ),
 
       ku:
         value(
           "footer_location_ku",
-          "دهۆک • کوردستان"
+          ""
         ),
 
       en:
         value(
           "footer_location_en",
-          "Duhok • Kurdistan"
+          ""
         )
     },
 
