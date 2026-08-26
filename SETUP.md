@@ -1,0 +1,70 @@
+# إعداد نسخة مطعم جديدة
+
+هذه النسخة مخصصة لمطعم واحد فقط. كرر الخطوات التالية لكل مطعم جديد، ولا تربط
+مطعمَين بنفس مشروع Supabase.
+
+## 1. أنشئ Supabase خاصًا بالمطعم
+
+من حساب المطعم في Supabase:
+
+1. أنشئ Project جديدًا.
+2. افتح Authentication ثم Users.
+3. أنشئ حساب دخول صاحب المطعم وفعّل بريده.
+4. افتح SQL Editor.
+5. الصق وشغّل الملف `supabase/bootstrap.sql` كاملًا مرة واحدة.
+
+الملف ينشئ الجداول، الحماية RLS، الإحصائيات، دوال الأسعار، وحاوية الصور
+`menu-images`. أول مستخدم تم إنشاؤه في Auth يصبح مدير هذه النسخة.
+
+## 2. اربط نسخة الموقع
+
+من Supabase افتح إعدادات API أو شاشة Connect، وانسخ:
+
+- Project URL
+- Publishable key، أو anon key في المشاريع القديمة
+
+افتح `js/runtime-config.js` وغيّر فقط:
+
+```js
+window.RESTBR_CONFIG = Object.freeze({
+  restaurantName: 'اسم المطعم',
+  supabaseUrl: 'https://PROJECT_REF.supabase.co',
+  supabasePublishableKey: 'PUBLISHABLE_KEY',
+  enableUserManagement: false,
+  enableRestaurantReset: false
+});
+```
+
+لا تستخدم `service_role` هنا؛ هذا المفتاح سري ولا يجوز أن يصل إلى المتصفح.
+
+## 3. انشر نسخة مستقلة
+
+أنشئ Repository أو فرع تسليم مستقل للمطعم، ثم أنشئ له Cloudflare Pages project
+ودومينًا أو subdomain خاصًا. لا توجّه مطعمين إلى نفس نسخة الموقع.
+
+بعد النشر:
+
+1. افتح `/admin.html` وسجّل بحساب صاحب المطعم.
+2. أكمل الاسم والشعار والهاتف وWhatsApp والموقع.
+3. أضف الأقسام ثم الأصناف والأسعار.
+4. افتح الصفحة الرئيسية من نافذة خاصة وتأكد أن المنيو يعرض بيانات هذا المطعم فقط.
+5. أرسل طلب WhatsApp تجريبي قبل تسليم النسخة.
+
+## الميزات الاختيارية
+
+`enableUserManagement` يحتاج نشر Edge Function الموجودة في
+`supabase/functions/admin-users`. اتركه `false` إذا كان للمطعم حساب إدارة واحد.
+
+`enableRestaurantReset` يمسح بيانات المطعم وصوره، لذلك يبقى `false` في كل
+نسخة مباعة. لا تفعّله قبل تركيب migrations الخاصة بالـ reset واختبار النسخ
+الاحتياطي على مشروع تجريبي.
+
+## قائمة فحص قبل البيع
+
+- Supabase مختلف عن كل المطاعم السابقة
+- حساب Auth يعود لصاحب المطعم
+- `runtime-config.js` لا يحتوي إلا المفتاح العام
+- رابط الأدمن يعمل وتسجيل الدخول ناجح
+- الصور ترفع إلى `menu-images`
+- الاسم والهاتف وWhatsApp والدومين تخص المطعم الصحيح
+- لا توجد بيانات أو صور من مطعم سابق

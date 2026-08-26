@@ -58,7 +58,7 @@
   }
 
   function readBackupData(payload) {
-    if (!payload || payload.format !== 'SHORASH_MENU_BACKUP') {
+    if (!payload || !['RESTBR_MENU_BACKUP', 'SHORASH_MENU_BACKUP'].includes(payload.format)) {
       throw new Error('هذا الملف ليس Backup مدعوم.');
     }
 

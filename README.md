@@ -1,26 +1,42 @@
-# RESTBR / YourCoffee Single Restaurant
+# RESTBR Single-Restaurant Template
 
-This branch is the restored single-restaurant version of the project, based on the last stable snapshot before Cloudflare routing and multi-tenant support were introduced.
+A reusable menu and admin dashboard for one restaurant per deployment.
 
-## Architecture
-- One restaurant: YourCoffee
-- One public menu
-- One admin page: `admin.html`
-- Direct Supabase connection from `js/supabase-config.js`
-- No Cloudflare Worker
-- No tenant router
-- No Super Admin / Owner split
-- No plans or subscriptions
-- No restaurant member accounts
+## Isolation model
 
-## Important
-Do not reintroduce multi-tenant routing, Cloudflare Workers, owner onboarding, or per-restaurant account flows into this branch without creating a separate experimental branch first.
+Every sold copy gets its own:
+
+- Supabase project and restaurant owner account
+- database, Auth users, and Storage bucket
+- deployment and domain/subdomain
+- copy of `js/runtime-config.js`
+
+There is no tenant table, shared restaurant database, tenant router, subscription
+system, or browser-side service key.
+
+## Start a restaurant
+
+Follow [SETUP.md](SETUP.md). The files changed for each customer are:
+
+- `js/runtime-config.js` — restaurant name, Supabase URL, and publishable key
+- Supabase `restaurant_settings` — logo, phone, WhatsApp, location, colors, and text
+- optional PWA icons in `manifest.webmanifest`
 
 ## Main files
+
 - `index.html` — public menu
-- `admin.html` — YourCoffee admin dashboard
+- `admin.html` — restaurant dashboard
 - `js/app.js` — menu runtime
 - `js/cart.js` — cart and WhatsApp checkout
-- `js/supabase-config.js` — Supabase browser config
-- `data/menu.json` — offline/static fallback
-- `sw.js` — PWA cache
+- `js/runtime-config.js` — this restaurant's public connection values
+- `js/supabase-config.js` — shared Supabase client bootstrap
+- `supabase/bootstrap.sql` — fresh project schema, RLS, functions, and Storage
+- `data/menu.json` — empty offline fallback
+
+## Safety
+
+Only a Supabase publishable/anon key belongs in browser code. Never commit or
+paste a `service_role` key into this repository.
+
+The optional user-management and full-reset features are disabled by default.
+The core menu and single administrator do not need either feature.

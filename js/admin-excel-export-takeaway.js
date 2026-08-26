@@ -70,7 +70,7 @@
       const wb = XLSX.utils.book_new();
 
       const instructions = [
-        ['SHORASH MENU — Excel'],
+        ['RESTBR MENU — Excel'],
         ['طريقة الاستخدام'],
         ['1', 'لا تغيّر عمود id للسجلات الموجودة.'],
         ['2', 'يمكن تعديل الأسماء، الأسعار، الحالات، الترتيب وأوقات التوفر.'],

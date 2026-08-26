@@ -11,7 +11,7 @@
 
   <meta name="theme-color" content="#080604">
 
-  <title>YourCoffee — Admin Dashboard</title>
+  <title>Restaurant — Admin Dashboard</title>
 
   <link rel="icon" type="image/png" href="assets/favicon.png">
 
@@ -2425,8 +2425,8 @@
 <section id="adminLoginGate" class="admin-login-gate">
   <div class="login-card">
     <div class="login-brand">
-      <img src="assets/yourcoffee-placeholder.svg" alt="YourCoffee">
-      <h1>YourCoffee Admin</h1>
+      <img src="assets/restaurant-placeholder.svg" alt="Restaurant">
+      <h1>Restaurant Admin</h1>
       <p>تسجيل دخول لوحة الإدارة</p>
     </div>
 
@@ -2465,11 +2465,11 @@
 </section>
 
 <header class="admin-header">
-  <img src="assets/yourcoffee-placeholder.svg" alt="YourCoffee" class="admin-logo">
+  <img src="assets/restaurant-placeholder.svg" alt="Restaurant" class="admin-logo">
 
   <div class="admin-header-copy">
     <h1 id="adminPageTitle">الرئيسية</h1>
-    <p id="adminPageSubtitle">YourCoffee Admin</p>
+    <p id="adminPageSubtitle">Restaurant Admin</p>
   </div>
 
   <button id="refreshBtn" class="header-refresh" type="button" aria-label="تحديث" title="تحديث">↻</button>
@@ -2836,7 +2836,7 @@
             </div>
 
             <div class="settings-logo-row compact-logo-row">
-              <img id="rs_logo_preview" class="settings-logo-preview" src="assets/yourcoffee-placeholder.svg" alt="">
+              <img id="rs_logo_preview" class="settings-logo-preview" src="assets/restaurant-placeholder.svg" alt="">
               <div class="settings-logo-controls">
                 <label class="settings-file-btn">
                   📷 رفع شعار
@@ -3614,8 +3614,9 @@
 <!-- Supabase Library -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
-<!-- Existing SHORASH Supabase Configuration -->
-<script src="js/supabase-config.js?v=1.0"></script>
+<!-- One per-restaurant public configuration; never contains service_role. -->
+<script src="js/runtime-config.js?v=1.0"></script>
+<script src="js/supabase-config.js?v=2.0"></script>
 
 <!-- Touch-friendly Drag & Drop -->
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
@@ -3751,7 +3752,7 @@
       const wb=XLSX.utils.book_new();
 
       const instructions=[
-        ['SHORASH MENU — Excel'],
+        ['RESTBR MENU — Excel'],
         ['طريقة الاستخدام'],
         ['1','لا تغيّر عمود id للسجلات الموجودة.'],
         ['2','يمكن تعديل الأسماء، الأسعار، الحالات، الترتيب وأوقات التوفر.'],
@@ -4171,7 +4172,7 @@
       const payload=JSON.parse(raw);
 
       downloadJson(
-        `SHORASH-price-backup-${safeFileDate()}.json`,
+        `RESTBR-price-backup-${safeFileDate()}.json`,
         payload
       );
 
@@ -5443,7 +5444,7 @@
   function applyAdminBranding(){
     const s=adminRestaurantSettings||{};
     const name=getAdminRestaurantName();
-    const logo=s.logo_url || 'assets/yourcoffee-placeholder.svg';
+    const logo=s.logo_url || 'assets/restaurant-placeholder.svg';
 
     const headerLogo=document.querySelector('.admin-logo');
     if(headerLogo)headerLogo.src=logo;
@@ -5556,7 +5557,7 @@
       ${fieldHtml('الاسم الكوردي','p_name_ku',firstExisting(product,['name_ku']))}
       ${fieldHtml('الاسم الإنجليزي','p_name_en',firstExisting(product,['name_en']))}
       <div class="field"><label>القسم</label><select id="p_category_id">${catOptions}</select></div>
-      <div class="image-upload-box"><div>صورة الصنف — من الجهاز أو رابط مباشر</div><div class="image-upload-row"><img id="p_image_preview" class="image-preview" src="${escapeAdminHtml(firstExisting(product,['image_url','image'],'assets/yourcoffee-placeholder.svg'))}"><label class="image-upload-btn">📷 اختيار صورة<input id="p_image_file" type="file" accept="image/*" onchange="previewAdminImage(this)"></label><span id="p_image_file_name" class="image-file-name">لم يتم اختيار صورة جديدة</span></div><div id="p_upload_progress" class="upload-progress"></div></div>${fieldHtml('رابط الصورة (اختياري)','p_image_url',firstExisting(product,['image_url','image']),'url',true)}
+      <div class="image-upload-box"><div>صورة الصنف — من الجهاز أو رابط مباشر</div><div class="image-upload-row"><img id="p_image_preview" class="image-preview" src="${escapeAdminHtml(firstExisting(product,['image_url','image'],'assets/restaurant-placeholder.svg'))}"><label class="image-upload-btn">📷 اختيار صورة<input id="p_image_file" type="file" accept="image/*" onchange="previewAdminImage(this)"></label><span id="p_image_file_name" class="image-file-name">لم يتم اختيار صورة جديدة</span></div><div id="p_upload_progress" class="upload-progress"></div></div>${fieldHtml('رابط الصورة (اختياري)','p_image_url',firstExisting(product,['image_url','image']),'url',true)}
       ${priceKey?fieldHtml('السعر الأساسي','p_base_price',product[priceKey]??0,'number'):''}
       ${hasField(product,'sort_order')?fieldHtml('الترتيب','p_sort_order',product.sort_order??0,'number'):''}
       ${hasField(product,'description_ar')?textAreaHtml('الوصف العربي','p_description_ar',product.description_ar||''):''}
@@ -5827,7 +5828,7 @@
       <div class="image-upload-box">
         <div>صورة الصنف — من الجهاز أو رابط مباشر</div>
         <div class="image-upload-row">
-          <img id="np_image_preview" class="image-preview" src="assets/yourcoffee-placeholder.svg" alt="">
+          <img id="np_image_preview" class="image-preview" src="assets/restaurant-placeholder.svg" alt="">
           <label class="image-upload-btn">📷 اختيار صورة
             <input id="np_image_file" type="file" accept="image/*" onchange="previewNewProductImage(this)">
           </label>
@@ -6459,7 +6460,7 @@
         const image =
           product.image_url ||
           product.image ||
-          'assets/yourcoffee-placeholder.svg';
+          'assets/restaurant-placeholder.svg';
 
 
         return `
@@ -6472,7 +6473,7 @@
               loading="lazy"
               onerror="
                 this.onerror=null;
-                this.src='assets/yourcoffee-placeholder.svg';
+                this.src='assets/restaurant-placeholder.svg';
               "
             >
 
@@ -6850,11 +6851,11 @@
 
   function backupSafeName(value){return String(value||'restaurant').trim().replace(/[^\p{L}\p{N}_-]+/gu,'-').replace(/-+/g,'-').replace(/^-|-$/g,'').slice(0,50)||'restaurant'}
   function backupPrefix(){return backupSafeName(getAdminRestaurantName()||'restaurant')}
-  function makeBackup(scope,data,extra={}){return{format:'SHORASH_MENU_BACKUP',version:3,created_at:new Date().toISOString(),scope,restaurant:getAdminRestaurantName()||'',note:'Menu backup generated from the restaurant admin dashboard.',...extra,data}}
+  function makeBackup(scope,data,extra={}){return{format:'RESTBR_MENU_BACKUP',version:3,created_at:new Date().toISOString(),scope,restaurant:getAdminRestaurantName()||'',note:'Menu backup generated from the restaurant admin dashboard.',...extra,data}}
   function downloadJson(filename,payload){const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
-  const SHORASH_EMERGENCY_BACKUP_KEY='SHORASH_LAST_AUTO_BACKUP_V2';
-  function saveEmergencyBackup(payload){try{localStorage.setItem(SHORASH_EMERGENCY_BACKUP_KEY,JSON.stringify(payload));return true}catch(e){console.warn(e);return false}}
-  function getEmergencyBackup(){try{const raw=localStorage.getItem(SHORASH_EMERGENCY_BACKUP_KEY);return raw?JSON.parse(raw):null}catch(e){console.warn(e);return null}}
+  const RESTBR_EMERGENCY_BACKUP_KEY='RESTBR_LAST_AUTO_BACKUP_V2';
+  function saveEmergencyBackup(payload){try{localStorage.setItem(RESTBR_EMERGENCY_BACKUP_KEY,JSON.stringify(payload));return true}catch(e){console.warn(e);return false}}
+  function getEmergencyBackup(){try{const raw=localStorage.getItem(RESTBR_EMERGENCY_BACKUP_KEY)||localStorage.getItem('SHORASH_LAST_AUTO_BACKUP_V2');return raw?JSON.parse(raw):null}catch(e){console.warn(e);return null}}
   function downloadEmergencyBackup(){const p=getEmergencyBackup();if(!p){setBackupStatus('لا يوجد Backup تلقائي محفوظ على هذا الجهاز حالياً.',false);return}downloadJson(`${backupPrefix()}-AUTO-${backupSafeName(p.category_name||'emergency')}-${safeFileDate()}.json`,p);setBackupStatus('تم تنزيل آخر Backup تلقائي محفوظ ✓')}
   function fullBackupPayload(){return makeBackup('full',{categories:cloneRows(adminCategories),products:cloneRows(adminProducts),product_options:cloneRows(adminOptions),restaurant_settings:adminRestaurantSettings?.id?[JSON.parse(JSON.stringify(adminRestaurantSettings))]:[]})}
   function backupFullMenu(){const p=fullBackupPayload();downloadJson(`${backupPrefix()}-full-${safeFileDate()}.json`,p);setBackupStatus('تم إنشاء نسخة كاملة ✓');return p}
@@ -6869,7 +6870,7 @@
   function downloadSelectedBackupType(){const t=document.getElementById('backupTypeSelect')?.value||'full';try{if(t==='full')return backupFullMenu();if(t==='settings')return backupSettingsOnly();if(t==='categories')return backupAllCategories();if(t==='products')return backupAllProducts();if(t==='prices')return backupPricesOnly();if(t==='category'){const id=val('backupCategorySelect');if(!id){setBackupStatus('اختر قسماً أولاً.',false);return}return backupOneCategory(id)}}catch(e){setBackupStatus('فشل إنشاء النسخة: '+(e.message||e),false)}}
   async function upsertInChunks(table,rows){if(!Array.isArray(rows)||!rows.length)return;for(let i=0;i<rows.length;i+=100){const r=await supabaseClient.from(table).upsert(rows.slice(i,i+100),{onConflict:'id'});if(r.error)throw r.error}}
   async function restorePrices(pp,po){pp=Array.isArray(pp)?pp:[];po=Array.isArray(po)?po:[];for(let i=0;i<pp.length;i+=40)await Promise.all(pp.slice(i,i+40).map(async x=>{if(!x?.id)return;const r=await supabaseClient.from('products').update({base_price:x.base_price}).eq('id',x.id);if(r.error)throw r.error}));for(let i=0;i<po.length;i+=60)await Promise.all(po.slice(i,i+60).map(async x=>{if(!x?.id)return;const r=await supabaseClient.from('product_options').update({price:x.price}).eq('id',x.id);if(r.error)throw r.error}));return{price_products:pp.length,price_options:po.length}}
-  async function restoreBackupObject(payload){if(!payload||payload.format!=='SHORASH_MENU_BACKUP')throw new Error('هذا الملف ليس Backup مدعوم.');const d=payload.data||{},categories=Array.isArray(d.categories)?d.categories:[],products=Array.isArray(d.products)?d.products:[],options=Array.isArray(d.product_options)?d.product_options:[],settings=Array.isArray(d.restaurant_settings)?d.restaurant_settings:[],pp=Array.isArray(d.price_products)?d.price_products:[],po=Array.isArray(d.price_options)?d.price_options:[];if(!categories.length&&!products.length&&!options.length&&!settings.length&&!pp.length&&!po.length)throw new Error('النسخة لا تحتوي بيانات قابلة للاسترجاع.');await upsertInChunks('restaurant_settings',settings);await upsertInChunks('categories',categories);await upsertInChunks('products',products);await upsertInChunks('product_options',options);const pr=await restorePrices(pp,po);await loadAdminDashboard();return{categories:categories.length,products:products.length,options:options.length,settings:settings.length,price_products:pr.price_products,price_options:pr.price_options}}
+  async function restoreBackupObject(payload){if(!payload||!['RESTBR_MENU_BACKUP','SHORASH_MENU_BACKUP'].includes(payload.format))throw new Error('هذا الملف ليس Backup مدعوم.');const d=payload.data||{},categories=Array.isArray(d.categories)?d.categories:[],products=Array.isArray(d.products)?d.products:[],options=Array.isArray(d.product_options)?d.product_options:[],settings=Array.isArray(d.restaurant_settings)?d.restaurant_settings:[],pp=Array.isArray(d.price_products)?d.price_products:[],po=Array.isArray(d.price_options)?d.price_options:[];if(!categories.length&&!products.length&&!options.length&&!settings.length&&!pp.length&&!po.length)throw new Error('النسخة لا تحتوي بيانات قابلة للاسترجاع.');await upsertInChunks('restaurant_settings',settings);await upsertInChunks('categories',categories);await upsertInChunks('products',products);await upsertInChunks('product_options',options);const pr=await restorePrices(pp,po);await loadAdminDashboard();return{categories:categories.length,products:products.length,options:options.length,settings:settings.length,price_products:pr.price_products,price_options:pr.price_options}}
   async function handleRestoreFile(file){if(!file)return;if(!confirm('سيتم استرجاع البيانات الموجودة داخل النسخة الاحتياطية.\n\nالسجلات المتطابقة سيتم تحديثها ولن نحذف بيانات أخرى غير موجودة في النسخة.\n\nهل تريد المتابعة؟'))return;setBackupStatus('جاري قراءة واسترجاع النسخة...');try{const p=JSON.parse(await file.text()),r=await restoreBackupObject(p),parts=[];if(r.settings)parts.push(`إعدادات: ${r.settings}`);if(r.categories)parts.push(`أقسام: ${r.categories}`);if(r.products)parts.push(`أصناف: ${r.products}`);if(r.options)parts.push(`خيارات: ${r.options}`);if(r.price_products||r.price_options)parts.push(`أسعار: ${r.price_products+r.price_options}`);setBackupStatus('تم الاسترجاع بنجاح ✓'+(parts.length?' — '+parts.join('، '):''));alert('تم استرجاع النسخة الاحتياطية بنجاح ✓')}catch(e){console.error(e);setBackupStatus('فشل الاسترجاع: '+(e.message||e),false);alert('فشل الاسترجاع: '+(e.message||e))}finally{const input=document.getElementById('restoreBackupInput');if(input)input.value=''}}
 
 
@@ -7096,7 +7097,7 @@
           .slice(0,60);
 
         downloadJson(
-          `SHORASH-before-delete-${clean}-${safeFileDate()}.json`,
+          `RESTBR-before-delete-${clean}-${safeFileDate()}.json`,
           backupPayload
         );
       }catch(downloadError){

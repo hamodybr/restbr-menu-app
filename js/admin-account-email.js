@@ -93,6 +93,7 @@
     try {
       if (typeof supabaseClient === 'undefined' || !supabaseClient?.auth) return;
       const { data:{ user }, error } = await supabaseClient.auth.getUser();
+      if (error?.name === 'AuthSessionMissingError') return;
       if (error) throw error;
       const value = user?.email || '—';
       const el = q('#restbrCurrentEmailDisplay');

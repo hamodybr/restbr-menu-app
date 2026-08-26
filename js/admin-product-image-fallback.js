@@ -3,7 +3,7 @@
   if (window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__) return;
   window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__ = true;
 
-  const LEGACY_FALLBACK = 'assets/yourcoffee-placeholder.svg';
+  const LEGACY_FALLBACK = 'assets/restaurant-placeholder.svg';
   const TARGET_SELECTOR = '#p_image_preview,#np_image_preview,.product-image';
   let restaurantLogo = '';
   let applying = false;
@@ -15,7 +15,7 @@
   function isLegacyFallback(value) {
     const src = cleanUrl(value);
     if (!src) return true;
-    return src === LEGACY_FALLBACK || src.endsWith('/assets/yourcoffee-placeholder.svg');
+    return src === LEGACY_FALLBACK;
   }
 
   function currentSettingsLogo() {

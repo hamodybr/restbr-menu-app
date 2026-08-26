@@ -4169,7 +4169,7 @@ async function loadMenuFromSupabase() {
     logo:
       value(
         "logo_url",
-        "assets/yourcoffee-placeholder.svg"
+        "assets/restaurant-placeholder.svg"
       ),
 
     isOpen:

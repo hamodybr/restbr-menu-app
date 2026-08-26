@@ -1,4 +1,4 @@
-const CACHE_NAME = "yourcoffee-menu-v2";
+const CACHE_NAME = "restbr-restaurant-template-v1";
 
 const CORE = [
   "./",
@@ -17,7 +17,8 @@ const CORE = [
   "./js/cart.js?v=4.1",
   "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.2",
-  "./js/supabase-config.js?v=1.3",
+  "./js/runtime-config.js?v=1.0",
+  "./js/supabase-config.js?v=2.0",
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
   "./js/discount-choice-price-sync.js?v=1.0",
@@ -35,9 +36,7 @@ const CORE = [
   "./js/dining-mode.js?v=1.3",
   "./js/dining-gate-language.js?v=1.0",
   "./data/menu.json?v=32",
-  "./assets/favicon.png",
-  "./assets/apple-touch-icon.png",
-  "./assets/yourcoffee-placeholder.svg"
+  "./assets/restaurant-placeholder.svg"
 ];
 
 async function cacheOne(cache, path) {
@@ -92,7 +91,7 @@ self.addEventListener("fetch", event => {
   const isAdminPage = /\/admin\.html$/i.test(url.pathname);
   const isAdminAsset =
     /\/js\/admin-[^/]+\.js$/i.test(url.pathname) ||
-    /\/js\/supabase-config\.js$/i.test(url.pathname);
+    /\/js\/(?:runtime|supabase)-config\.js$/i.test(url.pathname);
 
   // Admin must always prefer the newest online code. This prevents stale
   // dashboard plugins from being served after a deployment.

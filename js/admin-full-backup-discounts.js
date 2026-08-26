@@ -87,7 +87,7 @@
       ).trim();
 
       const payload = {
-        format: 'SHORASH_MENU_BACKUP',
+        format: 'RESTBR_MENU_BACKUP',
         version: 3,
         created_at: new Date().toISOString(),
         scope: 'full',

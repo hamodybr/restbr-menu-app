@@ -41,8 +41,8 @@
     document.head.appendChild(script);
   }
 
-  // Owner / super-admin only: create users, change roles, and enable/disable access.
-  if (!document.getElementById('restbrAdminUsersListScript')) {
+  // Optional: requires deploying the admin-users Edge Function first.
+  if (window.RESTBR_CONFIG?.enableUserManagement === true && !document.getElementById('restbrAdminUsersListScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminUsersListScript';
     script.src = 'js/admin-users-list.js?v=1.2';
@@ -51,7 +51,7 @@
   }
 
   // Owner / super-admin only: permanently delete eligible dashboard users with confirmation.
-  if (!document.getElementById('restbrAdminUserDeleteScript')) {
+  if (window.RESTBR_CONFIG?.enableUserManagement === true && !document.getElementById('restbrAdminUserDeleteScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminUserDeleteScript';
     script.src = 'js/admin-user-delete.js?v=1.0';
@@ -59,8 +59,8 @@
     document.head.appendChild(script);
   }
 
-  // Super-admin only: safe dry-run preview for preparing the system for a new restaurant.
-  if (!document.getElementById('restbrRestaurantResetPreviewScript')) {
+  // Optional destructive reset suite. Disabled for every sold copy by default.
+  if (window.RESTBR_CONFIG?.enableRestaurantReset === true && !document.getElementById('restbrRestaurantResetPreviewScript')) {
     const script = document.createElement('script');
     script.id = 'restbrRestaurantResetPreviewScript';
     script.src = 'js/admin-restaurant-reset-preview.js?v=1.1';
@@ -69,7 +69,7 @@
   }
 
   // Super-admin only: 4B mandatory full backup gate before any future destructive reset.
-  if (!document.getElementById('restbrRestaurantResetBackupScript')) {
+  if (window.RESTBR_CONFIG?.enableRestaurantReset === true && !document.getElementById('restbrRestaurantResetBackupScript')) {
     const script = document.createElement('script');
     script.id = 'restbrRestaurantResetBackupScript';
     script.src = 'js/admin-restaurant-reset-backup.js?v=1.0';
@@ -78,7 +78,7 @@
   }
 
   // Super-admin only: 4C guarded destructive reset, unlocked only by a fresh 4B gate.
-  if (!document.getElementById('restbrRestaurantResetExecuteScript')) {
+  if (window.RESTBR_CONFIG?.enableRestaurantReset === true && !document.getElementById('restbrRestaurantResetExecuteScript')) {
     const script = document.createElement('script');
     script.id = 'restbrRestaurantResetExecuteScript';
     script.src = 'js/admin-restaurant-reset-execute.js?v=1.0';
@@ -87,7 +87,7 @@
   }
 
   // 4D safety hardening: bind each Full Backup/Challenge to a SHA-256 state fingerprint.
-  if (!document.getElementById('restbrResetFingerprintPatchScript')) {
+  if (window.RESTBR_CONFIG?.enableRestaurantReset === true && !document.getElementById('restbrResetFingerprintPatchScript')) {
     const script = document.createElement('script');
     script.id = 'restbrResetFingerprintPatchScript';
     script.src = 'js/admin-reset-fingerprint-patch.js?v=1.0';

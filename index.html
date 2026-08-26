@@ -4,6 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#080604">
+  <script src="js/runtime-config.js?v=1.0"></script>
 
   <script>
     window.__smIntroBornAt=Date.now();
@@ -25,15 +26,15 @@
     },true);
 
     try{
-      const yourCoffeeResetKey="RESTBR_YOURCOFFEE_RESET_V1";
-      if(localStorage.getItem(yourCoffeeResetKey)!=="done"){
+      const templateResetKey="RESTBR_TEMPLATE_RESET_V1";
+      if(localStorage.getItem(templateResetKey)!=="done"){
         [
           "SHORASH_BRAND_CACHE_V1",
           "SHORASH_MENU_OFFLINE_CACHE_V1",
           "shorashCartV1",
           "shorashIntroSeen"
         ].forEach(key=>localStorage.removeItem(key));
-        localStorage.setItem(yourCoffeeResetKey,"done");
+        localStorage.setItem(templateResetKey,"done");
       }
       localStorage.removeItem("SM_THEME_PREF_V1");
       document.documentElement.removeAttribute("data-sm-theme");
@@ -42,9 +43,9 @@
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="YourCoffee">
+  <meta name="apple-mobile-web-app-title" content="Restaurant Menu">
 
-  <title>YourCoffee Menu</title>
+  <title>Restaurant Menu</title>
 
   <!-- Restaurant favicon -->
   <link rel="icon" type="image/png" href="assets/favicon.png">
@@ -252,7 +253,7 @@
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=1.3"></script>
+  <script src="js/supabase-config.js?v=2.0"></script>
 
   <!-- Category unavailable state + clear product active/visible/available semantics. -->
   <script src="js/unavailable-card-state.js?v=1.1"></script>
