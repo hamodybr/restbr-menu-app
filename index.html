@@ -25,6 +25,16 @@
     },true);
 
     try{
+      const yourCoffeeResetKey="RESTBR_YOURCOFFEE_RESET_V1";
+      if(localStorage.getItem(yourCoffeeResetKey)!=="done"){
+        [
+          "SHORASH_BRAND_CACHE_V1",
+          "SHORASH_MENU_OFFLINE_CACHE_V1",
+          "shorashCartV1",
+          "shorashIntroSeen"
+        ].forEach(key=>localStorage.removeItem(key));
+        localStorage.setItem(yourCoffeeResetKey,"done");
+      }
       localStorage.removeItem("SM_THEME_PREF_V1");
       document.documentElement.removeAttribute("data-sm-theme");
     }catch(_){}
