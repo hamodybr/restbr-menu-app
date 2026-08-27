@@ -5972,6 +5972,9 @@
 
   async function createAdminProduct(){
     const sample=adminProducts[0]||{};
+    // A new restaurant can have no products yet, so there is no row to use
+    // for schema detection. The bootstrap schema still requires these fields.
+    const hasSampleSchema=Object.keys(sample).length>0;
     const btn=document.getElementById('createProductBtn');
     const nameAr=val('np_name_ar').trim();
     const categoryId=val('np_category_id');
@@ -5998,8 +6001,8 @@
       // ID is UUID in the current SHORASH products table.
       insert.id=newId;
 
-      if(hasField(sample,'category_id')) insert.category_id=categoryId;
-      if(hasField(sample,'name_ar')) insert.name_ar=nameAr;
+      if(hasField(sample,'category_id') || !hasSampleSchema) insert.category_id=categoryId;
+      if(hasField(sample,'name_ar') || !hasSampleSchema) insert.name_ar=nameAr;
       else if(hasField(sample,'name')) insert.name=nameAr;
 
       if(hasField(sample,'name_ku')) insert.name_ku=val('np_name_ku').trim()||nameAr;
@@ -6186,6 +6189,9 @@
 
   async function createAdminCategory(){
     const sample=adminCategories[0]||{};
+    // On a fresh Supabase project there may be no category row yet. Fall back
+    // to the canonical bootstrap column instead of omitting the required name.
+    const hasSampleSchema=Object.keys(sample).length>0;
     const btn=document.getElementById('createCategoryBtn');
 
     const nameAr=val('nc_name_ar').trim();
@@ -6201,7 +6207,7 @@
       const newId=newUuid();
       const payload={id:newId};
 
-      if(hasField(sample,'name_ar')) payload.name_ar=nameAr;
+      if(hasField(sample,'name_ar') || !hasSampleSchema) payload.name_ar=nameAr;
       else if(hasField(sample,'name')) payload.name=nameAr;
 
       if(hasField(sample,'name_ku')) payload.name_ku=val('nc_name_ku').trim()||nameAr;
