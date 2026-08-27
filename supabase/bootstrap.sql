@@ -168,6 +168,7 @@ declare
   product_id uuid;
   category_number integer;
   product_number integer;
+  base_price_value numeric;
 begin
   if exists (select 1 from public.categories)
      or exists (select 1 from public.products) then
@@ -187,6 +188,10 @@ begin
     ) returning id into category_id;
 
     for product_number in 1..2 loop
+      base_price_value := 5000
+        + ((category_number - 1) * 500)
+        + ((product_number - 1) * 1000);
+
       insert into public.products (
         category_id, name_ar, name_ku, name_en, description_ar,
         base_price, sort_order, is_active, is_visible, is_available, has_options
@@ -196,19 +201,21 @@ begin
         'بەرهەمی تاقیکردنەوە ' || category_number || ' - ' || product_number,
         'Demo Item ' || category_number || ' - ' || product_number,
         'عدّل الاسم والوصف والسعر من لوحة الإدارة.',
-        0, product_number, true, true, true, false
+        base_price_value, product_number, true, true, true, true
       ) returning id into product_id;
 
       insert into public.product_options (
-        product_id, name_ar, name_ku, name_en, price,
+        product_id, name_ar, name_ku, name_en, price, takeaway_price,
         sort_order, is_active, is_available
-      ) values (
-        product_id,
-        'صنف تجريبي ' || category_number || ' - ' || product_number,
-        'بەرهەمی تاقیکردنەوە ' || category_number || ' - ' || product_number,
-        'Demo Item ' || category_number || ' - ' || product_number,
-        0, 1, true, true
-      );
+      ) values
+        (
+          product_id, 'صغير', 'بچووک', 'Small',
+          base_price_value, base_price_value + 500, 1, true, true
+        ),
+        (
+          product_id, 'كبير', 'گەورە', 'Large',
+          base_price_value + 2000, base_price_value + 2500, 2, true, true
+        );
     end loop;
   end loop;
 end;
