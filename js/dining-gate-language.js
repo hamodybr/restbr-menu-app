@@ -1,5 +1,5 @@
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
 
   const ALL = ['ar', 'ku', 'en'];
   const LABELS = { ar: 'عربي', ku: 'کوردی', en: 'English' };

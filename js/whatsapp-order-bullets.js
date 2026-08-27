@@ -1,5 +1,5 @@
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (window.__SHORASH_WHATSAPP_ORDER_BULLETS_V1__) return;
   window.__SHORASH_WHATSAPP_ORDER_BULLETS_V1__ = true;
 

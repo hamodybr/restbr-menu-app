@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (window.__RESTBR_RESET_FINGERPRINT_PATCH_V1__) return;
   window.__RESTBR_RESET_FINGERPRINT_PATCH_V1__ = true;
 

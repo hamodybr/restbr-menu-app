@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (window.__SHORASH_BULK_PRICE_TARGET_UI_V2__) return;
   window.__SHORASH_BULK_PRICE_TARGET_UI_V2__ = true;
 

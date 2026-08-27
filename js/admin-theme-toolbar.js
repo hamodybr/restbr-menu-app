@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
 
   const THEME_KEY = 'SHORASH_ADMIN_THEME_V2';
   const LEGACY_THEME_KEY = 'SHORASH_ADMIN_SETTINGS_THEME_V1';

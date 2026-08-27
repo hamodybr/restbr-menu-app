@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (document.getElementById('smAdminLightThemeCompleteStyles')) return;
 
   const style = document.createElement('style');

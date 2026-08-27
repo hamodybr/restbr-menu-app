@@ -14,6 +14,9 @@ const RESTBR_CONFIGURED =
   SUPABASE_PUBLISHABLE_KEY.length > 20 &&
   !/YOUR_SUPABASE_PUBLISHABLE_KEY/i.test(SUPABASE_PUBLISHABLE_KEY);
 
+const RESTBR_IS_ADMIN_PATH =
+  /(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname);
+
 if (!RESTBR_CONFIGURED) {
   console.error(
     'RESTBR setup is incomplete. Add this restaurant Supabase URL and publishable key to js/runtime-config.js.'
@@ -44,7 +47,7 @@ if (RESTBR_CONFIGURED) {
 
 (() => {
   const name = String(RESTBR_CONFIG.restaurantName || 'Restaurant').trim();
-  const isAdmin = /(?:^|\/)admin\.html$/i.test(location.pathname);
+  const isAdmin = RESTBR_IS_ADMIN_PATH;
   document.title = isAdmin ? `${name} — Admin Dashboard` : `${name} Menu`;
   document.querySelector('meta[name="apple-mobile-web-app-title"]')
     ?.setAttribute('content', name);
@@ -69,7 +72,7 @@ if (RESTBR_CONFIGURED) {
 
 // Public-menu only: keep the open options sheet synced after live price refreshes.
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashDiscountChoicePriceSyncScript')) return;
 
   const script = document.createElement('script');
@@ -81,7 +84,7 @@ if (RESTBR_CONFIGURED) {
 
 // Public-menu only: automatic restaurant opening hours.
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashRestaurantHoursScript')) return;
 
   const script = document.createElement('script');
@@ -93,7 +96,7 @@ if (RESTBR_CONFIGURED) {
 
 // Public-menu only: use bullets instead of numeric sequencing in WhatsApp order items.
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashWhatsappOrderBulletsScript')) return;
 
   const script = document.createElement('script');
@@ -105,7 +108,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only sticky toolbar + GLOBAL dashboard light/dark theme.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminThemeToolbarScript')) return;
 
   const script = document.createElement('script');
@@ -117,7 +120,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: slightly increase all dashboard text without changing layout sizing.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminFontScaleScript')) return;
 
   const script = document.createElement('script');
@@ -129,7 +132,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only native category filter inside the existing products filter system.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminProductCategoryFilterScript')) return;
 
   const script = document.createElement('script');
@@ -141,7 +144,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only dine-in / takeaway price controls for product options.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminTakeawayPricesScript')) return;
 
   const script = document.createElement('script');
@@ -153,7 +156,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only tap ordering for product options inside the product editor.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminOptionOrderScript')) return;
 
   const script = document.createElement('script');
@@ -165,7 +168,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: use the current restaurant logo when a product has no image.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminProductImageFallbackScript')) return;
 
   const script = document.createElement('script');
@@ -177,7 +180,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: choose which price type a bulk change targets.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminBulkPriceTargetUiScript')) return;
 
   const script = document.createElement('script');
@@ -189,7 +192,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: enhanced full backup includes discounts too.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminFullBackupDiscountsScript')) return;
 
   const script = document.createElement('script');
@@ -201,7 +204,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: restore discounts from enhanced backups too.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminFullRestoreDiscountsScript')) return;
 
   const script = document.createElement('script');
@@ -213,7 +216,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: include dine-in and takeaway prices in Excel export.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminExcelExportTakeawayScript')) return;
 
   const script = document.createElement('script');
@@ -225,7 +228,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only: allow takeaway_price updates during Excel import.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminExcelImportTakeawayScript')) return;
 
   const script = document.createElement('script');
@@ -237,7 +240,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only restaurant opening-hours editor.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminRestaurantHoursScript')) return;
 
   const script = document.createElement('script');
@@ -249,7 +252,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only editor for the first dine-in / takeaway choice window.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminDiningGateSettingsScript')) return;
 
   const script = document.createElement('script');
@@ -261,7 +264,7 @@ if (RESTBR_CONFIGURED) {
 
 // Admin-only simple percentage discount manager.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminDiscountsScript')) return;
 
   const script = document.createElement('script');
@@ -273,7 +276,7 @@ if (RESTBR_CONFIGURED) {
 
 // Final admin-only light-theme completion layer for hard-coded dark components.
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!RESTBR_IS_ADMIN_PATH) return;
   if (document.getElementById('shorashAdminLightThemeCompleteScript')) return;
 
   const script = document.createElement('script');
