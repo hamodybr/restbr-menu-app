@@ -2,7 +2,7 @@
   const ALL = ['ar', 'ku', 'en'];
   const LABELS = { ar: 'العربية', ku: 'کوردی', en: 'English' };
   const CACHE_KEY = 'SHORASH_ENABLED_LANGUAGES_V1';
-  const isAdmin = /(?:^|\/)admin\.html$/i.test(location.pathname);
+  const isAdmin = /(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname);
 
   let rowId = null;
   let enabled = readCached() || [...ALL];

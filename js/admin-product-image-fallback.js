@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__) return;
   window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__ = true;
 

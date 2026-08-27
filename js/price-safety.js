@@ -1,5 +1,5 @@
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
 
   const TEXT = {
     ar: 'السعر غير متوفر',

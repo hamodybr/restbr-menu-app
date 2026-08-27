@@ -1,5 +1,5 @@
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
 
   const TIMEZONE = 'Asia/Baghdad';
   const DAY_KEYS = ['sun','mon','tue','wed','thu','fri','sat'];

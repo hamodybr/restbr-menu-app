@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (window.__SHORASH_EXCEL_IMPORT_TAKEAWAY_V1__) return;
   window.__SHORASH_EXCEL_IMPORT_TAKEAWAY_V1__ = true;
 

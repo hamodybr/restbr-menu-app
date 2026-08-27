@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (document.getElementById('shorashAdminFontScaleStyles')) return;
 
   const style = document.createElement('style');
@@ -18,7 +18,7 @@
   if (!document.getElementById('restbrAdminRoleUiScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminRoleUiScript';
-    script.src = 'js/admin-role-ui.js?v=1.0';
+    script.src = 'js/admin-role-ui.js?v=1.1';
     script.async = false;
     document.head.appendChild(script);
   }
@@ -27,7 +27,7 @@
   if (!document.getElementById('restbrAdminAccountPasswordScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminAccountPasswordScript';
-    script.src = 'js/admin-account-password.js?v=1.0';
+    script.src = 'js/admin-account-password.js?v=1.2';
     script.async = false;
     document.head.appendChild(script);
   }
@@ -36,7 +36,7 @@
   if (!document.getElementById('restbrAdminAccountEmailScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminAccountEmailScript';
-    script.src = 'js/admin-account-email.js?v=1.1';
+    script.src = 'js/admin-account-email.js?v=1.2';
     script.async = false;
     document.head.appendChild(script);
   }

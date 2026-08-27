@@ -1,5 +1,5 @@
 (() => {
-  if (/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
 
   const PRICE_TABLE = 'product_options';
   const SETTINGS_TABLE = 'restaurant_settings';

@@ -1,5 +1,10 @@
 # إعداد نسخة مطعم جديدة
 
+ابدأ كل مطعم جديد من فرع `template/single-restaurant` في مستودع
+`hamodybr/restbr-menu-app`. هذا هو المصدر الرسمي الوحيد للنسخ الجديدة لأنه
+يحتوي آخر تصميم وجميع ميزات المنيو ولوحة الإدارة. لا تبدأ مطعماً جديداً بنسخ
+Repository مطعم سابق، ولا تنشئ فرع مطعم داخل مستودع مطعم آخر.
+
 هذه النسخة مخصصة لمطعم واحد فقط. كرر الخطوات التالية لكل مطعم جديد، ولا تربط
 مطعمَين بنفس مشروع Supabase.
 
@@ -46,8 +51,9 @@ window.RESTBR_CONFIG = Object.freeze({
 
 ## 3. انشر نسخة مستقلة
 
-أنشئ Repository أو فرع تسليم مستقل للمطعم، ثم أنشئ له Cloudflare Pages project
-ودومينًا أو subdomain خاصًا. لا توجّه مطعمين إلى نفس نسخة الموقع.
+أنشئ Repository مستقلًا للمطعم من فرع `template/single-restaurant`، ثم أنشئ له
+Cloudflare Pages project وsubdomain خاصًا تحت `restbr.com`. لا توجّه مطعمين إلى
+نفس Repository أو نسخة الموقع.
 
 بعد النشر:
 
@@ -68,6 +74,8 @@ window.RESTBR_CONFIG = Object.freeze({
 
 ## قائمة فحص قبل البيع
 
+- النسخة مأخوذة من آخر تحديث لفرع `template/single-restaurant`
+- جميع إضافات الأدمن تعمل على الرابطين `/admin` و`/admin.html`
 - Supabase مختلف عن كل المطاعم السابقة
 - حساب Auth يعود لصاحب المطعم
 - `runtime-config.js` لا يحتوي إلا المفتاح العام

@@ -1,5 +1,5 @@
 (() => {
-  if (!/(?:^|\/)admin\.html$/i.test(location.pathname)) return;
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
   if (window.__RESTBR_ADMIN_ACCOUNT_EMAIL_V1__) return;
   window.__RESTBR_ADMIN_ACCOUNT_EMAIL_V1__ = true;
 
