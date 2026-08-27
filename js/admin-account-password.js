@@ -38,10 +38,10 @@
     box.className = 'restbr-password-box';
     box.innerHTML = `
       <h4>تغيير كلمة المرور</h4>
-      <p>اكتب كلمة المرور الحالية ثم كلمة جديدة لا تقل عن 8 أحرف.</p>
+      <p>إذا كان هذا أول دخول أو دخلت من رابط الاستعادة، اترك كلمة المرور الحالية فارغة.</p>
       <label class="restbr-password-field">
-        <span>كلمة المرور الحالية</span>
-        <input id="restbrCurrentPassword" type="password" autocomplete="current-password" placeholder="••••••••">
+        <span>كلمة المرور الحالية (اختيارية لأول دخول)</span>
+        <input id="restbrCurrentPassword" type="password" autocomplete="current-password" placeholder="اتركها فارغة لأول دخول">
       </label>
       <label class="restbr-password-field">
         <span>كلمة المرور الجديدة</span>
@@ -80,10 +80,9 @@
     const confirmPassword = q('#restbrConfirmPassword')?.value || '';
     const btn = q('#restbrChangePasswordBtn');
 
-    if (!currentPassword) { status('اكتب كلمة المرور الحالية.'); return; }
     if (newPassword.length < 8) { status('كلمة المرور الجديدة لازم تكون 8 أحرف على الأقل.'); return; }
     if (newPassword !== confirmPassword) { status('تأكيد كلمة المرور غير مطابق.'); return; }
-    if (newPassword === currentPassword) { status('اختر كلمة مرور جديدة مختلفة عن الحالية.'); return; }
+    if (currentPassword && newPassword === currentPassword) { status('اختر كلمة مرور جديدة مختلفة عن الحالية.'); return; }
 
     btn.disabled = true;
     btn.textContent = 'جاري التغيير...';
@@ -98,10 +97,10 @@
       if (userError) throw userError;
       if (!user?.id) throw new Error('لا توجد جلسة تسجيل دخول فعالة.');
 
-      const { error } = await supabaseClient.auth.updateUser({
-        password: newPassword,
-        currentPassword
-      });
+      const passwordUpdate = { password: newPassword };
+      if (currentPassword) passwordUpdate.currentPassword = currentPassword;
+
+      const { error } = await supabaseClient.auth.updateUser(passwordUpdate);
 
       if (error) throw error;
 

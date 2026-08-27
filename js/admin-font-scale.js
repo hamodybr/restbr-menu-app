@@ -27,7 +27,7 @@
   if (!document.getElementById('restbrAdminAccountPasswordScript')) {
     const script = document.createElement('script');
     script.id = 'restbrAdminAccountPasswordScript';
-    script.src = 'js/admin-account-password.js?v=1.1';
+    script.src = 'js/admin-account-password.js?v=1.2';
     script.async = false;
     document.head.appendChild(script);
   }
