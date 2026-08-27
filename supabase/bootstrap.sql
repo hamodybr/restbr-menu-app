@@ -8,6 +8,17 @@ create schema if not exists private;
 revoke all on schema private from public;
 grant usage on schema private to authenticated;
 
+-- Supabase can create this helper when "automatic RLS" is enabled while the
+-- project is created. The event trigger still works as its owner, but browser
+-- roles must never be able to call the SECURITY DEFINER helper directly.
+do $$
+begin
+  if to_regprocedure('public.rls_auto_enable()') is not null then
+    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
+  end if;
+end;
+$$;
+
 create table if not exists public.restaurant_settings (
   id uuid primary key default gen_random_uuid(),
   restaurant_name_ar text default 'المطعم',

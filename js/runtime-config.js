@@ -3,8 +3,8 @@
 // Supabase service_role key in this repository or in any browser file.
 window.RESTBR_CONFIG = Object.freeze({
   restaurantName: 'Nawroz Palace',
-  supabaseUrl: 'https://YOUR_PROJECT_REF.supabase.co',
-  supabasePublishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
+  supabaseUrl: 'https://movgemgtaywqrynoxfox.supabase.co',
+  supabasePublishableKey: 'sb_publishable_G-WtrYzaFvnfCxR3-Z5uFQ_sPMa97f7',
   enableUserManagement: false,
   enableRestaurantReset: false
 });
