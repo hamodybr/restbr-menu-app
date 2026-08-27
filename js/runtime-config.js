@@ -1,10 +1,9 @@
-// Copy this template once per restaurant and replace only these values.
-// The publishable/anon key is safe to use in browser code. Never put the
-// Supabase service_role key in this repository or in any browser file.
+// One public configuration for this single restaurant.
+// The publishable key is safe to use in browser code. Never put a service_role key here.
 window.RESTBR_CONFIG = Object.freeze({
-  restaurantName: 'Nawroz Palace',
-  supabaseUrl: 'https://movgemgtaywqrynoxfox.supabase.co',
-  supabasePublishableKey: 'sb_publishable_G-WtrYzaFvnfCxR3-Z5uFQ_sPMa97f7',
+  restaurantName: 'YourCoffee',
+  supabaseUrl: 'https://pklzxpivnoqnrzyjryqz.supabase.co',
+  supabasePublishableKey: 'sb_publishable_CC5l_DeuRDVy32hFOoVWMw_7i45WhmK',
   enableUserManagement: false,
   enableRestaurantReset: false
 });
