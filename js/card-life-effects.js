@@ -8,6 +8,43 @@
     const style = document.createElement('style');
     style.id = STYLE_ID;
     style.textContent = `
+      /* RESTBR — correct logo motion wiring for the current HTML structure. */
+      .sm-logo-wrap{
+        width:94px;
+        height:94px;
+        margin:auto;
+        border-radius:50%;
+        border:1px solid rgba(185,137,69,.45);
+        box-shadow:0 18px 50px #0008;
+        position:relative;
+        overflow:visible;
+        animation:smLogoFloat 4.8s ease-in-out infinite;
+        will-change:transform,filter;
+      }
+      .sm-logo-wrap::before{
+        content:"";
+        position:absolute;
+        inset:-7px;
+        border-radius:50%;
+        border:1px solid rgba(232,184,98,.22);
+        box-shadow:0 0 24px rgba(225,164,69,.10);
+        animation:smLogoHalo 3.8s ease-in-out infinite;
+        pointer-events:none;
+      }
+      .sm-logo{
+        width:100%!important;
+        height:100%!important;
+        margin:0!important;
+        border:0!important;
+        display:block;
+        object-fit:cover;
+        border-radius:50%;
+        overflow:hidden;
+        box-shadow:0 10px 30px rgba(0,0,0,.55);
+        animation:smLogoBreath 5.5s ease-in-out infinite!important;
+        will-change:filter;
+      }
+
       /* SHORASH — subtle living-card effects */
       #smMenu .sm-card.sm-life-ready{
         will-change:translate,filter;
@@ -137,6 +174,9 @@
 
       /* Respect the device accessibility preference and save GPU work. */
       @media (prefers-reduced-motion:reduce){
+        .sm-logo-wrap,
+        .sm-logo-wrap::before,
+        .sm-logo,
         #smMenu .sm-card.sm-life-ready,
         #smMenu .sm-card.sm-life-ready.sm-visible,
         #smMenu .sm-card.sm-life-ready .sm-product-image,
