@@ -22,4 +22,10 @@
     'restbrAdminHiddenCategoryGuardScript',
     'js/admin-hidden-category-guard.js?v=1.0'
   );
+
+  // Tested RESTBR admin password recovery flow.
+  loadScript(
+    'restbrAdminAccountPasswordScript',
+    'js/admin-account-password.js?v=2.0'
+  );
 })();
