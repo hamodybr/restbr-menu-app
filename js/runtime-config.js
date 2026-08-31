@@ -193,3 +193,82 @@ window.RESTBR_CONFIG = Object.freeze({
     return client;
   };
 })();
+
+// Scope RESTBR browser storage per restaurant. This prevents carts, language,
+// cached branding and other local state from leaking between multiple GitHub
+// Pages projects that share the same origin (for example hamodybr.github.io).
+(() => {
+  const proto = window.Storage?.prototype;
+  if (!proto || proto.__restbrScopedStorageV1) return;
+
+  const supabaseUrl = String(window.RESTBR_CONFIG?.supabaseUrl || '');
+  const projectMatch = supabaseUrl.match(/^https:\/\/([a-z0-9-]+)\.supabase\.co/i);
+  const projectRef = projectMatch?.[1] || '';
+  const pathScope =
+    window.location.pathname.split('/').filter(Boolean)[0] || 'root';
+  const scope =
+    projectRef && !/YOUR_PROJECT_REF/i.test(projectRef)
+      ? projectRef
+      : pathScope;
+  const prefix = `RESTBR_SCOPE:${scope}:`;
+
+  const originalGetItem = proto.getItem;
+  const originalSetItem = proto.setItem;
+  const originalRemoveItem = proto.removeItem;
+  const originalClear = proto.clear;
+  const originalKey = proto.key;
+
+  const shouldScope = key =>
+    /^(?:SHORASH_|shorash|RESTBR_|SM_)/.test(String(key || ''));
+
+  const scopedKey = key => {
+    const raw = String(key ?? '');
+    return shouldScope(raw) ? `${prefix}${raw}` : raw;
+  };
+
+  try {
+    Object.defineProperty(proto, '__restbrScopedStorageV1', {
+      value: true,
+      configurable: false,
+      enumerable: false,
+      writable: false
+    });
+  } catch (_) {}
+
+  proto.getItem = function(key) {
+    return originalGetItem.call(
+      this,
+      this === window.localStorage ? scopedKey(key) : key
+    );
+  };
+
+  proto.setItem = function(key, value) {
+    return originalSetItem.call(
+      this,
+      this === window.localStorage ? scopedKey(key) : key,
+      value
+    );
+  };
+
+  proto.removeItem = function(key) {
+    return originalRemoveItem.call(
+      this,
+      this === window.localStorage ? scopedKey(key) : key
+    );
+  };
+
+  proto.clear = function() {
+    if (this !== window.localStorage) {
+      return originalClear.call(this);
+    }
+
+    const keys = [];
+    for (let i = 0; i < this.length; i += 1) {
+      const key = originalKey.call(this, i);
+      if (key?.startsWith(prefix)) keys.push(key);
+    }
+    keys.forEach(key => originalRemoveItem.call(this, key));
+  };
+
+  window.__RESTBR_STORAGE_SCOPE__ = scope;
+})();
