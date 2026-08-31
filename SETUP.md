@@ -63,6 +63,38 @@ Cloudflare Pages project وsubdomain خاصًا تحت `restbr.com`. لا توج
 4. افتح الصفحة الرئيسية من نافذة خاصة وتأكد أن المنيو يعرض بيانات هذا المطعم فقط.
 5. أرسل طلب WhatsApp تجريبي قبل تسليم النسخة.
 
+## 4. فعّل روابط Auth الصحيحة
+
+حتى يعمل تغيير البريد وميزة **نسيت كلمة المرور** بصورة صحيحة، افتح في Supabase:
+
+`Authentication → URL Configuration`
+
+واضبط:
+
+- `Site URL` على رابط النسخة المنشورة للمطعم.
+- أضف رابط `/admin.html` ضمن `Redirect URLs`.
+- يفضّل أيضًا السماح بنطاق النسخة المنشورة بالكامل إذا كانت المنصة تحتاج أكثر من مسار إداري.
+
+مثال لنسخة منشورة على GitHub Pages:
+
+```text
+Site URL:
+https://OWNER.github.io/REPOSITORY/
+
+Redirect URLs:
+https://OWNER.github.io/REPOSITORY/admin.html
+https://OWNER.github.io/REPOSITORY/**
+```
+
+وميزة الاستعادة في RESTBR ترسل رابط الرجوع بصيغة:
+
+```text
+/admin.html?recovery=1
+```
+
+بعد فتح رابط الاستعادة، تظهر شاشة إلزامية لاختيار كلمة مرور جديدة، وبعد الحفظ
+يسجّل النظام خروجًا تلقائيًا ويرجع المستخدم إلى شاشة تسجيل الدخول.
+
 ## الميزات الاختيارية
 
 `enableUserManagement` يحتاج نشر Edge Function الموجودة في
@@ -79,7 +111,9 @@ Cloudflare Pages project وsubdomain خاصًا تحت `restbr.com`. لا توج
 - Supabase مختلف عن كل المطاعم السابقة
 - حساب Auth يعود لصاحب المطعم
 - `runtime-config.js` لا يحتوي إلا المفتاح العام
+- `Site URL` و`Redirect URLs` في Supabase Auth تشير إلى نسخة المطعم الصحيحة
 - رابط الأدمن يعمل وتسجيل الدخول ناجح
+- زر `نسيت كلمة المرور؟` يرسل رابطًا ويرجع إلى شاشة تعيين كلمة مرور جديدة
 - الصور ترفع إلى `menu-images`
 - الاسم والهاتف وWhatsApp والدومين تخص المطعم الصحيح
 - لا توجد بيانات أو صور من مطعم سابق
