@@ -1,0 +1,139 @@
+name: Rename master localStorage once
+
+on:
+  push:
+    branches:
+      - template/single-restaurant
+    paths:
+      - .github/workflows/rename-master-localstorage-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  rename:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: template/single-restaurant
+          fetch-depth: 0
+
+      - name: Rename Shorash localStorage keys
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          replacements = {
+              b'SHORASH_ADMIN_SETTINGS_THEME_V1': b'RESTBR_ADMIN_SETTINGS_THEME_V1',
+              b'SHORASH_LAST_AUTO_BACKUP_V2': b'RESTBR_LAST_AUTO_BACKUP_V2',
+              b'SHORASH_LAST_PRICE_BACKUP_V1': b'RESTBR_LAST_PRICE_BACKUP_V1',
+              b'SHORASH_BRAND_CACHE_V1': b'RESTBR_BRAND_CACHE_V1',
+              b'SHORASH_ADMIN_THEME_V2': b'RESTBR_ADMIN_THEME_V2',
+              b'shorashCartV1': b'RESTBR_CART_V1',
+              b'shorashLang': b'RESTBR_LANG_V1',
+              b'SHORASH_ENABLED_LANGUAGES_V1': b'RESTBR_ENABLED_LANGUAGES_V1',
+              b'SHORASH_MENU_OFFLINE_CACHE_V1': b'RESTBR_MENU_OFFLINE_CACHE_V1',
+          }
+
+          allowed_exts = {'.js', '.html', '.css', '.json', '.md'}
+          changed = []
+          totals = {old: 0 for old in replacements}
+
+          for path in sorted(Path('.').rglob('*')):
+              if not path.is_file() or path.suffix.lower() not in allowed_exts:
+                  continue
+              if '.git' in path.parts or '.github' in path.parts:
+                  continue
+
+              data = path.read_bytes()
+              original = data
+              for old, new in replacements.items():
+                  count = data.count(old)
+                  if count:
+                      totals[old] += count
+                      data = data.replace(old, new)
+
+              if data != original:
+                  path.write_bytes(data)
+                  changed.append(str(path))
+
+          print('Changed files:')
+          for path in changed:
+              print(path)
+
+          missing = [old.decode() for old, count in totals.items() if count == 0]
+          if missing:
+              raise SystemExit('Expected old keys not found: ' + ', '.join(missing))
+
+          print('Replacement counts:')
+          for old, count in totals.items():
+              print(old.decode(), count)
+          PY
+
+      - name: Verify renamed keys
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          old_keys = [
+              'SHORASH_ADMIN_SETTINGS_THEME_V1',
+              'SHORASH_LAST_AUTO_BACKUP_V2',
+              'SHORASH_LAST_PRICE_BACKUP_V1',
+              'SHORASH_BRAND_CACHE_V1',
+              'SHORASH_ADMIN_THEME_V2',
+              'shorashCartV1',
+              'shorashLang',
+              'SHORASH_ENABLED_LANGUAGES_V1',
+              'SHORASH_MENU_OFFLINE_CACHE_V1',
+          ]
+          new_keys = [
+              'RESTBR_ADMIN_SETTINGS_THEME_V1',
+              'RESTBR_LAST_AUTO_BACKUP_V2',
+              'RESTBR_LAST_PRICE_BACKUP_V1',
+              'RESTBR_BRAND_CACHE_V1',
+              'RESTBR_ADMIN_THEME_V2',
+              'RESTBR_CART_V1',
+              'RESTBR_LANG_V1',
+              'RESTBR_ENABLED_LANGUAGES_V1',
+              'RESTBR_MENU_OFFLINE_CACHE_V1',
+          ]
+
+          texts = []
+          for path in Path('.').rglob('*'):
+              if not path.is_file() or '.git' in path.parts or '.github' in path.parts:
+                  continue
+              if path.suffix.lower() not in {'.js','.html','.css','.json','.md'}:
+                  continue
+              try:
+                  texts.append((str(path), path.read_text(encoding='utf-8')))
+              except Exception:
+                  pass
+
+          for key in old_keys:
+              hits = [path for path, text in texts if key in text]
+              if hits:
+                  raise SystemExit(f'Old key remains: {key}: {hits}')
+
+          for key in new_keys:
+              if not any(key in text for _, text in texts):
+                  raise SystemExit(f'New key missing: {key}')
+          PY
+
+          changed_js=$(git diff --name-only -- '*.js')
+          if [ -n "$changed_js" ]; then
+            while IFS= read -r file; do
+              [ -z "$file" ] || node --check "$file"
+            done <<< "$changed_js"
+          fi
+
+          echo 'Changed paths:'
+          git diff --name-only
+
+      - name: Commit localStorage cleanup
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add admin.html index.html js/
+          git commit -m "refactor: use RESTBR localStorage keys"
+          git push origin HEAD:template/single-restaurant
