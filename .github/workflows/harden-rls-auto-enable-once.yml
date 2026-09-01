@@ -70,11 +70,11 @@ jobs:
 
       - name: Verify narrow safe change
         run: |
-          changed=$(git diff --name-only)
+          changed=$( { git diff --name-only; git ls-files --others --exclude-standard; } | sort )
           printf '%s\n' "$changed"
           expected=$(printf '%s\n' \
             'supabase/bootstrap.sql' \
-            'supabase/migrations/202609010630_revoke_rls_auto_enable_public.sql')
+            'supabase/migrations/202609010630_revoke_rls_auto_enable_public.sql' | sort)
           test "$changed" = "$expected"
 
           grep -Fq "to_regprocedure('public.rls_auto_enable()')" supabase/bootstrap.sql
