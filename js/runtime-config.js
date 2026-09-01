@@ -265,3 +265,14 @@ window.RESTBR_CONFIG = Object.freeze({
     }
   }, 25);
 })();
+
+// Public/menu URL hardening. The guard allows only explicit safe schemes for
+// restaurant-configured action and social links.
+(() => {
+  if (document.getElementById('restbrUrlSafetyScript')) return;
+  const script = document.createElement('script');
+  script.id = 'restbrUrlSafetyScript';
+  script.src = 'js/url-safety.js?v=1.0';
+  script.defer = true;
+  document.head.appendChild(script);
+})();
