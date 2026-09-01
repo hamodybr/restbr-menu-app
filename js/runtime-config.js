@@ -276,3 +276,15 @@ window.RESTBR_CONFIG = Object.freeze({
   script.defer = true;
   document.head.appendChild(script);
 })();
+
+// Admin-only product image cleanup. It removes only old/orphaned files from
+// this restaurant's own menu-images/products/<productId>/ storage folder.
+(() => {
+  if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(window.location.pathname)) return;
+  if (document.getElementById('restbrAdminStorageCleanupScript')) return;
+  const script = document.createElement('script');
+  script.id = 'restbrAdminStorageCleanupScript';
+  script.src = 'js/admin-storage-cleanup.js?v=1.1';
+  script.defer = true;
+  document.head.appendChild(script);
+})();
