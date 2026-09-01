@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__) return;
-  window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__ = true;
+  if (window.__RESTBR_ADMIN_PRODUCT_IMAGE_FALLBACK__) return;
+  window.__RESTBR_ADMIN_PRODUCT_IMAGE_FALLBACK__ = true;
 
   const LEGACY_FALLBACK = 'assets/restaurant-placeholder.svg';
   const TARGET_SELECTOR = '#p_image_preview,#np_image_preview,.product-image';

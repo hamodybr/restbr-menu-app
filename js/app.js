@@ -944,7 +944,7 @@ function trackPageViewOnce(){
     }
   ).format(new Date());
 
-  const key=`shorash:view:${day}`;
+  const key=`restbr:view:${day}`;
 
   if(sessionStorage.getItem(key))return;
 
@@ -1754,7 +1754,7 @@ function formatRestaurantTemplate(value,targetLang=lang) {
     );
 
 
-  // Backward compatibility with old saved SHORASH text.
+  // Backward compatibility with old saved legacy restaurant text.
   const oldBrandPatterns =
     targetLang === "en"
       ? [/SHORASH/gi,/Shorash/g]
@@ -3130,7 +3130,7 @@ function setupIntro() {
 
   const alreadySeen=
     sessionStorage.getItem(
-      "shorashIntroSeen"
+      "RESTBR_INTRO_SEEN_V1"
     );
 
 
@@ -3141,7 +3141,7 @@ function setupIntro() {
 
 
   sessionStorage.setItem(
-    "shorashIntroSeen",
+    "RESTBR_INTRO_SEEN_V1",
     "1"
   );
 
@@ -3411,7 +3411,7 @@ async function loadMenuFromSupabase() {
     throw new Error("Supabase client is not available");
   }
 
-  console.log("🔄 Loading SHORASH menu from Supabase...");
+  console.log("🔄 Loading RESTBR menu from Supabase...");
 
 
   /* =========================
@@ -4283,10 +4283,10 @@ async function loadMenuFallback() {
 
 
 /* ========================================
-   START SHORASH
+   START RESTBR
 ======================================== */
 
-async function startShorash() {
+async function startRestbr() {
 
   /*
     Intro runs independently
@@ -4307,7 +4307,7 @@ async function startShorash() {
 
 
       console.log(
-        "✅ SHORASH MENU LOADED FROM SUPABASE"
+        "✅ RESTBR MENU LOADED FROM SUPABASE"
       );
 
       saveMenuOfflineCache(DB);
@@ -4330,7 +4330,7 @@ async function startShorash() {
           await loadMenuFallback();
 
         console.log(
-          "✅ SHORASH MENU LOADED FROM JSON FALLBACK"
+          "✅ RESTBR MENU LOADED FROM JSON FALLBACK"
         );
 
         saveMenuOfflineCache(DB);
@@ -4347,7 +4347,7 @@ async function startShorash() {
         DB=cached;
 
         console.log(
-          "✅ SHORASH MENU LOADED FROM OFFLINE CACHE"
+          "✅ RESTBR MENU LOADED FROM OFFLINE CACHE"
         );
 
         showOfflineDataBanner();
@@ -4429,12 +4429,12 @@ async function startShorash() {
        GLOBAL DATABASE
     ========================= */
 
-    window.SHORASH_DB = DB;
+    window.RESTBR_DB = DB;
 
-    window.SHORASH_LANG =
+    window.RESTBR_LANG =
       () => lang;
 
-    window.SHORASH_TRACK=
+    window.RESTBR_TRACK=
       trackMenuEvent;
 
     trackPageViewOnce();
@@ -4442,8 +4442,8 @@ async function startShorash() {
     scrollToDeepLink();
 
 
-    if(!window.__shorashScheduleTimer){
-      window.__shorashScheduleTimer=setInterval(
+    if(!window.__RESTBR_SCHEDULE_TIMER__){
+      window.__RESTBR_SCHEDULE_TIMER__=setInterval(
         refreshScheduledAvailability,
         60000
       );
@@ -4452,7 +4452,7 @@ async function startShorash() {
 
     window.dispatchEvent(
       new CustomEvent(
-        "shorash:ready",
+        "restbr:ready",
         {
           detail: {
             DB
@@ -4466,14 +4466,14 @@ async function startShorash() {
 
 
     console.log(
-      "🚀 SHORASH MENU READY"
+      "🚀 RESTBR MENU READY"
     );
 
 
   } catch (error) {
 
     console.error(
-      "SHORASH MENU ERROR:",
+      "RESTBR MENU ERROR:",
       error
     );
 
@@ -4517,4 +4517,4 @@ async function startShorash() {
    RUN
 ======================================== */
 
-startShorash();
+startRestbr();

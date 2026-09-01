@@ -8,8 +8,8 @@
   };
 
   function currentLang(){
-    const value = window.SHORASH_LANG
-      ? window.SHORASH_LANG()
+    const value = window.RESTBR_LANG
+      ? window.RESTBR_LANG()
       : (localStorage.getItem('RESTBR_LANG_V1') || 'ar');
     return ['ar','ku','en'].includes(value) ? value : 'ar';
   }
@@ -46,7 +46,7 @@
   }
 
   function staleKeys(){
-    const DB = window.SHORASH_DB;
+    const DB = window.RESTBR_DB;
     if (!DB || !Array.isArray(DB.products)) return [];
 
     return readCart()
@@ -113,8 +113,8 @@
     setTimeout(sanitize, 450);
   }
 
-  window.addEventListener('shorash:ready', schedule);
-  window.addEventListener('shorash:prices-updated', schedule);
+  window.addEventListener('restbr:ready', schedule);
+  window.addEventListener('restbr:prices-updated', schedule);
 
   document.addEventListener('click', event => {
     if (

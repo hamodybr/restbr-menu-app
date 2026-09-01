@@ -3,7 +3,7 @@
 
   function restaurantLogo(){
     const liveLogo = String(
-      window.SHORASH_DB?.restaurant?.logo ||
+      window.RESTBR_DB?.restaurant?.logo ||
       document.querySelector('.sm-logo')?.getAttribute('src') ||
       document.querySelector('.sm-intro-logo')?.getAttribute('src') ||
       ''

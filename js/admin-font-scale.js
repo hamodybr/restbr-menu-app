@@ -1,9 +1,9 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (document.getElementById('shorashAdminFontScaleStyles')) return;
+  if (document.getElementById('restbrAdminFontScaleStyles')) return;
 
   const style = document.createElement('style');
-  style.id = 'shorashAdminFontScaleStyles';
+  style.id = 'restbrAdminFontScaleStyles';
   style.textContent = `
     html,
     body {

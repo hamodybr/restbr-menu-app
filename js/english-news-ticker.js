@@ -176,7 +176,7 @@
     setTimeout(() => syncTicker({ restartAnimation: true }), 220);
   }
 
-  window.addEventListener('shorash:ready', syncSoon);
+  window.addEventListener('restbr:ready', syncSoon);
 
   document.addEventListener('click', event => {
     if (event.target.closest('[data-lang]')) syncSoon();

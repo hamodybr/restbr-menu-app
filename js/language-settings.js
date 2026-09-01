@@ -260,7 +260,7 @@
     await loadPolicy();
     enforceMenuPolicy();
 
-    window.addEventListener('shorash:ready', () => {
+    window.addEventListener('restbr:ready', () => {
       enforceMenuPolicy();
       setTimeout(enforceMenuPolicy, 80);
     });

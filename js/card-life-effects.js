@@ -45,7 +45,7 @@
         will-change:filter;
       }
 
-      /* SHORASH — subtle living-card effects */
+      /* RESTBR — subtle living-card effects */
       #smMenu .sm-card.sm-life-ready{
         will-change:translate,filter;
       }
@@ -241,7 +241,7 @@
 
     observer.observe(menu, { childList: true, subtree: true });
 
-    window.addEventListener('shorash:ready', () => {
+    window.addEventListener('restbr:ready', () => {
       requestAnimationFrame(() => decorateCards(menu));
       setTimeout(() => decorateCards(menu), 120);
     });

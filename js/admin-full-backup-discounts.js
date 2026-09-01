@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_FULL_BACKUP_DISCOUNTS_V1__) return;
-  window.__SHORASH_FULL_BACKUP_DISCOUNTS_V1__ = true;
+  if (window.__RESTBR_FULL_BACKUP_DISCOUNTS_V1__) return;
+  window.__RESTBR_FULL_BACKUP_DISCOUNTS_V1__ = true;
 
   function safeName(value) {
     return String(value || 'restaurant')

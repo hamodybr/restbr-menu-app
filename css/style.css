@@ -95,7 +95,7 @@ body{margin:0;background:#070503;color:#fff;font-family:Arial,Tahoma,sans-serif;
 .sm-intro-sub{font-size:14px;letter-spacing:2px;color:#fff}
 
 /* =========================================================
-   SHORASH V3.5 — FINAL MOBILE LAYOUT
+   RESTBR V3.5 — FINAL MOBILE LAYOUT
    ========================================================= */
 @media(max-width:768px){
 html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -175,7 +175,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
 .sm-popular-card:before,.sm-hot-card:after,.sm-grill-card:before,.sm-cold-card:before,.sm-cold-card:after,.sm-logo,.sm-logo:before,.sm-logo img,.sm-intro-logo-wrap{animation:none!important}
 }
 /* =========================================================
-   SHORASH V3.5 — COMPACT MOBILE CARDS
+   RESTBR V3.5 — COMPACT MOBILE CARDS
    Final mobile sizing + correct RTL layout
    ========================================================= */
 
@@ -477,7 +477,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
 }
 
 /* =========================================================
-   SHORASH — FINAL MOBILE OVERRIDES
+   RESTBR — FINAL MOBILE OVERRIDES
    Centered header • narrower cards • image RIGHT
    60% info / 40% image • more visible background video
    ========================================================= */
@@ -851,7 +851,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
   }
 }
 
-/* SHORASH V4 — FINAL MOBILE FIX */
+/* RESTBR V4 — FINAL MOBILE FIX */
 @media (max-width:768px){
   .sm-app{width:100%!important;max-width:100%!important;margin:auto!important;overflow:hidden!important}
 

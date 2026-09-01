@@ -628,7 +628,7 @@
 
   
     /* =========================================================
-       SHORASH ADMIN V3 — SIMPLE APP LAYOUT
+       RESTBR ADMIN V3 — SIMPLE APP LAYOUT
        ========================================================= */
     body{padding-bottom:92px}
     .admin-header{
@@ -738,7 +738,7 @@
 
   
     /* =========================================================
-       SHORASH ADMIN V3.1 — AUTH
+       RESTBR ADMIN V3.1 — AUTH
        ========================================================= */
     .admin-login-gate{
       display:none;
@@ -877,7 +877,7 @@
 
   
     /* =========================================================
-       SHORASH ADMIN V3.3 — RESTAURANT SETTINGS
+       RESTBR ADMIN V3.3 — RESTAURANT SETTINGS
        ========================================================= */
     .restaurant-settings-card{
       border-color:rgba(216,169,88,.25);
@@ -1083,7 +1083,7 @@
 
   
     /* =========================================================
-       SHORASH ADMIN V3.5 — QUICK ACTIONS + BULK PRICES
+       RESTBR ADMIN V3.5 — QUICK ACTIONS + BULK PRICES
        ========================================================= */
 
     .settings-inline-grid{
@@ -1191,7 +1191,7 @@
 
   
     /* =========================================================
-       SHORASH ADMIN V3.6 — CLEAN SETTINGS UI
+       RESTBR ADMIN V3.6 — CLEAN SETTINGS UI
        ========================================================= */
 
     .settings-clean-wrap{
@@ -1598,7 +1598,7 @@
 
   
     /* =========================================================
-       SHORASH ADMIN V3.6.1 — MOBILE WIDTH / IOS ZOOM HOTFIX
+       RESTBR ADMIN V3.6.1 — MOBILE WIDTH / IOS ZOOM HOTFIX
        ========================================================= */
 
     html,
@@ -1752,7 +1752,7 @@
 
 
     /* =========================================================
-       SHORASH ADMIN V4.0 — ANALYTICS + EXCEL
+       RESTBR ADMIN V4.0 — ANALYTICS + EXCEL
        ========================================================= */
 
     .bottom-nav{
@@ -1975,7 +1975,7 @@
 
 
     /* =========================================================
-       SHORASH ADMIN V4.2 — VIEWPORT / WIDTH HARDENING
+       RESTBR ADMIN V4.2 — VIEWPORT / WIDTH HARDENING
        ========================================================= */
 
     html,
@@ -2179,7 +2179,7 @@
 
 
     /* =========================================================
-       SHORASH ADMIN V4.3 — MOBILE SETTINGS POLISH
+       RESTBR ADMIN V4.3 — MOBILE SETTINGS POLISH
        ========================================================= */
     .settings-save-bar{
       position:relative !important;
@@ -2275,7 +2275,7 @@
 
 
     /* =========================================================
-       SHORASH ADMIN V4.5 — SETTINGS-ONLY LIGHT / DARK
+       RESTBR ADMIN V4.5 — SETTINGS-ONLY LIGHT / DARK
        ========================================================= */
     .admin-settings-theme-btn{
       flex:0 0 auto;
@@ -4388,7 +4388,7 @@
       }
     };
 
-    // Identity — EMPTY means empty. No automatic SHORASH restoration.
+    // Identity — EMPTY means empty. No automatic restaurant-name restoration.
     set('rs_name_ar',s.name_ar ?? s.name ?? '');
     set('rs_name_ku',s.name_ku ?? '');
     set('rs_name_en',s.name_en ?? s.name ?? '');
@@ -5244,7 +5244,7 @@
 
 
       console.log(
-        '✅ SHORASH ADMIN DATA LOADED',
+        '✅ RESTBR ADMIN DATA LOADED',
         {
           categories: adminCategories.length,
           products: adminProducts.length,
@@ -5257,7 +5257,7 @@
     catch (error) {
 
       console.error(
-        '❌ SHORASH ADMIN ERROR:',
+        '❌ RESTBR ADMIN ERROR:',
         error
       );
 
@@ -5766,7 +5766,7 @@
       setTimeout(closeAdminEditor,850);
 
     }catch(e){
-      console.error('SHORASH SAVE ERROR:',e);
+      console.error('RESTBR SAVE ERROR:',e);
       showEditorMsg('فشل الحفظ: '+(e.message||e));
     }finally{
       btn.disabled=false;
@@ -5998,7 +5998,7 @@
 
       const insert={};
 
-      // ID is UUID in the current SHORASH products table.
+      // ID is UUID in the current RESTBR products table.
       insert.id=newId;
 
       if(hasField(sample,'category_id') || !hasSampleSchema) insert.category_id=categoryId;

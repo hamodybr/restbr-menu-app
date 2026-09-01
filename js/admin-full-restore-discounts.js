@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_FULL_RESTORE_DISCOUNTS_V1__) return;
-  window.__SHORASH_FULL_RESTORE_DISCOUNTS_V1__ = true;
+  if (window.__RESTBR_FULL_RESTORE_DISCOUNTS_V1__) return;
+  window.__RESTBR_FULL_RESTORE_DISCOUNTS_V1__ = true;
 
   function setStatus(message = '', ok = true) {
     try {

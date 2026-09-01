@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_EXCEL_EXPORT_TAKEAWAY_V1__) return;
-  window.__SHORASH_EXCEL_EXPORT_TAKEAWAY_V1__ = true;
+  if (window.__RESTBR_EXCEL_EXPORT_TAKEAWAY_V1__) return;
+  window.__RESTBR_EXCEL_EXPORT_TAKEAWAY_V1__ = true;
 
   const byId = id => document.getElementById(id);
 
@@ -27,7 +27,7 @@
     try {
       if (typeof backupPrefix === 'function') return backupPrefix();
     } catch (_) {}
-    return 'shorash';
+    return 'restbr';
   }
 
   async function fetchRows() {

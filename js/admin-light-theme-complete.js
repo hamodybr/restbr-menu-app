@@ -6,7 +6,7 @@
   style.id = 'smAdminLightThemeCompleteStyles';
   style.textContent = `
     /* =========================================================
-       SHORASH ADMIN — LIGHT THEME COMPLETION LAYER
+       RESTBR ADMIN — LIGHT THEME COMPLETION LAYER
        Only overrides components that still carry hard-coded dark CSS.
        Dark mode remains untouched.
        ========================================================= */

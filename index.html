@@ -12,11 +12,11 @@
     // Ordering starts fail-closed until the restaurant opening-hours policy
     // has loaded and applied the real state. This removes the first-render
     // window where an add button could briefly be clickable.
-    window.SHORASH_HOURS_READY=false;
+    window.RESTBR_HOURS_READY=false;
     document.documentElement.classList.add("sm-hours-pending");
 
     document.addEventListener("click",function(event){
-      if(window.SHORASH_HOURS_READY===true)return;
+      if(window.RESTBR_HOURS_READY===true)return;
       const target=event.target.closest?.(
         ".sm-add-cart,.sm-direct-add,.sm-choose-options,[data-choice-product],#smCartContinue,#smSendWhatsApp"
       );
@@ -32,7 +32,7 @@
           "RESTBR_BRAND_CACHE_V1",
           "RESTBR_MENU_OFFLINE_CACHE_V1",
           "RESTBR_CART_V1",
-          "shorashIntroSeen"
+          "RESTBR_INTRO_SEEN_V1"
         ].forEach(key=>localStorage.removeItem(key));
         localStorage.setItem(templateResetKey,"done");
       }

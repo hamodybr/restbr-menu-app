@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_BULK_PRICE_TARGET_UI_V2__) return;
-  window.__SHORASH_BULK_PRICE_TARGET_UI_V2__ = true;
+  if (window.__RESTBR_BULK_PRICE_TARGET_UI_V2__) return;
+  window.__RESTBR_BULK_PRICE_TARGET_UI_V2__ = true;
 
   const LABELS = {
     dinein: 'داخل المطعم فقط',

@@ -188,7 +188,7 @@
   }
 
   function money(value) {
-    const l = window.SHORASH_LANG ? window.SHORASH_LANG() : lang();
+    const l = window.RESTBR_LANG ? window.RESTBR_LANG() : lang();
     return Number(value || 0).toLocaleString('en-US') + ' ' + (l === 'en' ? 'IQD' : 'د.ع');
   }
 
@@ -237,7 +237,7 @@
   }
 
   function updateVisiblePrices() {
-    const db = window.SHORASH_DB;
+    const db = window.RESTBR_DB;
     if (!db?.products) return;
     db.products.forEach(product => {
       const card = document.querySelector(`[data-product-card="${String(product.id).replace(/"/g, '\\"')}"]`);
@@ -265,7 +265,7 @@
   }
 
   function applyModePrices(notify = false) {
-    const db = window.SHORASH_DB;
+    const db = window.RESTBR_DB;
     if (!db?.products || !selectedMode) return;
 
     db.products.forEach(product => {
@@ -292,7 +292,7 @@
     updateVisiblePrices();
 
     if (notify) {
-      window.dispatchEvent(new CustomEvent('shorash:prices-updated', {
+      window.dispatchEvent(new CustomEvent('restbr:prices-updated', {
         detail: { source: 'dining-mode', mode: selectedMode, discounts: true }
       }));
     }
@@ -334,11 +334,11 @@
     document.documentElement.classList.toggle('sm-mode-dinein', selectedMode === 'dinein');
     document.documentElement.classList.toggle('sm-mode-takeaway', selectedMode === 'takeaway');
     document.documentElement.dataset.smDiningMode = selectedMode;
-    window.SHORASH_ORDER_MODE = selectedMode;
+    window.RESTBR_ORDER_MODE = selectedMode;
   }
 
   async function finishSelection() {
-    if (!selectedMode || !window.SHORASH_DB) return;
+    if (!selectedMode || !window.RESTBR_DB) return;
     try {
       await Promise.all([fetchPrices(), fetchDiscounts()]);
     } catch (error) {
@@ -356,13 +356,13 @@
     selectedMode = mode;
     applyModeClass();
     gate?.classList.add('loading');
-    if (window.SHORASH_DB) void finishSelection();
+    if (window.RESTBR_DB) void finishSelection();
   }
 
   function subscribePrices() {
     if (channel || typeof supabaseClient === 'undefined' || !supabaseClient) return;
     channel = supabaseClient
-      .channel('shorash-dining-mode-prices')
+      .channel('restbr-dining-mode-prices')
       .on('postgres_changes', { event: '*', schema: 'public', table: PRICE_TABLE }, payload => {
         const row = payload.new;
         if (row?.id) priceMap.set(String(row.id), row);
@@ -379,12 +379,12 @@
       .subscribe();
   }
 
-  window.addEventListener('shorash:ready', () => {
+  window.addEventListener('restbr:ready', () => {
     subscribePrices();
     if (selectedMode) void finishSelection();
   });
 
-  window.addEventListener('shorash:prices-updated', event => {
+  window.addEventListener('restbr:prices-updated', event => {
     if (!ready || event?.detail?.source === 'dining-mode') return;
     applyModePrices(false);
   });
