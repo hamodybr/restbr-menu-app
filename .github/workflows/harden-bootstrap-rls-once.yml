@@ -1,0 +1,70 @@
+name: Harden bootstrap RLS once
+
+on:
+  push:
+    branches:
+      - template/single-restaurant
+    paths:
+      - .github/workflows/harden-bootstrap-rls-once.yml
+
+permissions:
+  contents: write
+
+jobs:
+  harden:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: template/single-restaurant
+          fetch-depth: 0
+
+      - name: Patch bootstrap RLS policies
+        run: |
+          python - <<'PY'
+          from pathlib import Path
+
+          path = Path('supabase/bootstrap.sql')
+          text = path.read_text(encoding='utf-8')
+
+          replacements = [
+              (
+                  """drop policy if exists restbr_categories_public_read on public.categories;\ncreate policy restbr_categories_public_read\non public.categories for select to anon, authenticated using (true);\n""",
+                  """drop policy if exists restbr_categories_public_read on public.categories;\ndrop policy if exists restbr_categories_admin_read on public.categories;\ncreate policy restbr_categories_public_read\non public.categories for select to anon, authenticated\nusing (is_active = true and is_visible = true);\ncreate policy restbr_categories_admin_read\non public.categories for select to authenticated\nusing ((select private.can_access_admin()));\n"""
+              ),
+              (
+                  """drop policy if exists restbr_products_public_read on public.products;\ncreate policy restbr_products_public_read\non public.products for select to anon, authenticated using (true);\n""",
+                  """drop policy if exists restbr_products_public_read on public.products;\ndrop policy if exists restbr_products_admin_read on public.products;\ncreate policy restbr_products_public_read\non public.products for select to anon, authenticated\nusing (\n  is_active = true\n  and is_visible = true\n  and exists (\n    select 1\n    from public.categories c\n    where c.id = products.category_id\n      and c.is_active = true\n      and c.is_visible = true\n  )\n);\ncreate policy restbr_products_admin_read\non public.products for select to authenticated\nusing ((select private.can_access_admin()));\n"""
+              ),
+              (
+                  """drop policy if exists restbr_product_options_public_read on public.product_options;\ncreate policy restbr_product_options_public_read\non public.product_options for select to anon, authenticated using (true);\n""",
+                  """drop policy if exists restbr_product_options_public_read on public.product_options;\ndrop policy if exists restbr_product_options_admin_read on public.product_options;\ncreate policy restbr_product_options_public_read\non public.product_options for select to anon, authenticated\nusing (\n  is_active = true\n  and exists (\n    select 1\n    from public.products p\n    join public.categories c on c.id = p.category_id\n    where p.id = product_options.product_id\n      and p.is_active = true\n      and p.is_visible = true\n      and c.is_active = true\n      and c.is_visible = true\n  )\n);\ncreate policy restbr_product_options_admin_read\non public.product_options for select to authenticated\nusing ((select private.can_access_admin()));\n"""
+              ),
+          ]
+
+          for old, new in replacements:
+              count = text.count(old)
+              if count != 1:
+                  raise SystemExit(f'Expected exactly one bootstrap policy block, found {count}')
+              text = text.replace(old, new, 1)
+
+          path.write_text(text, encoding='utf-8')
+          PY
+
+      - name: Verify patch
+        run: |
+          grep -q "restbr_categories_admin_read" supabase/bootstrap.sql
+          grep -q "restbr_products_admin_read" supabase/bootstrap.sql
+          grep -q "restbr_product_options_admin_read" supabase/bootstrap.sql
+          if grep -A2 "restbr_categories_public_read" supabase/bootstrap.sql | grep -q "using (true)"; then exit 1; fi
+          if grep -A2 "restbr_products_public_read" supabase/bootstrap.sql | grep -q "using (true)"; then exit 1; fi
+          if grep -A2 "restbr_product_options_public_read" supabase/bootstrap.sql | grep -q "using (true)"; then exit 1; fi
+          git diff --check
+
+      - name: Commit hardened bootstrap
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add supabase/bootstrap.sql
+          git commit -m "security: harden bootstrap public menu RLS"
+          git push origin HEAD:template/single-restaurant
