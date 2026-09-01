@@ -1,0 +1,27 @@
+name: Audit master Shorash names once
+
+on:
+  push:
+    branches:
+      - template/single-restaurant
+    paths:
+      - .github/workflows/audit-master-shorash-names-once.yml
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: template/single-restaurant
+      - name: Scan remaining Shorash names
+        run: |
+          echo 'RESTBR_SHORASH_SCAN_BEGIN'
+          grep -RniE --exclude-dir=.git --exclude-dir=.github --exclude='*.png' --exclude='*.jpg' --exclude='*.jpeg' --exclude='*.webp' --exclude='*.mp4' 'SHORASH|shorash' . || true
+          echo 'RESTBR_SHORASH_SCAN_END'
+          echo 'RESTBR_SHORASH_NAMED_FILES_BEGIN'
+          find . -type f -not -path './.git/*' -not -path './.github/*' | grep -i 'shorash' || true
+          echo 'RESTBR_SHORASH_NAMED_FILES_END'
