@@ -29,9 +29,9 @@
       const templateResetKey="RESTBR_TEMPLATE_RESET_V1";
       if(localStorage.getItem(templateResetKey)!=="done"){
         [
-          "SHORASH_BRAND_CACHE_V1",
-          "SHORASH_MENU_OFFLINE_CACHE_V1",
-          "shorashCartV1",
+          "RESTBR_BRAND_CACHE_V1",
+          "RESTBR_MENU_OFFLINE_CACHE_V1",
+          "RESTBR_CART_V1",
           "shorashIntroSeen"
         ].forEach(key=>localStorage.removeItem(key));
         localStorage.setItem(templateResetKey,"done");
@@ -220,11 +220,11 @@
   <script>
     (function(){
       try{
-        const raw=localStorage.getItem("SHORASH_BRAND_CACHE_V1");
+        const raw=localStorage.getItem("RESTBR_BRAND_CACHE_V1");
         if(!raw)return;
 
         const cached=JSON.parse(raw)||{};
-        const lang=localStorage.getItem("shorashLang")||"ar";
+        const lang=localStorage.getItem("RESTBR_LANG_V1")||"ar";
 
         const name=
           lang==="ku"

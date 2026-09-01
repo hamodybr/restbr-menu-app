@@ -4026,7 +4026,7 @@
   // BULK PRICE ADJUSTMENT
   // ==========================================
 
-  const PRICE_SAFETY_BACKUP_KEY='SHORASH_LAST_PRICE_BACKUP_V1';
+  const PRICE_SAFETY_BACKUP_KEY='RESTBR_LAST_PRICE_BACKUP_V1';
 
   function renderBulkPriceCategoryOptions(){
     const select=document.getElementById('bulkPriceCategorySelect');
@@ -4947,7 +4947,7 @@
   // ==========================================
   // SETTINGS-ONLY APPEARANCE
   // ==========================================
-  const ADMIN_SETTINGS_THEME_KEY='SHORASH_ADMIN_SETTINGS_THEME_V1';
+  const ADMIN_SETTINGS_THEME_KEY='RESTBR_ADMIN_SETTINGS_THEME_V1';
 
   function applyAdminSettingsTheme(mode){
     const view=document.getElementById('viewTools');
@@ -6861,7 +6861,7 @@
   function downloadJson(filename,payload){const blob=new Blob([JSON.stringify(payload,null,2)],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=filename;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1200)}
   const RESTBR_EMERGENCY_BACKUP_KEY='RESTBR_LAST_AUTO_BACKUP_V2';
   function saveEmergencyBackup(payload){try{localStorage.setItem(RESTBR_EMERGENCY_BACKUP_KEY,JSON.stringify(payload));return true}catch(e){console.warn(e);return false}}
-  function getEmergencyBackup(){try{const raw=localStorage.getItem(RESTBR_EMERGENCY_BACKUP_KEY)||localStorage.getItem('SHORASH_LAST_AUTO_BACKUP_V2');return raw?JSON.parse(raw):null}catch(e){console.warn(e);return null}}
+  function getEmergencyBackup(){try{const raw=localStorage.getItem(RESTBR_EMERGENCY_BACKUP_KEY)||localStorage.getItem('RESTBR_LAST_AUTO_BACKUP_V2');return raw?JSON.parse(raw):null}catch(e){console.warn(e);return null}}
   function downloadEmergencyBackup(){const p=getEmergencyBackup();if(!p){setBackupStatus('لا يوجد Backup تلقائي محفوظ على هذا الجهاز حالياً.',false);return}downloadJson(`${backupPrefix()}-AUTO-${backupSafeName(p.category_name||'emergency')}-${safeFileDate()}.json`,p);setBackupStatus('تم تنزيل آخر Backup تلقائي محفوظ ✓')}
   function fullBackupPayload(){return makeBackup('full',{categories:cloneRows(adminCategories),products:cloneRows(adminProducts),product_options:cloneRows(adminOptions),restaurant_settings:adminRestaurantSettings?.id?[JSON.parse(JSON.stringify(adminRestaurantSettings))]:[]})}
   function backupFullMenu(){const p=fullBackupPayload();downloadJson(`${backupPrefix()}-full-${safeFileDate()}.json`,p);setBackupStatus('تم إنشاء نسخة كاملة ✓');return p}

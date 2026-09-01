@@ -61,10 +61,10 @@ if (RESTBR_CONFIGURED) {
 
 // Load the shared menu-language policy for both the public menu and admin.
 (() => {
-  if (document.getElementById('shorashLanguageSettingsScript')) return;
+  if (document.getElementById('RESTBR_LANG_V1uageSettingsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashLanguageSettingsScript';
+  script.id = 'RESTBR_LANG_V1uageSettingsScript';
   script.src = 'js/language-settings.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);

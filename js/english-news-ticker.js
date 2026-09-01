@@ -107,7 +107,7 @@
   }
 
   function currentLanguage() {
-    return localStorage.getItem('shorashLang') ||
+    return localStorage.getItem('RESTBR_LANG_V1') ||
       document.documentElement.lang ||
       'ar';
   }

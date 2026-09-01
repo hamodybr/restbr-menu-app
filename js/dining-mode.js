@@ -14,7 +14,7 @@
   let channel = null;
   let gateTexts = {};
 
-  const lang = () => localStorage.getItem('shorashLang') || 'ar';
+  const lang = () => localStorage.getItem('RESTBR_LANG_V1') || 'ar';
 
   const DEFAULT_COPY = {
     ar: {

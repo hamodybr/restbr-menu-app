@@ -10,7 +10,7 @@
   function lang(){
     const value = window.SHORASH_LANG
       ? window.SHORASH_LANG()
-      : (localStorage.getItem('shorashLang') || 'ar');
+      : (localStorage.getItem('RESTBR_LANG_V1') || 'ar');
     return ['ar','ku','en'].includes(value) ? value : 'ar';
   }
 
@@ -155,7 +155,7 @@
   function cartHasInvalidCurrentPrice(){
     let cart = [];
     try {
-      cart = JSON.parse(localStorage.getItem('shorashCartV1') || '[]');
+      cart = JSON.parse(localStorage.getItem('RESTBR_CART_V1') || '[]');
     } catch (_) {
       return false;
     }

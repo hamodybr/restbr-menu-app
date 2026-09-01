@@ -1,5 +1,5 @@
 (() => {
-  const KEY = 'shorashCartV1';
+  const KEY = 'RESTBR_CART_V1';
 
   const TEXT = {
     ar: 'تمت إزالة صنف لم يعد متوفراً من السلة',
@@ -10,7 +10,7 @@
   function currentLang(){
     const value = window.SHORASH_LANG
       ? window.SHORASH_LANG()
-      : (localStorage.getItem('shorashLang') || 'ar');
+      : (localStorage.getItem('RESTBR_LANG_V1') || 'ar');
     return ['ar','ku','en'].includes(value) ? value : 'ar';
   }
 

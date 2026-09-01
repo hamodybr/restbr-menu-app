@@ -4,7 +4,7 @@
   const currentLang = () =>
     window.SHORASH_LANG
       ? window.SHORASH_LANG()
-      : (localStorage.getItem('shorashLang') || 'ar');
+      : (localStorage.getItem('RESTBR_LANG_V1') || 'ar');
 
   const money = value =>
     Number(value || 0).toLocaleString('en-US') + ' ' +

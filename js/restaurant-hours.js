@@ -109,7 +109,7 @@
   }
 
   function lang() {
-    return localStorage.getItem('shorashLang') || 'ar';
+    return localStorage.getItem('RESTBR_LANG_V1') || 'ar';
   }
 
   function closedText(scheduleOpen) {
