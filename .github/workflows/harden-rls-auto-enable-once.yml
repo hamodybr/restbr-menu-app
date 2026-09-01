@@ -34,25 +34,38 @@ jobs:
           if text.count(marker) != 1:
               raise SystemExit(f'Expected exactly one final commit marker, found {text.count(marker)}')
 
-          guard = '''
--- Defensive compatibility hardening: older RESTBR databases may contain this
--- SECURITY DEFINER helper. Fresh databases do not create it, but if it exists
--- it must never be executable by public browser roles.
-do $$
-begin
-  if to_regprocedure('public.rls_auto_enable()') is not null then
-    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
-  end if;
-end;
-$$;
-'''
-
+          guard = '\n'.join([
+              '-- Defensive compatibility hardening: older RESTBR databases may contain this',
+              '-- SECURITY DEFINER helper. Fresh databases do not create it, but if it exists',
+              '-- it must never be executable by public browser roles.',
+              'do $$',
+              'begin',
+              "  if to_regprocedure('public.rls_auto_enable()') is not null then",
+              "    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';",
+              '  end if;',
+              'end;',
+              '$$;',
+              '',
+          ])
           bootstrap.write_text(text.replace(marker, '\n' + guard + marker), encoding='utf-8')
 
           migration = Path('supabase/migrations/202609010630_revoke_rls_auto_enable_public.sql')
           if migration.exists():
               raise SystemExit('Migration already exists')
-          migration.write_text('''-- RESTBR security hardening for databases created from older revisions.\n-- No-op when public.rls_auto_enable() does not exist.\n\ndo $$\nbegin\n  if to_regprocedure('public.rls_auto_enable()') is not null then\n    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';\n  end if;\nend;\n$$;\n''', encoding='utf-8')
+          migration_text = '\n'.join([
+              '-- RESTBR security hardening for databases created from older revisions.',
+              '-- No-op when public.rls_auto_enable() does not exist.',
+              '',
+              'do $$',
+              'begin',
+              "  if to_regprocedure('public.rls_auto_enable()') is not null then",
+              "    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';",
+              '  end if;',
+              'end;',
+              '$$;',
+              '',
+          ])
+          migration.write_text(migration_text, encoding='utf-8')
           PY
 
       - name: Verify narrow safe change
