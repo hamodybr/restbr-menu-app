@@ -872,4 +872,15 @@ where u.id = (
 on conflict (user_id) do update
 set role = 'super_admin', is_active = true;
 
+-- Defensive compatibility hardening: older RESTBR databases may contain this
+-- SECURITY DEFINER helper. Fresh databases do not create it, but if it exists
+-- it must never be executable by public browser roles.
+do $$
+begin
+  if to_regprocedure('public.rls_auto_enable()') is not null then
+    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
+  end if;
+end;
+$$;
+
 commit;
