@@ -25,114 +25,107 @@ jobs:
           from pathlib import Path
 
           replacements = {
-              'RESTBR_LANG_V1uageSettingsScript': 'restbrLanguageSettingsScript',
-              'window.SHORASH_HOURS_READY': 'window.RESTBR_HOURS_READY',
-              'shorashIntroSeen': 'RESTBR_INTRO_SEEN_V1',
-              'shorash:view:': 'restbr:view:',
-              'startShorash': 'startRestbr',
-              'window.SHORASH_DB': 'window.RESTBR_DB',
-              'window.SHORASH_LANG': 'window.RESTBR_LANG',
-              'window.SHORASH_TRACK': 'window.RESTBR_TRACK',
-              'window.SHORASH_ORDER_MODE': 'window.RESTBR_ORDER_MODE',
-              'window.__shorashScheduleTimer': 'window.__RESTBR_SCHEDULE_TIMER__',
-              'shorash:ready': 'restbr:ready',
-              'shorash:prices-updated': 'restbr:prices-updated',
-              'shorash:hours-ready': 'restbr:hours-ready',
-              'shorash-dining-mode-prices': 'restbr-dining-mode-prices',
-              'shorash-live-prices-v1': 'restbr-live-prices-v1',
-              '__SHORASH_BULK_PRICE_TARGET_UI_V2__': '__RESTBR_BULK_PRICE_TARGET_UI_V2__',
-              '__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__': '__RESTBR_ADMIN_PRODUCT_IMAGE_FALLBACK__',
-              '__SHORASH_FULL_RESTORE_DISCOUNTS_V1__': '__RESTBR_FULL_RESTORE_DISCOUNTS_V1__',
-              '__SHORASH_WHATSAPP_ORDER_BULLETS_V1__': '__RESTBR_WHATSAPP_ORDER_BULLETS_V1__',
-              '__shorashWhatsappBulletsPatched': '__restbrWhatsappBulletsPatched',
-              '__SHORASH_FULL_BACKUP_DISCOUNTS_V1__': '__RESTBR_FULL_BACKUP_DISCOUNTS_V1__',
-              '__SHORASH_EXCEL_EXPORT_TAKEAWAY_V1__': '__RESTBR_EXCEL_EXPORT_TAKEAWAY_V1__',
-              '__SHORASH_EXCEL_IMPORT_TAKEAWAY_V1__': '__RESTBR_EXCEL_IMPORT_TAKEAWAY_V1__',
-              '__shorashTakeawayPriceSupport': '__restbrTakeawayPriceSupport',
-              'shorashDiscountChoicePriceSyncScript': 'restbrDiscountChoicePriceSyncScript',
-              'shorashRestaurantHoursScript': 'restbrRestaurantHoursScript',
-              'shorashWhatsappOrderBulletsScript': 'restbrWhatsappOrderBulletsScript',
-              'shorashAdminThemeToolbarScript': 'restbrAdminThemeToolbarScript',
-              'shorashAdminFontScaleScript': 'restbrAdminFontScaleScript',
-              'shorashAdminProductCategoryFilterScript': 'restbrAdminProductCategoryFilterScript',
-              'shorashAdminTakeawayPricesScript': 'restbrAdminTakeawayPricesScript',
-              'shorashAdminOptionOrderScript': 'restbrAdminOptionOrderScript',
-              'shorashAdminProductImageFallbackScript': 'restbrAdminProductImageFallbackScript',
-              'shorashAdminBulkPriceTargetUiScript': 'restbrAdminBulkPriceTargetUiScript',
-              'shorashAdminFullBackupDiscountsScript': 'restbrAdminFullBackupDiscountsScript',
-              'shorashAdminFullRestoreDiscountsScript': 'restbrAdminFullRestoreDiscountsScript',
-              'shorashAdminExcelExportTakeawayScript': 'restbrAdminExcelExportTakeawayScript',
-              'shorashAdminExcelImportTakeawayScript': 'restbrAdminExcelImportTakeawayScript',
-              'shorashAdminRestaurantHoursScript': 'restbrAdminRestaurantHoursScript',
-              'shorashAdminDiningGateSettingsScript': 'restbrAdminDiningGateSettingsScript',
-              'shorashAdminDiscountsScript': 'restbrAdminDiscountsScript',
-              'shorashAdminLightThemeCompleteScript': 'restbrAdminLightThemeCompleteScript',
-              'shorashAdminFontScaleStyles': 'restbrAdminFontScaleStyles',
-              "return 'shorash';": "return 'restbr';",
+            'RESTBR_LANG_V1uageSettingsScript':'restbrLanguageSettingsScript',
+            'window.SHORASH_HOURS_READY':'window.RESTBR_HOURS_READY',
+            'shorashIntroSeen':'RESTBR_INTRO_SEEN_V1',
+            'shorash:view:':'restbr:view:',
+            'startShorash':'startRestbr',
+            'window.SHORASH_DB':'window.RESTBR_DB',
+            'window.SHORASH_LANG':'window.RESTBR_LANG',
+            'window.SHORASH_TRACK':'window.RESTBR_TRACK',
+            'window.SHORASH_ORDER_MODE':'window.RESTBR_ORDER_MODE',
+            'window.__shorashScheduleTimer':'window.__RESTBR_SCHEDULE_TIMER__',
+            'shorash:ready':'restbr:ready',
+            'shorash:prices-updated':'restbr:prices-updated',
+            'shorash:hours-ready':'restbr:hours-ready',
+            'shorash-dining-mode-prices':'restbr-dining-mode-prices',
+            'shorash-live-prices-v1':'restbr-live-prices-v1',
+            '__SHORASH_BULK_PRICE_TARGET_UI_V2__':'__RESTBR_BULK_PRICE_TARGET_UI_V2__',
+            '__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__':'__RESTBR_ADMIN_PRODUCT_IMAGE_FALLBACK__',
+            '__SHORASH_FULL_RESTORE_DISCOUNTS_V1__':'__RESTBR_FULL_RESTORE_DISCOUNTS_V1__',
+            '__SHORASH_WHATSAPP_ORDER_BULLETS_V1__':'__RESTBR_WHATSAPP_ORDER_BULLETS_V1__',
+            '__shorashWhatsappBulletsPatched':'__restbrWhatsappBulletsPatched',
+            '__SHORASH_FULL_BACKUP_DISCOUNTS_V1__':'__RESTBR_FULL_BACKUP_DISCOUNTS_V1__',
+            '__SHORASH_EXCEL_EXPORT_TAKEAWAY_V1__':'__RESTBR_EXCEL_EXPORT_TAKEAWAY_V1__',
+            '__SHORASH_EXCEL_IMPORT_TAKEAWAY_V1__':'__RESTBR_EXCEL_IMPORT_TAKEAWAY_V1__',
+            '__shorashTakeawayPriceSupport':'__restbrTakeawayPriceSupport',
+            'shorashDiscountChoicePriceSyncScript':'restbrDiscountChoicePriceSyncScript',
+            'shorashRestaurantHoursScript':'restbrRestaurantHoursScript',
+            'shorashWhatsappOrderBulletsScript':'restbrWhatsappOrderBulletsScript',
+            'shorashAdminThemeToolbarScript':'restbrAdminThemeToolbarScript',
+            'shorashAdminFontScaleScript':'restbrAdminFontScaleScript',
+            'shorashAdminProductCategoryFilterScript':'restbrAdminProductCategoryFilterScript',
+            'shorashAdminTakeawayPricesScript':'restbrAdminTakeawayPricesScript',
+            'shorashAdminOptionOrderScript':'restbrAdminOptionOrderScript',
+            'shorashAdminProductImageFallbackScript':'restbrAdminProductImageFallbackScript',
+            'shorashAdminBulkPriceTargetUiScript':'restbrAdminBulkPriceTargetUiScript',
+            'shorashAdminFullBackupDiscountsScript':'restbrAdminFullBackupDiscountsScript',
+            'shorashAdminFullRestoreDiscountsScript':'restbrAdminFullRestoreDiscountsScript',
+            'shorashAdminExcelExportTakeawayScript':'restbrAdminExcelExportTakeawayScript',
+            'shorashAdminExcelImportTakeawayScript':'restbrAdminExcelImportTakeawayScript',
+            'shorashAdminRestaurantHoursScript':'restbrAdminRestaurantHoursScript',
+            'shorashAdminDiningGateSettingsScript':'restbrAdminDiningGateSettingsScript',
+            'shorashAdminDiscountsScript':'restbrAdminDiscountsScript',
+            'shorashAdminLightThemeCompleteScript':'restbrAdminLightThemeCompleteScript',
+            'shorashAdminFontScaleStyles':'restbrAdminFontScaleStyles',
+            "return 'shorash';":"return 'restbr';",
           }
 
-          exts = {'.js', '.html'}
-          changed = []
-          counts = {old: 0 for old in replacements}
+          counts={k:0 for k in replacements}
           for path in sorted(Path('.').rglob('*')):
-              if not path.is_file() or path.suffix.lower() not in exts:
-                  continue
-              if '.git' in path.parts or '.github' in path.parts:
-                  continue
-              text = path.read_text(encoding='utf-8')
-              original = text
-              for old, new in replacements.items():
-                  n = text.count(old)
-                  if n:
-                      counts[old] += n
-                      text = text.replace(old, new)
-              if text != original:
-                  path.write_text(text, encoding='utf-8', newline='')
-                  changed.append(str(path))
+            if not path.is_file() or path.suffix.lower() not in {'.js','.html'} or '.git' in path.parts or '.github' in path.parts:
+              continue
+            text=path.read_text(encoding='utf-8')
+            original=text
+            for old,new in replacements.items():
+              n=text.count(old)
+              if n:
+                counts[old]+=n
+                text=text.replace(old,new)
+            if text!=original:
+              path.write_text(text,encoding='utf-8',newline='')
 
-          missing = [key for key, count in counts.items() if count == 0]
+          missing=[k for k,v in counts.items() if v==0]
           if missing:
-              raise SystemExit('Expected runtime names were not found: ' + ', '.join(missing))
+            raise SystemExit('Expected runtime names not found: '+', '.join(missing))
 
-          # Pure labels/comments only; keep legacy backup-format and SQL compatibility literals untouched.
-          admin = Path('admin.html')
-          text = admin.read_text(encoding='utf-8')
-          text = text.replace('SHORASH ADMIN', 'RESTBR ADMIN')
-          text = text.replace('automatic SHORASH restoration', 'automatic restaurant-name restoration')
-          text = text.replace('SHORASH SAVE ERROR:', 'RESTBR SAVE ERROR:')
-          text = text.replace('current SHORASH products table', 'current RESTBR products table')
-          admin.write_text(text, encoding='utf-8', newline='')
-
-          app = Path('js/app.js')
-          text = app.read_text(encoding='utf-8')
-          text = text.replace('Loading SHORASH menu', 'Loading RESTBR menu')
-          text = text.replace('START SHORASH', 'START RESTBR')
-          text = text.replace('SHORASH MENU LOADED', 'RESTBR MENU LOADED')
-          text = text.replace('SHORASH MENU READY', 'RESTBR MENU READY')
-          text = text.replace('SHORASH MENU ERROR:', 'RESTBR MENU ERROR:')
-          text = text.replace('Backward compatibility with old saved SHORASH text.', 'Backward compatibility with old saved legacy restaurant text.')
-          app.write_text(text, encoding='utf-8', newline='')
-
-          supa = Path('js/supabase-config.js')
-          text = supa.read_text(encoding='utf-8').replace('SHORASH MENU — Supabase Connection Test', 'RESTBR MENU — Supabase Connection Test')
-          supa.write_text(text, encoding='utf-8', newline='')
-
-          theme = Path('js/admin-light-theme-complete.js')
-          text = theme.read_text(encoding='utf-8').replace('SHORASH ADMIN', 'RESTBR ADMIN')
-          theme.write_text(text, encoding='utf-8', newline='')
-
-          card = Path('js/card-life-effects.js')
-          text = card.read_text(encoding='utf-8').replace('SHORASH — subtle living-card effects', 'RESTBR — subtle living-card effects')
-          card.write_text(text, encoding='utf-8', newline='')
+          label_edits={
+            'admin.html':[
+              ('SHORASH ADMIN','RESTBR ADMIN'),
+              ('automatic SHORASH restoration','automatic restaurant-name restoration'),
+              ('SHORASH SAVE ERROR:','RESTBR SAVE ERROR:'),
+              ('current SHORASH products table','current RESTBR products table'),
+            ],
+            'js/app.js':[
+              ('Loading SHORASH menu','Loading RESTBR menu'),
+              ('START SHORASH','START RESTBR'),
+              ('SHORASH MENU LOADED','RESTBR MENU LOADED'),
+              ('SHORASH MENU READY','RESTBR MENU READY'),
+              ('SHORASH MENU ERROR:','RESTBR MENU ERROR:'),
+              ('Backward compatibility with old saved SHORASH text.','Backward compatibility with old saved legacy restaurant text.'),
+            ],
+            'js/supabase-config.js':[
+              ('SHORASH MENU — Supabase Connection Test','RESTBR MENU — Supabase Connection Test'),
+            ],
+            'js/admin-light-theme-complete.js':[
+              ('SHORASH ADMIN','RESTBR ADMIN'),
+            ],
+            'js/card-life-effects.js':[
+              ('SHORASH — subtle living-card effects','RESTBR — subtle living-card effects'),
+            ],
+            'js/restaurant-hours.js':[
+              ('applied to SHORASH_DB.','applied to RESTBR_DB.'),
+            ],
+          }
+          for rel,pairs in label_edits.items():
+            path=Path(rel); text=path.read_text(encoding='utf-8')
+            for old,new in pairs: text=text.replace(old,new)
+            path.write_text(text,encoding='utf-8',newline='')
 
           for path in Path('css').glob('*.css'):
-              text = path.read_text(encoding='utf-8')
-              if 'SHORASH' in text:
-                  path.write_text(text.replace('SHORASH', 'RESTBR'), encoding='utf-8', newline='')
-
-          print('Runtime replacement counts:')
-          for key, count in counts.items():
-              print(f'{key}: {count}')
+            text=path.read_text(encoding='utf-8')
+            if 'SHORASH' in text:
+              path.write_text(text.replace('SHORASH','RESTBR'),encoding='utf-8',newline='')
           PY
 
           git rm assets/shorash-logo.jpeg
@@ -140,45 +133,31 @@ jobs:
       - name: Verify runtime cleanup
         run: |
           test ! -e assets/shorash-logo.jpeg
-
-          # Catch the accidental partial replacement pattern from the prior localStorage cleanup.
           ! grep -RniE --exclude-dir=.git --exclude-dir=.github 'RESTBR_LANG_V1[A-Za-z_]' .
-
-          # Functional Shorash-era runtime names must be gone.
           ! grep -RniE --exclude-dir=.git --exclude-dir=.github --include='*.js' --include='*.html' \
             'window\.SHORASH_|shorash:(ready|prices-updated|hours-ready)|shorash(IntroSeen|:view:)|startShorash|__SHORASH_|__shorash|shorash[A-Z][A-Za-z]+Script|shorashAdminFontScaleStyles|shorash-(dining-mode-prices|live-prices-v1)' .
 
-          # The only remaining Shorash literals are intentional legacy restore/text compatibility and historical SQL names.
           python - <<'PY'
           from pathlib import Path
-
-          allowed = {
-              'admin.html': ('SHORASH_MENU_BACKUP',),
-              'js/admin-full-restore-discounts.js': ('SHORASH_MENU_BACKUP',),
-              'js/app.js': ('SHORASH',),
-              'supabase/bootstrap.sql': ('is_shorash_admin',),
-              'supabase/migrations/202608250252_tighten_admin_rls_by_roles.sql': ('is_shorash_admin', 'shorash_'),
+          allowed={
+            'admin.html':('SHORASH_MENU_BACKUP',),
+            'js/admin-full-restore-discounts.js':('SHORASH_MENU_BACKUP',),
+            'js/app.js':('/SHORASH',),
+            'supabase/bootstrap.sql':('is_shorash_admin',),
+            'supabase/migrations/202608250252_tighten_admin_rls_by_roles.sql':('is_shorash_admin','shorash_'),
           }
-          bad = []
+          bad=[]
           for path in Path('.').rglob('*'):
-              if not path.is_file() or '.git' in path.parts or '.github' in path.parts:
-                  continue
-              if path.suffix.lower() not in {'.js','.html','.css','.sql','.md','.json'}:
-                  continue
-              try:
-                  lines = path.read_text(encoding='utf-8').splitlines()
-              except Exception:
-                  continue
-              for no, line in enumerate(lines, 1):
-                  if 'shorash' not in line.lower():
-                      continue
-                  rel = str(path)
-                  permits = allowed.get(rel, ())
-                  if permits and any(token.lower() in line.lower() for token in permits):
-                      continue
-                  bad.append(f'{rel}:{no}:{line.strip()}')
-          if bad:
-              raise SystemExit('Unexpected Shorash leftovers:\n' + '\n'.join(bad))
+            if not path.is_file() or '.git' in path.parts or '.github' in path.parts or path.suffix.lower() not in {'.js','.html','.css','.sql','.md','.json'}:
+              continue
+            try: lines=path.read_text(encoding='utf-8').splitlines()
+            except Exception: continue
+            for no,line in enumerate(lines,1):
+              if 'shorash' not in line.lower(): continue
+              permits=allowed.get(str(path),())
+              if permits and any(x.lower() in line.lower() for x in permits): continue
+              bad.append(f'{path}:{no}:{line.strip()}')
+          if bad: raise SystemExit('Unexpected Shorash leftovers:\n'+'\n'.join(bad))
           PY
 
           changed_js=$(git diff --name-only -- '*.js')
@@ -188,7 +167,6 @@ jobs:
             done <<< "$changed_js"
           fi
 
-          echo 'Changed paths:'
           git diff --name-only
 
       - name: Commit runtime cleanup
