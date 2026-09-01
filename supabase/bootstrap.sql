@@ -641,8 +641,13 @@ using ((select private.can_manage_restaurant_settings()))
 with check ((select private.can_manage_restaurant_settings()));
 
 drop policy if exists restbr_categories_public_read on public.categories;
+drop policy if exists restbr_categories_admin_read on public.categories;
 create policy restbr_categories_public_read
-on public.categories for select to anon, authenticated using (true);
+on public.categories for select to anon, authenticated
+using (is_active = true and is_visible = true);
+create policy restbr_categories_admin_read
+on public.categories for select to authenticated
+using ((select private.can_access_admin()));
 drop policy if exists restbr_categories_insert on public.categories;
 create policy restbr_categories_insert
 on public.categories for insert to authenticated
@@ -658,8 +663,23 @@ on public.categories for delete to authenticated
 using ((select private.has_admin_role(array['super_admin','owner','manager']::text[])));
 
 drop policy if exists restbr_products_public_read on public.products;
+drop policy if exists restbr_products_admin_read on public.products;
 create policy restbr_products_public_read
-on public.products for select to anon, authenticated using (true);
+on public.products for select to anon, authenticated
+using (
+  is_active = true
+  and is_visible = true
+  and exists (
+    select 1
+    from public.categories c
+    where c.id = products.category_id
+      and c.is_active = true
+      and c.is_visible = true
+  )
+);
+create policy restbr_products_admin_read
+on public.products for select to authenticated
+using ((select private.can_access_admin()));
 drop policy if exists restbr_products_insert on public.products;
 create policy restbr_products_insert
 on public.products for insert to authenticated
@@ -675,8 +695,25 @@ on public.products for delete to authenticated
 using ((select private.has_admin_role(array['super_admin','owner','manager']::text[])));
 
 drop policy if exists restbr_product_options_public_read on public.product_options;
+drop policy if exists restbr_product_options_admin_read on public.product_options;
 create policy restbr_product_options_public_read
-on public.product_options for select to anon, authenticated using (true);
+on public.product_options for select to anon, authenticated
+using (
+  is_active = true
+  and exists (
+    select 1
+    from public.products p
+    join public.categories c on c.id = p.category_id
+    where p.id = product_options.product_id
+      and p.is_active = true
+      and p.is_visible = true
+      and c.is_active = true
+      and c.is_visible = true
+  )
+);
+create policy restbr_product_options_admin_read
+on public.product_options for select to authenticated
+using ((select private.can_access_admin()));
 drop policy if exists restbr_product_options_insert on public.product_options;
 create policy restbr_product_options_insert
 on public.product_options for insert to authenticated
