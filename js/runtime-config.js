@@ -272,7 +272,7 @@ window.RESTBR_CONFIG = Object.freeze({
   if (document.getElementById('restbrUrlSafetyScript')) return;
   const script = document.createElement('script');
   script.id = 'restbrUrlSafetyScript';
-  script.src = 'js/url-safety.js?v=1.0';
+  script.src = 'js/url-safety.js?v=1.1';
   script.defer = true;
   document.head.appendChild(script);
 })();
