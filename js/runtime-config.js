@@ -318,7 +318,7 @@ window.RESTBR_CONFIG = Object.freeze({
   if (document.getElementById('restbrUrlSafetyScript')) return;
   const script = document.createElement('script');
   script.id = 'restbrUrlSafetyScript';
-  script.src = 'js/url-safety.js?v=1.2';
+  script.src = 'js/url-safety.js?v=1.3';
   script.defer = true;
   document.head.appendChild(script);
 })();

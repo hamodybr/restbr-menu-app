@@ -18,6 +18,7 @@
   ]);
 
   const CONTROL_CHARACTERS = /[\u0000-\u001F\u007F]/;
+  const RAW_WHITESPACE = /[\s\u00A0]/u;
 
   const CONFIGURED_LINK_SELECTOR = [
     '#smActions a',
@@ -35,7 +36,7 @@
   function safeConfiguredUrl(value) {
     const raw = String(value ?? '').trim();
     if (!raw) return '';
-    if (CONTROL_CHARACTERS.test(raw)) return '';
+    if (CONTROL_CHARACTERS.test(raw) || RAW_WHITESPACE.test(raw)) return '';
 
     if (
       raw.startsWith('#') ||
@@ -68,7 +69,7 @@
 
   function safeMediaUrl(value) {
     const raw = String(value ?? '').trim();
-    if (!raw || CONTROL_CHARACTERS.test(raw)) return '';
+    if (!raw || CONTROL_CHARACTERS.test(raw) || RAW_WHITESPACE.test(raw)) return '';
     if (raw.startsWith('//') || raw.startsWith('\\')) return '';
 
     const schemeMatch = raw.match(/^([a-z][a-z0-9+.-]*:)/i);
