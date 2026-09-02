@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v6";
+const CACHE_NAME = "restbr-restaurant-template-v7";
 
 const CORE = [
   "./",
@@ -11,7 +11,7 @@ const CORE = [
   "./css/mobile-card-image-fix.css?v=1.1",
   "./js/offline-status.js?v=1.1",
   "./js/unavailable-card-state.js?v=1.1",
-  "./js/app.js?v=17.8",
+  "./js/app.js?v=17.9",
   "./js/product-image-fallback.js?v=1.2",
   "./js/price-safety.js?v=1.0",
   "./js/cart.js?v=4.4",

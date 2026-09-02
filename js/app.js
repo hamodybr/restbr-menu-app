@@ -2306,7 +2306,7 @@ function renderLanguages() {
    TOP ACTIONS
 ======================================== */
 
-function renderActions(){const holder=$("#smActions");if(!holder||!DB)return;const r=DB.restaurant||{},q=r.quickActions||{},a=[];const add=(icon,label,url)=>{const safe=safeConfiguredUrl(url);if(safe)a.push({icon,label,url:safe})};if(q.location?.enabled!==false&&String(r.location||"").trim()&&r.location!=="#")add("📍",q.location?.label?.[lang]||I18N[lang].location,r.location);if(q.call?.enabled!==false&&String(r.phone||"").trim())add("☎",q.call?.label?.[lang]||I18N[lang].call,"tel:"+String(r.phone).replace(/[^\d+(). -]/g,""));if(q.whatsapp?.enabled!==false&&String(r.whatsapp||"").trim())add("💬",q.whatsapp?.label?.[lang]||I18N[lang].whatsapp,r.whatsapp);safeArray(r.customTopActions).forEach(i=>{const l=actionLabel(i);if(i?.enabled!==false&&l)add(String(i.icon||"🔗"),l,i?.url)});holder.className="sm-quick-actions";holder.innerHTML=a.map(i=>`<a href="${escapeUi(i.url)}" ${/^https?:/i.test(i.url)?'target="_blank" rel="noopener noreferrer"':''}><span>${escapeUi(i.icon)}</span><b>${escapeUi(i.label)}</b></a>`).join("");if(a.length){holder.style.display="grid";holder.style.gridTemplateColumns=`repeat(${a.length},minmax(0,1fr))`}else holder.style.display="none"}
+function renderActions(){const holder=$("#smActions");if(!holder||!DB)return;const r=DB.restaurant||{},q=r.quickActions||{},a=[];const add=(icon,label,url)=>{const safe=safeConfiguredUrl(url);if(safe)a.push({icon,label,url:safe})};if(q.location?.enabled!==false&&String(r.location||"").trim()&&r.location!=="#")add("📍",q.location?.label?.[lang]||I18N[lang].location,r.location);if(q.call?.enabled!==false&&String(r.phone||"").trim())add("☎",q.call?.label?.[lang]||I18N[lang].call,"tel:"+String(r.phone).replace(/[^\d+().-]/g,""));if(q.whatsapp?.enabled!==false&&String(r.whatsapp||"").trim())add("💬",q.whatsapp?.label?.[lang]||I18N[lang].whatsapp,r.whatsapp);safeArray(r.customTopActions).forEach(i=>{const l=actionLabel(i);if(i?.enabled!==false&&l)add(String(i.icon||"🔗"),l,i?.url)});holder.className="sm-quick-actions";holder.innerHTML=a.map(i=>`<a href="${escapeUi(i.url)}" ${/^https?:/i.test(i.url)?'target="_blank" rel="noopener noreferrer"':''}><span>${escapeUi(i.icon)}</span><b>${escapeUi(i.label)}</b></a>`).join("");if(a.length){holder.style.display="grid";holder.style.gridTemplateColumns=`repeat(${a.length},minmax(0,1fr))`}else holder.style.display="none"}
 
 /* ========================================
    APPLY LANGUAGE
@@ -2632,7 +2632,7 @@ function setupFooter() {
 
   const safeCall =
     safeConfiguredUrl(
-      "tel:" + String(restaurant.phone || "").replace(/[^\d+(). -]/g, "")
+      "tel:" + String(restaurant.phone || "").replace(/[^\d+().-]/g, "")
     );
 
   const safeWhatsapp =
