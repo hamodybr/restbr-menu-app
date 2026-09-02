@@ -6,8 +6,54 @@ window.RESTBR_CONFIG = Object.freeze({
   supabaseUrl: 'https://YOUR_PROJECT_REF.supabase.co',
   supabasePublishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
   enableUserManagement: false,
-  enableRestaurantReset: false
+  enableRestaurantReset: false,
+  legacyLocalStorageKeys: {},
+  legacySessionStorageKeys: {}
 });
+
+// Keep every restaurant on the same RESTBR runtime namespace while preserving
+// data created by older branded builds during a one-time core alignment.
+(() => {
+  const config = window.RESTBR_CONFIG || {};
+
+  const migrateKeys = (storage, mappings) => {
+    if (!storage || !mappings || typeof mappings !== 'object') return false;
+
+    let migrated = false;
+
+    Object.entries(mappings).forEach(([currentKey, legacyKey]) => {
+      if (!currentKey || !legacyKey || storage.getItem(currentKey) !== null) return;
+      const legacyValue = storage.getItem(String(legacyKey));
+      if (legacyValue !== null) {
+        storage.setItem(currentKey, legacyValue);
+        migrated = true;
+      }
+    });
+
+    return migrated;
+  };
+
+  try {
+    const migratedLocal = migrateKeys(window.localStorage, config.legacyLocalStorageKeys);
+    migrateKeys(window.sessionStorage, config.legacySessionStorageKeys);
+    if (migratedLocal) localStorage.setItem('RESTBR_TEMPLATE_RESET_V1', 'done');
+  } catch (_) {}
+
+  const applyInitialBrand = () => {
+    const name = String(config.restaurantName || '').trim();
+    if (!name || name === 'Restaurant') return;
+
+    document.title = `${name} Menu`;
+    const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
+    if (appleTitle) appleTitle.setAttribute('content', `${name} Menu`);
+  };
+
+  if (document.readyState === 'loading') {
+    document.addEventListener('DOMContentLoaded', applyInitialBrand, { once: true });
+  } else {
+    applyInitialBrand();
+  }
+})();
 
 // Keep the admin dashboard locked until the current Supabase session is
 // confirmed against public.admin_users. This does not monkey-patch Supabase

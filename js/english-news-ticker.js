@@ -1,4 +1,14 @@
 (() => {
+  if (!document.getElementById('smSeamlessBackgroundVideoLoader')) {
+    const script = document.createElement('script');
+    script.id = 'smSeamlessBackgroundVideoLoader';
+    script.src = 'js/seamless-background-video.js?v=1.0';
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+})();
+
+(() => {
   const STYLE_ID = 'smUnifiedNewsTickerStyle';
 
   function installStyle() {
