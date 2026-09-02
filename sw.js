@@ -1,10 +1,10 @@
-const CACHE_NAME = "restbr-restaurant-template-v3";
+const CACHE_NAME = "restbr-restaurant-template-v4";
 
 const CORE = [
   "./",
   "./index.html",
   "./manifest.webmanifest",
-  "./css/style.css?v=4.0",
+  "./css/style.css?v=4.1",
   "./css/cart.css?v=3.6",
   "./css/desktop-phone-parity.css?v=1.0",
   "./css/english-card-ltr.css?v=1.0",
