@@ -12,6 +12,19 @@
     'geo:'
   ]);
 
+  const CONFIGURED_LINK_SELECTOR = [
+    '#smActions a',
+    '#smFooterLocation',
+    '#smFooterCall',
+    '#smFooterWhatsapp',
+    '#smFacebook',
+    '#smSnapchat',
+    '#smTikTok',
+    '#smInstagram',
+    'a.sm-custom-footer-action',
+    'a.sm-custom-social-link'
+  ].join(', ');
+
   function safeConfiguredUrl(value) {
     const raw = String(value ?? '').trim();
     if (!raw) return '';
@@ -48,11 +61,7 @@
   function isConfiguredLink(anchor) {
     if (!(anchor instanceof HTMLAnchorElement)) return false;
 
-    return (
-      !!anchor.closest('#smActions') ||
-      anchor.classList.contains('sm-custom-footer-action') ||
-      anchor.classList.contains('sm-custom-social-link')
-    );
+    return anchor.matches(CONFIGURED_LINK_SELECTOR);
   }
 
   function sanitizeAnchor(anchor) {
@@ -79,9 +88,7 @@
   }
 
   function scan(root = document) {
-    root.querySelectorAll?.(
-      '#smActions a, a.sm-custom-footer-action, a.sm-custom-social-link'
-    ).forEach(sanitizeAnchor);
+    root.querySelectorAll?.(CONFIGURED_LINK_SELECTOR).forEach(sanitizeAnchor);
   }
 
   document.addEventListener('click', event => {
