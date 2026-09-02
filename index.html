@@ -31,6 +31,7 @@
       if(localStorage.getItem(templateResetKey)!=="done"){
         [
           "RESTBR_BRAND_CACHE_V1",
+          "RESTBR_BRAND_CACHE_SCOPE_V1",
           "RESTBR_MENU_OFFLINE_CACHE_V1",
           "RESTBR_CART_V1",
           "RESTBR_INTRO_SEEN_V1"
@@ -221,10 +222,63 @@
   <script>
     (function(){
       try{
-        const raw=localStorage.getItem("RESTBR_BRAND_CACHE_V1");
-        if(!raw)return;
+        const config=window.RESTBR_CONFIG||{};
+        const configuredName=String(config.restaurantName||"").trim();
+        const configuredUrl=String(config.supabaseUrl||"").trim();
+        const fallbackName=
+          configuredName && !/^restaurant$/i.test(configuredName)
+            ? configuredName
+            : "";
+        const scopeKey="RESTBR_BRAND_CACHE_SCOPE_V1";
+        const currentScope=
+          fallbackName || configuredUrl
+            ? `${fallbackName}|${configuredUrl}`
+            : "";
+        const previousScope=localStorage.getItem(scopeKey)||"";
 
-        const cached=JSON.parse(raw)||{};
+        if(currentScope && previousScope && previousScope!==currentScope){
+          localStorage.removeItem("RESTBR_BRAND_CACHE_V1");
+        }
+        if(currentScope){
+          localStorage.setItem(scopeKey,currentScope);
+        }
+
+        let raw=localStorage.getItem("RESTBR_BRAND_CACHE_V1");
+        let cached=raw ? (JSON.parse(raw)||{}) : {};
+
+        // A browser can already contain RESTBR_BRAND_CACHE_V1 from another
+        // restaurant before the scope key existed. Validate that first cache
+        // against this instance and discard it if the identity does not match.
+        if(raw && !previousScope && fallbackName){
+          const normalize=value=>
+            String(value||"")
+              .normalize("NFKC")
+              .trim()
+              .toLocaleLowerCase("en")
+              .replace(/[\s\-_.'’]+/g,"");
+          const expected=normalize(fallbackName);
+          const cachedNames=[cached.nameAr,cached.nameKu,cached.nameEn]
+            .map(normalize)
+            .filter(Boolean);
+          const matches=cachedNames.some(name=>
+            name===expected ||
+            name.includes(expected) ||
+            expected.includes(name)
+          );
+
+          if(!matches){
+            localStorage.removeItem("RESTBR_BRAND_CACHE_V1");
+            raw="";
+            cached={};
+          }
+        }
+
+        const brand=document.querySelector(".sm-intro-brand");
+        if(!raw){
+          if(brand && fallbackName)brand.textContent=fallbackName;
+          return;
+        }
+
         const cachedLogo=typeof window.RESTBR_SAFE_MEDIA_URL==="function"
           ? window.RESTBR_SAFE_MEDIA_URL(cached.logo)
           : "";
@@ -232,12 +286,11 @@
 
         const name=
           lang==="ku"
-            ? (cached.nameKu||cached.nameAr||cached.nameEn||"")
+            ? (cached.nameKu||cached.nameAr||cached.nameEn||fallbackName)
             : lang==="en"
-              ? (cached.nameEn||cached.nameAr||cached.nameKu||"")
-              : (cached.nameAr||cached.nameKu||cached.nameEn||"");
+              ? (cached.nameEn||cached.nameAr||cached.nameKu||fallbackName)
+              : (cached.nameAr||cached.nameKu||cached.nameEn||fallbackName);
 
-        const brand=document.querySelector(".sm-intro-brand");
         if(brand)brand.textContent=name;
 
         document
