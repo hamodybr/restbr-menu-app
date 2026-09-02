@@ -240,7 +240,10 @@
     const db = window.RESTBR_DB;
     if (!db?.products) return;
     db.products.forEach(product => {
-      const card = document.querySelector(`[data-product-card="${String(product.id).replace(/"/g, '\\"')}"]`);
+      const productId = String(product.id ?? '');
+      const card = [...document.querySelectorAll('[data-product-card]')].find(
+        element => String(element.dataset.productCard) === productId
+      );
       if (!card) return;
       const nodes = [...card.querySelectorAll('.sm-price')];
       (product.options || []).forEach((option, index) => {

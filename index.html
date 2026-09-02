@@ -4,7 +4,8 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#080604">
-  <script src="js/runtime-config.js?v=1.2"></script>
+  <script id="restbrUrlSafetyScript" src="js/url-safety.js?v=1.2"></script>
+  <script src="js/runtime-config.js?v=1.3"></script>
 
   <script>
     window.__smIntroBornAt=Date.now();
@@ -224,6 +225,9 @@
         if(!raw)return;
 
         const cached=JSON.parse(raw)||{};
+        const cachedLogo=typeof window.RESTBR_SAFE_MEDIA_URL==="function"
+          ? window.RESTBR_SAFE_MEDIA_URL(cached.logo)
+          : "";
         const lang=localStorage.getItem("RESTBR_LANG_V1")||"ar";
 
         const name=
@@ -239,8 +243,8 @@
         document
           .querySelectorAll(".sm-intro-logo, .sm-logo")
           .forEach(logo=>{
-            if(logo && cached.logo){
-              logo.src=cached.logo;
+            if(logo && cachedLogo){
+              logo.src=cachedLogo;
               logo.style.visibility="visible";
             }
           });
@@ -253,20 +257,20 @@
 
   <!-- Supabase -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>
-  <script src="js/supabase-config.js?v=2.2"></script>
+  <script src="js/supabase-config.js?v=2.3"></script>
 
   <!-- Category unavailable state + clear product active/visible/available semantics. -->
   <script src="js/unavailable-card-state.js?v=1.1"></script>
 
   <!-- Dine-in / takeaway gate + active discount price policy -->
-  <script src="js/dining-mode.js?v=1.3"></script>
+  <script src="js/dining-mode.js?v=1.4"></script>
   <script src="js/dining-gate-language.js?v=1.0"></script>
 
   <!-- Menu + Cart + Live Prices -->
-  <script src="js/app.js?v=17.7"></script>
-  <script src="js/product-image-fallback.js?v=1.1"></script>
+  <script src="js/app.js?v=17.8"></script>
+  <script src="js/product-image-fallback.js?v=1.2"></script>
   <script src="js/price-safety.js?v=1.0"></script>
-  <script src="js/cart.js?v=4.3"></script>
+  <script src="js/cart.js?v=4.4"></script>
   <script src="js/cart-stale-item-guard.js?v=1.1"></script>
   <script src="js/cart-fab-effects.js?v=1.5"></script>
   <script src="js/live-prices.js?v=1.0"></script>

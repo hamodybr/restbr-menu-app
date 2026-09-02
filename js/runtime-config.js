@@ -312,13 +312,13 @@ window.RESTBR_CONFIG = Object.freeze({
   }, 25);
 })();
 
-// Public/menu URL hardening. The guard allows only explicit safe schemes for
-// restaurant-configured action and social links.
+// Backward-compatible URL guard loader for older page shells. Current pages
+// load this synchronously before runtime-config.js, so this is a no-op there.
 (() => {
   if (document.getElementById('restbrUrlSafetyScript')) return;
   const script = document.createElement('script');
   script.id = 'restbrUrlSafetyScript';
-  script.src = 'js/url-safety.js?v=1.1';
+  script.src = 'js/url-safety.js?v=1.2';
   script.defer = true;
   document.head.appendChild(script);
 })();

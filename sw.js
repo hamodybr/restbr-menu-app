@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v4";
+const CACHE_NAME = "restbr-restaurant-template-v5";
 
 const CORE = [
   "./",
@@ -11,14 +11,15 @@ const CORE = [
   "./css/mobile-card-image-fix.css?v=1.1",
   "./js/offline-status.js?v=1.1",
   "./js/unavailable-card-state.js?v=1.1",
-  "./js/app.js?v=17.7",
-  "./js/product-image-fallback.js?v=1.1",
+  "./js/app.js?v=17.8",
+  "./js/product-image-fallback.js?v=1.2",
   "./js/price-safety.js?v=1.0",
-  "./js/cart.js?v=4.3",
+  "./js/cart.js?v=4.4",
   "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.5",
-  "./js/runtime-config.js?v=1.2",
-  "./js/supabase-config.js?v=2.2",
+  "./js/runtime-config.js?v=1.3",
+  "./js/url-safety.js?v=1.2",
+  "./js/supabase-config.js?v=2.3",
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
   "./js/discount-choice-price-sync.js?v=1.0",
@@ -27,7 +28,7 @@ const CORE = [
   "./js/english-news-ticker.js?v=1.0",
   "./js/seamless-background-video.js?v=1.0",
   "./js/card-life-effects.js?v=1.0",
-  "./js/dining-mode.js?v=1.3",
+  "./js/dining-mode.js?v=1.4",
   "./js/dining-gate-language.js?v=1.0",
   "./data/menu.json?v=32",
   "./assets/restaurant-placeholder.svg"
