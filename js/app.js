@@ -297,6 +297,14 @@ function installV44PolishStyles(){
 
     .sm-header-icon-btn:active{transform:scale(.94)}
 
+    #smRefreshBtn.is-refreshing svg{
+      animation:smHeaderRefreshSpin .62s linear infinite;
+    }
+
+    @keyframes smHeaderRefreshSpin{
+      to{transform:rotate(360deg)}
+    }
+
     .sm-lang-code{
       position:absolute;
       right:-3px;
@@ -618,6 +626,32 @@ function ensureHeaderTools(){
     tools.appendChild(langToggle);
   }
 
+  let refreshToggle=document.getElementById("smRefreshBtn");
+  if(!refreshToggle){
+    refreshToggle=document.createElement("button");
+    refreshToggle.id="smRefreshBtn";
+    refreshToggle.type="button";
+    refreshToggle.className="sm-header-icon-btn";
+    refreshToggle.innerHTML=`
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
+        <path d="M20 4v7h-7"></path>
+      </svg>
+    `;
+    refreshToggle.setAttribute("aria-label","تحديث الصفحة");
+    refreshToggle.setAttribute("title","تحديث الصفحة");
+    tools.insertBefore(refreshToggle,searchToggle);
+  }
+
+  if(!refreshToggle.dataset.bound){
+    refreshToggle.dataset.bound="1";
+    refreshToggle.addEventListener("click",()=>{
+      refreshToggle.classList.add("is-refreshing");
+      refreshToggle.disabled=true;
+      window.setTimeout(()=>window.location.reload(),120);
+    });
+  }
+
   const langHolder=document.getElementById("smLangs");
   if(langHolder && langHolder.parentElement!==tools){
     tools.appendChild(langHolder);
@@ -774,6 +808,13 @@ function updateSearchUiLanguage(){
       "aria-label",
       lang==="en" ? "Search menu" : lang==="ku" ? "لێگەڕان" : "البحث في المنيو"
     );
+  }
+
+  const refresh=document.getElementById("smRefreshBtn");
+  if(refresh){
+    const label=lang==="en" ? "Refresh page" : lang==="ku" ? "نوێکردنەوەی پەڕە" : "تحديث الصفحة";
+    refresh.setAttribute("aria-label",label);
+    refresh.setAttribute("title",label);
   }
 }
 
@@ -2552,6 +2593,30 @@ function setupFooter() {
 
   const whatsapp =
     $("#smFooterWhatsapp");
+
+  const quickActions =
+    restaurant.quickActions || {};
+
+
+  if (location) {
+    location.textContent =
+      quickActions.location?.label?.[lang] ||
+      I18N[lang].location;
+  }
+
+
+  if (call) {
+    call.textContent =
+      quickActions.call?.label?.[lang] ||
+      I18N[lang].call;
+  }
+
+
+  if (whatsapp) {
+    whatsapp.textContent =
+      quickActions.whatsapp?.label?.[lang] ||
+      I18N[lang].whatsapp;
+  }
 
 
   const hasLocation =
