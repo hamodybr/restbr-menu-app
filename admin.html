@@ -3603,27 +3603,36 @@
 
 
 
-<div id="editorModal" class="admin-modal" aria-hidden="true">
+<div id="editorModal" class="admin-modal" role="dialog" aria-modal="true" aria-labelledby="editorTitle" aria-hidden="true">
   <div class="admin-modal-card">
-    <div class="modal-head"><h2 id="editorTitle">تعديل الصنف</h2><button class="modal-close" type="button" onclick="closeAdminEditor()">×</button></div>
+    <div class="modal-head"><h2 id="editorTitle">تعديل الصنف</h2><button class="modal-close" type="button" aria-label="إغلاق" onclick="closeAdminEditor()">×</button></div>
     <div id="editorBody"></div>
     <div id="editorMsg" class="msg"></div>
   </div>
 </div>
 
 <!-- Supabase Library -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.112.4"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"
+  integrity="sha384-0UK+HVlz5Y7F//atDpPysyocv/PjGXQoBX+XSaL/eEotARW8rPFh+lL5sO0Ljzfi"
+  crossorigin="anonymous"></script>
 
 <!-- One per-restaurant public configuration; never contains service_role. -->
 <script id="restbrUrlSafetyScript" src="js/url-safety.js?v=1.3"></script>
-<script src="js/runtime-config.js?v=1.4"></script>
-<script src="js/supabase-config.js?v=2.3"></script>
+<script src="js/runtime-config.js?v=1.5"></script>
+<script src="js/supabase-config.js?v=2.4"></script>
 
 <!-- Touch-friendly Drag & Drop -->
-<script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.6/Sortable.min.js"></script>
+<script
+  src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.7/Sortable.min.js"
+  integrity="sha384-DgmC6Xe2bSN2WjTDXzWYbUbxyhNP+NNkGDR/g78pCXV7E7rcVTGxVg0uIVCUUcBc"
+  crossorigin="anonymous"></script>
 
 <!-- Excel Import / Export -->
-<script src="https://cdn.jsdelivr.net/npm/xlsx@0.18.5/dist/xlsx.full.min.js"></script>
+<script
+  src="https://cdn.sheetjs.com/xlsx-0.20.3/package/dist/xlsx.full.min.js"
+  integrity="sha384-EnyY0/GSHQGSxSgMwaIPzSESbqoOLSexfnSMN2AP+39Ckmn92stwABZynq1JyzdT"
+  crossorigin="anonymous"></script>
 
 
 <script>
@@ -5467,8 +5476,9 @@
     return `<div class="field ${full?'full':''}"><label for="${id}">${label}</label><input id="${id}" type="${type}" value="${escapeAdminHtml(value)}"></div>`;
   }
   function textAreaHtml(label,id,value='') { return `<div class="field full"><label for="${id}">${label}</label><textarea id="${id}">${escapeAdminHtml(value)}</textarea></div>`; }
-  function closeAdminEditor(){ const m=document.getElementById('editorModal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; }
-  function openAdminEditor(title, html){ document.getElementById('editorTitle').textContent=title; document.getElementById('editorBody').innerHTML=html; const msg=document.getElementById('editorMsg'); msg.className='msg'; msg.textContent=''; const m=document.getElementById('editorModal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; }
+  let adminEditorReturnFocus=null;
+  function closeAdminEditor(){ const m=document.getElementById('editorModal'); m.classList.remove('open'); m.setAttribute('aria-hidden','true'); document.body.style.overflow=''; const target=adminEditorReturnFocus; adminEditorReturnFocus=null; setTimeout(()=>target?.focus?.(),0); }
+  function openAdminEditor(title, html){ adminEditorReturnFocus=document.activeElement; document.getElementById('editorTitle').textContent=title; document.getElementById('editorBody').innerHTML=html; const msg=document.getElementById('editorMsg'); msg.className='msg'; msg.textContent=''; const m=document.getElementById('editorModal'); m.classList.add('open'); m.setAttribute('aria-hidden','false'); document.body.style.overflow='hidden'; setTimeout(()=>m.querySelector('.modal-close')?.focus(),0); }
   function showEditorMsg(text, ok=false){ const m=document.getElementById('editorMsg'); m.textContent=text; m.className='msg '+(ok?'ok':'err'); }
   function val(id){ return document.getElementById(id)?.value ?? ''; }
   function checked(id){ return !!document.getElementById(id)?.checked; }
@@ -6974,7 +6984,7 @@
   function downloadSelectedBackupType(){const t=document.getElementById('backupTypeSelect')?.value||'full';try{if(t==='full')return backupFullMenu();if(t==='settings')return backupSettingsOnly();if(t==='categories')return backupAllCategories();if(t==='products')return backupAllProducts();if(t==='prices')return backupPricesOnly();if(t==='category'){const id=val('backupCategorySelect');if(!id){setBackupStatus('اختر قسماً أولاً.',false);return}return backupOneCategory(id)}}catch(e){setBackupStatus('فشل إنشاء النسخة: '+(e.message||e),false)}}
   async function upsertInChunks(table,rows){if(!Array.isArray(rows)||!rows.length)return;for(let i=0;i<rows.length;i+=100){const r=await supabaseClient.from(table).upsert(rows.slice(i,i+100),{onConflict:'id'});if(r.error)throw r.error}}
   async function restorePrices(pp,po){pp=Array.isArray(pp)?pp:[];po=Array.isArray(po)?po:[];for(let i=0;i<pp.length;i+=40)await Promise.all(pp.slice(i,i+40).map(async x=>{if(!x?.id)return;const r=await supabaseClient.from('products').update({base_price:x.base_price}).eq('id',x.id);if(r.error)throw r.error}));for(let i=0;i<po.length;i+=60)await Promise.all(po.slice(i,i+60).map(async x=>{if(!x?.id)return;const r=await supabaseClient.from('product_options').update({price:x.price}).eq('id',x.id);if(r.error)throw r.error}));return{price_products:pp.length,price_options:po.length}}
-  async function restoreBackupObject(payload){if(!payload||!['RESTBR_MENU_BACKUP','SHORASH_MENU_BACKUP'].includes(payload.format))throw new Error('هذا الملف ليس Backup مدعوم.');const d=payload.data||{},categories=Array.isArray(d.categories)?d.categories:[],products=Array.isArray(d.products)?d.products:[],options=Array.isArray(d.product_options)?d.product_options:[],settings=Array.isArray(d.restaurant_settings)?d.restaurant_settings:[],pp=Array.isArray(d.price_products)?d.price_products:[],po=Array.isArray(d.price_options)?d.price_options:[];if(!categories.length&&!products.length&&!options.length&&!settings.length&&!pp.length&&!po.length)throw new Error('النسخة لا تحتوي بيانات قابلة للاسترجاع.');await upsertInChunks('restaurant_settings',settings);await upsertInChunks('categories',categories);await upsertInChunks('products',products);await upsertInChunks('product_options',options);const pr=await restorePrices(pp,po);await loadAdminDashboard();return{categories:categories.length,products:products.length,options:options.length,settings:settings.length,price_products:pr.price_products,price_options:pr.price_options}}
+  async function restoreBackupObject(payload){const supported=payload&&(typeof window.RESTBR_IS_SUPPORTED_BACKUP_FORMAT==='function'?window.RESTBR_IS_SUPPORTED_BACKUP_FORMAT(payload.format):payload.format==='RESTBR_MENU_BACKUP');if(!supported)throw new Error('هذا الملف ليس Backup مدعوم.');const d=payload.data||{},categories=Array.isArray(d.categories)?d.categories:[],products=Array.isArray(d.products)?d.products:[],options=Array.isArray(d.product_options)?d.product_options:[],settings=Array.isArray(d.restaurant_settings)?d.restaurant_settings:[],pp=Array.isArray(d.price_products)?d.price_products:[],po=Array.isArray(d.price_options)?d.price_options:[];if(!categories.length&&!products.length&&!options.length&&!settings.length&&!pp.length&&!po.length)throw new Error('النسخة لا تحتوي بيانات قابلة للاسترجاع.');await upsertInChunks('restaurant_settings',settings);await upsertInChunks('categories',categories);await upsertInChunks('products',products);await upsertInChunks('product_options',options);const pr=await restorePrices(pp,po);await loadAdminDashboard();return{categories:categories.length,products:products.length,options:options.length,settings:settings.length,price_products:pr.price_products,price_options:pr.price_options}}
   async function handleRestoreFile(file){if(!file)return;if(!confirm('سيتم استرجاع البيانات الموجودة داخل النسخة الاحتياطية.\n\nالسجلات المتطابقة سيتم تحديثها ولن نحذف بيانات أخرى غير موجودة في النسخة.\n\nهل تريد المتابعة؟'))return;setBackupStatus('جاري قراءة واسترجاع النسخة...');try{const p=JSON.parse(await file.text()),r=await restoreBackupObject(p),parts=[];if(r.settings)parts.push(`إعدادات: ${r.settings}`);if(r.categories)parts.push(`أقسام: ${r.categories}`);if(r.products)parts.push(`أصناف: ${r.products}`);if(r.options)parts.push(`خيارات: ${r.options}`);if(r.price_products||r.price_options)parts.push(`أسعار: ${r.price_products+r.price_options}`);setBackupStatus('تم الاسترجاع بنجاح ✓'+(parts.length?' — '+parts.join('، '):''));alert('تم استرجاع النسخة الاحتياطية بنجاح ✓')}catch(e){console.error(e);setBackupStatus('فشل الاسترجاع: '+(e.message||e),false);alert('فشل الاسترجاع: '+(e.message||e))}finally{const input=document.getElementById('restoreBackupInput');if(input)input.value=''}}
 
 
@@ -7305,6 +7315,7 @@
   });
 
   document.getElementById('editorModal').addEventListener('click',e=>{if(e.target.id==='editorModal')closeAdminEditor();});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&document.getElementById('editorModal')?.classList.contains('open'))closeAdminEditor();});
 
 
   document.getElementById('adminLoginForm').addEventListener('submit',e=>{

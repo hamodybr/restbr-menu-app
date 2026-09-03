@@ -72,7 +72,7 @@
   if (window.RESTBR_CONFIG?.enableRestaurantReset === true && !document.getElementById('restbrRestaurantResetBackupScript')) {
     const script = document.createElement('script');
     script.id = 'restbrRestaurantResetBackupScript';
-    script.src = 'js/admin-restaurant-reset-backup.js?v=1.0';
+    script.src = 'js/admin-restaurant-reset-backup.js?v=1.1';
     script.async = false;
     document.head.appendChild(script);
   }

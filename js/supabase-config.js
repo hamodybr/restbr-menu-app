@@ -125,7 +125,7 @@ if (RESTBR_CONFIGURED) {
 
   const script = document.createElement('script');
   script.id = 'restbrAdminFontScaleScript';
-  script.src = 'js/admin-font-scale.js?v=1.2';
+  script.src = 'js/admin-font-scale.js?v=1.3';
   script.async = false;
   document.head.appendChild(script);
 })();
@@ -209,7 +209,7 @@ if (RESTBR_CONFIGURED) {
 
   const script = document.createElement('script');
   script.id = 'restbrAdminFullRestoreDiscountsScript';
-  script.src = 'js/admin-full-restore-discounts.js?v=1.0';
+  script.src = 'js/admin-full-restore-discounts.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();

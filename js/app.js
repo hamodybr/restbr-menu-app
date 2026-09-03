@@ -14,7 +14,11 @@ const I18N = {
     searchResults: "نتائج البحث",
     noResults: "ما لقينا صنف مطابق",
     share: "مشاركة",
-    copied: "تم نسخ الرابط"
+    copied: "تم نسخ الرابط",
+    languageLabel: "اختيار اللغة",
+    refreshPage: "تحديث الصفحة",
+    closeSearch: "إغلاق البحث",
+    backToTop: "الرجوع إلى الأعلى"
   },
 
   ku: {
@@ -32,7 +36,11 @@ const I18N = {
     searchResults: "ئەنجامی گەڕان",
     noResults: "هیچ بەرهەمێک نەدۆزرایەوە",
     share: "هاوبەشکردن",
-    copied: "لینک کۆپی کرا"
+    copied: "لینک کۆپی کرا",
+    languageLabel: "هەڵبژاردنی زمان",
+    refreshPage: "نوێکردنەوەی پەڕە",
+    closeSearch: "داخستنی لێگەڕان",
+    backToTop: "گەڕانەوە بۆ سەرەوە"
   },
 
   en: {
@@ -50,7 +58,11 @@ const I18N = {
     searchResults: "Search results",
     noResults: "No matching items",
     share: "Share",
-    copied: "Link copied"
+    copied: "Link copied",
+    languageLabel: "Choose language",
+    refreshPage: "Refresh page",
+    closeSearch: "Close search",
+    backToTop: "Back to top"
   }
 };
 
@@ -814,10 +826,19 @@ function updateSearchUiLanguage(){
 
   const refresh=document.getElementById("smRefreshBtn");
   if(refresh){
-    const label=lang==="en" ? "Refresh page" : lang==="ku" ? "نوێکردنەوەی پەڕە" : "تحديث الصفحة";
+    const label=I18N[lang].refreshPage;
     refresh.setAttribute("aria-label",label);
     refresh.setAttribute("title",label);
   }
+
+  const clear=document.getElementById("smSearchClear");
+  if(clear)clear.setAttribute("aria-label",I18N[lang].closeSearch);
+
+  const language=document.getElementById("smLangToggle");
+  if(language)language.setAttribute("aria-label",I18N[lang].languageLabel);
+
+  const top=document.getElementById("smTopBtn");
+  if(top)top.setAttribute("aria-label",I18N[lang].backToTop);
 }
 
 
@@ -1798,19 +1819,16 @@ function formatRestaurantTemplate(value,targetLang=lang) {
     );
 
 
-  // Backward compatibility with old saved legacy restaurant text.
-  const oldBrandPatterns =
-    targetLang === "en"
-      ? [/SHORASH/gi,/Shorash/g]
-      : [/شوراش/g,/شورش/g,/SHORASH/gi];
+  // Backward compatibility belongs to each restaurant's configuration so the
+  // shared core never carries the identity of a specific restaurant.
+  safeArray(window.RESTBR_CONFIG?.legacyRestaurantNames).forEach(value => {
+    const alias = String(value || "").trim().slice(0,80);
+    if (!alias) return;
 
+    const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const flags = /[A-Za-z]/.test(alias) ? "gi" : "g";
 
-  oldBrandPatterns.forEach(pattern => {
-    text =
-      text.replace(
-        pattern,
-        currentName
-      );
+    text = text.replace(new RegExp(escaped,flags),currentName);
   });
 
 

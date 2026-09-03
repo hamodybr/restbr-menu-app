@@ -7,6 +7,7 @@
   const GATE_KEY = 'RESTBR_RESET_BACKUP_GATE_V1';
   const GATE_TTL_MS = 15 * 60 * 1000;
   const JSZIP_URL = 'https://cdn.jsdelivr.net/npm/jszip@3.10.1/dist/jszip.min.js';
+  const JSZIP_INTEGRITY = 'sha384-+mbV2IY1Zk/X1p/nWllGySJSUN8uMs+gUAN10Or95UBH0fpj6GfKgPmgC5EXieXG';
   const PAGE_SIZE = 1000;
   const STORAGE_PAGE_SIZE = 100;
   const DOWNLOAD_CONCURRENCY = 4;
@@ -174,6 +175,8 @@
       const script = document.createElement('script');
       script.id = 'restbrResetJsZip';
       script.src = JSZIP_URL;
+      script.integrity = JSZIP_INTEGRITY;
+      script.crossOrigin = 'anonymous';
       script.async = true;
       script.onload = resolve;
       script.onerror = () => reject(new Error('فشل تحميل أداة ZIP. تحقق من اتصال الإنترنت ثم أعد المحاولة.'));

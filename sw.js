@@ -1,4 +1,5 @@
-const CACHE_NAME = "restbr-restaurant-template-v8";
+const CACHE_NAME = "restbr-restaurant-template-v9";
+const SUPABASE_BROWSER_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0";
 
 const CORE = [
   "./",
@@ -11,15 +12,15 @@ const CORE = [
   "./css/mobile-card-image-fix.css?v=1.1",
   "./js/offline-status.js?v=1.1",
   "./js/unavailable-card-state.js?v=1.1",
-  "./js/app.js?v=18.0",
+  "./js/app.js?v=18.1",
   "./js/product-image-fallback.js?v=1.3",
   "./js/price-safety.js?v=1.0",
-  "./js/cart.js?v=4.4",
+  "./js/cart.js?v=4.5",
   "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.5",
-  "./js/runtime-config.js?v=1.4",
+  "./js/runtime-config.js?v=1.5",
   "./js/url-safety.js?v=1.3",
-  "./js/supabase-config.js?v=2.3",
+  "./js/supabase-config.js?v=2.4",
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
   "./js/discount-choice-price-sync.js?v=1.0",
@@ -31,7 +32,8 @@ const CORE = [
   "./js/dining-mode.js?v=1.4",
   "./js/dining-gate-language.js?v=1.0",
   "./data/menu.json?v=32",
-  "./assets/restaurant-placeholder.svg"
+  "./assets/restaurant-placeholder.svg",
+  SUPABASE_BROWSER_URL
 ];
 
 async function cacheOne(cache, path) {
@@ -96,12 +98,32 @@ async function networkFirst(request, { noStore = false } = {}) {
   }
 }
 
+async function cacheFirst(request) {
+  const cached = await caches.match(request);
+  if (cached) return cached;
+
+  const response = await fetch(request);
+  if (response && response.ok) {
+    const cache = await caches.open(CACHE_NAME);
+    cache.put(request, response.clone()).catch(() => {});
+  }
+  return response;
+}
+
 self.addEventListener("fetch", event => {
   const request = event.request;
 
   if (request.method !== "GET") return;
 
   const url = new URL(request.url);
+
+  // The public menu needs this pinned browser client to start from its offline
+  // shell. Cache the exact immutable version and leave every other CDN request
+  // untouched.
+  if (url.href === SUPABASE_BROWSER_URL) {
+    event.respondWith(cacheFirst(request));
+    return;
+  }
 
   if (url.origin !== self.location.origin) return;
 
@@ -145,7 +167,7 @@ self.addEventListener("fetch", event => {
     return;
   }
 
-  const isMedia = /\.(?:png|jpg|jpeg|webp|gif|svg|ico|mp4)$/i.test(url.pathname);
+  const isMedia = /\.(?:png|jpg|jpeg|webp|avif|gif|svg|ico|mp4)$/i.test(url.pathname);
   if (!isMedia) return;
 
   const networkUpdate = fetch(request)

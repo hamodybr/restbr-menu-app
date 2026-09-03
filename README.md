@@ -18,7 +18,7 @@ system, or browser-side service key.
 
 Follow [SETUP.md](SETUP.md). The files changed for each customer are:
 
-- `js/runtime-config.js` — restaurant name, Supabase URL, and publishable key
+- `js/runtime-config.js` — restaurant name, order prefix, Supabase URL, publishable key, and optional legacy aliases
 - Supabase `restaurant_settings` — logo, phone, WhatsApp, location, colors, and text
 - optional PWA icons in `manifest.webmanifest`
 

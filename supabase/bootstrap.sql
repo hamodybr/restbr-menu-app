@@ -459,6 +459,7 @@ create or replace function public.can_manage_orders()
 returns boolean language sql stable security invoker set search_path = ''
 as $$ select private.can_manage_orders(); $$;
 
+-- Deprecated compatibility alias for older deployed restaurant dashboards.
 create or replace function public.is_shorash_admin()
 returns boolean language sql stable security invoker set search_path = ''
 as $$ select private.can_access_admin(); $$;

@@ -2,9 +2,9 @@
   const KEY="RESTBR_CART_V1";
   let cart=[];
   const T={
-    ar:{cart:"السلة",empty:"السلة فارغة",total:"الإجمالي",continue:"متابعة الطلب",added:"تمت الإضافة للسلة",choose:"اختر النوع",add:"إضافة للسلة",close:"إغلاق",clear:"إفراغ السلة",clearConfirm:"هل تريد إفراغ السلة بالكامل؟",checkout:"إكمال الطلب",name:"الاسم",phone:"رقم الهاتف",orderType:"نوع الطلب",delivery:"توصيل",pickup:"استلام من المطعم",address:"العنوان",location:"الموقع",getLocation:"تحديد موقعي",notes:"ملاحظات الطلب (اختياري)",review:"مراجعة الطلب",send:"إرسال الطلب عبر WhatsApp",required:"يرجى إكمال الحقول المطلوبة",locationOk:"تم تحديد الموقع",locationFail:"تعذر تحديد الموقع",back:"رجوع"},
-    ku:{cart:"سەبەتە",empty:"سەبەتە بەتاڵە",total:"کۆی گشتی",continue:"بەردەوام بە",added:"زیاد کرا",choose:"جۆر هەڵبژێرە",add:"زیادکردن بۆ سەبەتە",close:"داخستن",clear:"بەتاڵکردنەوەی سەبەتە",clearConfirm:"دڵنیایت لە بەتاڵکردنەوەی تەواوی سەبەتە؟",checkout:"تەواوکردنی داواکاری",name:"ناو",phone:"ژمارەی مۆبایل",orderType:"جۆری داواکاری",delivery:"گەیاندن",pickup:"وەرگرتن لە چێشتخانە",address:"ناونیشان",location:"شوێن",getLocation:"شوێنم دیاری بکە",notes:"تێبینی (ئارەزوومەندانە)",review:"پێداچوونەوە",send:"ناردنی داواکاری بە WhatsApp",required:"تکایە خانە پێویستەکان پڕ بکەرەوە",locationOk:"شوێن دیاری کرا",locationFail:"نەتوانرا شوێن دیاری بکرێت",back:"گەڕانەوە"},
-    en:{cart:"Cart",empty:"Your cart is empty",total:"Total",continue:"Continue order",added:"Added to cart",choose:"Choose an option",add:"Add to cart",close:"Close",clear:"Clear cart",clearConfirm:"Clear the entire cart?",checkout:"Checkout",name:"Name",phone:"Phone number",orderType:"Order type",delivery:"Delivery",pickup:"Pickup",address:"Address",location:"Location",getLocation:"Use my location",notes:"Order notes (optional)",review:"Review order",send:"Send order via WhatsApp",required:"Please complete the required fields",locationOk:"Location captured",locationFail:"Could not get location",back:"Back"}
+    ar:{cart:"السلة",empty:"السلة فارغة",total:"الإجمالي",continue:"متابعة الطلب",added:"تمت الإضافة للسلة",choose:"اختر النوع",add:"إضافة للسلة",close:"إغلاق",clear:"إفراغ السلة",clearConfirm:"هل تريد إفراغ السلة بالكامل؟",checkout:"إكمال الطلب",name:"الاسم",phone:"رقم الهاتف",orderType:"نوع الطلب",delivery:"توصيل",pickup:"استلام من المطعم",address:"العنوان",location:"الموقع",getLocation:"تحديد موقعي",notes:"ملاحظات الطلب (اختياري)",review:"مراجعة الطلب",send:"إرسال الطلب عبر WhatsApp",required:"يرجى إكمال الحقول المطلوبة",phoneInvalid:"يرجى إدخال رقم هاتف صحيح",locationOk:"تم تحديد الموقع",locationFail:"تعذر تحديد الموقع",back:"رجوع",increase:"زيادة الكمية",decrease:"تقليل الكمية",remove:"إزالة الصنف"},
+    ku:{cart:"سەبەتە",empty:"سەبەتە بەتاڵە",total:"کۆی گشتی",continue:"بەردەوام بە",added:"زیاد کرا",choose:"جۆر هەڵبژێرە",add:"زیادکردن بۆ سەبەتە",close:"داخستن",clear:"بەتاڵکردنەوەی سەبەتە",clearConfirm:"دڵنیایت لە بەتاڵکردنەوەی تەواوی سەبەتە؟",checkout:"تەواوکردنی داواکاری",name:"ناو",phone:"ژمارەی مۆبایل",orderType:"جۆری داواکاری",delivery:"گەیاندن",pickup:"وەرگرتن لە چێشتخانە",address:"ناونیشان",location:"شوێن",getLocation:"شوێنم دیاری بکە",notes:"تێبینی (ئارەزوومەندانە)",review:"پێداچوونەوە",send:"ناردنی داواکاری بە WhatsApp",required:"تکایە خانە پێویستەکان پڕ بکەرەوە",phoneInvalid:"ژمارەی مۆبایل دروست نییە",locationOk:"شوێن دیاری کرا",locationFail:"نەتوانرا شوێن دیاری بکرێت",back:"گەڕانەوە",increase:"زیادکردنی ژمارە",decrease:"کەمکردنەوەی ژمارە",remove:"لابردنی بەرهەم"},
+    en:{cart:"Cart",empty:"Your cart is empty",total:"Total",continue:"Continue order",added:"Added to cart",choose:"Choose an option",add:"Add to cart",close:"Close",clear:"Clear cart",clearConfirm:"Clear the entire cart?",checkout:"Checkout",name:"Name",phone:"Phone number",orderType:"Order type",delivery:"Delivery",pickup:"Pickup",address:"Address",location:"Location",getLocation:"Use my location",notes:"Order notes (optional)",review:"Review order",send:"Send order via WhatsApp",required:"Please complete the required fields",phoneInvalid:"Please enter a valid phone number",locationOk:"Location captured",locationFail:"Could not get location",back:"Back",increase:"Increase quantity",decrease:"Decrease quantity",remove:"Remove item"}
   };
   const lang=()=>window.RESTBR_LANG?window.RESTBR_LANG():(localStorage.getItem("RESTBR_LANG_V1")||"ar");
   const tr=k=>(T[lang()]||T.ar)[k]||T.ar[k];
@@ -12,6 +12,8 @@
   const esc=value=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
   const safeMedia=(value,fallback="assets/restaurant-placeholder.svg")=>{const fn=window.RESTBR_SAFE_MEDIA_URL;const safe=typeof fn==="function"?fn(value):"";if(safe)return safe;return typeof fn==="function"?(fn(fallback)||""):fallback};
   const money=n=>Number(n||0).toLocaleString("en-US")+" "+(lang()==="en"?"IQD":"د.ع");
+  const normalizeDigits=value=>String(value??"").replace(/[٠-٩]/g,d=>String(d.charCodeAt(0)-1632)).replace(/[۰-۹]/g,d=>String(d.charCodeAt(0)-1776));
+  const orderIdPrefix=()=>String(window.RESTBR_CONFIG?.orderIdPrefix||"ORD").toUpperCase().replace(/[^A-Z0-9]/g,"").slice(0,8)||"ORD";
   const restaurant=()=>window.RESTBR_DB?.restaurant||{};
   const deliveryAllowed=()=>restaurant().deliveryEnabled!==false;
   const pickupAllowed=()=>restaurant().pickupEnabled!==false;
@@ -187,22 +189,22 @@
           -webkit-backdrop-filter:blur(14px);
         "
       ></div>
-      <button id="smCartFab" class="sm-cart-fab" type="button"><span>🛒</span><span id="smCartFabText"></span></button>
+      <button id="smCartFab" class="sm-cart-fab" type="button"><span aria-hidden="true">🛒</span><span id="smCartFabText"></span></button>
       <div id="smCartBackdrop" class="sm-cart-backdrop"></div>
-      <aside id="smCartDrawer" class="sm-cart-drawer" aria-hidden="true">
+      <aside id="smCartDrawer" class="sm-cart-drawer" role="dialog" aria-modal="true" aria-labelledby="smCartTitle" aria-hidden="true">
         <div class="sm-cart-handle"></div>
         <div class="sm-cart-head"><button id="smCartClose" class="sm-cart-close" type="button">×</button><h3 id="smCartTitle"></h3><button id="smCartClear" class="sm-cart-clear" type="button"></button></div>
         <div id="smCartItems" class="sm-cart-items"></div>
         <div class="sm-cart-bottom"><div class="sm-cart-total-row"><span id="smCartTotalLabel"></span><b id="smCartTotal"></b></div><button id="smCartContinue" class="sm-cart-continue" type="button"></button></div>
       </aside>
-      <div id="smCartToast" class="sm-cart-toast"></div>
+      <div id="smCartToast" class="sm-cart-toast" role="status" aria-live="polite"></div>
       <div id="smCheckoutBackdrop" class="sm-checkout-backdrop"></div>
-      <section id="smCheckoutSheet" class="sm-checkout-sheet" aria-hidden="true">
+      <section id="smCheckoutSheet" class="sm-checkout-sheet" role="dialog" aria-modal="true" aria-labelledby="smCheckoutTitle" aria-hidden="true">
         <div class="sm-checkout-handle"></div>
         <div class="sm-checkout-head"><button id="smCheckoutClose" type="button">×</button><h3 id="smCheckoutTitle"></h3></div>
         <div class="sm-checkout-body">
-          <label><span id="smNameLabel"></span><input id="smCustomerName" autocomplete="name"></label>
-          <label><span id="smPhoneLabel"></span><input id="smCustomerPhone" type="tel" inputmode="tel" autocomplete="tel"></label>
+          <label><span id="smNameLabel"></span><input id="smCustomerName" autocomplete="name" maxlength="80" required></label>
+          <label><span id="smPhoneLabel"></span><input id="smCustomerPhone" type="tel" inputmode="tel" autocomplete="tel" maxlength="20" required></label>
           <div class="sm-checkout-label" id="smTypeLabel"></div>
           <div class="sm-order-types"><button type="button" data-order-type="delivery" class="active" id="smDeliveryBtn"></button><button type="button" data-order-type="pickup" id="smPickupBtn"></button></div>
           <div id="smDeliveryFields">
@@ -220,18 +222,18 @@
                 line-height:1.65;
               "
             ></div>
-            <label><span id="smAddressLabel"></span><input id="smCustomerAddress" autocomplete="street-address"></label>
+            <label><span id="smAddressLabel"></span><input id="smCustomerAddress" autocomplete="street-address" maxlength="300" required></label>
             <button id="smGetLocation" class="sm-location-btn" type="button">📍 <span></span></button>
             <div id="smLocationStatus" class="sm-location-status"></div>
           </div>
-          <label><span id="smNotesLabel"></span><textarea id="smCustomerNotes" rows="3"></textarea></label>
+          <label><span id="smNotesLabel"></span><textarea id="smCustomerNotes" rows="3" maxlength="500"></textarea></label>
           <div class="sm-checkout-review"><h4 id="smReviewLabel"></h4><div id="smCheckoutSummary"></div><div class="sm-checkout-review-total"><span id="smCheckoutTotalLabel"></span><b id="smCheckoutTotal"></b></div></div>
         </div>
         <div class="sm-checkout-actions"><button id="smSendWhatsApp" type="button"></button></div>
       </section>
       <div id="smChoiceBackdrop" class="sm-choice-backdrop"></div>
-      <div id="smChoiceSheet" class="sm-choice-sheet" aria-hidden="true"><div class="sm-choice-handle"></div><div class="sm-choice-head"><button id="smChoiceClose" type="button">×</button><div><small id="smChoiceLabel"></small><h3 id="smChoiceTitle"></h3></div></div><div id="smChoiceList" class="sm-choice-list"></div></div>
-      <div id="smImageViewer" class="sm-image-viewer" aria-hidden="true"><button id="smImageClose" type="button">×</button><img id="smImageFull" alt=""><div id="smImageCaption"></div></div>`);
+      <div id="smChoiceSheet" class="sm-choice-sheet" role="dialog" aria-modal="true" aria-labelledby="smChoiceTitle" aria-hidden="true"><div class="sm-choice-handle"></div><div class="sm-choice-head"><button id="smChoiceClose" type="button">×</button><div><small id="smChoiceLabel"></small><h3 id="smChoiceTitle"></h3></div></div><div id="smChoiceList" class="sm-choice-list"></div></div>
+      <div id="smImageViewer" class="sm-image-viewer" role="dialog" aria-modal="true" aria-labelledby="smImageCaption" aria-hidden="true"><button id="smImageClose" type="button">×</button><img id="smImageFull" alt=""><div id="smImageCaption"></div></div>`);
     document.getElementById("smCartFab").onclick=()=>open(true);
     document.getElementById("smCartClose").onclick=()=>open(false);
     document.getElementById("smCartBackdrop").onclick=()=>open(false);
@@ -248,9 +250,10 @@
     document.getElementById("smImageViewer").addEventListener("click",e=>{if(e.target.id==="smImageViewer")closeImage()});
   }
   function lock(){document.body.classList.toggle("sm-cart-lock",!!document.querySelector('.sm-cart-drawer.open,.sm-choice-sheet.open,.sm-image-viewer.open,.sm-checkout-sheet.open'))}
-  function open(v){ensureUI();if(v)syncLivePrices();document.getElementById("smCartDrawer").classList.toggle("open",v);document.getElementById("smCartBackdrop").classList.toggle("open",v);document.getElementById("smCartDrawer").setAttribute("aria-hidden",String(!v));lock()}
+  function focusSoon(id){setTimeout(()=>{const el=document.getElementById(id);if(!el)return;try{el.focus({preventScroll:true})}catch(_){el.focus()}},0)}
+  function open(v){ensureUI();if(v)syncLivePrices();document.getElementById("smCartDrawer").classList.toggle("open",v);document.getElementById("smCartBackdrop").classList.toggle("open",v);document.getElementById("smCartDrawer").setAttribute("aria-hidden",String(!v));lock();focusSoon(v?"smCartClose":"smCartFab")}
   let orderType="delivery", customerLocation="";
-  function checkoutOpen(v){ensureUI();if(v)syncLivePrices();const sh=document.getElementById("smCheckoutSheet"),bd=document.getElementById("smCheckoutBackdrop");sh.classList.toggle("open",v);bd.classList.toggle("open",v);sh.setAttribute("aria-hidden",String(!v));if(v)renderCheckout();lock()}
+  function checkoutOpen(v){ensureUI();if(v)syncLivePrices();const sh=document.getElementById("smCheckoutSheet"),bd=document.getElementById("smCheckoutBackdrop");sh.classList.toggle("open",v);bd.classList.toggle("open",v);sh.setAttribute("aria-hidden",String(!v));if(v)renderCheckout();lock();focusSoon(v?"smCheckoutClose":"smCartFab")}
   function setOrderType(type){
     const delivery=deliveryAllowed();
     const pickup=pickupAllowed();
@@ -361,10 +364,10 @@
       return;
     }
 
-    const name=document.getElementById("smCustomerName").value.trim();
-    let phone=document.getElementById("smCustomerPhone").value.trim();
-    const address=document.getElementById("smCustomerAddress").value.trim();
-    const notes=document.getElementById("smCustomerNotes").value.trim();
+    const name=document.getElementById("smCustomerName").value.trim().slice(0,80);
+    let phone=normalizeDigits(document.getElementById("smCustomerPhone").value).trim().slice(0,20);
+    const address=document.getElementById("smCustomerAddress").value.trim().slice(0,300);
+    const notes=document.getElementById("smCustomerNotes").value.trim().slice(0,500);
 
     if(!name||!phone||(orderType==="delivery"&&!address)){
       toast(tr("required"));
@@ -373,13 +376,19 @@
 
     phone=phone.replace(/\s+/g,"");
 
+    const phoneDigits=phone.replace(/\D/g,"");
+    if(!/^[+\d().-]+$/.test(phone)||phoneDigits.length<7||phoneDigits.length>15){
+      toast(tr("phoneInvalid"));
+      return;
+    }
+
     if(/^7\d{9}$/.test(phone)) phone="0"+phone;
     if(/^9647\d{9}$/.test(phone)) phone="+"+phone;
 
     const {sum}=totals();
 
     const id=
-      "SH-"+
+      orderIdPrefix()+"-"+
       new Date().toISOString().slice(2,10).replaceAll("-","")+
       "-"+
       String(Date.now()).slice(-5);
@@ -457,18 +466,37 @@
 
     window.location.href=url;
   }
-  function choiceOpen(v){ensureUI();document.getElementById("smChoiceSheet").classList.toggle("open",v);document.getElementById("smChoiceBackdrop").classList.toggle("open",v);document.getElementById("smChoiceSheet").setAttribute("aria-hidden",String(!v));lock()}
+  function choiceOpen(v){ensureUI();document.getElementById("smChoiceSheet").classList.toggle("open",v);document.getElementById("smChoiceBackdrop").classList.toggle("open",v);document.getElementById("smChoiceSheet").setAttribute("aria-hidden",String(!v));lock();if(v)focusSoon("smChoiceClose")}
 
   function addItem(p,oi){if(!ordersAllowed()){toast(closedMessage());syncOrderState();return}const o=(p.options||[])[oi];if(!o)return;const key=`${p.id}:${oi}`,found=cart.find(x=>x.key===key);if(found){found.qty++;found.price=Number(o.price||0);if(o.id!==undefined&&o.id!==null)found.optionId=o.id}else cart.push({key,productId:p.id,optionId:o.id??null,optionIndex:oi,name:localized(p.name),option:localized({ar:o.ar,ku:o.ku,en:o.en}),price:Number(o.price||0),image:safeMedia(p.image),qty:1});window.RESTBR_TRACK?.("product_interest",p.id);save();toast(tr("added"))}
   function addFromButton(btn){const D=window.RESTBR_DB;if(!D)return;const p=D.products.find(x=>String(x.id)===String(btn.dataset.productId));if(!p)return;addItem(p,Number(btn.dataset.optionIndex))}
   function showChoices(productId){if(!ordersAllowed()){toast(closedMessage());syncOrderState();return}const D=window.RESTBR_DB;if(!D)return;const p=D.products.find(x=>String(x.id)===String(productId));if(!p)return;ensureUI();document.getElementById("smChoiceLabel").textContent=tr("choose");document.getElementById("smChoiceTitle").textContent=txt(p.name);document.getElementById("smChoiceList").innerHTML=(p.options||[]).map((o,i)=>`<button class="sm-choice-option" type="button" data-choice-product="${esc(p.id)}" data-choice-index="${i}"><span>${esc(txt(o))}</span><b>${money(o.price)}</b><i>+</i></button>`).join("");choiceOpen(true)}
-  function showImage(img){ensureUI();const v=document.getElementById("smImageViewer"),full=document.getElementById("smImageFull"),source=safeMedia(img.dataset.fullImage||img.src,"");if(source)full.src=source;else full.removeAttribute("src");full.alt=img.alt||"";document.getElementById("smImageCaption").textContent=img.dataset.productName||img.alt||"";v.classList.add("open");v.setAttribute("aria-hidden","false");lock()}
+  function showImage(img){ensureUI();const v=document.getElementById("smImageViewer"),full=document.getElementById("smImageFull"),source=safeMedia(img.dataset.fullImage||img.src,"");if(source)full.src=source;else full.removeAttribute("src");full.alt=img.alt||"";document.getElementById("smImageCaption").textContent=img.dataset.productName||img.alt||"";v.classList.add("open");v.setAttribute("aria-hidden","false");lock();focusSoon("smImageClose")}
   function closeImage(){const v=document.getElementById("smImageViewer");if(!v)return;v.classList.remove("open");v.setAttribute("aria-hidden","true");lock()}
   function change(key,d){const x=cart.find(i=>i.key===key);if(!x)return;x.qty+=d;if(x.qty<=0)cart=cart.filter(i=>i.key!==key);save()}
   function remove(key){cart=cart.filter(i=>i.key!==key);save()}
-  function render(){ensureUI();const {qty,sum}=totals();document.getElementById("smCartFabText").textContent=qty?`${qty} • ${money(sum)}`:tr("cart");document.getElementById("smCartFab").classList.toggle("has-items",qty>0);document.getElementById("smCartTitle").textContent=tr("cart");document.getElementById("smCartTotalLabel").textContent=tr("total");document.getElementById("smCartTotal").textContent=money(sum);document.getElementById("smCartContinue").textContent=tr("continue");const clearBtn=document.getElementById("smCartClear");clearBtn.textContent=tr("clear");clearBtn.disabled=!cart.length;const box=document.getElementById("smCartItems");if(!cart.length){box.innerHTML=`<div class="sm-cart-empty"><div>🛒</div><span>${tr("empty")}</span></div>`;return}box.innerHTML=cart.map(x=>`<div class="sm-cart-item"><img src="${esc(safeMedia(x.image))}" alt=""><div class="sm-cart-item-info"><strong>${esc(txt(x.name))}</strong><small>${esc(txt(x.option))}</small><b>${money(x.price)}</b></div><div class="sm-cart-qty"><button data-cart-plus="${esc(x.key)}" type="button">+</button><span>${x.qty}</span><button data-cart-minus="${esc(x.key)}" type="button">−</button></div><button class="sm-cart-remove" data-cart-remove="${esc(x.key)}" type="button">×</button></div>`).join("")}
+  function render(){
+    ensureUI();
+    const {qty,sum}=totals();
+    const fab=document.getElementById("smCartFab");
+    document.getElementById("smCartFabText").textContent=qty?`${qty} • ${money(sum)}`:tr("cart");
+    fab.classList.toggle("has-items",qty>0);
+    fab.setAttribute("aria-label",qty?`${tr("cart")}: ${qty}، ${money(sum)}`:tr("cart"));
+    ["smCartClose","smCheckoutClose","smChoiceClose","smImageClose"].forEach(id=>document.getElementById(id)?.setAttribute("aria-label",tr("close")));
+    document.getElementById("smCartTitle").textContent=tr("cart");
+    document.getElementById("smCartTotalLabel").textContent=tr("total");
+    document.getElementById("smCartTotal").textContent=money(sum);
+    document.getElementById("smCartContinue").textContent=tr("continue");
+    const clearBtn=document.getElementById("smCartClear");
+    clearBtn.textContent=tr("clear");
+    clearBtn.disabled=!cart.length;
+    const box=document.getElementById("smCartItems");
+    if(!cart.length){box.innerHTML=`<div class="sm-cart-empty"><div aria-hidden="true">🛒</div><span>${tr("empty")}</span></div>`;return}
+    box.innerHTML=cart.map(x=>{const name=txt(x.name);return `<div class="sm-cart-item"><img src="${esc(safeMedia(x.image))}" alt=""><div class="sm-cart-item-info"><strong>${esc(name)}</strong><small>${esc(txt(x.option))}</small><b>${money(x.price)}</b></div><div class="sm-cart-qty"><button data-cart-plus="${esc(x.key)}" type="button" aria-label="${esc(tr("increase")+": "+name)}">+</button><span>${x.qty}</span><button data-cart-minus="${esc(x.key)}" type="button" aria-label="${esc(tr("decrease")+": "+name)}">−</button></div><button class="sm-cart-remove" data-cart-remove="${esc(x.key)}" type="button" aria-label="${esc(tr("remove")+": "+name)}">×</button></div>`}).join("")
+  }
   let timer;function toast(msg){ensureUI();const e=document.getElementById("smCartToast");e.textContent=msg;e.classList.add("show");clearTimeout(timer);timer=setTimeout(()=>e.classList.remove("show"),1300)}
   document.addEventListener("click",e=>{const a=e.target.closest(".sm-add-cart,.sm-direct-add");if(a){e.preventDefault();addFromButton(a);return}const choose=e.target.closest(".sm-choose-options");if(choose){e.preventDefault();showChoices(choose.dataset.productId);return}const choice=e.target.closest("[data-choice-product]");if(choice){const D=window.RESTBR_DB,p=D&&D.products.find(x=>String(x.id)===String(choice.dataset.choiceProduct));if(p){addItem(p,Number(choice.dataset.choiceIndex));choiceOpen(false)}return}const image=e.target.closest(".sm-product-image");if(image){showImage(image);return}const p=e.target.closest("[data-cart-plus]");if(p){change(p.dataset.cartPlus,1);return}const m=e.target.closest("[data-cart-minus]");if(m){change(m.dataset.cartMinus,-1);return}const r=e.target.closest("[data-cart-remove]");if(r){remove(r.dataset.cartRemove);return}if(e.target.closest("[data-lang]"))setTimeout(()=>{render();syncOrderState()},40)});
+  document.addEventListener("keydown",e=>{if(e.key!=="Escape")return;const image=document.getElementById("smImageViewer"),choice=document.getElementById("smChoiceSheet"),checkout=document.getElementById("smCheckoutSheet"),drawer=document.getElementById("smCartDrawer");if(image?.classList.contains("open")){closeImage();return}if(choice?.classList.contains("open")){choiceOpen(false);return}if(checkout?.classList.contains("open")){checkoutOpen(false);return}if(drawer?.classList.contains("open"))open(false)});
   document.addEventListener("dblclick",e=>{if(e.target.closest("button,.sm-product-image"))e.preventDefault()},{passive:false});
   window.addEventListener("restbr:prices-updated",()=>{syncLivePrices()});
   window.addEventListener("restbr:ready",()=>{syncLivePrices();render();syncOrderState()});load();ensureUI();render();syncOrderState();

@@ -3,10 +3,13 @@
 // Supabase service_role key in this repository or in any browser file.
 window.RESTBR_CONFIG = Object.freeze({
   restaurantName: 'Restaurant',
+  orderIdPrefix: 'ORD',
   supabaseUrl: 'https://YOUR_PROJECT_REF.supabase.co',
   supabasePublishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
   enableUserManagement: false,
   enableRestaurantReset: false,
+  legacyRestaurantNames: [],
+  legacyBackupFormats: [],
   legacyLocalStorageKeys: {},
   legacySessionStorageKeys: {}
 });
@@ -15,6 +18,22 @@ window.RESTBR_CONFIG = Object.freeze({
 // data created by older branded builds during a one-time core alignment.
 (() => {
   const config = window.RESTBR_CONFIG || {};
+
+  const uniqueStrings = value => [
+    ...new Set(
+      (Array.isArray(value) ? value : [])
+        .map(item => String(item || '').trim())
+        .filter(Boolean)
+    )
+  ];
+
+  const legacyBackupFormats = new Set(
+    uniqueStrings(config.legacyBackupFormats)
+  );
+
+  window.RESTBR_IS_SUPPORTED_BACKUP_FORMAT = value =>
+    String(value || '') === 'RESTBR_MENU_BACKUP' ||
+    legacyBackupFormats.has(String(value || ''));
 
   const migrateKeys = (storage, mappings) => {
     if (!storage || !mappings || typeof mappings !== 'object') return false;

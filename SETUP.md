@@ -40,12 +40,20 @@ Editor. الملف آمن وقابل لإعادة التشغيل، ولا يضي
 ```js
 window.RESTBR_CONFIG = Object.freeze({
   restaurantName: 'اسم المطعم',
+  orderIdPrefix: 'ORD',
   supabaseUrl: 'https://PROJECT_REF.supabase.co',
   supabasePublishableKey: 'PUBLISHABLE_KEY',
   enableUserManagement: false,
-  enableRestaurantReset: false
+  enableRestaurantReset: false,
+  legacyRestaurantNames: [],
+  legacyBackupFormats: [],
+  legacyLocalStorageKeys: {},
+  legacySessionStorageKeys: {}
 });
 ```
+
+`orderIdPrefix` بادئة قصيرة لأرقام الطلبات مثل `SH` أو `REST`.
+حقول `legacy*` تبقى فارغة للمطاعم الجديدة، وتستخدم فقط عند نقل نسخة قديمة.
 
 لا تستخدم `service_role` هنا؛ هذا المفتاح سري ولا يجوز أن يصل إلى المتصفح.
 
