@@ -2900,6 +2900,7 @@ function saveBrandCache(){
       "RESTBR_BRAND_CACHE_V1",
       JSON.stringify({
         saved_at:Date.now(),
+        restaurantKey:String(window.RESTBR_RESTAURANT_KEY||""),
         nameAr:restaurant.nameAr ?? "",
         nameKu:restaurant.nameKu ?? "",
         nameEn:restaurant.nameEn ?? "",

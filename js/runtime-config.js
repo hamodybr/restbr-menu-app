@@ -39,6 +39,58 @@ window.RESTBR_CONFIG = Object.freeze({
     if (migratedLocal) localStorage.setItem('RESTBR_TEMPLATE_RESET_V1', 'done');
   } catch (_) {}
 
+  const normalizeRestaurantIdentity = value =>
+    String(value || '').trim().toLocaleLowerCase('en-US');
+
+  const configuredRestaurantKey = normalizeRestaurantIdentity(config.restaurantName);
+  const hasSpecificRestaurantIdentity =
+    configuredRestaurantKey &&
+    configuredRestaurantKey !== 'restaurant' &&
+    configuredRestaurantKey !== 'restaurant name';
+
+  window.RESTBR_RESTAURANT_KEY = hasSpecificRestaurantIdentity
+    ? configuredRestaurantKey
+    : '';
+
+  window.RESTBR_READ_BRAND_CACHE = () => {
+    try {
+      const raw = window.localStorage.getItem('RESTBR_BRAND_CACHE_V1');
+      if (!raw) return null;
+
+      const cached = JSON.parse(raw);
+      if (!cached || typeof cached !== 'object' || Array.isArray(cached)) {
+        window.localStorage.removeItem('RESTBR_BRAND_CACHE_V1');
+        return null;
+      }
+
+      if (hasSpecificRestaurantIdentity) {
+        const cachedKey = normalizeRestaurantIdentity(cached.restaurantKey);
+        const cachedNames = [cached.nameAr, cached.nameKu, cached.nameEn]
+          .map(normalizeRestaurantIdentity)
+          .filter(Boolean);
+
+        if (
+          cachedKey !== configuredRestaurantKey &&
+          !cachedNames.includes(configuredRestaurantKey)
+        ) {
+          window.localStorage.removeItem('RESTBR_BRAND_CACHE_V1');
+          return null;
+        }
+      }
+
+      return cached;
+    } catch (_) {
+      try {
+        window.localStorage.removeItem('RESTBR_BRAND_CACHE_V1');
+      } catch (_) {}
+      return null;
+    }
+  };
+
+  // Purge a brand cache copied from another restaurant before the intro can
+  // read it. This keeps each single-restaurant deployment isolated by config.
+  window.RESTBR_READ_BRAND_CACHE();
+
   const applyInitialBrand = () => {
     const name = String(config.restaurantName || '').trim();
     if (!name || name === 'Restaurant') return;

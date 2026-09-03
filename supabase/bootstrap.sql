@@ -893,9 +893,13 @@ values (
   'menu-images',
   true,
   10485760,
-  array['image/jpeg','image/png','image/webp','image/gif']::text[]
+  array['image/jpeg','image/png','image/webp','image/gif','image/avif']::text[]
 )
-on conflict (id) do nothing;
+on conflict (id) do update set
+  name = excluded.name,
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 drop policy if exists restbr_menu_images_insert on storage.objects;
 create policy restbr_menu_images_insert

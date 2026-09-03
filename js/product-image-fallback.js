@@ -17,12 +17,10 @@
 
     if (liveLogo) return liveLogo;
 
-    try{
-      const cached = JSON.parse(localStorage.getItem('RESTBR_BRAND_CACHE_V1') || '{}');
-      return safeMedia(cached?.logo);
-    }catch(_){
-      return '';
-    }
+    const cached = typeof window.RESTBR_READ_BRAND_CACHE === 'function'
+      ? window.RESTBR_READ_BRAND_CACHE()
+      : null;
+    return safeMedia(cached?.logo);
   }
 
   function installStyles(){
