@@ -5568,7 +5568,12 @@
       ${hasField(product,'is_active')?`<label class="check-card"><input id="p_is_active" type="checkbox" ${product.is_active?'checked':''}> فعال</label>`:''}
       ${hasField(product,'is_visible')?`<label class="check-card"><input id="p_is_visible" type="checkbox" ${product.is_visible?'checked':''}> ظاهر في المنيو</label>`:''}
       ${hasField(product,'is_available')?`<label class="check-card"><input id="p_is_available" type="checkbox" ${product.is_available?'checked':''}> متوفر</label>`:''}
+      ${hasField(product,'is_popular')?`<label class="check-card"><input id="p_is_popular" type="checkbox" ${product.is_popular?'checked':''}> ⭐ الأكثر طلبًا</label>`:''}
+      ${hasField(product,'is_new')?`<label class="check-card"><input id="p_is_new" type="checkbox" ${product.is_new?'checked':''}> ✨ جديد</label>`:''}
+      ${hasField(product,'is_hot')?`<label class="check-card"><input id="p_is_hot" type="checkbox" ${product.is_hot?'checked':''}> 🔥 حار</label>`:''}
+      ${hasField(product,'is_offer')?`<label class="check-card"><input id="p_is_offer" type="checkbox" ${product.is_offer?'checked':''}> 🏷 عرض مميز</label>`:''}
     </div>
+    ${hasField(product,'is_offer')?`<div class="schedule-note" style="margin-top:10px">نسبة الخصم الخضراء تظهر تلقائيًا من قسم الخصومات. خيار «عرض مميز» يضيف ليبل عرض فقط بدون تغيير السعر.</div>`:''}
     ${hasField(product,'availability_schedule_enabled') ? `
     <div class="schedule-editor">
       <div class="schedule-editor-head">
@@ -5643,7 +5648,7 @@
         if(hasField(product,k)) patch[k]=val('p_'+k);
       });
 
-      ['is_active','is_visible','is_available'].forEach(k=>{
+      ['is_active','is_visible','is_available','is_popular','is_new','is_hot','is_offer'].forEach(k=>{
         if(hasField(product,k)) patch[k]=checked('p_'+k);
       });
 
@@ -5849,7 +5854,12 @@
       ${hasField(sample,'is_active')?`<label class="check-card"><input id="np_is_active" type="checkbox" checked> فعال</label>`:''}
       ${hasField(sample,'is_visible')?`<label class="check-card"><input id="np_is_visible" type="checkbox" checked> ظاهر في المنيو</label>`:''}
       ${hasField(sample,'is_available')?`<label class="check-card"><input id="np_is_available" type="checkbox" checked> متوفر</label>`:''}
+      ${hasField(sample,'is_popular')?`<label class="check-card"><input id="np_is_popular" type="checkbox"> ⭐ الأكثر طلبًا</label>`:''}
+      ${hasField(sample,'is_new')?`<label class="check-card"><input id="np_is_new" type="checkbox"> ✨ جديد</label>`:''}
+      ${hasField(sample,'is_hot')?`<label class="check-card"><input id="np_is_hot" type="checkbox"> 🔥 حار</label>`:''}
+      ${hasField(sample,'is_offer')?`<label class="check-card"><input id="np_is_offer" type="checkbox"> 🏷 عرض مميز</label>`:''}
     </div>
+    ${hasField(sample,'is_offer')?`<div class="schedule-note" style="margin-top:10px">نسبة الخصم الخضراء تظهر تلقائيًا من قسم الخصومات. خيار «عرض مميز» يضيف ليبل عرض فقط بدون تغيير السعر.</div>`:''}
     ${hasField(sample,'availability_schedule_enabled') ? `
     <div class="schedule-editor">
       <div class="schedule-editor-head">
@@ -6040,9 +6050,9 @@
 
       if(hasField(sample,'has_options')) insert.has_options=optionRows.length>1;
 
-      // Keep badge defaults safe if the columns exist.
+      // Product labels are optional and default to off for every new item.
       ['is_popular','is_new','is_hot','is_offer'].forEach(k=>{
-        if(hasField(sample,k)) insert[k]=false;
+        if(hasField(sample,k)) insert[k]=checked('np_'+k);
       });
 
       const now=new Date().toISOString();
@@ -6262,6 +6272,39 @@
     }
   }
 
+  const PRODUCT_BADGE_FIELDS = [
+    {key:'is_popular',label:'⭐ الأكثر طلباً'},
+    {key:'is_new',label:'✨ جديد'},
+    {key:'is_hot',label:'🔥 حار'},
+    {key:'is_offer',label:'🏷 عرض مميز'}
+  ];
+
+  function categoryBadgeControlsHtml(categoryId){
+    const products=adminProducts.filter(product=>String(product.category_id)===String(categoryId));
+
+    return `<div class="schedule-editor">
+      <div class="schedule-editor-head">
+        <div>
+          <strong>🏷 ليبلات كل أصناف القسم</strong>
+          <small>طبّق الليبل على جميع أصناف هذا القسم أو أزله منها. «بدون تغيير» يحافظ على حالة كل صنف.</small>
+        </div>
+      </div>
+      <div class="form-grid">
+        ${PRODUCT_BADGE_FIELDS.map(item=>{
+          const activeCount=products.filter(product=>product[item.key]===true).length;
+          return `<label class="field"><span>${item.label} — مفعّل على ${activeCount} من ${products.length}</span>
+            <select id="c_badge_${item.key}">
+              <option value="keep" selected>بدون تغيير</option>
+              <option value="enable">تفعيل على كل الأصناف</option>
+              <option value="disable">إزالة من كل الأصناف</option>
+            </select>
+          </label>`;
+        }).join('')}
+      </div>
+      <div class="schedule-note">ملاحظة: ليبل نسبة الخصم يظهر تلقائياً من صفحة «الخصومات» ولا يتغير من هنا.</div>
+    </div>`;
+  }
+
   function editAdminCategory(categoryId){
     const c=adminCategories.find(x=>String(x.id)===String(categoryId));
     if(!c)return;
@@ -6325,6 +6368,7 @@
           مثال: القهوة 11:00 → 00:00. يبقى القسم ظاهر حتى خارج الوقت، لكن أصنافه تظهر "غير متوفر حالياً".
         </div>
       </div>` : ''}
+      ${categoryBadgeControlsHtml(c.id)}
       <div style="font-size:12px;color:#9f9991;line-height:1.8;margin-top:8px">إلغاء «ظاهر في المنيو» يخفي القسم وكل أصنافه من منيو الزبائن بدون حذف أي بيانات.</div>
       <div class="modal-actions">
         <button class="btn btn-dark" type="button" onclick="closeAdminEditor()">إلغاء</button>
@@ -6360,6 +6404,21 @@
 
     if(hasField(c,'updated_at'))patch.updated_at=new Date().toISOString();
 
+    const categoryProducts=adminProducts.filter(product=>String(product.category_id)===String(id));
+    const badgePatch={};
+    PRODUCT_BADGE_FIELDS.forEach(item=>{
+      const action=val(`c_badge_${item.key}`);
+      if(action==='enable')badgePatch[item.key]=true;
+      if(action==='disable')badgePatch[item.key]=false;
+    });
+
+    const badgeKeys=Object.keys(badgePatch);
+    if(badgeKeys.length && !confirm(`سيتم تطبيق خيارات الليبلات على ${categoryProducts.length} صنف داخل القسم. متابعة؟`))return;
+
+    if(badgeKeys.length && hasField(adminProducts[0]||{},'updated_at')){
+      badgePatch.updated_at=new Date().toISOString();
+    }
+
     const btn=document.getElementById('saveCategoryBtn');
     btn.disabled=true; btn.textContent='جاري الحفظ...';
     try{
@@ -6367,7 +6426,29 @@
       if(result.error)throw result.error;
       const verify=await supabaseClient.from('categories').select('*').eq('id',id).single();
       if(verify.error)throw verify.error;
-      showEditorMsg(patch.is_visible===false?'تم حفظ القسم وإخفاؤه من المنيو ✓':'تم حفظ القسم ✓',true);
+
+      if(badgeKeys.length){
+        const badgeResult=await supabaseClient.from('products').update(badgePatch).eq('category_id',id);
+        if(badgeResult.error)throw badgeResult.error;
+
+        const badgeVerify=await supabaseClient
+          .from('products')
+          .select(`id,${badgeKeys.join(',')}`)
+          .eq('category_id',id);
+        if(badgeVerify.error)throw badgeVerify.error;
+
+        const mismatched=(badgeVerify.data||[]).some(product=>
+          badgeKeys.some(key=>product[key]!==badgePatch[key])
+        );
+        if(mismatched || (badgeVerify.data||[]).length!==categoryProducts.length){
+          throw new Error('تعذر التحقق من تطبيق الليبلات على جميع أصناف القسم.');
+        }
+      }
+
+      const successText=badgeKeys.length
+        ? `تم حفظ القسم وتطبيق الليبلات على ${categoryProducts.length} صنف ✓`
+        : (patch.is_visible===false?'تم حفظ القسم وإخفاؤه من المنيو ✓':'تم حفظ القسم ✓');
+      showEditorMsg(successText,true);
       await loadAdminDashboard();
       setTimeout(closeAdminEditor,700);
     }catch(e){
@@ -6488,6 +6569,10 @@
                 ${escapeAdminHtml(categoryName)}
                 ${product.is_visible===false?'<span class="hidden-badge">مخفي</span>':''}
                 ${product.is_available===false?'<span class="system-badge">غير متوفر</span>':''}
+                ${product.is_popular?'<span class="system-badge">⭐ الأكثر طلبًا</span>':''}
+                ${product.is_new?'<span class="system-badge">✨ جديد</span>':''}
+                ${product.is_hot?'<span class="system-badge">🔥 حار</span>':''}
+                ${product.is_offer?'<span class="system-badge">🏷 عرض مميز</span>':''}
               </div>
 
               ${renderProductOptionChips(product.id)}

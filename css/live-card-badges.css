@@ -1,0 +1,149 @@
+/* Compact, living product labels layered over the photo. */
+body #smMenu .sm-card .sm-badges,
+html[dir="rtl"] body #smMenu .sm-card .sm-badges,
+html[dir="ltr"] body #smMenu .sm-card .sm-badges{
+  position:absolute!important;
+  z-index:32!important;
+  inset-inline-start:auto!important;
+  inset-inline-end:auto!important;
+  top:8px!important;
+  left:auto!important;
+  right:8px!important;
+  max-width:40%!important;
+  display:flex!important;
+  flex-wrap:wrap!important;
+  justify-content:flex-end;
+  align-items:center;
+  gap:3px!important;
+  pointer-events:none;
+  direction:rtl;
+}
+
+/* English reverses the card: the photo is physically on the left. */
+html[dir="ltr"] body #smMenu .sm-card .sm-badges{
+  inset-inline-start:auto!important;
+  inset-inline-end:auto!important;
+  right:auto!important;
+  left:8px!important;
+}
+
+body #smMenu .sm-display-badge{
+  position:relative;
+  isolation:isolate;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  min-height:25px;
+  padding:5px 9px!important;
+  overflow:hidden;
+  border:1px solid rgba(232,190,112,.48)!important;
+  border-radius:999px;
+  background:linear-gradient(135deg,rgba(28,25,21,.94),rgba(10,9,8,.92))!important;
+  color:#fff8e8!important;
+  box-shadow:0 7px 20px rgba(0,0,0,.42),inset 0 1px rgba(255,255,255,.14)!important;
+  font-size:10.5px!important;
+  font-weight:900;
+  line-height:1!important;
+  letter-spacing:0;
+  white-space:nowrap;
+  text-shadow:0 1px 3px rgba(0,0,0,.36);
+  backdrop-filter:blur(10px) saturate(1.18);
+  -webkit-backdrop-filter:blur(10px) saturate(1.18);
+  animation:smLiveBadgeFloat 3.8s ease-in-out infinite;
+}
+
+body #smMenu .sm-display-badge:nth-child(2){animation-delay:.65s}
+body #smMenu .sm-display-badge:nth-child(3){animation-delay:1.3s}
+
+body #smMenu .sm-display-badge::after{
+  content:"";
+  position:absolute;
+  z-index:-1;
+  top:-70%;
+  left:-55%;
+  width:32%;
+  height:240%;
+  transform:skewX(-20deg);
+  background:linear-gradient(90deg,transparent,rgba(255,255,255,.55),transparent);
+  opacity:0;
+  animation:smLiveBadgeShine 5.4s ease-in-out infinite;
+}
+
+body #smMenu .sm-display-badge.gold{
+  border-color:rgba(255,226,155,.78)!important;
+  background:linear-gradient(135deg,#ffe18d,#d79a31 72%,#a96818)!important;
+  color:#241707!important;
+  text-shadow:0 1px rgba(255,255,255,.38);
+  box-shadow:0 7px 21px rgba(188,119,24,.33),inset 0 1px rgba(255,255,255,.45)!important;
+}
+
+body #smMenu .sm-display-badge.red{
+  border-color:rgba(255,106,91,.72)!important;
+  background:linear-gradient(135deg,rgba(132,22,18,.96),rgba(78,8,7,.95))!important;
+  color:#fff1ed!important;
+  box-shadow:0 7px 21px rgba(188,32,23,.28),inset 0 1px rgba(255,255,255,.12)!important;
+}
+
+body #smMenu .sm-display-badge.offer,
+body #smMenu .sm-display-badge.sm-live-discount{
+  border-color:rgba(83,206,128,.78)!important;
+  background:linear-gradient(135deg,rgba(19,112,61,.97),rgba(7,66,35,.96))!important;
+  color:#f0fff5!important;
+  box-shadow:0 7px 21px rgba(12,112,55,.30),inset 0 1px rgba(255,255,255,.14)!important;
+}
+
+body #smMenu .sm-display-badge.sm-badge-suppressed{display:none!important}
+
+@keyframes smLiveBadgeFloat{
+  0%,100%{transform:translateY(0);filter:brightness(.98)}
+  50%{transform:translateY(-1.5px);filter:brightness(1.08)}
+}
+
+@keyframes smLiveBadgeShine{
+  0%,63%{left:-55%;opacity:0}
+  70%{opacity:.65}
+  84%{left:135%;opacity:.18}
+  85%,100%{left:135%;opacity:0}
+}
+
+@media(max-width:768px){
+  body #smMenu .sm-card .sm-badges,
+  html[dir="rtl"] body #smMenu .sm-card .sm-badges,
+  html[dir="ltr"] body #smMenu .sm-card .sm-badges{
+    inset-inline-start:auto!important;
+    inset-inline-end:auto!important;
+    top:6px!important;
+    left:auto!important;
+    right:6px!important;
+    max-width:39%!important;
+    gap:3px!important;
+  }
+
+  html[dir="ltr"] body #smMenu .sm-card .sm-badges{
+    inset-inline-start:auto!important;
+    inset-inline-end:auto!important;
+    right:auto!important;
+    left:6px!important;
+  }
+
+  body #smMenu .sm-display-badge{
+    min-height:20px;
+    padding:4px 6px!important;
+    font-size:8.25px!important;
+  }
+}
+
+@media(max-width:390px){
+  body #smMenu .sm-display-badge{
+    min-height:19px;
+    padding:4px 5px!important;
+    font-size:7.75px!important;
+  }
+}
+
+@media(prefers-reduced-motion:reduce){
+  body #smMenu .sm-display-badge,
+  body #smMenu .sm-display-badge::after{
+    animation:none!important;
+  }
+}

@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v1";
+const CACHE_NAME = "restbr-restaurant-template-v2";
 
 const CORE = [
   "./",
@@ -9,6 +9,7 @@ const CORE = [
   "./css/desktop-phone-parity.css?v=1.0",
   "./css/english-card-ltr.css?v=1.0",
   "./css/mobile-card-image-fix.css?v=1.1",
+  "./css/live-card-badges.css?v=1.5",
   "./js/offline-status.js?v=1.1",
   "./js/unavailable-card-state.js?v=1.1",
   "./js/app.js?v=17.3",
@@ -35,6 +36,7 @@ const CORE = [
   "./js/admin-discounts.js?v=1.0",
   "./js/dining-mode.js?v=1.3",
   "./js/dining-gate-language.js?v=1.0",
+  "./js/live-card-badges.js?v=1.0",
   "./data/menu.json?v=32",
   "./assets/restaurant-placeholder.svg"
 ];
