@@ -236,14 +236,20 @@
     }
   }
 
-  function loadAdminDashboardI18n() {
-    if (!isAdmin || document.getElementById('restbrAdminI18nScript')) return;
-
+  function appendAdminI18nScript(id, src) {
+    if (!isAdmin || document.getElementById(id)) return;
     const script = document.createElement('script');
-    script.id = 'restbrAdminI18nScript';
-    script.src = 'js/admin-i18n.js?v=1.0';
+    script.id = id;
+    script.src = src;
     script.async = false;
     document.head.appendChild(script);
+  }
+
+  function loadAdminDashboardI18n() {
+    appendAdminI18nScript('restbrAdminI18nAttributeGuardScript', 'js/admin-i18n-attribute-guard.js?v=1.0');
+    appendAdminI18nScript('restbrAdminI18nScript', 'js/admin-i18n.js?v=1.0');
+    appendAdminI18nScript('restbrAdminI18nSupplementScript', 'js/admin-i18n-supplement.js?v=1.0');
+    appendAdminI18nScript('restbrAdminI18nFinalCleanupScript', 'js/admin-i18n-final-cleanup.js?v=2.0');
   }
 
   async function initAdmin() {
