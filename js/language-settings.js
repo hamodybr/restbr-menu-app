@@ -236,7 +236,18 @@
     }
   }
 
+  function loadAdminDashboardI18n() {
+    if (!isAdmin || document.getElementById('restbrAdminI18nScript')) return;
+
+    const script = document.createElement('script');
+    script.id = 'restbrAdminI18nScript';
+    script.src = 'js/admin-i18n.js?v=1.0';
+    script.async = false;
+    document.head.appendChild(script);
+  }
+
   async function initAdmin() {
+    loadAdminDashboardI18n();
     await loadPolicy();
 
     const tryInstall = () => installAdminUI();
