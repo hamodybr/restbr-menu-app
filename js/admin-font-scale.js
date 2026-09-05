@@ -1,9 +1,9 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (document.getElementById('shorashAdminFontScaleStyles')) return;
+  if (document.getElementById('restbrAdminFontScaleStyles')) return;
 
   const style = document.createElement('style');
-  style.id = 'shorashAdminFontScaleStyles';
+  style.id = 'restbrAdminFontScaleStyles';
   style.textContent = `
     html,
     body {
@@ -72,7 +72,7 @@
   if (window.RESTBR_CONFIG?.enableRestaurantReset === true && !document.getElementById('restbrRestaurantResetBackupScript')) {
     const script = document.createElement('script');
     script.id = 'restbrRestaurantResetBackupScript';
-    script.src = 'js/admin-restaurant-reset-backup.js?v=1.0';
+    script.src = 'js/admin-restaurant-reset-backup.js?v=1.1';
     script.async = false;
     document.head.appendChild(script);
   }

@@ -61,10 +61,10 @@ if (RESTBR_CONFIGURED) {
 
 // Load the shared menu-language policy for both the public menu and admin.
 (() => {
-  if (document.getElementById('shorashLanguageSettingsScript')) return;
+  if (document.getElementById('restbrLanguageSettingsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashLanguageSettingsScript';
+  script.id = 'restbrLanguageSettingsScript';
   script.src = 'js/language-settings.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
@@ -73,10 +73,10 @@ if (RESTBR_CONFIGURED) {
 // Public-menu only: keep the open options sheet synced after live price refreshes.
 (() => {
   if (RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashDiscountChoicePriceSyncScript')) return;
+  if (document.getElementById('restbrDiscountChoicePriceSyncScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashDiscountChoicePriceSyncScript';
+  script.id = 'restbrDiscountChoicePriceSyncScript';
   script.src = 'js/discount-choice-price-sync.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
@@ -85,10 +85,10 @@ if (RESTBR_CONFIGURED) {
 // Public-menu only: automatic restaurant opening hours.
 (() => {
   if (RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashRestaurantHoursScript')) return;
+  if (document.getElementById('restbrRestaurantHoursScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashRestaurantHoursScript';
+  script.id = 'restbrRestaurantHoursScript';
   script.src = 'js/restaurant-hours.js?v=1.3';
   script.async = false;
   document.head.appendChild(script);
@@ -97,10 +97,10 @@ if (RESTBR_CONFIGURED) {
 // Public-menu only: use bullets instead of numeric sequencing in WhatsApp order items.
 (() => {
   if (RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashWhatsappOrderBulletsScript')) return;
+  if (document.getElementById('restbrWhatsappOrderBulletsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashWhatsappOrderBulletsScript';
+  script.id = 'restbrWhatsappOrderBulletsScript';
   script.src = 'js/whatsapp-order-bullets.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
@@ -109,10 +109,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only sticky toolbar + GLOBAL dashboard light/dark theme.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminThemeToolbarScript')) return;
+  if (document.getElementById('restbrAdminThemeToolbarScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminThemeToolbarScript';
+  script.id = 'restbrAdminThemeToolbarScript';
   script.src = 'js/admin-theme-toolbar.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
@@ -121,11 +121,11 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: slightly increase all dashboard text without changing layout sizing.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminFontScaleScript')) return;
+  if (document.getElementById('restbrAdminFontScaleScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminFontScaleScript';
-  script.src = 'js/admin-font-scale.js?v=1.2';
+  script.id = 'restbrAdminFontScaleScript';
+  script.src = 'js/admin-font-scale.js?v=1.3';
   script.async = false;
   document.head.appendChild(script);
 })();
@@ -133,10 +133,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only native category filter inside the existing products filter system.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminProductCategoryFilterScript')) return;
+  if (document.getElementById('restbrAdminProductCategoryFilterScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminProductCategoryFilterScript';
+  script.id = 'restbrAdminProductCategoryFilterScript';
   script.src = 'js/admin-product-category-filter.js?v=2.0';
   script.async = false;
   document.head.appendChild(script);
@@ -145,10 +145,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only dine-in / takeaway price controls for product options.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminTakeawayPricesScript')) return;
+  if (document.getElementById('restbrAdminTakeawayPricesScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminTakeawayPricesScript';
+  script.id = 'restbrAdminTakeawayPricesScript';
   script.src = 'js/admin-takeaway-prices.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
@@ -157,10 +157,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only tap ordering for product options inside the product editor.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminOptionOrderScript')) return;
+  if (document.getElementById('restbrAdminOptionOrderScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminOptionOrderScript';
+  script.id = 'restbrAdminOptionOrderScript';
   script.src = 'js/admin-option-order.js?v=1.4';
   script.async = false;
   document.head.appendChild(script);
@@ -169,11 +169,11 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: use the current restaurant logo when a product has no image.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminProductImageFallbackScript')) return;
+  if (document.getElementById('restbrAdminProductImageFallbackScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminProductImageFallbackScript';
-  script.src = 'js/admin-product-image-fallback.js?v=1.0';
+  script.id = 'restbrAdminProductImageFallbackScript';
+  script.src = 'js/admin-product-image-fallback.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
@@ -181,10 +181,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: choose which price type a bulk change targets.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminBulkPriceTargetUiScript')) return;
+  if (document.getElementById('restbrAdminBulkPriceTargetUiScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminBulkPriceTargetUiScript';
+  script.id = 'restbrAdminBulkPriceTargetUiScript';
   script.src = 'js/admin-bulk-price-target-ui.js?v=2.0';
   script.async = false;
   document.head.appendChild(script);
@@ -193,10 +193,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: enhanced full backup includes discounts too.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminFullBackupDiscountsScript')) return;
+  if (document.getElementById('restbrAdminFullBackupDiscountsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminFullBackupDiscountsScript';
+  script.id = 'restbrAdminFullBackupDiscountsScript';
   script.src = 'js/admin-full-backup-discounts.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
@@ -205,11 +205,11 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: restore discounts from enhanced backups too.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminFullRestoreDiscountsScript')) return;
+  if (document.getElementById('restbrAdminFullRestoreDiscountsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminFullRestoreDiscountsScript';
-  script.src = 'js/admin-full-restore-discounts.js?v=1.0';
+  script.id = 'restbrAdminFullRestoreDiscountsScript';
+  script.src = 'js/admin-full-restore-discounts.js?v=1.1';
   script.async = false;
   document.head.appendChild(script);
 })();
@@ -217,10 +217,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: include dine-in and takeaway prices in Excel export.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminExcelExportTakeawayScript')) return;
+  if (document.getElementById('restbrAdminExcelExportTakeawayScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminExcelExportTakeawayScript';
+  script.id = 'restbrAdminExcelExportTakeawayScript';
   script.src = 'js/admin-excel-export-takeaway.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
@@ -229,10 +229,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only: allow takeaway_price updates during Excel import.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminExcelImportTakeawayScript')) return;
+  if (document.getElementById('restbrAdminExcelImportTakeawayScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminExcelImportTakeawayScript';
+  script.id = 'restbrAdminExcelImportTakeawayScript';
   script.src = 'js/admin-excel-import-takeaway.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
@@ -241,10 +241,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only restaurant opening-hours editor.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminRestaurantHoursScript')) return;
+  if (document.getElementById('restbrAdminRestaurantHoursScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminRestaurantHoursScript';
+  script.id = 'restbrAdminRestaurantHoursScript';
   script.src = 'js/admin-restaurant-hours.js?v=1.2';
   script.async = false;
   document.head.appendChild(script);
@@ -253,10 +253,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only editor for the first dine-in / takeaway choice window.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminDiningGateSettingsScript')) return;
+  if (document.getElementById('restbrAdminDiningGateSettingsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminDiningGateSettingsScript';
+  script.id = 'restbrAdminDiningGateSettingsScript';
   script.src = 'js/admin-dining-gate-settings.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
@@ -265,10 +265,10 @@ if (RESTBR_CONFIGURED) {
 // Admin-only simple percentage discount manager.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminDiscountsScript')) return;
+  if (document.getElementById('restbrAdminDiscountsScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminDiscountsScript';
+  script.id = 'restbrAdminDiscountsScript';
   script.src = 'js/admin-discounts.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
@@ -277,17 +277,17 @@ if (RESTBR_CONFIGURED) {
 // Final admin-only light-theme completion layer for hard-coded dark components.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
-  if (document.getElementById('shorashAdminLightThemeCompleteScript')) return;
+  if (document.getElementById('restbrAdminLightThemeCompleteScript')) return;
 
   const script = document.createElement('script');
-  script.id = 'shorashAdminLightThemeCompleteScript';
+  script.id = 'restbrAdminLightThemeCompleteScript';
   script.src = 'js/admin-light-theme-complete.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
 })();
 
 // ==========================================
-// SHORASH MENU — Supabase Connection Test
+// RESTBR MENU — Supabase Connection Test
 // ==========================================
 
 async function testSupabaseConnection() {

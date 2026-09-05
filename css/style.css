@@ -77,7 +77,7 @@ body{margin:0;background:#070503;color:#fff;font-family:Arial,Tahoma,sans-serif;
 .sm-footer-line{width:170px;height:1px;margin:0 auto 44px;background:linear-gradient(90deg,transparent,#d7a654,transparent)}
 .sm-footer h2{font-size:30px;letter-spacing:3px;color:#e6b45d;margin:0 0 22px}
 .sm-footer-location{font-size:20px;color:#aaa39a;margin:0}
-.sm-footer-main-actions{display:grid;grid-template-columns:1fr .82fr 1.45fr;gap:16px;max-width:760px;margin:44px auto 28px}
+.sm-footer-main-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;max-width:760px;margin:44px auto 28px}
 .sm-footer-main-actions a{display:grid;place-items:center;min-height:72px;border-radius:25px;border:1px solid rgba(181,132,65,.55);font-size:18px;font-weight:800;color:#eee;background:rgba(10,10,9,.55);text-decoration:none}
 .sm-footer-socials{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;max-width:690px;margin:30px auto}
 .sm-footer-socials a{display:grid;place-items:center;min-height:58px;border-radius:999px;border:1px solid #3b342d;font-size:17px;font-weight:800;background:rgba(5,5,5,.44);color:#ddd;text-decoration:none}
@@ -95,7 +95,7 @@ body{margin:0;background:#070503;color:#fff;font-family:Arial,Tahoma,sans-serif;
 .sm-intro-sub{font-size:14px;letter-spacing:2px;color:#fff}
 
 /* =========================================================
-   SHORASH V3.5 — FINAL MOBILE LAYOUT
+   RESTBR V3.5 — FINAL MOBILE LAYOUT
    ========================================================= */
 @media(max-width:768px){
 html,body{width:100%;max-width:100%;overflow-x:hidden}
@@ -142,7 +142,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
 .sm-footer-line{width:105px;height:1px;margin:0 auto 23px}
 .sm-footer h2{margin:0 0 9px;font-size:17px;line-height:1.25;letter-spacing:1.6px}
 .sm-footer-location{margin:0;font-size:14px}
-.sm-footer-main-actions{display:grid;grid-template-columns:1fr .72fr 1.3fr;gap:6px;width:100%;margin:22px auto 17px}
+.sm-footer-main-actions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:6px;width:100%;margin:22px auto 17px}
 .sm-footer-main-actions a{display:grid;place-items:center;min-width:0;min-height:46px;padding:6px 3px;border-radius:16px;font-size:10.5px;line-height:1.1;white-space:nowrap}
 .sm-footer-socials{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));width:100%;gap:5px;margin:17px auto}
 .sm-footer-socials a{display:grid;place-items:center;min-width:0;min-height:41px;padding:5px 2px;border-radius:16px;font-size:9.5px;line-height:1;white-space:nowrap}
@@ -175,7 +175,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
 .sm-popular-card:before,.sm-hot-card:after,.sm-grill-card:before,.sm-cold-card:before,.sm-cold-card:after,.sm-logo,.sm-logo:before,.sm-logo img,.sm-intro-logo-wrap{animation:none!important}
 }
 /* =========================================================
-   SHORASH V3.5 — COMPACT MOBILE CARDS
+   RESTBR V3.5 — COMPACT MOBILE CARDS
    Final mobile sizing + correct RTL layout
    ========================================================= */
 
@@ -477,7 +477,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
 }
 
 /* =========================================================
-   SHORASH — FINAL MOBILE OVERRIDES
+   RESTBR — FINAL MOBILE OVERRIDES
    Centered header • narrower cards • image RIGHT
    60% info / 40% image • more visible background video
    ========================================================= */
@@ -774,7 +774,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
   }
   .sm-footer-main-actions{
     width:100% !important;
-    grid-template-columns:1fr .72fr 1.35fr !important;
+    grid-template-columns:repeat(3,minmax(0,1fr)) !important;
     gap:7px !important;
     margin:27px auto 19px !important;
   }
@@ -851,7 +851,7 @@ html[dir="ltr"] .sm-card .sm-info{grid-column:2;grid-row:1}
   }
 }
 
-/* SHORASH V4 — FINAL MOBILE FIX */
+/* RESTBR V4 — FINAL MOBILE FIX */
 @media (max-width:768px){
   .sm-app{width:100%!important;max-width:100%!important;margin:auto!important;overflow:hidden!important}
 

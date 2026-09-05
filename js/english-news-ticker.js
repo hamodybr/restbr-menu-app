@@ -1,4 +1,14 @@
 (() => {
+  if (!document.getElementById('smSeamlessBackgroundVideoLoader')) {
+    const script = document.createElement('script');
+    script.id = 'smSeamlessBackgroundVideoLoader';
+    script.src = 'js/seamless-background-video.js?v=1.0';
+    script.defer = true;
+    document.head.appendChild(script);
+  }
+})();
+
+(() => {
   const STYLE_ID = 'smUnifiedNewsTickerStyle';
 
   function installStyle() {
@@ -107,7 +117,7 @@
   }
 
   function currentLanguage() {
-    return localStorage.getItem('shorashLang') ||
+    return localStorage.getItem('RESTBR_LANG_V1') ||
       document.documentElement.lang ||
       'ar';
   }
@@ -176,7 +186,7 @@
     setTimeout(() => syncTicker({ restartAnimation: true }), 220);
   }
 
-  window.addEventListener('shorash:ready', syncSoon);
+  window.addEventListener('restbr:ready', syncSoon);
 
   document.addEventListener('click', event => {
     if (event.target.closest('[data-lang]')) syncSoon();

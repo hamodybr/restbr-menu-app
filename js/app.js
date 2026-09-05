@@ -14,7 +14,11 @@ const I18N = {
     searchResults: "نتائج البحث",
     noResults: "ما لقينا صنف مطابق",
     share: "مشاركة",
-    copied: "تم نسخ الرابط"
+    copied: "تم نسخ الرابط",
+    languageLabel: "اختيار اللغة",
+    refreshPage: "تحديث الصفحة",
+    closeSearch: "إغلاق البحث",
+    backToTop: "الرجوع إلى الأعلى"
   },
 
   ku: {
@@ -32,7 +36,11 @@ const I18N = {
     searchResults: "ئەنجامی گەڕان",
     noResults: "هیچ بەرهەمێک نەدۆزرایەوە",
     share: "هاوبەشکردن",
-    copied: "لینک کۆپی کرا"
+    copied: "لینک کۆپی کرا",
+    languageLabel: "هەڵبژاردنی زمان",
+    refreshPage: "نوێکردنەوەی پەڕە",
+    closeSearch: "داخستنی لێگەڕان",
+    backToTop: "گەڕانەوە بۆ سەرەوە"
   },
 
   en: {
@@ -50,13 +58,17 @@ const I18N = {
     searchResults: "Search results",
     noResults: "No matching items",
     share: "Share",
-    copied: "Link copied"
+    copied: "Link copied",
+    languageLabel: "Choose language",
+    refreshPage: "Refresh page",
+    closeSearch: "Close search",
+    backToTop: "Back to top"
   }
 };
 
 
 let DB = null;
-let lang = localStorage.getItem("shorashLang") || "ar";
+let lang = localStorage.getItem("RESTBR_LANG_V1") || "ar";
 let active = "";
 let searchQuery = "";
 let searchTracked = false;
@@ -67,6 +79,8 @@ const $$ = selector => [...document.querySelectorAll(selector)];
 const safeArray=value=>{if(Array.isArray(value))return value;if(typeof value==="string"){try{const p=JSON.parse(value);return Array.isArray(p)?p:[]}catch(_){return []}}return []};
 const safeObject=value=>{if(value&&typeof value==="object"&&!Array.isArray(value))return value;if(typeof value==="string"){try{const p=JSON.parse(value);return p&&typeof p==="object"&&!Array.isArray(p)?p:{}}catch(_){return {}}}return {}};
 const escapeUi=value=>String(value??"").replaceAll("&","&amp;").replaceAll("<","&lt;").replaceAll(">","&gt;").replaceAll('"',"&quot;").replaceAll("'","&#039;");
+const safeConfiguredUrl=value=>typeof window.RESTBR_SAFE_CONFIGURED_URL==="function"?window.RESTBR_SAFE_CONFIGURED_URL(value):"";
+const safeMediaUrl=(value,fallback="")=>{const safe=typeof window.RESTBR_SAFE_MEDIA_URL==="function"?window.RESTBR_SAFE_MEDIA_URL(value):"";return safe||(fallback&&typeof window.RESTBR_SAFE_MEDIA_URL==="function"?window.RESTBR_SAFE_MEDIA_URL(fallback):fallback)||""};
 const actionLabel=(item,currentLang=lang)=>String(item?.[`label_${currentLang}`]??item?.label_ar??item?.label_en??"").trim();
 
 
@@ -296,6 +310,14 @@ function installV44PolishStyles(){
     }
 
     .sm-header-icon-btn:active{transform:scale(.94)}
+
+    #smRefreshBtn.is-refreshing svg{
+      animation:smHeaderRefreshSpin .62s linear infinite;
+    }
+
+    @keyframes smHeaderRefreshSpin{
+      to{transform:rotate(360deg)}
+    }
 
     .sm-lang-code{
       position:absolute;
@@ -618,6 +640,32 @@ function ensureHeaderTools(){
     tools.appendChild(langToggle);
   }
 
+  let refreshToggle=document.getElementById("smRefreshBtn");
+  if(!refreshToggle){
+    refreshToggle=document.createElement("button");
+    refreshToggle.id="smRefreshBtn";
+    refreshToggle.type="button";
+    refreshToggle.className="sm-header-icon-btn";
+    refreshToggle.innerHTML=`
+      <svg viewBox="0 0 24 24" aria-hidden="true">
+        <path d="M20 11a8 8 0 1 0-2.3 5.7"></path>
+        <path d="M20 4v7h-7"></path>
+      </svg>
+    `;
+    refreshToggle.setAttribute("aria-label","تحديث الصفحة");
+    refreshToggle.setAttribute("title","تحديث الصفحة");
+    tools.insertBefore(refreshToggle,searchToggle);
+  }
+
+  if(!refreshToggle.dataset.bound){
+    refreshToggle.dataset.bound="1";
+    refreshToggle.addEventListener("click",()=>{
+      refreshToggle.classList.add("is-refreshing");
+      refreshToggle.disabled=true;
+      window.setTimeout(()=>window.location.reload(),120);
+    });
+  }
+
   const langHolder=document.getElementById("smLangs");
   if(langHolder && langHolder.parentElement!==tools){
     tools.appendChild(langHolder);
@@ -775,6 +823,22 @@ function updateSearchUiLanguage(){
       lang==="en" ? "Search menu" : lang==="ku" ? "لێگەڕان" : "البحث في المنيو"
     );
   }
+
+  const refresh=document.getElementById("smRefreshBtn");
+  if(refresh){
+    const label=I18N[lang].refreshPage;
+    refresh.setAttribute("aria-label",label);
+    refresh.setAttribute("title",label);
+  }
+
+  const clear=document.getElementById("smSearchClear");
+  if(clear)clear.setAttribute("aria-label",I18N[lang].closeSearch);
+
+  const language=document.getElementById("smLangToggle");
+  if(language)language.setAttribute("aria-label",I18N[lang].languageLabel);
+
+  const top=document.getElementById("smTopBtn");
+  if(top)top.setAttribute("aria-label",I18N[lang].backToTop);
 }
 
 
@@ -898,8 +962,9 @@ function scrollToDeepLink(){
   const productId=String(new URLSearchParams(window.location.search).get("product")||"").trim();
   if(!productId)return;
   const locate=()=>{
-    const safeId=productId.replace(/"/g,'\\"');
-    const card=document.querySelector(`[data-product-card="${safeId}"]`)||document.getElementById(`product-${productId}`);
+    const card=[...document.querySelectorAll("[data-product-card]")].find(
+      element=>String(element.dataset.productCard)===productId
+    )||document.getElementById(`product-${productId}`);
     if(!card)return false;
     card.scrollIntoView({behavior:"smooth",block:"center"});
     card.classList.add("sm-deep-highlight");
@@ -944,7 +1009,7 @@ function trackPageViewOnce(){
     }
   ).format(new Date());
 
-  const key=`shorash:view:${day}`;
+  const key=`restbr:view:${day}`;
 
   if(sessionStorage.getItem(key))return;
 
@@ -956,7 +1021,7 @@ function trackPageViewOnce(){
 function saveMenuOfflineCache(db){
   try{
     localStorage.setItem(
-      "SHORASH_MENU_OFFLINE_CACHE_V1",
+      "RESTBR_MENU_OFFLINE_CACHE_V1",
       JSON.stringify({
         saved_at:Date.now(),
         db
@@ -968,7 +1033,7 @@ function saveMenuOfflineCache(db){
 
 function loadMenuOfflineCache(){
   try{
-    const raw=localStorage.getItem("SHORASH_MENU_OFFLINE_CACHE_V1");
+    const raw=localStorage.getItem("RESTBR_MENU_OFFLINE_CACHE_V1");
     if(!raw)return null;
 
     const parsed=JSON.parse(raw);
@@ -1754,19 +1819,16 @@ function formatRestaurantTemplate(value,targetLang=lang) {
     );
 
 
-  // Backward compatibility with old saved SHORASH text.
-  const oldBrandPatterns =
-    targetLang === "en"
-      ? [/SHORASH/gi,/Shorash/g]
-      : [/شوراش/g,/شورش/g,/SHORASH/gi];
+  // Backward compatibility belongs to each restaurant's configuration so the
+  // shared core never carries the identity of a specific restaurant.
+  safeArray(window.RESTBR_CONFIG?.legacyRestaurantNames).forEach(value => {
+    const alias = String(value || "").trim().slice(0,80);
+    if (!alias) return;
 
+    const escaped = alias.replace(/[.*+?^${}()|[\]\\]/g,"\\$&");
+    const flags = /[A-Za-z]/.test(alias) ? "gi" : "g";
 
-  oldBrandPatterns.forEach(pattern => {
-    text =
-      text.replace(
-        pattern,
-        currentName
-      );
+    text = text.replace(new RegExp(escaped,flags),currentName);
   });
 
 
@@ -1898,9 +1960,9 @@ function renderCats() {
     .map(category => `
       <button
         class="sm-cat ${category.ar === active ? "active" : ""}"
-        data-cat="${category.ar}"
-        data-cat-id="${category.id}">
-        ${txt(category)}
+        data-cat="${escapeUi(category.ar)}"
+        data-cat-id="${escapeUi(category.id)}">
+        ${escapeUi(txt(category))}
       </button>
     `)
     .join("");
@@ -1999,11 +2061,16 @@ function productCard(product) {
 
   const productOptions = product.options || [];
   const hasVariants = productOptions.length > 1;
+  const productId = escapeUi(product.id);
+  const productName = escapeUi(txt(product.name));
+  const productImage = escapeUi(
+    safeMediaUrl(product.image, "assets/restaurant-placeholder.svg")
+  );
 
   const optionRows = productOptions
     .map((option, optionIndex) => {
 
-      const optionName = txt(option);
+      const optionName = escapeUi(txt(option));
 
       return `
         <div class="sm-option">
@@ -2024,25 +2091,25 @@ function productCard(product) {
       : "";
 
   const variantButton = b.unavailable ? "" : hasVariants
-    ? `<button class="sm-choose-options" type="button" data-product-id="${product.id}">
+    ? `<button class="sm-choose-options" type="button" data-product-id="${productId}">
          <span>+</span><b>${lang === "en" ? "Choose" : lang === "ku" ? "هەڵبژێرە" : "اختيار"}</b>
        </button>`
-    : `<button class="sm-direct-add" type="button" data-product-id="${product.id}" data-option-index="0">
+    : `<button class="sm-direct-add" type="button" data-product-id="${productId}" data-option-index="0">
          <span>+</span><b>${lang === "en" ? "Add to cart" : lang === "ku" ? "زیادکردن بۆ سەبەتە" : "إضافة للسلة"}</b>
        </button>`;
 
 
   return `
     <article
-      id="product-${product.id}"
+      id="product-${productId}"
       class="${classes}"
-      data-product-card="${product.id}"
+      data-product-card="${productId}"
     >
 
       <button
         class="sm-share-product"
         type="button"
-        data-share-product="${product.id}"
+        data-share-product="${productId}"
         aria-label="${I18N[lang].share}">
         ↗
       </button>
@@ -2063,12 +2130,12 @@ function productCard(product) {
 
         <img
           class="sm-product-image"
-          data-full-image="${product.image || ""}"
-          data-product-name="${txt(product.name)}"
+          data-full-image="${productImage}"
+          data-product-name="${productName}"
           loading="lazy"
           decoding="async"
-          src="${product.image || ""}"
-          alt="${txt(product.name)}"
+          src="${productImage}"
+          alt="${productName}"
         >
 
       </div>
@@ -2076,12 +2143,12 @@ function productCard(product) {
       <div class="sm-info">
 
         <div class="sm-name">
-          ${txt(product.name)}
+          ${productName}
         </div>
 
         ${
           searchQuery
-            ? `<div class="sm-search-category">${txt(product.category)}</div>`
+            ? `<div class="sm-search-category">${escapeUi(txt(product.category))}</div>`
             : ""
         }
 
@@ -2089,7 +2156,7 @@ function productCard(product) {
 
         ${
           b.unavailable && product.scheduleText
-            ? `<div class="sm-schedule-note">${product.scheduleText}</div>`
+            ? `<div class="sm-schedule-note">${escapeUi(product.scheduleText)}</div>`
             : ""
         }
 
@@ -2177,13 +2244,13 @@ function render() {
 
       <div class="sm-section-head">
         <h2 class="sm-section-title">
-          ${txt(category)}
+          ${escapeUi(txt(category))}
         </h2>
 
         <button
           class="sm-share-category"
           type="button"
-          data-share-category="${category.id}"
+          data-share-category="${escapeUi(category.id)}"
           aria-label="${I18N[lang].share}">
           ↗
         </button>
@@ -2257,7 +2324,7 @@ function renderLanguages() {
    TOP ACTIONS
 ======================================== */
 
-function renderActions(){const holder=$("#smActions");if(!holder||!DB)return;const r=DB.restaurant||{},q=r.quickActions||{},a=[];if(q.location?.enabled!==false&&String(r.location||"").trim()&&r.location!=="#")a.push({icon:"📍",label:q.location?.label?.[lang]||I18N[lang].location,url:r.location});if(q.call?.enabled!==false&&String(r.phone||"").trim())a.push({icon:"☎",label:q.call?.label?.[lang]||I18N[lang].call,url:"tel:"+r.phone});if(q.whatsapp?.enabled!==false&&String(r.whatsapp||"").trim())a.push({icon:"💬",label:q.whatsapp?.label?.[lang]||I18N[lang].whatsapp,url:r.whatsapp});safeArray(r.customTopActions).forEach(i=>{const l=actionLabel(i),u=String(i?.url||"").trim();if(i?.enabled!==false&&l&&u)a.push({icon:String(i.icon||"🔗"),label:l,url:u})});holder.className="sm-quick-actions";holder.innerHTML=a.map(i=>`<a href="${escapeUi(i.url)}" ${/^https?:/i.test(i.url)?'target="_blank" rel="noopener"':''}><span>${escapeUi(i.icon)}</span><b>${escapeUi(i.label)}</b></a>`).join("");if(a.length){holder.style.display="grid";holder.style.gridTemplateColumns=`repeat(${a.length},minmax(0,1fr))`}else holder.style.display="none"}
+function renderActions(){const holder=$("#smActions");if(!holder||!DB)return;const r=DB.restaurant||{},q=r.quickActions||{},a=[];const add=(icon,label,url)=>{const safe=safeConfiguredUrl(url);if(safe)a.push({icon,label,url:safe})};if(q.location?.enabled!==false&&String(r.location||"").trim()&&r.location!=="#")add("📍",q.location?.label?.[lang]||I18N[lang].location,r.location);if(q.call?.enabled!==false&&String(r.phone||"").trim())add("☎",q.call?.label?.[lang]||I18N[lang].call,"tel:"+String(r.phone).replace(/[^\d+().-]/g,""));if(q.whatsapp?.enabled!==false&&String(r.whatsapp||"").trim())add("💬",q.whatsapp?.label?.[lang]||I18N[lang].whatsapp,r.whatsapp);safeArray(r.customTopActions).forEach(i=>{const l=actionLabel(i);if(i?.enabled!==false&&l)add(String(i.icon||"🔗"),l,i?.url)});holder.className="sm-quick-actions";holder.innerHTML=a.map(i=>`<a href="${escapeUi(i.url)}" ${/^https?:/i.test(i.url)?'target="_blank" rel="noopener noreferrer"':''}><span>${escapeUi(i.icon)}</span><b>${escapeUi(i.label)}</b></a>`).join("");if(a.length){holder.style.display="grid";holder.style.gridTemplateColumns=`repeat(${a.length},minmax(0,1fr))`}else holder.style.display="none"}
 
 /* ========================================
    APPLY LANGUAGE
@@ -2405,7 +2472,7 @@ document.addEventListener(
         languageButton.dataset.lang;
 
       localStorage.setItem(
-        "shorashLang",
+        "RESTBR_LANG_V1",
         lang
       );
 
@@ -2553,10 +2620,45 @@ function setupFooter() {
   const whatsapp =
     $("#smFooterWhatsapp");
 
+  const quickActions =
+    restaurant.quickActions || {};
+
+
+  if (location) {
+    location.textContent =
+      quickActions.location?.label?.[lang] ||
+      I18N[lang].location;
+  }
+
+
+  if (call) {
+    call.textContent =
+      quickActions.call?.label?.[lang] ||
+      I18N[lang].call;
+  }
+
+
+  if (whatsapp) {
+    whatsapp.textContent =
+      quickActions.whatsapp?.label?.[lang] ||
+      I18N[lang].whatsapp;
+  }
+
+
+  const safeLocation =
+    safeConfiguredUrl(restaurant.location);
+
+  const safeCall =
+    safeConfiguredUrl(
+      "tel:" + String(restaurant.phone || "").replace(/[^\d+().-]/g, "")
+    );
+
+  const safeWhatsapp =
+    safeConfiguredUrl(restaurant.whatsapp);
 
   const hasLocation =
-    String(restaurant.location || "").trim() &&
-    restaurant.location !== "#";
+    !!safeLocation &&
+    safeLocation !== "#";
 
   const hasPhone =
     String(restaurant.phone || "").trim();
@@ -2566,8 +2668,8 @@ function setupFooter() {
 
 
   if (location) {
-    location.href =
-      restaurant.location || "#";
+    if (safeLocation) location.href = safeLocation;
+    else location.removeAttribute("href");
 
     const show =
       display.footerLocationButton !== false &&
@@ -2579,9 +2681,8 @@ function setupFooter() {
 
 
   if (call) {
-    call.href =
-      "tel:" +
-      (restaurant.phone || "");
+    if (safeCall) call.href = safeCall;
+    else call.removeAttribute("href");
 
     const show =
       display.footerCallButton !== false &&
@@ -2593,8 +2694,8 @@ function setupFooter() {
 
 
   if (whatsapp) {
-    whatsapp.href =
-      restaurant.whatsapp || "#";
+    if (safeWhatsapp) whatsapp.href = safeWhatsapp;
+    else whatsapp.removeAttribute("href");
 
     const show =
       display.footerWhatsappButton !== false &&
@@ -2623,7 +2724,7 @@ function setupFooter() {
     if (!element) return;
 
     const clean =
-      String(url || "").trim();
+      safeConfiguredUrl(url);
 
     const show =
       display.footerSocials !== false &&
@@ -2632,6 +2733,10 @@ function setupFooter() {
 
     if (show) {
       element.href = clean;
+      if (/^https?:/i.test(clean)) {
+        element.target = "_blank";
+        element.rel = "noopener noreferrer";
+      }
       element.hidden = false;
       element.style.display = "";
     } else {
@@ -2677,9 +2782,9 @@ function setupFooter() {
         : "";
   }
   const footerActionsParent=location?.parentElement||call?.parentElement||whatsapp?.parentElement||document.querySelector(".sm-footer-actions");
-  if(footerActionsParent){footerActionsParent.querySelectorAll(".sm-custom-footer-action").forEach(el=>el.remove());safeArray(restaurant.customFooterActions).forEach(item=>{const label=actionLabel(item),url=String(item?.url||"").trim();if(item?.enabled===false||!label||!url)return;const link=document.createElement("a");link.className=(location?.className||call?.className||whatsapp?.className||"")+" sm-custom-footer-action";link.href=url;if(/^https?:/i.test(url)){link.target="_blank";link.rel="noopener"}link.innerHTML=`<span>${escapeUi(item.icon||"🔗")}</span><b>${escapeUi(label)}</b>`;footerActionsParent.appendChild(link)})}
+  if(footerActionsParent){footerActionsParent.querySelectorAll(".sm-custom-footer-action").forEach(el=>el.remove());safeArray(restaurant.customFooterActions).forEach(item=>{const label=actionLabel(item),url=safeConfiguredUrl(item?.url);if(item?.enabled===false||!label||!url)return;const link=document.createElement("a");link.className=(location?.className||call?.className||whatsapp?.className||"")+" sm-custom-footer-action";link.href=url;if(/^https?:/i.test(url)){link.target="_blank";link.rel="noopener noreferrer"}const icon=document.createElement("span"),text=document.createElement("b");icon.textContent=String(item.icon||"🔗");text.textContent=label;link.append(icon,text);footerActionsParent.appendChild(link)})}
   const socialParent=instagram?.parentElement||facebook?.parentElement||tiktok?.parentElement||snapchat?.parentElement||document.querySelector(".sm-footer-socials, .sm-footer-social");
-  if(socialParent){socialParent.querySelectorAll(".sm-custom-social-link").forEach(el=>el.remove());safeArray(restaurant.customSocialLinks).forEach(item=>{const url=String(item?.url||"").trim(),name=String(item?.name||"Social").trim();if(item?.enabled===false||!url)return;const link=document.createElement("a");link.className=(instagram?.className||facebook?.className||"sm-social-link")+" sm-custom-social-link";link.href=url;link.target="_blank";link.rel="noopener";link.title=name;link.setAttribute("aria-label",name);link.innerHTML=`<span style="display:grid;place-items:center;min-width:1.25em;min-height:1.25em;font-size:1.05em;">${escapeUi(item.icon||"🔗")}</span>`;socialParent.appendChild(link)})}
+  if(socialParent){socialParent.querySelectorAll(".sm-custom-social-link").forEach(el=>el.remove());safeArray(restaurant.customSocialLinks).forEach(item=>{const url=safeConfiguredUrl(item?.url),name=String(item?.name||"Social").trim();if(item?.enabled===false||!url)return;const link=document.createElement("a");link.className=(instagram?.className||facebook?.className||"sm-social-link")+" sm-custom-social-link";link.href=url;link.target="_blank";link.rel="noopener noreferrer";link.title=name;link.setAttribute("aria-label",name);const icon=document.createElement("span");icon.style.cssText="display:grid;place-items:center;min-width:1.25em;min-height:1.25em;font-size:1.05em";icon.textContent=String(item.icon||"🔗");link.appendChild(icon);socialParent.appendChild(link)})}
 
 }
 
@@ -2810,13 +2915,14 @@ function saveBrandCache(){
 
   try{
     localStorage.setItem(
-      "SHORASH_BRAND_CACHE_V1",
+      "RESTBR_BRAND_CACHE_V1",
       JSON.stringify({
         saved_at:Date.now(),
+        restaurantKey:String(window.RESTBR_RESTAURANT_KEY||""),
         nameAr:restaurant.nameAr ?? "",
         nameKu:restaurant.nameKu ?? "",
         nameEn:restaurant.nameEn ?? "",
-        logo:restaurant.logo ?? ""
+        logo:safeMediaUrl(restaurant.logo)
       })
     );
   }catch(_){}
@@ -2847,7 +2953,7 @@ function applyRestaurantBranding() {
 
 
   const logo =
-    String(restaurant.logo ?? "").trim();
+    safeMediaUrl(restaurant.logo);
 
 
   [
@@ -3035,9 +3141,7 @@ function setupBackground() {
 
 
   const url =
-    String(
-      DB.restaurant?.backgroundVideo || ""
-    ).trim();
+    safeMediaUrl(DB.restaurant?.backgroundVideo);
 
 
   if (!enabled || !url) {
@@ -3130,7 +3234,7 @@ function setupIntro() {
 
   const alreadySeen=
     sessionStorage.getItem(
-      "shorashIntroSeen"
+      "RESTBR_INTRO_SEEN_V1"
     );
 
 
@@ -3141,7 +3245,7 @@ function setupIntro() {
 
 
   sessionStorage.setItem(
-    "shorashIntroSeen",
+    "RESTBR_INTRO_SEEN_V1",
     "1"
   );
 
@@ -3411,7 +3515,7 @@ async function loadMenuFromSupabase() {
     throw new Error("Supabase client is not available");
   }
 
-  console.log("🔄 Loading SHORASH menu from Supabase...");
+  console.log("🔄 Loading RESTBR menu from Supabase...");
 
 
   /* =========================
@@ -4283,10 +4387,10 @@ async function loadMenuFallback() {
 
 
 /* ========================================
-   START SHORASH
+   START RESTBR
 ======================================== */
 
-async function startShorash() {
+async function startRestbr() {
 
   /*
     Intro runs independently
@@ -4307,7 +4411,7 @@ async function startShorash() {
 
 
       console.log(
-        "✅ SHORASH MENU LOADED FROM SUPABASE"
+        "✅ RESTBR MENU LOADED FROM SUPABASE"
       );
 
       saveMenuOfflineCache(DB);
@@ -4330,7 +4434,7 @@ async function startShorash() {
           await loadMenuFallback();
 
         console.log(
-          "✅ SHORASH MENU LOADED FROM JSON FALLBACK"
+          "✅ RESTBR MENU LOADED FROM JSON FALLBACK"
         );
 
         saveMenuOfflineCache(DB);
@@ -4347,7 +4451,7 @@ async function startShorash() {
         DB=cached;
 
         console.log(
-          "✅ SHORASH MENU LOADED FROM OFFLINE CACHE"
+          "✅ RESTBR MENU LOADED FROM OFFLINE CACHE"
         );
 
         showOfflineDataBanner();
@@ -4429,12 +4533,12 @@ async function startShorash() {
        GLOBAL DATABASE
     ========================= */
 
-    window.SHORASH_DB = DB;
+    window.RESTBR_DB = DB;
 
-    window.SHORASH_LANG =
+    window.RESTBR_LANG =
       () => lang;
 
-    window.SHORASH_TRACK=
+    window.RESTBR_TRACK=
       trackMenuEvent;
 
     trackPageViewOnce();
@@ -4442,8 +4546,8 @@ async function startShorash() {
     scrollToDeepLink();
 
 
-    if(!window.__shorashScheduleTimer){
-      window.__shorashScheduleTimer=setInterval(
+    if(!window.__RESTBR_SCHEDULE_TIMER__){
+      window.__RESTBR_SCHEDULE_TIMER__=setInterval(
         refreshScheduledAvailability,
         60000
       );
@@ -4452,7 +4556,7 @@ async function startShorash() {
 
     window.dispatchEvent(
       new CustomEvent(
-        "shorash:ready",
+        "restbr:ready",
         {
           detail: {
             DB
@@ -4466,14 +4570,14 @@ async function startShorash() {
 
 
     console.log(
-      "🚀 SHORASH MENU READY"
+      "🚀 RESTBR MENU READY"
     );
 
 
   } catch (error) {
 
     console.error(
-      "SHORASH MENU ERROR:",
+      "RESTBR MENU ERROR:",
       error
     );
 
@@ -4517,4 +4621,4 @@ async function startShorash() {
    RUN
 ======================================== */
 
-startShorash();
+startRestbr();

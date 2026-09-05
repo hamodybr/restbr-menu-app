@@ -1,7 +1,7 @@
 (() => {
   if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_WHATSAPP_ORDER_BULLETS_V1__) return;
-  window.__SHORASH_WHATSAPP_ORDER_BULLETS_V1__ = true;
+  if (window.__RESTBR_WHATSAPP_ORDER_BULLETS_V1__) return;
+  window.__RESTBR_WHATSAPP_ORDER_BULLETS_V1__ = true;
 
   function transformOrderMessage(value) {
     if (typeof value !== 'string') return value;
@@ -13,7 +13,7 @@
   function patchSendButton() {
     const button = document.getElementById('smSendWhatsApp');
     if (!button || typeof button.onclick !== 'function') return false;
-    if (button.__shorashWhatsappBulletsPatched) return true;
+    if (button.__restbrWhatsappBulletsPatched) return true;
 
     const originalHandler = button.onclick;
 
@@ -31,7 +31,7 @@
       }
     };
 
-    button.__shorashWhatsappBulletsPatched = true;
+    button.__restbrWhatsappBulletsPatched = true;
     return true;
   }
 

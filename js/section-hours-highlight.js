@@ -5,20 +5,26 @@
 
   const AR_DIGITS = ['٠','١','٢','٣','٤','٥','٦','٧','٨','٩'];
 
-  const toArabicDigits = value =>
-    String(value).replace(/\d/g, digit => AR_DIGITS[Number(digit)] || digit);
+  function toArabicDigits(value) {
+    return String(value).replace(/\d/g, digit => AR_DIGITS[Number(digit)] || digit);
+  }
 
-  const normalizeDigits = value =>
-    String(value || '').replace(/[٠-٩]/g, digit => String(AR_DIGITS.indexOf(digit)));
+  function normalizeDigits(value) {
+    return String(value || '').replace(/[٠-٩]/g, digit => String(AR_DIGITS.indexOf(digit)));
+  }
 
   function parseTwoTimes(text) {
-    const matches = [...normalizeDigits(text).matchAll(/(\d{1,2}):(\d{2})/g)];
+    const normalized = normalizeDigits(text);
+    const matches = [...normalized.matchAll(/(\d{1,2}):(\d{2})/g)];
     if (matches.length < 2) return null;
 
-    const read = match => ({ hour:Number(match[1]), minute:Number(match[2]) });
+    const read = match => ({
+      hour: Number(match[1]),
+      minute: Number(match[2])
+    });
+
     const from = read(matches[0]);
     const to = read(matches[1]);
-
     if (
       !Number.isFinite(from.hour) || !Number.isFinite(from.minute) ||
       !Number.isFinite(to.hour) || !Number.isFinite(to.minute)
@@ -41,14 +47,10 @@
   }
 
   function currentLanguage(text) {
-    const saved = String(
-      localStorage.getItem('RESTBR_LANG_V1') ||
-      localStorage.getItem('shorashLang') ||
-      ''
-    ).trim();
-
+    const saved = String(localStorage.getItem('RESTBR_LANG_V1') || '').trim();
     if (['ar','ku','en'].includes(saved)) return saved;
     if (/Category\s+available/i.test(text)) return 'en';
+    if (/القسم\s+متوفر/u.test(text)) return 'ar';
     if (/بەشەکە\s+بەردەستە/u.test(text)) return 'ku';
     return 'ar';
   }
@@ -61,11 +63,15 @@
     );
   }
 
-  function renderArabic(note, times) {
-    const kicker = document.createElement('span');
-    kicker.className = 'sm-category-schedule-kicker';
-    kicker.textContent = '⏰ وقت توفر القسم';
+  function makeSpan(className, text) {
+    const span = document.createElement('span');
+    span.className = className;
+    span.textContent = text;
+    return span;
+  }
 
+  function renderArabic(note, times) {
+    const kicker = makeSpan('sm-category-schedule-kicker', '⏰ وقت توفر القسم');
     const range = document.createElement('strong');
     range.className = 'sm-category-schedule-range';
     range.dir = 'rtl';
@@ -81,15 +87,11 @@
   }
 
   function renderEnglish(note, times) {
-    const kicker = document.createElement('span');
-    kicker.className = 'sm-category-schedule-kicker';
-    kicker.textContent = '⏰ Category hours';
-
+    const kicker = makeSpan('sm-category-schedule-kicker', '⏰ Category hours');
     const range = document.createElement('strong');
     range.className = 'sm-category-schedule-range';
     range.dir = 'ltr';
     range.textContent = `From ${format12(times.from, 'en')} to ${format12(times.to, 'en')}`;
-
     note.replaceChildren(kicker, range);
     note.dir = 'ltr';
   }
@@ -109,7 +111,14 @@
     const liveText = String(note.textContent || '').replace(/\s+/g, ' ').trim();
     if (!liveText || liveText === note.dataset.smScheduleRendered) return;
 
-    if (!isCategorySchedule(liveText)) return;
+    if (!isCategorySchedule(liveText)) {
+      note.classList.remove(
+        'sm-category-schedule-highlight',
+        'sm-category-schedule-under-unavailable'
+      );
+      delete note.dataset.smScheduleRendered;
+      return;
+    }
 
     const times = parseTwoTimes(liveText);
     if (!times) return;
@@ -117,14 +126,17 @@
     note.classList.add('sm-category-schedule-highlight');
     const language = currentLanguage(liveText);
 
-    if (language === 'ar') renderArabic(note, times);
-    else if (language === 'en') renderEnglish(note, times);
-    else note.dir = 'rtl';
+    if (language === 'ar') {
+      renderArabic(note, times);
+    } else if (language === 'en') {
+      renderEnglish(note, times);
+    } else {
+      note.textContent = liveText;
+      note.dir = 'rtl';
+    }
 
     placeUnderUnavailable(note);
-    note.dataset.smScheduleRendered = String(note.textContent || '')
-      .replace(/\s+/g, ' ')
-      .trim();
+    note.dataset.smScheduleRendered = String(note.textContent || '').replace(/\s+/g, ' ').trim();
   }
 
   function refresh(root = document) {
@@ -143,6 +155,7 @@
         overflow:hidden;
         width:max-content;
         max-width:96%;
+        margin:8px auto 1px !important;
         padding:6px 11px 7px !important;
         display:flex;
         flex-direction:column;
@@ -151,9 +164,15 @@
         gap:2px;
         border:1px solid rgba(232,184,98,.62);
         border-radius:999px;
-        background:radial-gradient(circle at 50% -30%,rgba(255,220,145,.2),transparent 60%),linear-gradient(135deg,rgba(91,56,20,.92),rgba(18,11,6,.94));
+        background:
+          radial-gradient(circle at 50% -30%,rgba(255,220,145,.2),transparent 60%),
+          linear-gradient(135deg,rgba(91,56,20,.92),rgba(18,11,6,.94));
         color:#ffe0a0 !important;
-        box-shadow:inset 0 1px 0 rgba(255,236,188,.15),0 0 0 1px rgba(232,184,98,.07),0 7px 18px rgba(0,0,0,.22),0 0 17px rgba(216,169,88,.14);
+        box-shadow:
+          inset 0 1px 0 rgba(255,236,188,.15),
+          0 0 0 1px rgba(232,184,98,.07),
+          0 7px 18px rgba(0,0,0,.22),
+          0 0 17px rgba(216,169,88,.14);
         backdrop-filter:blur(10px);
         -webkit-backdrop-filter:blur(10px);
         text-align:center;
@@ -191,6 +210,7 @@
         font-size:7.8px !important;
         font-weight:800;
         line-height:1.2;
+        letter-spacing:.05px;
         white-space:nowrap;
       }
 
@@ -238,7 +258,8 @@
       });
     };
 
-    new MutationObserver(scheduleRefresh).observe(document.body, {
+    const observer = new MutationObserver(scheduleRefresh);
+    observer.observe(document.body, {
       subtree:true,
       childList:true,
       characterData:true

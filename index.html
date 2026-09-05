@@ -4,19 +4,19 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
   <meta name="theme-color" content="#080604">
-  <script src="js/runtime-config.js?v=1.0"></script>
+
+  <script id="restbrUrlSafetyScript" src="js/url-safety.js?v=1.3"></script>
+  <script src="js/runtime-config.js?v=2.0"></script>
 
   <script>
     window.__smIntroBornAt=Date.now();
 
-    // Ordering starts fail-closed until the restaurant opening-hours policy
-    // has loaded and applied the real state. This removes the first-render
-    // window where an add button could briefly be clickable.
-    window.SHORASH_HOURS_READY=false;
+    // Ordering stays fail-closed until opening-hours state is resolved.
+    window.RESTBR_HOURS_READY=false;
     document.documentElement.classList.add("sm-hours-pending");
 
     document.addEventListener("click",function(event){
-      if(window.SHORASH_HOURS_READY===true)return;
+      if(window.RESTBR_HOURS_READY===true)return;
       const target=event.target.closest?.(
         ".sm-add-cart,.sm-direct-add,.sm-choose-options,[data-choice-product],#smCartContinue,#smSendWhatsApp"
       );
@@ -26,38 +26,37 @@
     },true);
 
     try{
-      const templateResetKey="RESTBR_TEMPLATE_RESET_V1";
+      const templateResetKey="RESTBR_TEMPLATE_RESET_V2";
       if(localStorage.getItem(templateResetKey)!=="done"){
         [
-          "SHORASH_BRAND_CACHE_V1",
-          "SHORASH_MENU_OFFLINE_CACHE_V1",
-          "shorashCartV1",
-          "shorashIntroSeen"
+          "RESTBR_BRAND_CACHE_V1",
+          "RESTBR_MENU_OFFLINE_CACHE_V1",
+          "RESTBR_CART_V1",
+          "RESTBR_ENABLED_LANGUAGES_V1"
         ].forEach(key=>localStorage.removeItem(key));
+        sessionStorage.removeItem("RESTBR_INTRO_SEEN_V1");
         localStorage.setItem(templateResetKey,"done");
       }
       localStorage.removeItem("SM_THEME_PREF_V1");
       document.documentElement.removeAttribute("data-sm-theme");
     }catch(_){}
   </script>
+
   <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-  <meta name="apple-mobile-web-app-title" content="Restaurant Menu">
+  <meta name="apple-mobile-web-app-title" content="RESTBR">
 
   <title>Restaurant Menu</title>
 
-  <!-- Restaurant favicon -->
   <link rel="icon" type="image/png" href="assets/favicon.png">
   <link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
   <link rel="manifest" href="manifest.webmanifest">
-  <link rel="stylesheet" href="css/style.css?v=4.0">
+  <link rel="stylesheet" href="css/style.css?v=4.1">
   <link rel="stylesheet" href="css/cart.css?v=3.6">
 
   <style>
-    html[dir="ltr"] .sm-card .sm-name{
-      padding-inline-start:38px !important;
-    }
+    html[dir="ltr"] .sm-card .sm-name{padding-inline-start:38px !important}
 
     html.sm-hours-pending .sm-add-cart,
     html.sm-hours-pending .sm-direct-add,
@@ -73,158 +72,75 @@
 </head>
 
 <body>
-
-  <!-- Background video -->
-  <video
-    id="smBgVideo"
-    class="sm-bg-video"
-    autoplay
-    muted
-    loop
-    playsinline>
-  </video>
-
+  <video id="smBgVideo" class="sm-bg-video" autoplay muted loop playsinline></video>
   <div class="sm-bg-overlay"></div>
 
-  <!-- Intro -->
   <div id="smIntro" class="sm-intro">
-
     <div class="sm-intro-logo-wrap">
-      <img
-        src=""
-        alt=""
-        class="sm-intro-logo"
-        style="visibility:hidden">
+      <img src="" alt="" class="sm-intro-logo" style="visibility:hidden">
     </div>
-
     <div class="sm-intro-brand"></div>
-
     <div class="sm-intro-sub">MENU</div>
-
   </div>
 
-  <!-- Main page -->
   <main id="smApp" class="sm-app">
-
     <header class="sm-header">
-
       <div class="sm-logo-wrap">
-        <img
-          src=""
-          alt=""
-          class="sm-logo"
-          style="visibility:hidden">
+        <img src="" alt="" class="sm-logo" style="visibility:hidden">
       </div>
-
       <h1>MENU</h1>
-
       <p id="smSubtitle"></p>
-
       <div id="smLangs" class="sm-langs"></div>
-
       <div id="smActions" class="sm-actions"></div>
-
     </header>
 
-
-    <!-- Sticky category navigation -->
     <div class="sm-cats-wrap">
-
       <div id="smCats" class="sm-cats"></div>
-
-      <div id="smProgress" class="sm-progress">
-        <span></span>
-      </div>
-
+      <div id="smProgress" class="sm-progress"><span></span></div>
     </div>
 
     <div id="smCatsSentinel"></div>
-
-
-    <!-- Menu -->
     <section id="smMenu" class="sm-menu"></section>
 
-
-    <!-- Footer -->
     <footer class="sm-footer">
-
       <div class="sm-footer-card">
-
         <div class="sm-footer-line"></div>
-
         <h2></h2>
-
-        <p class="sm-footer-location">
-
-        </p>
+        <p class="sm-footer-location"></p>
 
         <div class="sm-footer-main-actions">
-
-          <a id="smFooterLocation" href="#" target="_blank">
-            موقعنا
-          </a>
-
-          <a id="smFooterCall" href="#">
-            اتصال
-          </a>
-
-          <a id="smFooterWhatsapp" href="#" target="_blank">
-            WhatsApp Menu
-          </a>
-
+          <a id="smFooterLocation" href="#" target="_blank" rel="noopener noreferrer">موقعنا</a>
+          <a id="smFooterCall" href="#">اتصال</a>
+          <a id="smFooterWhatsapp" href="#" target="_blank" rel="noopener noreferrer">واتساب</a>
         </div>
-
 
         <div class="sm-footer-socials">
-
-          <a id="smFacebook" href="#" target="_blank">
-            Facebook
-          </a>
-
-          <a id="smSnapchat" href="#" target="_blank">
-            Snapchat
-          </a>
-
-          <a id="smTikTok" href="#" target="_blank">
-            TikTok
-          </a>
-
-          <a id="smInstagram" href="#" target="_blank">
-            Instagram
-          </a>
-
+          <a id="smFacebook" href="#" target="_blank" rel="noopener noreferrer">Facebook</a>
+          <a id="smSnapchat" href="#" target="_blank" rel="noopener noreferrer">Snapchat</a>
+          <a id="smTikTok" href="#" target="_blank" rel="noopener noreferrer">TikTok</a>
+          <a id="smInstagram" href="#" target="_blank" rel="noopener noreferrer">Instagram</a>
         </div>
 
-
         <div class="sm-footer-phone"></div>
-
         <div class="sm-footer-copy"></div>
-
       </div>
-
     </footer>
-
   </main>
 
-
-  <!-- Back to top -->
-  <button
-    id="smTopBtn"
-    class="sm-top-btn"
-    type="button"
-    aria-label="Back to top">
-    ↑
-  </button>
-
+  <button id="smTopBtn" class="sm-top-btn" type="button" aria-label="الرجوع إلى الأعلى">↑</button>
 
   <script>
     (function(){
       try{
-        const raw=localStorage.getItem("SHORASH_BRAND_CACHE_V1");
-        if(!raw)return;
+        const cached=typeof window.RESTBR_READ_BRAND_CACHE==="function"
+          ? window.RESTBR_READ_BRAND_CACHE()
+          : null;
+        if(!cached)return;
 
-        const cached=JSON.parse(raw)||{};
-        const lang=localStorage.getItem("shorashLang")||"ar";
+        const cachedLogo=typeof window.RESTBR_SAFE_MEDIA_URL==="function"
+          ? window.RESTBR_SAFE_MEDIA_URL(cached.logo)
+          : "";
+        const lang=localStorage.getItem("RESTBR_LANG_V1")||"ar";
 
         const name=
           lang==="ku"
@@ -236,60 +152,44 @@
         const brand=document.querySelector(".sm-intro-brand");
         if(brand)brand.textContent=name;
 
-        document
-          .querySelectorAll(".sm-intro-logo, .sm-logo")
-          .forEach(logo=>{
-            if(logo && cached.logo){
-              logo.src=cached.logo;
-              logo.style.visibility="visible";
-            }
-          });
+        document.querySelectorAll(".sm-intro-logo, .sm-logo").forEach(logo=>{
+          if(logo && cachedLogo){
+            logo.src=cachedLogo;
+            logo.style.visibility="visible";
+          }
+        });
       }catch(_){}
     })();
   </script>
 
-  <!-- Offline shell + persistent connection notice. Loaded before network libraries. -->
   <script src="js/offline-status.js?v=1.1"></script>
 
-  <!-- Supabase -->
-  <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <script src="js/supabase-config.js?v=2.2"></script>
+  <script
+    src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"
+    integrity="sha384-0UK+HVlz5Y7F//atDpPysyocv/PjGXQoBX+XSaL/eEotARW8rPFh+lL5sO0Ljzfi"
+    crossorigin="anonymous"></script>
+  <script src="js/supabase-config.js?v=2.4"></script>
 
-  <!-- Category unavailable state + clear product active/visible/available semantics. -->
   <script src="js/unavailable-card-state.js?v=1.1"></script>
-
-  <!-- Dine-in / takeaway gate + active discount price policy -->
-  <script src="js/dining-mode.js?v=1.3"></script>
+  <script src="js/dining-mode.js?v=1.4"></script>
   <script src="js/dining-gate-language.js?v=1.0"></script>
 
-  <!-- Menu + Cart + Live Prices -->
-  <script src="js/app.js?v=17.4"></script>
+  <script src="js/app.js?v=18.1"></script>
   <script src="js/section-hours-highlight.js?v=1.0"></script>
-  <script src="js/product-image-fallback.js?v=1.1"></script>
+  <script src="js/product-image-fallback.js?v=1.3"></script>
   <script src="js/price-safety.js?v=1.0"></script>
-  <script src="js/cart.js?v=4.2"></script>
+  <script src="js/cart.js?v=4.5"></script>
   <script src="js/cart-stale-item-guard.js?v=1.1"></script>
-  <script src="js/cart-fab-effects.js?v=1.2"></script>
+  <script src="js/cart-fab-effects.js?v=1.5"></script>
   <script src="js/live-prices.js?v=1.0"></script>
 
-  <!-- Desktop uses the exact tested phone presentation. Loaded last on purpose. -->
   <link rel="stylesheet" href="css/desktop-phone-parity.css?v=1.0">
-
-  <!-- English-only card direction override. Arabic/Kurdish remain untouched. -->
   <link rel="stylesheet" href="css/english-card-ltr.css?v=1.0">
-
-  <!-- Mobile-only: keep product photos perfectly clipped inside card corners. -->
   <link rel="stylesheet" href="css/mobile-card-image-fix.css?v=1.1">
-
-  <!-- Animated product labels + automatic live discount percentage. -->
   <link rel="stylesheet" href="css/live-card-badges.css?v=1.5">
   <script src="js/live-card-badges.js?v=1.0"></script>
 
-  <!-- Announcement direction + motion. -->
   <script src="js/english-news-ticker.js?v=1.0"></script>
-
-  <!-- Subtle living-card effects only. -->
   <script src="js/card-life-effects.js?v=1.0"></script>
-
 </body>
 </html>

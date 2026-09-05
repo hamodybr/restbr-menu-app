@@ -9,8 +9,8 @@
   const ORDER_SELECTOR = '.sm-add-cart,.sm-direct-add,.sm-choose-options,[data-choice-product],#smCartContinue,#smSendWhatsApp';
 
   // Fail closed during the short startup window until the real opening-hours
-  // state has been loaded and applied to SHORASH_DB.
-  window.SHORASH_HOURS_READY = false;
+  // state has been loaded and applied to RESTBR_DB.
+  window.RESTBR_HOURS_READY = false;
   document.documentElement.classList.add('sm-hours-pending');
 
   let settings = {
@@ -109,11 +109,11 @@
   }
 
   function lang() {
-    return localStorage.getItem('shorashLang') || 'ar';
+    return localStorage.getItem('RESTBR_LANG_V1') || 'ar';
   }
 
   function closedText(scheduleOpen) {
-    const restaurant = window.SHORASH_DB?.restaurant || {};
+    const restaurant = window.RESTBR_DB?.restaurant || {};
     const custom = safeObject(restaurant.closedMessage);
     const current = lang();
     const customText = custom[current] || custom.ar || custom.en || '';
@@ -228,14 +228,14 @@
   }
 
   function markResolved() {
-    if (window.SHORASH_HOURS_READY === true) return;
-    window.SHORASH_HOURS_READY = true;
+    if (window.RESTBR_HOURS_READY === true) return;
+    window.RESTBR_HOURS_READY = true;
     document.documentElement.classList.remove('sm-hours-pending');
-    window.dispatchEvent(new CustomEvent('shorash:hours-ready'));
+    window.dispatchEvent(new CustomEvent('restbr:hours-ready'));
   }
 
   function applyToMenu({ broadcast = false } = {}) {
-    const restaurant = window.SHORASH_DB?.restaurant;
+    const restaurant = window.RESTBR_DB?.restaurant;
     if (!restaurant || !loaded) return false;
 
     const scheduleOpen = scheduleAllowsOpen(settings.mode, settings.schedule);
@@ -258,7 +258,7 @@
     if (changed && broadcast && !broadcastLock) {
       broadcastLock = true;
       setTimeout(() => {
-        window.dispatchEvent(new CustomEvent('shorash:ready', {
+        window.dispatchEvent(new CustomEvent('restbr:ready', {
           detail:{ reason:'restaurant-hours' }
         }));
         broadcastLock = false;
@@ -302,13 +302,13 @@
     const orderControl = event.target.closest?.(ORDER_SELECTOR);
     if (!orderControl) return;
 
-    if (window.SHORASH_HOURS_READY !== true || document.body.classList.contains('sm-hours-closed')) {
+    if (window.RESTBR_HOURS_READY !== true || document.body.classList.contains('sm-hours-closed')) {
       event.preventDefault();
       event.stopImmediatePropagation();
     }
   }, true);
 
-  window.addEventListener('shorash:ready', () => {
+  window.addEventListener('restbr:ready', () => {
     applyToMenu({ broadcast:false });
   });
 

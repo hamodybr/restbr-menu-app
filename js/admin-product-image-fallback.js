@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__) return;
-  window.__SHORASH_ADMIN_PRODUCT_IMAGE_FALLBACK__ = true;
+  if (window.__RESTBR_ADMIN_PRODUCT_IMAGE_FALLBACK__) return;
+  window.__RESTBR_ADMIN_PRODUCT_IMAGE_FALLBACK__ = true;
 
   const LEGACY_FALLBACK = 'assets/restaurant-placeholder.svg';
   const TARGET_SELECTOR = '#p_image_preview,#np_image_preview,.product-image';
@@ -12,6 +12,12 @@
     return String(value || '').trim();
   }
 
+  function safeStoredUrl(value) {
+    return typeof window.RESTBR_SAFE_MEDIA_URL === 'function'
+      ? window.RESTBR_SAFE_MEDIA_URL(value)
+      : '';
+  }
+
   function isLegacyFallback(value) {
     const src = cleanUrl(value);
     if (!src) return true;
@@ -20,7 +26,7 @@
 
   function currentSettingsLogo() {
     const preview = document.getElementById('rs_logo_preview');
-    const src = cleanUrl(preview?.getAttribute('src') || preview?.src);
+    const src = safeStoredUrl(preview?.getAttribute('src') || preview?.src);
     return src && !isLegacyFallback(src) ? src : '';
   }
 
@@ -76,7 +82,7 @@
         .maybeSingle();
 
       if (error) throw error;
-      const logo = cleanUrl(data?.logo_url);
+      const logo = safeStoredUrl(data?.logo_url);
       if (logo) restaurantLogo = logo;
       applyFallbacks();
     } catch (error) {

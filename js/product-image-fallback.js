@@ -1,22 +1,26 @@
 (() => {
   if (/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
 
+  function safeMedia(value){
+    return typeof window.RESTBR_SAFE_MEDIA_URL === 'function'
+      ? window.RESTBR_SAFE_MEDIA_URL(value)
+      : '';
+  }
+
   function restaurantLogo(){
-    const liveLogo = String(
-      window.SHORASH_DB?.restaurant?.logo ||
+    const liveLogo = safeMedia(
+      window.RESTBR_DB?.restaurant?.logo ||
       document.querySelector('.sm-logo')?.getAttribute('src') ||
       document.querySelector('.sm-intro-logo')?.getAttribute('src') ||
       ''
-    ).trim();
+    );
 
     if (liveLogo) return liveLogo;
 
-    try{
-      const cached = JSON.parse(localStorage.getItem('SHORASH_BRAND_CACHE_V1') || '{}');
-      return String(cached?.logo || '').trim();
-    }catch(_){
-      return '';
-    }
+    const cached = typeof window.RESTBR_READ_BRAND_CACHE === 'function'
+      ? window.RESTBR_READ_BRAND_CACHE()
+      : null;
+    return safeMedia(cached?.logo);
   }
 
   function installStyles(){
@@ -65,7 +69,7 @@
     if (!(img instanceof HTMLImageElement)) return;
     if (!img.classList.contains('sm-product-image')) return;
 
-    const raw = String(img.getAttribute('src') || '').trim();
+    const raw = safeMedia(img.getAttribute('src'));
     if (!raw) {
       applyFallback(img);
       return;

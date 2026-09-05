@@ -3,7 +3,7 @@
 
   const ALL = ['ar', 'ku', 'en'];
   const LABELS = { ar: 'عربي', ku: 'کوردی', en: 'English' };
-  const ENABLED_CACHE_KEY = 'SHORASH_ENABLED_LANGUAGES_V1';
+  const ENABLED_CACHE_KEY = 'RESTBR_ENABLED_LANGUAGES_V1';
   const SETTINGS_TABLE = 'restaurant_settings';
 
   let enabledLanguages = readEnabledCache() || [...ALL];
@@ -73,7 +73,7 @@
   }
 
   function currentLanguage() {
-    const value = localStorage.getItem('shorashLang') || 'ar';
+    const value = localStorage.getItem('RESTBR_LANG_V1') || 'ar';
     return ALL.includes(value) ? value : 'ar';
   }
 
@@ -260,7 +260,7 @@
       const language = button.dataset.smGateLang;
       if (!ALL.includes(language) || !enabledLanguages.includes(language)) return;
 
-      try { localStorage.setItem('shorashLang', language); } catch (_) {}
+      try { localStorage.setItem('RESTBR_LANG_V1', language); } catch (_) {}
 
       document.documentElement.lang = language;
       document.documentElement.dir = language === 'en' ? 'ltr' : 'rtl';

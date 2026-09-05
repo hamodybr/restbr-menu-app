@@ -9,16 +9,16 @@
       : null;
 
   const lang = () =>
-    window.SHORASH_LANG
-      ? window.SHORASH_LANG()
-      : (localStorage.getItem("shorashLang") || "ar");
+    window.RESTBR_LANG
+      ? window.RESTBR_LANG()
+      : (localStorage.getItem("RESTBR_LANG_V1") || "ar");
 
   const money = value => {
     if (value === null || value === undefined || value === "") return "";
     return Number(value).toLocaleString("en-US") + " " + (lang() === "en" ? "IQD" : "د.ع");
   };
 
-  const db = () => window.SHORASH_DB;
+  const db = () => window.RESTBR_DB;
 
   function productById(productId) {
     return db()?.products?.find(
@@ -67,7 +67,7 @@
 
   function notifyPriceUpdate(detail = {}) {
     window.dispatchEvent(
-      new CustomEvent("shorash:prices-updated", { detail })
+      new CustomEvent("restbr:prices-updated", { detail })
     );
   }
 
@@ -133,7 +133,7 @@
     syncAllPrices();
 
     channel = sb
-      .channel("shorash-live-prices-v1")
+      .channel("restbr-live-prices-v1")
       .on(
         "postgres_changes",
         {
@@ -176,7 +176,7 @@
     if (document.visibilityState === "visible") syncAllPrices();
   });
 
-  window.addEventListener("shorash:ready", start, { once: true });
+  window.addEventListener("restbr:ready", start, { once: true });
 
   if (db()?.products) {
     start();
