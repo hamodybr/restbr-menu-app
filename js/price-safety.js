@@ -8,9 +8,9 @@
   };
 
   function lang(){
-    const value = window.SHORASH_LANG
-      ? window.SHORASH_LANG()
-      : (localStorage.getItem('shorashLang') || 'ar');
+    const value = window.RESTBR_LANG
+      ? window.RESTBR_LANG()
+      : (localStorage.getItem('RESTBR_LANG_V1') || 'ar');
     return ['ar','ku','en'].includes(value) ? value : 'ar';
   }
 
@@ -26,7 +26,7 @@
   }
 
   function productById(id){
-    return window.SHORASH_DB?.products?.find(
+    return window.RESTBR_DB?.products?.find(
       product => String(product.id) === String(id)
     ) || null;
   }
@@ -155,7 +155,7 @@
   function cartHasInvalidCurrentPrice(){
     let cart = [];
     try {
-      cart = JSON.parse(localStorage.getItem('shorashCartV1') || '[]');
+      cart = JSON.parse(localStorage.getItem('RESTBR_CART_V1') || '[]');
     } catch (_) {
       return false;
     }
@@ -198,8 +198,8 @@
     patchAll();
     observer.observe(document.body,{childList:true,subtree:true});
 
-    window.addEventListener('shorash:ready',() => setTimeout(patchAll,0));
-    window.addEventListener('shorash:prices-updated',() => setTimeout(patchAll,0));
+    window.addEventListener('restbr:ready',() => setTimeout(patchAll,0));
+    window.addEventListener('restbr:prices-updated',() => setTimeout(patchAll,0));
 
     document.addEventListener('click',event => {
       if (event.target.closest('[data-lang],[data-sm-gate-lang]')) {

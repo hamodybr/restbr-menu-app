@@ -8,16 +8,14 @@ create schema if not exists private;
 revoke all on schema private from public;
 grant usage on schema private to authenticated;
 
--- Supabase can create this helper when "automatic RLS" is enabled while the
--- project is created. The event trigger still works as its owner, but browser
--- roles must never be able to call the SECURITY DEFINER helper directly.
-do $$
-begin
-  if to_regprocedure('public.rls_auto_enable()') is not null then
-    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
-  end if;
-end;
-$$;
+-- New API objects start private. Every browser/server permission is granted
+-- explicitly later in this bootstrap.
+alter default privileges for role postgres in schema public
+  revoke all on tables from anon, authenticated, service_role;
+alter default privileges for role postgres in schema public
+  revoke all on sequences from anon, authenticated, service_role;
+alter default privileges for role postgres in schema public
+  revoke execute on functions from public, anon, authenticated;
 
 create table if not exists public.restaurant_settings (
   id uuid primary key default gen_random_uuid(),
@@ -175,6 +173,67 @@ create table if not exists public.product_options (
   takeaway_price numeric check (takeaway_price is null or takeaway_price >= 0)
 );
 
+-- Give every new restaurant a complete editable starter menu. This block is
+-- idempotent and only runs when the menu is still empty.
+do $$
+declare
+  category_id uuid;
+  product_id uuid;
+  category_number integer;
+  product_number integer;
+  base_price_value numeric;
+begin
+  if exists (select 1 from public.categories)
+     or exists (select 1 from public.products) then
+    return;
+  end if;
+
+  for category_number in 1..15 loop
+    insert into public.categories (
+      name_ar, name_ku, name_en, slug, sort_order,
+      is_active, is_visible, availability_schedule_enabled
+    ) values (
+      'قسم تجريبي ' || category_number,
+      'بەشی تاقیکردنەوە ' || category_number,
+      'Demo Category ' || category_number,
+      'demo-category-' || category_number,
+      category_number, true, true, false
+    ) returning id into category_id;
+
+    for product_number in 1..2 loop
+      base_price_value := 5000
+        + ((category_number - 1) * 500)
+        + ((product_number - 1) * 1000);
+
+      insert into public.products (
+        category_id, name_ar, name_ku, name_en, description_ar,
+        base_price, sort_order, is_active, is_visible, is_available, has_options
+      ) values (
+        category_id,
+        'صنف تجريبي ' || category_number || ' - ' || product_number,
+        'بەرهەمی تاقیکردنەوە ' || category_number || ' - ' || product_number,
+        'Demo Item ' || category_number || ' - ' || product_number,
+        'عدّل الاسم والوصف والسعر من لوحة الإدارة.',
+        base_price_value, product_number, true, true, true, true
+      ) returning id into product_id;
+
+      insert into public.product_options (
+        product_id, name_ar, name_ku, name_en, price, takeaway_price,
+        sort_order, is_active, is_available
+      ) values
+        (
+          product_id, 'صغير', 'بچووک', 'Small',
+          base_price_value, base_price_value + 500, 1, true, true
+        ),
+        (
+          product_id, 'كبير', 'گەورە', 'Large',
+          base_price_value + 2000, base_price_value + 2500, 2, true, true
+        );
+    end loop;
+  end loop;
+end;
+$$;
+
 create table if not exists public.discounts (
   id uuid primary key default gen_random_uuid(),
   discount_percent numeric not null check (discount_percent > 0 and discount_percent <= 100),
@@ -250,6 +309,8 @@ create index if not exists product_options_sort_order_idx on public.product_opti
 create index if not exists orders_created_at_idx on public.orders(created_at desc);
 create index if not exists orders_status_idx on public.orders(status);
 create index if not exists order_items_order_id_idx on public.order_items(order_id);
+create index if not exists order_items_product_id_idx on public.order_items(product_id);
+create index if not exists order_items_option_id_idx on public.order_items(option_id);
 create index if not exists menu_analytics_daily_type_date_idx
   on public.menu_analytics_daily(event_type, event_date desc);
 create index if not exists admin_users_active_role_idx
@@ -365,7 +426,7 @@ grant execute on function private.can_manage_discounts() to authenticated;
 grant execute on function private.can_view_reports() to authenticated;
 grant execute on function private.can_manage_orders() to authenticated;
 
--- Compatibility wrappers used by the existing dashboard and optional migrations.
+-- Compatibility wrappers used by the dashboard and optional migrations.
 create or replace function public.current_admin_role()
 returns text language sql stable security invoker set search_path = ''
 as $$ select private.current_admin_role(); $$;
@@ -402,7 +463,7 @@ create or replace function public.can_manage_orders()
 returns boolean language sql stable security invoker set search_path = ''
 as $$ select private.can_manage_orders(); $$;
 
-create or replace function public.is_shorash_admin()
+create or replace function public.is_restbr_admin()
 returns boolean language sql stable security invoker set search_path = ''
 as $$ select private.can_access_admin(); $$;
 
@@ -415,7 +476,7 @@ revoke all on function public.can_manage_users() from public;
 revoke all on function public.can_manage_discounts() from public;
 revoke all on function public.can_view_reports() from public;
 revoke all on function public.can_manage_orders() from public;
-revoke all on function public.is_shorash_admin() from public;
+revoke all on function public.is_restbr_admin() from public;
 
 grant execute on function public.current_admin_role() to authenticated;
 grant execute on function public.has_admin_role(text[]) to authenticated;
@@ -426,7 +487,7 @@ grant execute on function public.can_manage_users() to authenticated;
 grant execute on function public.can_manage_discounts() to authenticated;
 grant execute on function public.can_view_reports() to authenticated;
 grant execute on function public.can_manage_orders() to authenticated;
-grant execute on function public.is_shorash_admin() to authenticated;
+grant execute on function public.is_restbr_admin() to authenticated;
 
 create or replace function public.track_menu_event(
   p_event_type text,
@@ -440,9 +501,11 @@ set search_path = ''
 as $$
 declare
   v_type text := lower(left(coalesce(p_event_type, ''), 40));
-  v_ref text := left(coalesce(p_ref_id, ''), 100);
+  v_ref text := lower(left(coalesce(p_ref_id, ''), 100));
   v_language text := lower(left(coalesce(p_language, ''), 5));
   v_date date := (now() at time zone 'Asia/Baghdad')::date;
+  v_uuid_pattern constant text :=
+    '^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$';
 begin
   if v_type not in (
     'menu_view', 'category_view', 'product_interest', 'search_use',
@@ -453,6 +516,39 @@ begin
 
   if v_language not in ('', 'ar', 'ku', 'en') then
     v_language := '';
+  end if;
+
+  if v_type in ('category_view', 'share_category') then
+    if v_ref !~ v_uuid_pattern then
+      raise exception 'Invalid analytics category reference';
+    end if;
+    if not exists (
+        select 1
+        from public.categories c
+        where c.id = v_ref::uuid
+          and c.is_active = true
+          and c.is_visible = true
+      ) then
+      raise exception 'Invalid analytics category reference';
+    end if;
+  elsif v_type in ('product_interest', 'share_product') then
+    if v_ref !~ v_uuid_pattern then
+      raise exception 'Invalid analytics product reference';
+    end if;
+    if not exists (
+        select 1
+        from public.products p
+        join public.categories c on c.id = p.category_id
+        where p.id = v_ref::uuid
+          and p.is_active = true
+          and p.is_visible = true
+          and c.is_active = true
+          and c.is_visible = true
+      ) then
+      raise exception 'Invalid analytics product reference';
+    end if;
+  else
+    v_ref := '';
   end if;
 
   insert into public.menu_analytics_daily(
@@ -468,6 +564,8 @@ $$;
 
 revoke all on function public.track_menu_event(text,text,text) from public;
 grant execute on function public.track_menu_event(text,text,text) to anon, authenticated;
+comment on function public.track_menu_event(text,text,text) is
+  'Intentional public analytics endpoint. Inputs and references are allow-listed; the analytics table remains private to browser roles.';
 
 create or replace function public.adjust_menu_prices_mode(
   p_category_id uuid,
@@ -595,8 +693,17 @@ using ((select private.can_manage_restaurant_settings()))
 with check ((select private.can_manage_restaurant_settings()));
 
 drop policy if exists restbr_categories_public_read on public.categories;
+drop policy if exists restbr_categories_admin_read on public.categories;
+drop policy if exists restbr_categories_authenticated_read on public.categories;
 create policy restbr_categories_public_read
-on public.categories for select to anon, authenticated using (true);
+on public.categories for select to anon
+using (is_active = true and is_visible = true);
+create policy restbr_categories_authenticated_read
+on public.categories for select to authenticated
+using (
+  (is_active = true and is_visible = true)
+  or (select private.can_access_admin())
+);
 drop policy if exists restbr_categories_insert on public.categories;
 create policy restbr_categories_insert
 on public.categories for insert to authenticated
@@ -612,8 +719,37 @@ on public.categories for delete to authenticated
 using ((select private.has_admin_role(array['super_admin','owner','manager']::text[])));
 
 drop policy if exists restbr_products_public_read on public.products;
+drop policy if exists restbr_products_admin_read on public.products;
+drop policy if exists restbr_products_authenticated_read on public.products;
 create policy restbr_products_public_read
-on public.products for select to anon, authenticated using (true);
+on public.products for select to anon
+using (
+  is_active = true
+  and is_visible = true
+  and exists (
+    select 1
+    from public.categories c
+    where c.id = products.category_id
+      and c.is_active = true
+      and c.is_visible = true
+  )
+);
+create policy restbr_products_authenticated_read
+on public.products for select to authenticated
+using (
+  (
+    is_active = true
+    and is_visible = true
+    and exists (
+      select 1
+      from public.categories c
+      where c.id = products.category_id
+        and c.is_active = true
+        and c.is_visible = true
+    )
+  )
+  or (select private.can_access_admin())
+);
 drop policy if exists restbr_products_insert on public.products;
 create policy restbr_products_insert
 on public.products for insert to authenticated
@@ -629,8 +765,41 @@ on public.products for delete to authenticated
 using ((select private.has_admin_role(array['super_admin','owner','manager']::text[])));
 
 drop policy if exists restbr_product_options_public_read on public.product_options;
+drop policy if exists restbr_product_options_admin_read on public.product_options;
+drop policy if exists restbr_product_options_authenticated_read on public.product_options;
 create policy restbr_product_options_public_read
-on public.product_options for select to anon, authenticated using (true);
+on public.product_options for select to anon
+using (
+  is_active = true
+  and exists (
+    select 1
+    from public.products p
+    join public.categories c on c.id = p.category_id
+    where p.id = product_options.product_id
+      and p.is_active = true
+      and p.is_visible = true
+      and c.is_active = true
+      and c.is_visible = true
+  )
+);
+create policy restbr_product_options_authenticated_read
+on public.product_options for select to authenticated
+using (
+  (
+    is_active = true
+    and exists (
+      select 1
+      from public.products p
+      join public.categories c on c.id = p.category_id
+      where p.id = product_options.product_id
+        and p.is_active = true
+        and p.is_visible = true
+        and c.is_active = true
+        and c.is_visible = true
+    )
+  )
+  or (select private.can_access_admin())
+);
 drop policy if exists restbr_product_options_insert on public.product_options;
 create policy restbr_product_options_insert
 on public.product_options for insert to authenticated
@@ -647,11 +816,12 @@ using ((select private.has_admin_role(array['super_admin','owner','manager']::te
 
 drop policy if exists restbr_discounts_public_read on public.discounts;
 create policy restbr_discounts_public_read
-on public.discounts for select to anon, authenticated using (is_active = true);
+on public.discounts for select to anon using (is_active = true);
 drop policy if exists restbr_discounts_admin_read on public.discounts;
-create policy restbr_discounts_admin_read
+drop policy if exists restbr_discounts_authenticated_read on public.discounts;
+create policy restbr_discounts_authenticated_read
 on public.discounts for select to authenticated
-using ((select private.can_access_admin()));
+using (is_active = true or (select private.can_access_admin()));
 drop policy if exists restbr_discounts_insert on public.discounts;
 create policy restbr_discounts_insert
 on public.discounts for insert to authenticated
@@ -710,6 +880,15 @@ grant select on public.order_items to authenticated;
 grant select on public.menu_analytics_daily to authenticated;
 grant select on public.admin_users to authenticated;
 
+-- RLS governs DML; browser roles never need schema-changing table rights.
+revoke truncate, references, trigger on all tables in schema public
+  from anon, authenticated, service_role;
+
+-- Exact server-side needs used by the RESTBR Edge Functions.
+grant select on all tables in schema public to service_role;
+grant insert, update, delete on public.admin_users to service_role;
+grant update on public.products to service_role;
+
 insert into storage.buckets (
   id, name, public, file_size_limit, allowed_mime_types
 )
@@ -718,9 +897,13 @@ values (
   'menu-images',
   true,
   10485760,
-  array['image/jpeg','image/png','image/webp','image/gif']::text[]
+  array['image/jpeg','image/png','image/webp','image/gif','image/avif']::text[]
 )
-on conflict (id) do nothing;
+on conflict (id) do update set
+  name = excluded.name,
+  public = excluded.public,
+  file_size_limit = excluded.file_size_limit,
+  allowed_mime_types = excluded.allowed_mime_types;
 
 drop policy if exists restbr_menu_images_insert on storage.objects;
 create policy restbr_menu_images_insert
@@ -788,5 +971,16 @@ where u.id = (
 )
 on conflict (user_id) do update
 set role = 'super_admin', is_active = true;
+
+-- Defensive compatibility hardening: older RESTBR databases may contain this
+-- SECURITY DEFINER helper. Fresh databases do not create it, but if it exists
+-- it must never be executable by public browser roles.
+do $$
+begin
+  if to_regprocedure('public.rls_auto_enable()') is not null then
+    execute 'revoke execute on function public.rls_auto_enable() from public, anon, authenticated';
+  end if;
+end;
+$$;
 
 commit;

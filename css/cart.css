@@ -1,4 +1,4 @@
-/* SHORASH CART V1 */
+/* RESTBR CART V1 */
 .sm-option-buy{display:flex;align-items:center;gap:6px;flex:0 0 auto}
 .sm-add-cart{width:22px;height:22px;border-radius:50%;border:1px solid rgba(225,177,92,.75);background:linear-gradient(135deg,#e2b15c,#a86c28);color:#100b05;font-size:16px;font-weight:900;line-height:1;display:grid;place-items:center;padding:0;cursor:pointer}.sm-add-cart:active{transform:scale(.9)}
 .sm-cart-fab{position:fixed;z-index:70;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);min-width:145px;height:46px;padding:0 16px;border:1px solid rgba(224,173,85,.78);border-radius:999px;background:rgba(9,8,6,.9);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);color:#f3c66e;font-weight:900;box-shadow:0 12px 34px rgba(0,0,0,.45);display:flex;align-items:center;justify-content:center;gap:8px}.sm-cart-fab.has-items{background:linear-gradient(135deg,rgba(32,24,13,.97),rgba(14,10,7,.97))}
@@ -12,7 +12,7 @@
 .sm-cart-toast{position:fixed;z-index:90;left:50%;bottom:76px;transform:translate(-50%,10px);padding:9px 14px;border-radius:999px;background:#17130e;color:#efbd62;border:1px solid #5a452d;font-size:11px;font-weight:800;opacity:0;pointer-events:none;transition:.22s;white-space:nowrap}.sm-cart-toast.show{opacity:1;transform:translate(-50%,0)}.sm-cart-lock{overflow:hidden}
 @media(max-width:768px){.sm-option-buy{gap:4px}.sm-add-cart{width:20px;height:20px;font-size:14px}.sm-cart-fab{height:43px;min-width:136px;font-size:11px}#smTopBtn{bottom:70px}}
 
-/* SHORASH CART V2 — variant chooser, touch controls, image viewer */
+/* RESTBR CART V2 — variant chooser, touch controls, image viewer */
 button,.sm-add-cart,.sm-choose-options,.sm-cart-qty button,.sm-choice-option{touch-action:manipulation;-webkit-tap-highlight-color:transparent;user-select:none;-webkit-user-select:none}
 .sm-product-image{cursor:zoom-in;touch-action:manipulation}
 .sm-choose-options{align-self:flex-start;margin-top:5px;min-width:78px;height:27px;padding:0 10px;border-radius:999px;border:1px solid rgba(225,177,92,.72);background:rgba(18,14,9,.58);color:#e7b65d;display:flex;align-items:center;justify-content:center;gap:5px;font-size:10px;font-weight:900;touch-action:manipulation}
@@ -29,7 +29,7 @@ button,.sm-add-cart,.sm-choose-options,.sm-cart-qty button,.sm-choice-option{tou
 .sm-cart-head{position:relative}.sm-cart-head h3{flex:1;text-align:center}.sm-cart-clear{height:30px;padding:0 10px;border-radius:999px;border:1px solid rgba(212,157,76,.42);background:rgba(20,15,10,.55);color:#d9a855;font-size:10px;font-weight:800;white-space:nowrap}.sm-cart-clear:disabled{opacity:.32;pointer-events:none}
 @media(max-width:768px){.sm-direct-add{height:25px;min-width:88px;font-size:9px;margin-top:3px}.sm-cart-clear{height:28px;padding:0 8px;font-size:9px}}
 
-/* SHORASH CHECKOUT V1 */
+/* RESTBR CHECKOUT V1 */
 .sm-checkout-backdrop{position:fixed;inset:0;z-index:84;background:rgba(0,0,0,.68);opacity:0;visibility:hidden;transition:.24s}.sm-checkout-backdrop.open{opacity:1;visibility:visible}
 .sm-checkout-sheet{position:fixed;z-index:85;left:50%;bottom:0;transform:translate(-50%,105%);width:min(620px,100%);max-height:92vh;border:1px solid rgba(212,157,76,.58);border-bottom:0;border-radius:27px 27px 0 0;background:rgba(10,8,6,.95);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px);box-shadow:0 -22px 70px rgba(0,0,0,.58);transition:transform .3s cubic-bezier(.2,.8,.2,1);display:flex;flex-direction:column;padding:8px 16px calc(14px + env(safe-area-inset-bottom))}.sm-checkout-sheet.open{transform:translate(-50%,0)}
 .sm-checkout-handle{width:48px;height:4px;border-radius:99px;background:#76644d;margin:2px auto 7px}.sm-checkout-head{display:flex;align-items:center;border-bottom:1px solid rgba(255,255,255,.08);padding:2px 0 10px}.sm-checkout-head h3{flex:1;text-align:center;margin:0;color:#e8b65f;font-size:20px}.sm-checkout-head button{width:35px;height:35px;border-radius:50%;border:1px solid #493a29;background:#15110d;color:#ddd;font-size:24px}

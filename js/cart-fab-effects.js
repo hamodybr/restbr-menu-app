@@ -14,6 +14,8 @@
           min-width .28s cubic-bezier(.2,.8,.2,1),
           max-width .28s cubic-bezier(.2,.8,.2,1),
           padding .28s cubic-bezier(.2,.8,.2,1),
+          left .3s cubic-bezier(.2,.8,.2,1),
+          transform .3s cubic-bezier(.2,.8,.2,1),
           background .24s ease,
           border-color .24s ease,
           box-shadow .24s ease !important;
@@ -60,6 +62,42 @@
         font-size:23px !important;
         line-height:1 !important;
         transform-origin:center;
+      }
+
+      /* Keep the footer phone number clear without changing the cart's normal position. */
+      #smCartFab.sm-cart-fab-footer{
+        left:max(14px,env(safe-area-inset-left)) !important;
+        right:auto !important;
+        transform:none !important;
+        width:54px !important;
+        min-width:54px !important;
+        max-width:54px !important;
+        height:54px !important;
+        min-height:54px !important;
+        padding:0 !important;
+        border-radius:50% !important;
+        gap:0 !important;
+      }
+
+      #smCartFab.sm-cart-fab-footer #smCartFabText{
+        display:none !important;
+      }
+
+      #smTopBtn.sm-top-footer{
+        right:max(14px,env(safe-area-inset-right)) !important;
+        bottom:calc(var(--sm-ui-cart-bottom,16px) + env(safe-area-inset-bottom)) !important;
+        width:54px !important;
+        height:54px !important;
+      }
+
+      @media (min-width:769px){
+        #smCartFab.sm-cart-fab-footer{
+          left:calc(50% - 206px) !important;
+        }
+
+        #smTopBtn.sm-top-footer{
+          right:calc(50% - 206px) !important;
+        }
       }
 
       .sm-cart-fly{
@@ -147,6 +185,55 @@
         easing:"ease-out"
       });
     }
+  }
+
+  function installFooterAvoidance(){
+    const fab = document.getElementById("smCartFab");
+    const footer = document.querySelector(".sm-footer");
+    if(!fab || !footer) return;
+
+    const setAside = visible => {
+      fab.classList.toggle("sm-cart-fab-footer",visible);
+      document.getElementById("smTopBtn")?.classList.toggle("sm-top-footer",visible);
+
+      const forced = {
+        width:"54px",
+        "min-width":"54px",
+        "max-width":"54px",
+        height:"54px",
+        "min-height":"54px",
+        padding:"0px",
+        "border-radius":"50%",
+        gap:"0px",
+        "box-sizing":"border-box"
+      };
+
+      Object.entries(forced).forEach(([property,value])=>{
+        if(visible) fab.style.setProperty(property,value,"important");
+        else fab.style.removeProperty(property);
+      });
+
+      const text = document.getElementById("smCartFabText");
+      if(text){
+        if(visible) text.style.setProperty("display","none","important");
+        else text.style.removeProperty("display");
+      }
+    };
+
+    if("IntersectionObserver" in window){
+      const observer = new IntersectionObserver(entries=>{
+        setAside(entries.some(entry=>entry.isIntersecting));
+      },{threshold:.05});
+      observer.observe(footer);
+      return;
+    }
+
+    const update = () => {
+      const rect = footer.getBoundingClientRect();
+      setAside(rect.top < window.innerHeight && rect.bottom > 0);
+    };
+    window.addEventListener("scroll",update,{passive:true});
+    update();
   }
 
   function burstAt(x,y){
@@ -237,6 +324,7 @@
   }
 
   installStyles();
+  installFooterAvoidance();
 
   // Capture the exact source before the original cart handler updates/closes its UI.
   document.addEventListener("click",event=>{

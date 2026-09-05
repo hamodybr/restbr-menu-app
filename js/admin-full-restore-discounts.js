@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_FULL_RESTORE_DISCOUNTS_V1__) return;
-  window.__SHORASH_FULL_RESTORE_DISCOUNTS_V1__ = true;
+  if (window.__RESTBR_FULL_RESTORE_DISCOUNTS_V1__) return;
+  window.__RESTBR_FULL_RESTORE_DISCOUNTS_V1__ = true;
 
   function setStatus(message = '', ok = true) {
     try {
@@ -58,7 +58,13 @@
   }
 
   function readBackupData(payload) {
-    if (!payload || !['RESTBR_MENU_BACKUP', 'SHORASH_MENU_BACKUP'].includes(payload.format)) {
+    const supported = payload && (
+      typeof window.RESTBR_IS_SUPPORTED_BACKUP_FORMAT === 'function'
+        ? window.RESTBR_IS_SUPPORTED_BACKUP_FORMAT(payload.format)
+        : payload.format === 'RESTBR_MENU_BACKUP'
+    );
+
+    if (!supported) {
       throw new Error('هذا الملف ليس Backup مدعوم.');
     }
 

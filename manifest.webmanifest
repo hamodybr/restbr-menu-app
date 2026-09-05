@@ -1,7 +1,7 @@
 {
-  "name": "Nawroz Palace Menu",
-  "short_name": "Nawroz Palace",
-  "description": "Nawroz Palace menu and ordering experience",
+  "name": "RESTBR Restaurant Menu",
+  "short_name": "RESTBR",
+  "description": "RESTBR single-restaurant digital menu and ordering experience",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
@@ -10,16 +10,16 @@
   "orientation": "portrait",
   "icons": [
     {
-      "src": "assets/restaurant-placeholder.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "src": "assets/apple-touch-icon.png",
+      "sizes": "180x180",
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "assets/restaurant-placeholder.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "assets/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }

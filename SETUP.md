@@ -1,70 +1,80 @@
-# إعداد نسخة مطعم جديدة
+# إعداد نسخة مطعم جديدة من RESTBR Master
 
-هذه النسخة مخصصة لمطعم واحد فقط. كرر الخطوات التالية لكل مطعم جديد، ولا تربط
-مطعمَين بنفس مشروع Supabase.
+هذه النسخة مخصصة لمطعم واحد فقط. لكل مطعم جديد يجب إنشاء نسخة مستقلة وقاعدة بيانات مستقلة.
 
-## 1. أنشئ Supabase خاصًا بالمطعم
+## 1. انسخ الماستر
 
-من حساب المطعم في Supabase:
+أنشئ Repository جديدًا من `hamodybr/restbr-menu-app` ولا تعمل مباشرة على الماستر بعد ذلك.
+
+## 2. أنشئ Supabase خاصًا بالمطعم
 
 1. أنشئ Project جديدًا.
-2. افتح Authentication ثم Users.
-3. أنشئ حساب دخول صاحب المطعم وفعّل بريده.
-4. افتح SQL Editor.
-5. الصق وشغّل الملف `supabase/bootstrap.sql` كاملًا مرة واحدة.
+2. من Authentication > Users أنشئ حساب صاحب المطعم وفعّل بريده.
+3. افتح SQL Editor.
+4. شغّل `supabase/bootstrap.sql` كاملًا مرة واحدة.
 
-الملف ينشئ الجداول، الحماية RLS، الإحصائيات، دوال الأسعار، وحاوية الصور
-`menu-images`. أول مستخدم تم إنشاؤه في Auth يصبح مدير هذه النسخة.
+الـbootstrap ينشئ الجداول وRLS والإحصائيات والأسعار والخصومات وأوقات التوفر وحاوية `menu-images` والإعدادات اللازمة للنسخة الحالية.
 
-## 2. اربط نسخة الموقع
+## 3. اربط الموقع
 
-من Supabase افتح إعدادات API أو شاشة Connect، وانسخ:
-
+من Supabase انسخ:
 - Project URL
-- Publishable key، أو anon key في المشاريع القديمة
+- Publishable key / anon key
 
-افتح `js/runtime-config.js` وغيّر فقط:
+ثم عدّل فقط القيم الخاصة بالمطعم في أعلى `js/runtime-config.js`:
 
 ```js
 window.RESTBR_CONFIG = Object.freeze({
-  restaurantName: 'اسم المطعم',
+  restaurantName: 'Restaurant Name',
+  orderIdPrefix: 'ORD',
   supabaseUrl: 'https://PROJECT_REF.supabase.co',
   supabasePublishableKey: 'PUBLISHABLE_KEY',
   enableUserManagement: false,
-  enableRestaurantReset: false
+  enableRestaurantReset: false,
+  legacyRestaurantNames: [],
+  legacyBackupFormats: [],
+  legacyLocalStorageKeys: {},
+  legacySessionStorageKeys: {}
 });
 ```
 
-لا تستخدم `service_role` هنا؛ هذا المفتاح سري ولا يجوز أن يصل إلى المتصفح.
+لا تستخدم `service_role` داخل أي ملف يصل للمتصفح.
 
-## 3. انشر نسخة مستقلة
+## 4. انشر نسخة مستقلة
 
-أنشئ Repository أو فرع تسليم مستقل للمطعم، ثم أنشئ له Cloudflare Pages project
-ودومينًا أو subdomain خاصًا. لا توجّه مطعمين إلى نفس نسخة الموقع.
+اربط Repository الجديد باستضافة مستقلة ودومين أو subdomain خاص بالمطعم، مثل:
+
+`restaurant.restbr.com`
+
+لا توجّه مطعمين إلى نفس Repository أو نفس Supabase project.
+
+## 5. أكمل إعداد المطعم
 
 بعد النشر:
 
 1. افتح `/admin.html` وسجّل بحساب صاحب المطعم.
-2. أكمل الاسم والشعار والهاتف وWhatsApp والموقع.
-3. أضف الأقسام ثم الأصناف والأسعار.
-4. افتح الصفحة الرئيسية من نافذة خاصة وتأكد أن المنيو يعرض بيانات هذا المطعم فقط.
-5. أرسل طلب WhatsApp تجريبي قبل تسليم النسخة.
+2. أدخل الاسم والشعار والهاتف وWhatsApp والموقع.
+3. اضبط اللغات والتصميم وأوقات المطعم.
+4. أضف الأقسام والأصناف والأسعار أو استورد Excel.
+5. ارفع صور الأصناف إلى Storage الخاص بنفس المطعم.
+
+## 6. فحص قبل التسليم
+
+- Repository مستقل
+- Supabase مستقل
+- Auth owner صحيح
+- `runtime-config.js` يحتوي بيانات هذا المطعم فقط
+- لا يوجد `service_role` في الكود
+- الاسم والشعار والهاتف وWhatsApp والموقع صحيحة
+- اللغة العربية/الكوردية/الإنجليزية تعمل حسب الإعداد
+- الداشبورد عربي/English يعمل
+- الأسعار داخل المطعم/السفري صحيحة
+- أوقات المطعم وأوقات الأقسام تعمل
+- السلة تعمل
+- رقم WhatsApp يخرج بالصيغة الدولية الصحيحة
+- طلب WhatsApp تجريبي ناجح
+- نافذة خاصة لا تعرض أي كاش أو هوية لمطعم سابق
 
 ## الميزات الاختيارية
 
-`enableUserManagement` يحتاج نشر Edge Function الموجودة في
-`supabase/functions/admin-users`. اتركه `false` إذا كان للمطعم حساب إدارة واحد.
-
-`enableRestaurantReset` يمسح بيانات المطعم وصوره، لذلك يبقى `false` في كل
-نسخة مباعة. لا تفعّله قبل تركيب migrations الخاصة بالـ reset واختبار النسخ
-الاحتياطي على مشروع تجريبي.
-
-## قائمة فحص قبل البيع
-
-- Supabase مختلف عن كل المطاعم السابقة
-- حساب Auth يعود لصاحب المطعم
-- `runtime-config.js` لا يحتوي إلا المفتاح العام
-- رابط الأدمن يعمل وتسجيل الدخول ناجح
-- الصور ترفع إلى `menu-images`
-- الاسم والهاتف وWhatsApp والدومين تخص المطعم الصحيح
-- لا توجد بيانات أو صور من مطعم سابق
+`enableUserManagement` و`enableRestaurantReset` يبقيان `false` افتراضيًا. لا يتم تفعيلهما إلا إذا كانت متطلباتهما منشورة ومختبرة على نسخة المطعم نفسها.

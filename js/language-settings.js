@@ -1,7 +1,7 @@
 (() => {
   const ALL = ['ar', 'ku', 'en'];
   const LABELS = { ar: 'العربية', ku: 'کوردی', en: 'English' };
-  const CACHE_KEY = 'SHORASH_ENABLED_LANGUAGES_V1';
+  const CACHE_KEY = 'RESTBR_ENABLED_LANGUAGES_V1';
   const isAdmin = /(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname);
 
   let rowId = null;
@@ -215,11 +215,11 @@
 
     installMenuPolicyStyle();
 
-    const current = localStorage.getItem('shorashLang') || 'ar';
+    const current = localStorage.getItem('RESTBR_LANG_V1') || 'ar';
     const first = enabled[0] || 'ar';
 
     if (!enabled.includes(current)) {
-      localStorage.setItem('shorashLang', first);
+      localStorage.setItem('RESTBR_LANG_V1', first);
       const target = document.querySelector(`[data-lang="${first}"]`);
       if (target) target.click();
     }
@@ -277,7 +277,7 @@
     await loadPolicy();
     enforceMenuPolicy();
 
-    window.addEventListener('shorash:ready', () => {
+    window.addEventListener('restbr:ready', () => {
       enforceMenuPolicy();
       setTimeout(enforceMenuPolicy, 80);
     });

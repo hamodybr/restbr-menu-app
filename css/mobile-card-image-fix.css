@@ -1,4 +1,4 @@
-/* SHORASH — mobile product image clipping fix */
+/* RESTBR — mobile product image clipping fix */
 @media (max-width:768px){
   .sm-card{
     overflow:hidden !important;
@@ -49,4 +49,14 @@
     border-radius:15px 0 0 15px !important;
     clip-path:inset(0 round 15px 0 0 15px) !important;
   }
+}
+
+/* RESTBR — logo float independent from transform overrides. */
+.sm-logo-wrap{
+  animation:smLogoLiveFloat 4.2s ease-in-out infinite !important;
+  will-change:translate;
+}
+@keyframes smLogoLiveFloat{
+  0%,100%{translate:0 0}
+  50%{translate:0 -8px}
 }

@@ -8,7 +8,7 @@
   };
 
   function currentLang(){
-    const value = localStorage.getItem('shorashLang') || 'ar';
+    const value = localStorage.getItem('RESTBR_LANG_V1') || 'ar';
     return ['ar','ku','en'].includes(value) ? value : 'ar';
   }
 

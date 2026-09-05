@@ -1,10 +1,13 @@
 {
   "restaurant": {
-    "name": "YourCoffee",
+    "name": "Restaurant",
+    "nameAr": "المطعم",
+    "nameKu": "Restaurant",
+    "nameEn": "Restaurant",
     "phone": "",
     "whatsapp": "",
     "location": "",
-    "logo": "",
+    "logo": "assets/restaurant-placeholder.svg",
     "backgroundVideo": ""
   },
   "products": []
