@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v3";
+const CACHE_NAME = "restbr-pasha-baby-v1";
 const SUPABASE_BROWSER_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0";
 
 const CORE = [
@@ -11,6 +11,7 @@ const CORE = [
   "./css/english-card-ltr.css?v=1.0",
   "./css/mobile-card-image-fix.css?v=1.1",
   "./css/live-card-badges.css?v=1.5",
+  "./css/pasha-baby-theme.css?v=1.0",
   "./js/offline-status.js?v=1.1",
   "./js/unavailable-card-state.js?v=1.1",
   "./js/app.js?v=18.1",
@@ -20,7 +21,7 @@ const CORE = [
   "./js/cart.js?v=4.5",
   "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.5",
-  "./js/runtime-config.js?v=2.0",
+  "./js/runtime-config.js?v=2.1",
   "./js/url-safety.js?v=1.3",
   "./js/supabase-config.js?v=2.4",
   "./js/language-settings.js?v=1.1",
@@ -34,6 +35,7 @@ const CORE = [
   "./js/dining-mode.js?v=1.4",
   "./js/dining-gate-language.js?v=1.0",
   "./js/live-card-badges.js?v=1.0",
+  "./js/pasha-baby-ui.js?v=1.0",
   "./data/menu.json?v=32",
   "./assets/restaurant-placeholder.svg",
   "./assets/favicon.png",
