@@ -32,6 +32,18 @@
     }
   };
 
+  function setText(element, value) {
+    if (!element) return;
+    const next = String(value ?? '');
+    if (element.textContent !== next) element.textContent = next;
+  }
+
+  function setAttribute(element, name, value) {
+    if (!element) return;
+    const next = String(value ?? '');
+    if (element.getAttribute(name) !== next) element.setAttribute(name, next);
+  }
+
   function currentLang() {
     const value = String(
       (typeof window.RESTBR_LANG === 'function' ? window.RESTBR_LANG() : '') ||
@@ -80,9 +92,9 @@
     }
 
     const lang = currentLang();
-    brand.querySelector('.pb-brand-name').textContent = COPY[lang].name;
-    brand.querySelector('.pb-brand-tagline').textContent = COPY[lang].tagline;
-    brand.setAttribute('aria-label', COPY[lang].name);
+    setText(brand.querySelector('.pb-brand-name'), COPY[lang].name);
+    setText(brand.querySelector('.pb-brand-tagline'), COPY[lang].tagline);
+    setAttribute(brand, 'aria-label', COPY[lang].name);
   }
 
   function ensureIntroMark() {
@@ -104,7 +116,8 @@
   function decorateCategories() {
     document.querySelectorAll('#smCats .sm-cat').forEach(button => {
       const label = String(button.textContent || '').trim();
-      button.dataset.pbIcon = iconFor(label);
+      const icon = iconFor(label);
+      if (button.dataset.pbIcon !== icon) button.dataset.pbIcon = icon;
     });
   }
 
@@ -126,14 +139,21 @@
         /restaurant-placeholder\.svg(?:\?|$)/i.test(raw) ||
         image.dataset.pbBroken === '1';
 
-      holder.classList.toggle('pb-placeholder', placeholder);
-      holder.dataset.pbIcon = iconFor(category || image.alt || '');
+      const currentlyPlaceholder = holder.classList.contains('pb-placeholder');
+      if (currentlyPlaceholder !== placeholder) {
+        holder.classList.toggle('pb-placeholder', placeholder);
+      }
+
+      const icon = iconFor(category || image.alt || '');
+      if (holder.dataset.pbIcon !== icon) holder.dataset.pbIcon = icon;
 
       if (!image.dataset.pbErrorBound) {
         image.dataset.pbErrorBound = '1';
         image.addEventListener('error', () => {
           image.dataset.pbBroken = '1';
-          holder.classList.add('pb-placeholder');
+          if (!holder.classList.contains('pb-placeholder')) {
+            holder.classList.add('pb-placeholder');
+          }
         });
       }
     });
@@ -146,35 +166,26 @@
     ensureBrand();
     ensureIntroMark();
 
-    const title = document.querySelector('.sm-header h1');
-    if (title) title.textContent = copy.title;
-
-    const introBrand = document.querySelector('.sm-intro-brand');
-    if (introBrand) introBrand.textContent = copy.name;
-
-    const introSub = document.querySelector('.sm-intro-sub');
-    if (introSub) introSub.textContent = copy.intro;
+    setText(document.querySelector('.sm-header h1'), copy.title);
+    setText(document.querySelector('.sm-intro-brand'), copy.name);
+    setText(document.querySelector('.sm-intro-sub'), copy.intro);
+    setText(document.getElementById('smPickupBtn'), copy.pickup);
+    setText(document.querySelector('.sm-footer h2'), copy.name);
 
     const search = document.getElementById('smSearchInput');
-    if (search) search.placeholder = copy.search;
+    if (search && search.placeholder !== copy.search) search.placeholder = copy.search;
 
-    const searchToggle = document.getElementById('smSearchToggle');
-    if (searchToggle) searchToggle.setAttribute('aria-label', copy.searchLabel);
-
-    const pickup = document.getElementById('smPickupBtn');
-    if (pickup) pickup.textContent = copy.pickup;
-
-    const footerTitle = document.querySelector('.sm-footer h2');
-    if (footerTitle) footerTitle.textContent = copy.name;
+    setAttribute(document.getElementById('smSearchToggle'), 'aria-label', copy.searchLabel);
 
     const currentTitle = `${copy.name} — ${copy.title}`;
     if (document.title !== currentTitle) document.title = currentTitle;
 
-    const appleTitle = document.querySelector('meta[name="apple-mobile-web-app-title"]');
-    if (appleTitle) appleTitle.setAttribute('content', copy.name);
-
-    const theme = document.querySelector('meta[name="theme-color"]');
-    if (theme) theme.setAttribute('content', '#fffaf5');
+    setAttribute(
+      document.querySelector('meta[name="apple-mobile-web-app-title"]'),
+      'content',
+      copy.name
+    );
+    setAttribute(document.querySelector('meta[name="theme-color"]'), 'content', '#fffaf5');
 
     decorateCategories();
     decorateCards();
