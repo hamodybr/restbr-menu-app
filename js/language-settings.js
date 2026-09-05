@@ -250,6 +250,7 @@
     appendAdminI18nScript('restbrAdminI18nScript', 'js/admin-i18n.js?v=1.0');
     appendAdminI18nScript('restbrAdminI18nSupplementScript', 'js/admin-i18n-supplement.js?v=1.0');
     appendAdminI18nScript('restbrAdminI18nFinalCleanupScript', 'js/admin-i18n-final-cleanup.js?v=2.0');
+    appendAdminI18nScript('pashaBabyAdminCopyScript', 'js/pasha-baby-admin-copy.js?v=1.0');
   }
 
   async function initAdmin() {
