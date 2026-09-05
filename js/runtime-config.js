@@ -1,9 +1,9 @@
-// RESTBR single-restaurant public configuration template.
-// Replace only the restaurant-specific values at the top for each new copy.
+// PASHA BABY public configuration.
+// Keep the Supabase placeholders until the store gets its own isolated project.
 // Never put a Supabase service_role key in browser code.
 window.RESTBR_CONFIG = Object.freeze({
-  restaurantName: 'Restaurant',
-  orderIdPrefix: 'ORD',
+  restaurantName: 'Pasha Baby',
+  orderIdPrefix: 'PB',
   supabaseUrl: 'https://YOUR_PROJECT_REF.supabase.co',
   supabasePublishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
   enableUserManagement: false,
@@ -101,14 +101,14 @@ window.RESTBR_CONFIG = Object.freeze({
     }
   };
 
-  // Remove a brand cache copied from another restaurant before the intro uses it.
+  // Remove a brand cache copied from another deployment before the intro uses it.
   window.RESTBR_READ_BRAND_CACHE();
 
   const applyInitialBrand = () => {
     const name = String(config.restaurantName || '').trim();
     if (!name || name === 'Restaurant' || name === 'Restaurant Name') return;
 
-    document.title = `${name} Menu`;
+    document.title = `${name} Store`;
     document.querySelector('meta[name="apple-mobile-web-app-title"]')
       ?.setAttribute('content', name);
   };
