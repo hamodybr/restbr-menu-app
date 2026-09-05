@@ -1,12 +1,12 @@
 {
-  "name": "RESTBR Restaurant Menu",
-  "short_name": "RESTBR",
-  "description": "RESTBR single-restaurant digital menu and ordering experience",
+  "name": "Pasha Baby — پاشا بيبي",
+  "short_name": "Pasha Baby",
+  "description": "Pasha Baby children's supplies storefront and ordering experience",
   "start_url": "./",
   "scope": "./",
   "display": "standalone",
-  "background_color": "#080604",
-  "theme_color": "#080604",
+  "background_color": "#fffaf5",
+  "theme_color": "#fffaf5",
   "orientation": "portrait",
   "icons": [
     {
