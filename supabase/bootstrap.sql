@@ -426,7 +426,7 @@ grant execute on function private.can_manage_discounts() to authenticated;
 grant execute on function private.can_view_reports() to authenticated;
 grant execute on function private.can_manage_orders() to authenticated;
 
--- Compatibility wrappers used by the existing dashboard and optional migrations.
+-- Compatibility wrappers used by the dashboard and optional migrations.
 create or replace function public.current_admin_role()
 returns text language sql stable security invoker set search_path = ''
 as $$ select private.current_admin_role(); $$;
@@ -463,8 +463,7 @@ create or replace function public.can_manage_orders()
 returns boolean language sql stable security invoker set search_path = ''
 as $$ select private.can_manage_orders(); $$;
 
--- Deprecated compatibility alias for older deployed restaurant dashboards.
-create or replace function public.is_shorash_admin()
+create or replace function public.is_restbr_admin()
 returns boolean language sql stable security invoker set search_path = ''
 as $$ select private.can_access_admin(); $$;
 
@@ -477,7 +476,7 @@ revoke all on function public.can_manage_users() from public;
 revoke all on function public.can_manage_discounts() from public;
 revoke all on function public.can_view_reports() from public;
 revoke all on function public.can_manage_orders() from public;
-revoke all on function public.is_shorash_admin() from public;
+revoke all on function public.is_restbr_admin() from public;
 
 grant execute on function public.current_admin_role() to authenticated;
 grant execute on function public.has_admin_role(text[]) to authenticated;
@@ -488,7 +487,7 @@ grant execute on function public.can_manage_users() to authenticated;
 grant execute on function public.can_manage_discounts() to authenticated;
 grant execute on function public.can_view_reports() to authenticated;
 grant execute on function public.can_manage_orders() to authenticated;
-grant execute on function public.is_shorash_admin() to authenticated;
+grant execute on function public.is_restbr_admin() to authenticated;
 
 create or replace function public.track_menu_event(
   p_event_type text,
