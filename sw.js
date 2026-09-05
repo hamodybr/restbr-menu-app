@@ -29,6 +29,7 @@ const CORE = [
   "./js/restaurant-hours.js?v=1.3",
   "./js/whatsapp-order-bullets.js?v=1.0",
   "./js/english-news-ticker.js?v=1.0",
+  "./js/seamless-background-video.js?v=1.0",
   "./js/card-life-effects.js?v=1.0",
   "./js/dining-mode.js?v=1.4",
   "./js/dining-gate-language.js?v=1.0",
