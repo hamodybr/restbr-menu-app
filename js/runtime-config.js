@@ -1,11 +1,11 @@
 // PASHA BABY public configuration.
-// Keep the Supabase placeholders until the store gets its own isolated project.
+// This copy is connected to its own isolated Supabase project.
 // Never put a Supabase service_role key in browser code.
 window.RESTBR_CONFIG = Object.freeze({
   restaurantName: 'Pasha Baby',
   orderIdPrefix: 'PB',
-  supabaseUrl: 'https://YOUR_PROJECT_REF.supabase.co',
-  supabasePublishableKey: 'YOUR_SUPABASE_PUBLISHABLE_KEY',
+  supabaseUrl: 'https://wlollfpmjzenhkjwxrqo.supabase.co',
+  supabasePublishableKey: 'sb_publishable_VOuh1-xvEayYsNBdDCzRnA_3bcFWUB2',
   enableUserManagement: false,
   enableRestaurantReset: false,
   legacyRestaurantNames: [],
