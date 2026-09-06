@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v3";
+const CACHE_NAME = "restbr-restaurant-template-v4";
 const SUPABASE_BROWSER_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0";
 
 const CORE = [
@@ -7,6 +7,7 @@ const CORE = [
   "./manifest.webmanifest",
   "./css/style.css?v=4.1",
   "./css/cart.css?v=3.6",
+  "./css/flexible-actions.css?v=1.0",
   "./css/desktop-phone-parity.css?v=1.0",
   "./css/english-card-ltr.css?v=1.0",
   "./css/mobile-card-image-fix.css?v=1.1",
@@ -21,7 +22,7 @@ const CORE = [
   "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.5",
   "./js/runtime-config.js?v=2.0",
-  "./js/url-safety.js?v=1.3",
+  "./js/url-safety.js?v=1.4",
   "./js/supabase-config.js?v=2.4",
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
