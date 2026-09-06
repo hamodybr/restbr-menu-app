@@ -1,0 +1,55 @@
+/* RESTBR generic flexible action presentation.
+   Keeps each customer's theme/colors while standardizing action layout. */
+
+.sm-quick-actions{
+  grid-template-columns:repeat(auto-fit,minmax(110px,1fr)) !important;
+}
+
+.sm-quick-actions a,
+.sm-footer-main-actions a{
+  min-width:0;
+  display:flex;
+  flex-direction:row;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+}
+
+.sm-quick-actions a > span,
+.sm-footer-main-actions a > span{
+  flex:0 0 auto;
+  display:grid;
+  place-items:center;
+  line-height:1;
+}
+
+.sm-quick-actions a > b,
+.sm-footer-main-actions a > b{
+  min-width:0;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.sm-footer-socials{
+  grid-template-columns:repeat(4,minmax(0,1fr)) !important;
+  align-items:stretch;
+}
+
+.sm-footer-socials > a{
+  width:100%;
+  min-width:0;
+  max-width:none;
+  box-sizing:border-box;
+}
+
+@media (max-width:390px){
+  .sm-quick-actions{
+    grid-template-columns:repeat(auto-fit,minmax(92px,1fr)) !important;
+  }
+
+  .sm-quick-actions a,
+  .sm-footer-main-actions a{
+    gap:5px;
+  }
+}
