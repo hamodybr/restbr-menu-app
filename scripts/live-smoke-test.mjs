@@ -84,6 +84,7 @@ const indexHtml = await expectText('', [
   'js/runtime-config.js?v=2.0',
   'js/url-safety.js?v=1.4',
   'css/flexible-actions.css?v=1.0',
+  'js/product-service-mode.js?v=2.0',
   'js/app.js?v=18.1'
 ], 'master storefront');
 
@@ -107,7 +108,8 @@ await expectText('css/flexible-actions.css?v=1.0', [
 ], 'flexible action presentation');
 
 await expectText('sw.js', [
-  'restbr-restaurant-template-v4',
+  'restbr-restaurant-template-v5',
+  'js/product-service-mode.js?v=2.0',
   'js/url-safety.js?v=1.4',
   'css/flexible-actions.css?v=1.0'
 ], 'service worker');
