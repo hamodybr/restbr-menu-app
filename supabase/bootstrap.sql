@@ -151,6 +151,8 @@ create table if not exists public.products (
   is_new boolean not null default false,
   is_hot boolean not null default false,
   is_offer boolean not null default false,
+  service_mode text not null default 'both'
+    check (service_mode in ('both', 'dinein', 'takeaway')),
   created_at timestamptz not null default now(),
   updated_at timestamptz not null default now(),
   availability_schedule_enabled boolean not null default false,
