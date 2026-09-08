@@ -8,6 +8,32 @@
     return ['both', 'dinein', 'takeaway'].includes(mode) ? mode : 'both';
   }
 
+  function adminLanguage() {
+    return localStorage.getItem('RESTBR_ADMIN_LANGUAGE_V1') === 'en' ? 'en' : 'ar';
+  }
+
+  function labels() {
+    if (adminLanguage() === 'en') {
+      return {
+        title: 'Product visibility',
+        both: 'Dine-in & takeaway',
+        dinein: 'Dine-in only',
+        takeaway: 'Takeaway only',
+        help: 'Controls where this product appears after the customer chooses dine-in or takeaway.',
+        saveError: 'Could not save product visibility. Please try again.'
+      };
+    }
+
+    return {
+      title: 'مكان ظهور الصنف',
+      both: 'داخل المطعم والسفري',
+      dinein: 'داخل المطعم فقط',
+      takeaway: 'سفري فقط',
+      help: 'هذا الخيار يتحكم بظهور الصنف بعد أن يختار الزبون «داخل المطعم» أو «سفري».',
+      saveError: 'تعذر حفظ مكان ظهور الصنف. حاول مرة ثانية.'
+    };
+  }
+
   function installStyles() {
     if (document.getElementById('smAdminServiceModeStyles')) return;
 
@@ -36,16 +62,15 @@
 
   function fieldMarkup(selectId, mode) {
     const value = normalizeMode(mode);
+    const text = labels();
     return `
-      <label>مكان ظهور الصنف</label>
+      <label>${text.title}</label>
       <select id="${selectId}">
-        <option value="both" ${value === 'both' ? 'selected' : ''}>داخل المطعم والسفري</option>
-        <option value="dinein" ${value === 'dinein' ? 'selected' : ''}>داخل المطعم فقط</option>
-        <option value="takeaway" ${value === 'takeaway' ? 'selected' : ''}>سفري فقط</option>
+        <option value="both" ${value === 'both' ? 'selected' : ''}>${text.both}</option>
+        <option value="dinein" ${value === 'dinein' ? 'selected' : ''}>${text.dinein}</option>
+        <option value="takeaway" ${value === 'takeaway' ? 'selected' : ''}>${text.takeaway}</option>
       </select>
-      <small class="sm-service-mode-help">
-        هذا الخيار يتحكم بظهور الصنف بعد أن يختار الزبون «داخل المطعم» أو «سفري».
-      </small>
+      <small class="sm-service-mode-help">${text.help}</small>
     `;
   }
 
@@ -120,10 +145,7 @@
   function showModeSaveError(error) {
     console.error('Service mode save failed:', error);
     if (typeof window.showEditorMsg === 'function') {
-      window.showEditorMsg(
-        'تعذر حفظ مكان ظهور الصنف. حاول مرة ثانية.',
-        false
-      );
+      window.showEditorMsg(labels().saveError, false);
     }
   }
 
