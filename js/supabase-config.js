@@ -154,6 +154,18 @@ if (RESTBR_CONFIGURED) {
   document.head.appendChild(script);
 })();
 
+// Admin-only: choose whether a product appears in both modes, dine-in only, or takeaway only.
+(() => {
+  if (!RESTBR_IS_ADMIN_PATH) return;
+  if (document.getElementById('restbrAdminServiceModeScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'restbrAdminServiceModeScript';
+  script.src = 'js/admin-service-mode.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only tap ordering for product options inside the product editor.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
