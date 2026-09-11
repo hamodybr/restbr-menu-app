@@ -41,6 +41,12 @@ const supabaseClient = window.supabase.createClient(
   SUPABASE_PUBLISHABLE_KEY
 );
 
+// Compatibility handle for independent runtime extensions. This is the same
+// publishable browser client already used by the page; it never contains a
+// service_role credential.
+window.supabaseClient = supabaseClient;
+window.RESTBR_SUPABASE_CLIENT = supabaseClient;
+
 if (RESTBR_CONFIGURED) {
   console.log(`✅ RESTBR connected for ${RESTBR_CONFIG.restaurantName || 'Restaurant'}`);
 }
@@ -174,6 +180,18 @@ if (RESTBR_CONFIGURED) {
   const script = document.createElement('script');
   script.id = 'restbrAdminOptionOrderScript';
   script.src = 'js/admin-option-order.js?v=1.4';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
+// Admin-only generic product colors with a separate image per color.
+(() => {
+  if (!RESTBR_IS_ADMIN_PATH) return;
+  if (document.getElementById('restbrAdminProductColorsScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'restbrAdminProductColorsScript';
+  script.src = 'js/admin-product-colors.js?v=1.0';
   script.async = false;
   document.head.appendChild(script);
 })();
