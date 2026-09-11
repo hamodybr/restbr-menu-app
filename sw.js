@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v5";
+const CACHE_NAME = "restbr-restaurant-template-v6";
 const SUPABASE_BROWSER_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0";
 
 const CORE = [
@@ -36,6 +36,7 @@ const CORE = [
   "./js/product-service-mode.js?v=2.0",
   "./js/dining-gate-language.js?v=1.0",
   "./js/live-card-badges.js?v=1.0",
+  "./js/number-normalizer.js?v=1.0",
   "./data/menu.json?v=32",
   "./assets/restaurant-placeholder.svg",
   "./assets/favicon.png",
@@ -109,6 +110,28 @@ async function cacheFirst(request) {
   return response;
 }
 
+function staleWhileRevalidate(event, request) {
+  const networkUpdate = fetch(request, { cache: "no-cache" })
+    .then(async response => {
+      if (response && response.ok) {
+        const cache = await caches.open(CACHE_NAME);
+        cache.put(request, response.clone()).catch(() => {});
+      }
+      return response;
+    })
+    .catch(() => null);
+
+  event.waitUntil(networkUpdate.then(() => {}).catch(() => {}));
+
+  return (async () => {
+    const cached =
+      await caches.match(request) ||
+      await caches.match(request, { ignoreSearch: true });
+    if (cached) return cached;
+    return (await networkUpdate) || Response.error();
+  })();
+}
+
 self.addEventListener("fetch", event => {
   const request = event.request;
   if (request.method !== "GET") return;
@@ -125,7 +148,8 @@ self.addEventListener("fetch", event => {
   const isAdminPage = /\/admin(?:\.html)?\/?$/i.test(url.pathname);
   const isAdminAsset =
     /\/js\/admin-[^/]+\.js$/i.test(url.pathname) ||
-    /\/js\/(?:runtime|supabase)-config\.js$/i.test(url.pathname);
+    /\/js\/(?:runtime|supabase)-config\.js$/i.test(url.pathname) ||
+    /\/js\/number-normalizer\.js$/i.test(url.pathname);
 
   if (isAdminPage || isAdminAsset) {
     event.respondWith(networkFirst(request, { noStore: true }));
@@ -155,7 +179,9 @@ self.addEventListener("fetch", event => {
 
   const isCode = /\.(?:css|js|webmanifest|json)$/i.test(url.pathname);
   if (isCode) {
-    event.respondWith(networkFirst(request));
+    // Versioned public assets can render from the local cache immediately on
+    // repeat visits while a fresh copy is fetched in the background.
+    event.respondWith(staleWhileRevalidate(event, request));
     return;
   }
 
