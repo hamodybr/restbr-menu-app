@@ -108,11 +108,25 @@ await expectText('css/flexible-actions.css?v=1.0', [
 ], 'flexible action presentation');
 
 await expectText('sw.js', [
-  'restbr-restaurant-template-v5',
+  'restbr-restaurant-template-v6',
   'js/product-service-mode.js?v=2.0',
   'js/url-safety.js?v=1.4',
+  'js/number-normalizer.js?v=1.0',
+  'staleWhileRevalidate(event, request)',
   'css/flexible-actions.css?v=1.0'
 ], 'service worker');
+
+await expectText('js/number-normalizer.js?v=1.0', [
+  'RESTBR_TO_ENGLISH_DIGITS',
+  'RESTBR_NUMERIC_FAST_PATH_V2',
+  'data-restbr-native-number'
+], 'numeric input normalizer');
+
+await expectText('js/live-prices.js?v=1.0', [
+  'PRICE_SYNC_INTERVAL_MS = 5 * 60 * 1000',
+  'restbr-live-prices-v2',
+  'syncInFlight'
+], 'live price reconciliation');
 
 try {
   const { response, body } = await get('manifest.webmanifest', { json: true });
