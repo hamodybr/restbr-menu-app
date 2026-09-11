@@ -33,6 +33,9 @@ jobs:
       - name: Invoice print regression check
         run: node scripts/invoice-print-check.mjs
 
+      - name: Master readiness check
+        run: node scripts/master-readiness-check.mjs
+
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: validate
