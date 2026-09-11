@@ -13,6 +13,8 @@ const index = read('index.html');
 const colors = read('js/product-colors.js');
 const cartMeta = read('js/product-color-cart-meta.js');
 const admin = read('js/admin-product-colors.js');
+const backup = read('js/admin-full-backup-discounts.js');
+const restore = read('js/admin-full-restore-discounts.js');
 const supabaseConfig = read('js/supabase-config.js');
 const migration = read('supabase/migrations/20260911171000_generic_product_colors.sql');
 
@@ -54,6 +56,20 @@ for (const marker of [
   'is_active'
 ]) requireText('js/admin-product-colors.js', marker);
 
+for (const marker of [
+  '__RESTBR_FULL_BACKUP_V4__',
+  "from('product_colors')",
+  'product_colors: productColors',
+  'version: 4'
+]) requireText('js/admin-full-backup-discounts.js', marker);
+
+for (const marker of [
+  '__RESTBR_FULL_RESTORE_V4__',
+  'colors: Array.isArray(d.product_colors)',
+  "upsertInChunks('product_colors', data.colors)",
+  'جدول product_colors غير مثبت'
+]) requireText('js/admin-full-restore-discounts.js', marker);
+
 requireText('js/supabase-config.js', "script.src = 'js/admin-product-colors.js?v=1.0'", 'admin product color loader');
 requireText('js/supabase-config.js', 'window.RESTBR_SUPABASE_CLIENT = supabaseClient', 'shared publishable client handle');
 
@@ -71,9 +87,9 @@ for (const marker of [
   'private.can_manage_menu()'
 ]) requireText('supabase/migrations/20260911171000_generic_product_colors.sql', marker);
 
-const combined = `${colors}\n${cartMeta}\n${admin}`.toLowerCase();
-if (combined.includes('pasha')) fail('generic color runtime contains client-specific Pasha naming');
-if (combined.includes('shorash')) fail('generic color runtime contains client-specific Shorash naming');
+const combined = `${colors}\n${cartMeta}\n${admin}\n${backup}\n${restore}`.toLowerCase();
+if (combined.includes('pasha')) fail('generic color implementation contains client-specific Pasha naming');
+if (combined.includes('shorash')) fail('generic color implementation contains client-specific Shorash naming');
 
 if (/new MutationObserver\([^)]*\)[\s\S]{0,400}observe\(document\.(?:body|documentElement)/.test(colors)) {
   fail('js/product-colors.js: whole-document MutationObserver is forbidden');
