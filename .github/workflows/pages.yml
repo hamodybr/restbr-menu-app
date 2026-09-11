@@ -21,6 +21,9 @@ jobs:
       - name: Pre-deploy audit
         run: node scripts/predeploy-check.mjs
 
+      - name: Product color regression check
+        run: node scripts/product-colors-check.mjs
+
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: validate
