@@ -24,6 +24,9 @@ jobs:
       - name: Product color regression check
         run: node scripts/product-colors-check.mjs
 
+      - name: Order persistence regression check
+        run: node scripts/order-persistence-check.mjs
+
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: validate
