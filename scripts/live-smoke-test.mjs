@@ -154,6 +154,23 @@ await expectText('js/order-submit.js?v=1.0', [
   'RESTBR_CHECKOUT_LOCATION_V1'
 ], 'persisted checkout runtime');
 
+await expectText('js/supabase-config.js', [
+  "script.src = 'js/admin-orders.js?v=1.0'",
+  'restbrAdminOrdersScript'
+], 'admin orders loader');
+
+await expectText('js/admin-orders.js?v=1.0', [
+  "let currentStatus = 'new'",
+  "['all','كل الحالات']",
+  ".from('orders')",
+  ".from('order_items')",
+  "rpc('set_order_status'",
+  "rpc('delete_order'",
+  'selected_color_name',
+  "timeZone:'Asia/Baghdad'",
+  "channel('restbr-admin-orders-v1')"
+], 'admin orders runtime');
+
 try {
   const { response, body } = await get('manifest.webmanifest', { json: true });
   if (!response.ok) fail('manifest', `HTTP ${response.status}`);
