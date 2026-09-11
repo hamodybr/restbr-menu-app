@@ -1,21 +1,29 @@
 (() => {
+  if (window.__RESTBR_LIVE_PRICES_V2__) return;
+  window.__RESTBR_LIVE_PRICES_V2__ = true;
+
+  const PAGE_SIZE = 1000;
+  const MAX_ROWS = 50000;
+  const PRICE_SYNC_INTERVAL_MS = 5 * 60 * 1000;
+
   let channel = null;
   let started = false;
   let activeChoiceProductId = null;
+  let syncInFlight = null;
 
   const client = () =>
-    typeof supabaseClient !== "undefined"
+    typeof supabaseClient !== 'undefined'
       ? supabaseClient
       : null;
 
   const lang = () =>
     window.RESTBR_LANG
       ? window.RESTBR_LANG()
-      : (localStorage.getItem("RESTBR_LANG_V1") || "ar");
+      : (localStorage.getItem('RESTBR_LANG_V1') || 'ar');
 
   const money = value => {
-    if (value === null || value === undefined || value === "") return "";
-    return Number(value).toLocaleString("en-US") + " " + (lang() === "en" ? "IQD" : "د.ع");
+    if (value === null || value === undefined || value === '') return '';
+    return Number(value).toLocaleString('en-US') + ' ' + (lang() === 'en' ? 'IQD' : 'د.ع');
   };
 
   const db = () => window.RESTBR_DB;
@@ -33,7 +41,7 @@
   }
 
   function productCard(productId) {
-    return [...document.querySelectorAll("[data-product-card]")].find(
+    return [...document.querySelectorAll('[data-product-card]')].find(
       card => String(card.dataset.productCard) === String(productId)
     ) || null;
   }
@@ -43,10 +51,10 @@
     const card = productCard(productId);
 
     if (product && card) {
-      const rows = [...card.querySelectorAll(".sm-option")];
+      const rows = [...card.querySelectorAll('.sm-option')];
 
       (product.options || []).forEach((option, index) => {
-        const price = rows[index]?.querySelector(".sm-price");
+        const price = rows[index]?.querySelector('.sm-price');
         if (price) price.textContent = money(option.price);
       });
     }
@@ -56,10 +64,10 @@
       activeChoiceProductId !== null &&
       String(activeChoiceProductId) === String(productId)
     ) {
-      const choiceRows = [...document.querySelectorAll("#smChoiceList .sm-choice-option")];
+      const choiceRows = [...document.querySelectorAll('#smChoiceList .sm-choice-option')];
 
       (product.options || []).forEach((option, index) => {
-        const price = choiceRows[index]?.querySelector("b");
+        const price = choiceRows[index]?.querySelector('b');
         if (price) price.textContent = money(option.price);
       });
     }
@@ -67,7 +75,7 @@
 
   function notifyPriceUpdate(detail = {}) {
     window.dispatchEvent(
-      new CustomEvent("restbr:prices-updated", { detail })
+      new CustomEvent('restbr:prices-updated', { detail })
     );
   }
 
@@ -97,32 +105,73 @@
     return changed;
   }
 
-  async function syncAllPrices() {
+  async function fetchAllPriceRows() {
     const sb = client();
-    if (!sb || !db()?.products) return;
+    if (!sb) return [];
 
-    const { data, error } = await sb
-      .from("product_options")
-      .select("id,product_id,price");
+    const rows = [];
+    let from = 0;
 
-    if (error || !Array.isArray(data)) return;
+    while (true) {
+      const { data, error } = await sb
+        .from('product_options')
+        .select('id,product_id,price')
+        .order('id', { ascending: true })
+        .range(from, from + PAGE_SIZE - 1);
 
-    const touchedProducts = new Set();
-    let changed = false;
+      if (error) throw error;
 
-    data.forEach(row => {
-      const didChange = applyRow(row, false);
-      if (didChange) {
-        changed = true;
-        touchedProducts.add(String(row.product_id));
+      const page = Array.isArray(data) ? data : [];
+      rows.push(...page);
+
+      if (page.length < PAGE_SIZE) break;
+      from += PAGE_SIZE;
+
+      if (from >= MAX_ROWS) {
+        throw new Error(`product_options exceeded ${MAX_ROWS} row live-price safety limit`);
       }
+    }
+
+    return rows;
+  }
+
+  async function syncAllPrices() {
+    if (syncInFlight) return syncInFlight;
+
+    syncInFlight = (async () => {
+      if (!client() || !db()?.products) return false;
+
+      let data;
+      try {
+        data = await fetchAllPriceRows();
+      } catch (error) {
+        console.warn('Live price sync failed:', error?.message || error);
+        return false;
+      }
+
+      const touchedProducts = new Set();
+      let changed = false;
+
+      data.forEach(row => {
+        const didChange = applyRow(row, false);
+        if (didChange) {
+          changed = true;
+          touchedProducts.add(String(row.product_id));
+        }
+      });
+
+      touchedProducts.forEach(refreshProductDom);
+
+      if (changed) {
+        notifyPriceUpdate({ bulk: true, rows: data.length });
+      }
+
+      return changed;
+    })().finally(() => {
+      syncInFlight = null;
     });
 
-    touchedProducts.forEach(refreshProductDom);
-
-    if (changed) {
-      notifyPriceUpdate({ bulk: true });
-    }
+    return syncInFlight;
   }
 
   function start() {
@@ -130,20 +179,20 @@
     if (started || !sb || !db()?.products) return;
     started = true;
 
-    syncAllPrices();
-
+    // Realtime is the primary update path. Reconcile once after subscription so
+    // startup does not download the same price table twice back-to-back.
     channel = sb
-      .channel("restbr-live-prices-v1")
+      .channel('restbr-live-prices-v2')
       .on(
-        "postgres_changes",
+        'postgres_changes',
         {
-          event: "*",
-          schema: "public",
-          table: "product_options"
+          event: '*',
+          schema: 'public',
+          table: 'product_options'
         },
         payload => {
-          if (payload.eventType === "DELETE") {
-            syncAllPrices();
+          if (payload.eventType === 'DELETE') {
+            void syncAllPrices();
             return;
           }
 
@@ -151,32 +200,37 @@
         }
       )
       .subscribe(status => {
-        if (status === "SUBSCRIBED") {
-          syncAllPrices();
+        if (status === 'SUBSCRIBED') {
+          void syncAllPrices();
         }
       });
 
-    // Safety sync in case a mobile browser briefly drops the realtime socket.
-    window.setInterval(syncAllPrices, 30000);
+    // Reconciliation is only a safety net for missed Realtime events. Do not
+    // repeatedly download prices every 30 seconds or while the page is hidden.
+    window.setInterval(() => {
+      if (document.visibilityState !== 'visible' || navigator.onLine === false) return;
+      void syncAllPrices();
+    }, PRICE_SYNC_INTERVAL_MS);
   }
 
-  document.addEventListener("click", event => {
-    const choose = event.target.closest(".sm-choose-options");
+  document.addEventListener('click', event => {
+    const choose = event.target.closest('.sm-choose-options');
     if (choose) {
       activeChoiceProductId = choose.dataset.productId || null;
     }
 
-    if (event.target.closest("#smChoiceClose,#smChoiceBackdrop")) {
+    if (event.target.closest('#smChoiceClose,#smChoiceBackdrop')) {
       activeChoiceProductId = null;
     }
   }, true);
 
-  window.addEventListener("online", syncAllPrices);
-  document.addEventListener("visibilitychange", () => {
-    if (document.visibilityState === "visible") syncAllPrices();
+  window.addEventListener('online', () => void syncAllPrices());
+  document.addEventListener('visibilitychange', () => {
+    if (document.visibilityState === 'visible') void syncAllPrices();
   });
+  window.addEventListener('restbr:catalog-expanded', () => void syncAllPrices());
 
-  window.addEventListener("restbr:ready", start, { once: true });
+  window.addEventListener('restbr:ready', start, { once: true });
 
   if (db()?.products) {
     start();

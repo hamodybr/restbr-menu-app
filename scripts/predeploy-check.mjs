@@ -58,6 +58,19 @@ for (const file of syntaxFiles) {
 }
 note(`JavaScript syntax checked: ${syntaxFiles.length} files`);
 
+// 1b) Numeric-input behavior must stay compatible with Arabic/Persian keyboards
+// and the iPhone text-backed number-field workaround.
+if (exists('scripts/numeric-input-check.mjs')) {
+  try {
+    execFileSync(process.execPath, [path.join(root, 'scripts/numeric-input-check.mjs')], { stdio: 'pipe' });
+    note('Localized numeric input regression check passed');
+  } catch (error) {
+    fail(`scripts/numeric-input-check.mjs: behavior check failed\n${String(error?.stderr || error?.message || error)}`);
+  }
+} else {
+  fail('scripts/numeric-input-check.mjs: missing numeric input regression check');
+}
+
 // 2) Manifest validity and local icons.
 try {
   const manifest = JSON.parse(read('manifest.webmanifest'));
@@ -105,6 +118,8 @@ for (const match of sw.matchAll(/["']\.\/([^"']+)["']/g)) {
 }
 requireText('sw.js', './js/url-safety.js?v=1.4', 'current URL safety cache entry');
 requireText('sw.js', './css/flexible-actions.css?v=1.0', 'generic flexible actions cache entry');
+requireText('sw.js', './js/number-normalizer.js?v=1.0', 'generic number normalizer cache entry');
+requireText('sw.js', 'staleWhileRevalidate(event, request)', 'stale-while-revalidate public asset strategy');
 
 // 6) Flexible actions/socials must exist from DB -> admin -> storefront.
 for (const marker of ['custom_social_links', 'custom_top_actions', 'custom_footer_actions']) {
@@ -134,6 +149,37 @@ for (const marker of [
 }
 requireText('index.html', 'js/url-safety.js?v=1.4', 'current URL safety script version');
 requireText('js/runtime-config.js', "script.src = 'js/url-safety.js?v=1.4'", 'runtime URL safety fallback version');
+
+// 7b) Generic iPhone number normalization must stay wired into admin without a
+// whole-dashboard MutationObserver.
+for (const marker of [
+  'RESTBR_TO_ENGLISH_DIGITS',
+  'RESTBR_NORMALIZE_NUMERIC_INPUT',
+  'RESTBR_IOS_NUMERIC_FALLBACK_ACTIVE',
+  'RESTBR_NUMERIC_FAST_PATH_V2',
+  'data-restbr-native-number'
+]) {
+  requireText('js/number-normalizer.js', marker, marker);
+}
+requireText('js/runtime-config.js', "script.src = 'js/number-normalizer.js?v=1.0'", 'admin number-normalizer loader');
+if (read('js/number-normalizer.js').includes('new MutationObserver')) {
+  fail('js/number-normalizer.js: global MutationObserver must not be reintroduced');
+}
+
+// 7c) Live prices: Realtime first, one paginated reconciliation, no 30-second
+// full-table polling, and no reconciliation while the page is hidden/offline.
+for (const marker of [
+  'PRICE_SYNC_INTERVAL_MS = 5 * 60 * 1000',
+  'syncInFlight',
+  '.range(from, from + PAGE_SIZE - 1)',
+  "document.visibilityState !== 'visible'",
+  "channel('restbr-live-prices-v2')"
+]) {
+  requireText('js/live-prices.js', marker, marker);
+}
+if (read('js/live-prices.js').includes('setInterval(syncAllPrices, 30000)')) {
+  fail('js/live-prices.js: 30-second full-price polling was reintroduced');
+}
 
 // 8) No privileged Supabase credentials may ship to the browser.
 const browserFiles = [
