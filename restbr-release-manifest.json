@@ -1,0 +1,55 @@
+{
+  "schema_version": 1,
+  "release": "master-foundation-2026-09-11",
+  "model": "single-restaurant-copy",
+  "description": "Canonical reusable RESTBR master contract for creating one independent restaurant copy per repository and Supabase project.",
+  "database_install_order": [
+    "supabase/bootstrap.sql",
+    "supabase/migrations/20260911171000_generic_product_colors.sql",
+    "supabase/migrations/20260911173000_order_persistence.sql",
+    "supabase/migrations/20260911173100_order_hours_guard.sql",
+    "supabase/migrations/20260911174000_admin_orders.sql"
+  ],
+  "critical_browser_files": [
+    "index.html",
+    "admin.html",
+    "manifest.webmanifest",
+    "js/runtime-config.js",
+    "js/supabase-config.js",
+    "js/product-colors.js",
+    "js/product-color-cart-meta.js",
+    "js/order-submit.js",
+    "js/admin-orders.js",
+    "js/admin-order-print.js"
+  ],
+  "required_validation_scripts": [
+    "scripts/predeploy-check.mjs",
+    "scripts/product-colors-check.mjs",
+    "scripts/order-persistence-check.mjs",
+    "scripts/admin-orders-check.mjs",
+    "scripts/invoice-print-check.mjs",
+    "scripts/master-readiness-check.mjs",
+    "scripts/live-smoke-test.mjs"
+  ],
+  "configuration_contract": {
+    "file": "js/runtime-config.js",
+    "restaurant_name_placeholder": "Restaurant",
+    "supabase_url_placeholder": "https://YOUR_PROJECT_REF.supabase.co",
+    "supabase_key_placeholder": "YOUR_SUPABASE_PUBLISHABLE_KEY",
+    "service_role_in_browser": false
+  },
+  "handoff_requirements": [
+    "repository_is_independent",
+    "supabase_project_is_independent",
+    "owner_auth_user_exists",
+    "runtime_config_is_restaurant_specific",
+    "database_install_order_completed",
+    "checkout_persists_before_whatsapp",
+    "prices_are_server_authoritative",
+    "admin_orders_work",
+    "invoice_100x150_works",
+    "invoice_a4_works",
+    "live_smoke_is_green"
+  ],
+  "legacy_compatibility_note": "Older SHORASH backup/local-storage identifiers may remain only as backward-compatibility fallbacks. They are not the active RESTBR identity or configuration contract."
+}
