@@ -32,9 +32,13 @@
           "RESTBR_BRAND_CACHE_V1",
           "RESTBR_MENU_OFFLINE_CACHE_V1",
           "RESTBR_CART_V1",
-          "RESTBR_ENABLED_LANGUAGES_V1"
+          "RESTBR_ENABLED_LANGUAGES_V1",
+          "RESTBR_CART_COLOR_META_V1"
         ].forEach(key=>localStorage.removeItem(key));
-        sessionStorage.removeItem("RESTBR_INTRO_SEEN_V1");
+        [
+          "RESTBR_INTRO_SEEN_V1",
+          "RESTBR_PRODUCT_COLOR_SELECTION_V1"
+        ].forEach(key=>sessionStorage.removeItem(key));
         localStorage.setItem(templateResetKey,"done");
       }
       localStorage.removeItem("SM_THEME_PREF_V1");
@@ -169,7 +173,7 @@
     src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0"
     integrity="sha384-0UK+HVlz5Y7F//atDpPysyocv/PjGXQoBX+XSaL/eEotARW8rPFh+lL5sO0Ljzfi"
     crossorigin="anonymous"></script>
-  <script src="js/supabase-config.js?v=2.4"></script>
+  <script src="js/supabase-config.js?v=2.5"></script>
 
   <script src="js/unavailable-card-state.js?v=1.1"></script>
   <script src="js/dining-mode.js?v=1.4"></script>
@@ -177,6 +181,8 @@
   <script src="js/dining-gate-language.js?v=1.0"></script>
 
   <script src="js/app.js?v=18.1"></script>
+  <script src="js/product-colors.js?v=1.0"></script>
+  <script src="js/product-color-cart-meta.js?v=1.0"></script>
   <script src="js/section-hours-highlight.js?v=1.0"></script>
   <script src="js/product-image-fallback.js?v=1.3"></script>
   <script src="js/price-safety.js?v=1.0"></script>

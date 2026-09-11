@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v6";
+const CACHE_NAME = "restbr-restaurant-template-v7";
 const SUPABASE_BROWSER_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0";
 
 const CORE = [
@@ -15,6 +15,8 @@ const CORE = [
   "./js/offline-status.js?v=1.1",
   "./js/unavailable-card-state.js?v=1.1",
   "./js/app.js?v=18.1",
+  "./js/product-colors.js?v=1.0",
+  "./js/product-color-cart-meta.js?v=1.0",
   "./js/section-hours-highlight.js?v=1.0",
   "./js/product-image-fallback.js?v=1.3",
   "./js/price-safety.js?v=1.0",
@@ -23,7 +25,7 @@ const CORE = [
   "./js/cart-fab-effects.js?v=1.5",
   "./js/runtime-config.js?v=2.0",
   "./js/url-safety.js?v=1.4",
-  "./js/supabase-config.js?v=2.4",
+  "./js/supabase-config.js?v=2.5",
   "./js/language-settings.js?v=1.1",
   "./js/live-prices.js?v=1.0",
   "./js/discount-choice-price-sync.js?v=1.0",

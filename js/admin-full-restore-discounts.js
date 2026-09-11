@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__RESTBR_FULL_RESTORE_DISCOUNTS_V1__) return;
-  window.__RESTBR_FULL_RESTORE_DISCOUNTS_V1__ = true;
+  if (window.__RESTBR_FULL_RESTORE_V4__) return;
+  window.__RESTBR_FULL_RESTORE_V4__ = true;
 
   function setStatus(message = '', ok = true) {
     try {
@@ -23,8 +23,19 @@
       const { error } = await supabaseClient
         .from(table)
         .upsert(rows.slice(i, i + 100), { onConflict: 'id' });
-      if (error) throw error;
+      if (error) {
+        if (table === 'product_colors' && isMissingProductColorsTable(error)) {
+          throw new Error('النسخة تحتوي ألوان أصناف، لكن جدول product_colors غير مثبت. شغّل migration نظام الألوان ثم أعد الاسترجاع.');
+        }
+        throw error;
+      }
     }
+  }
+
+  function isMissingProductColorsTable(error) {
+    const code = String(error?.code || '');
+    const message = String(error?.message || '');
+    return code === '42P01' || code === 'PGRST205' || /product_colors/i.test(message);
   }
 
   async function restorePrices(productPrices, optionPrices) {
@@ -73,6 +84,7 @@
       categories: Array.isArray(d.categories) ? d.categories : [],
       products: Array.isArray(d.products) ? d.products : [],
       options: Array.isArray(d.product_options) ? d.product_options : [],
+      colors: Array.isArray(d.product_colors) ? d.product_colors : [],
       settings: Array.isArray(d.restaurant_settings) ? d.restaurant_settings : [],
       discounts: Array.isArray(d.discounts) ? d.discounts : [],
       priceProducts: Array.isArray(d.price_products) ? d.price_products : [],
@@ -84,6 +96,7 @@
     return data.categories.length ||
       data.products.length ||
       data.options.length ||
+      data.colors.length ||
       data.settings.length ||
       data.discounts.length ||
       data.priceProducts.length ||
@@ -102,11 +115,12 @@
 
     // Keep the same non-destructive restore policy used by the original admin:
     // matching IDs are updated and missing IDs are inserted; unrelated current
-    // rows are never deleted.
+    // rows are never deleted. FK order matters: products before options/colors.
     await upsertInChunks('restaurant_settings', data.settings);
     await upsertInChunks('categories', data.categories);
     await upsertInChunks('products', data.products);
     await upsertInChunks('product_options', data.options);
+    await upsertInChunks('product_colors', data.colors);
     await upsertInChunks('discounts', data.discounts);
 
     const priceResult = await restorePrices(data.priceProducts, data.priceOptions);
@@ -121,6 +135,7 @@
       categories: data.categories.length,
       products: data.products.length,
       options: data.options.length,
+      colors: data.colors.length,
       settings: data.settings.length,
       discounts: data.discounts.length,
       price_products: priceResult.price_products,
@@ -148,6 +163,7 @@
       data.categories.length ? `أقسام ${data.categories.length}` : '',
       data.products.length ? `أصناف ${data.products.length}` : '',
       data.options.length ? `خيارات ${data.options.length}` : '',
+      data.colors.length ? `ألوان ${data.colors.length}` : '',
       data.discounts.length ? `خصومات ${data.discounts.length}` : '',
       (data.priceProducts.length || data.priceOptions.length)
         ? `أسعار ${data.priceProducts.length + data.priceOptions.length}`
@@ -162,7 +178,7 @@
     );
     if (!proceed) return;
 
-    setStatus('جاري استرجاع النسخة والخصومات...');
+    setStatus('جاري استرجاع النسخة والألوان والخصومات...');
 
     try {
       const result = await restoreBackupObjectEnhanced(payload);
@@ -171,6 +187,7 @@
       if (result.categories) parts.push(`أقسام: ${result.categories}`);
       if (result.products) parts.push(`أصناف: ${result.products}`);
       if (result.options) parts.push(`خيارات: ${result.options}`);
+      if (result.colors) parts.push(`ألوان: ${result.colors}`);
       if (result.discounts) parts.push(`خصومات: ${result.discounts}`);
       if (result.price_products || result.price_options) {
         parts.push(`أسعار: ${result.price_products + result.price_options}`);
@@ -179,8 +196,7 @@
       setStatus('تم الاسترجاع بنجاح ✓' + (parts.length ? ' — ' + parts.join('، ') : ''));
       alert('تم استرجاع النسخة الاحتياطية بنجاح ✓');
 
-      // A reload makes every admin module (including the discounts panel)
-      // re-read the restored database state.
+      // A reload makes every admin module re-read the restored database state.
       setTimeout(() => location.reload(), 250);
     } catch (error) {
       console.error('ENHANCED RESTORE ERROR:', error);

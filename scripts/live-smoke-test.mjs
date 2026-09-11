@@ -85,7 +85,9 @@ const indexHtml = await expectText('', [
   'js/url-safety.js?v=1.4',
   'css/flexible-actions.css?v=1.0',
   'js/product-service-mode.js?v=2.0',
-  'js/app.js?v=18.1'
+  'js/app.js?v=18.1',
+  'js/product-colors.js?v=1.0',
+  'js/product-color-cart-meta.js?v=1.0'
 ], 'master storefront');
 
 const adminHtml = await expectText('admin.html', [
@@ -108,10 +110,12 @@ await expectText('css/flexible-actions.css?v=1.0', [
 ], 'flexible action presentation');
 
 await expectText('sw.js', [
-  'restbr-restaurant-template-v6',
+  'restbr-restaurant-template-v7',
   'js/product-service-mode.js?v=2.0',
   'js/url-safety.js?v=1.4',
   'js/number-normalizer.js?v=1.0',
+  'js/product-colors.js?v=1.0',
+  'js/product-color-cart-meta.js?v=1.0',
   'staleWhileRevalidate(event, request)',
   'css/flexible-actions.css?v=1.0'
 ], 'service worker');
@@ -127,6 +131,18 @@ await expectText('js/live-prices.js?v=1.0', [
   'restbr-live-prices-v2',
   'syncInFlight'
 ], 'live price reconciliation');
+
+await expectText('js/product-colors.js?v=1.0', [
+  'syntheticOptionIndex',
+  "from('product_colors')",
+  'RESTBR_PRODUCT_COLORS'
+], 'product color runtime');
+
+await expectText('js/product-color-cart-meta.js?v=1.0', [
+  'RESTBR_CART_COLOR_META_V1',
+  'selectedColor',
+  'RESTBR_CART_COLOR_META'
+], 'cart color metadata bridge');
 
 try {
   const { response, body } = await get('manifest.webmanifest', { json: true });

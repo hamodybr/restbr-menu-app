@@ -1,7 +1,7 @@
 (() => {
   if (!/(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname)) return;
-  if (window.__SHORASH_FULL_BACKUP_DISCOUNTS_V1__) return;
-  window.__SHORASH_FULL_BACKUP_DISCOUNTS_V1__ = true;
+  if (window.__RESTBR_FULL_BACKUP_V4__) return;
+  window.__RESTBR_FULL_BACKUP_V4__ = true;
 
   function safeName(value) {
     return String(value || 'restaurant')
@@ -44,17 +44,35 @@
     setTimeout(() => URL.revokeObjectURL(url), 1200);
   }
 
+  function isMissingProductColorsTable(error) {
+    const code = String(error?.code || '');
+    const message = String(error?.message || '');
+    return code === '42P01' || code === 'PGRST205' || /product_colors/i.test(message);
+  }
+
+  async function fetchProductColors() {
+    const response = await supabaseClient
+      .from('product_colors')
+      .select('*')
+      .order('sort_order', { ascending: true });
+
+    if (!response.error) return response.data || [];
+    if (isMissingProductColorsTable(response.error)) return [];
+    throw response.error;
+  }
+
   async function fetchAll() {
     if (typeof supabaseClient === 'undefined' || !supabaseClient) {
       throw new Error('Supabase غير جاهز.');
     }
 
-    const [categoriesRes, productsRes, optionsRes, settingsRes, discountsRes] = await Promise.all([
+    const [categoriesRes, productsRes, optionsRes, settingsRes, discountsRes, productColors] = await Promise.all([
       supabaseClient.from('categories').select('*').order('sort_order', { ascending: true }),
       supabaseClient.from('products').select('*').order('sort_order', { ascending: true }),
       supabaseClient.from('product_options').select('*').order('sort_order', { ascending: true }),
       supabaseClient.from('restaurant_settings').select('*').limit(1),
-      supabaseClient.from('discounts').select('*').order('created_at', { ascending: false })
+      supabaseClient.from('discounts').select('*').order('created_at', { ascending: false }),
+      fetchProductColors()
     ]);
 
     const responses = [categoriesRes, productsRes, optionsRes, settingsRes, discountsRes];
@@ -65,6 +83,7 @@
       categories: categoriesRes.data || [],
       products: productsRes.data || [],
       product_options: optionsRes.data || [],
+      product_colors: productColors,
       restaurant_settings: settingsRes.data || [],
       discounts: discountsRes.data || []
     };
@@ -76,7 +95,7 @@
       button.disabled = true;
       button.textContent = 'جاري إنشاء النسخة...';
     }
-    setStatus('جاري قراءة كل بيانات المنيو والخصومات...', true);
+    setStatus('جاري قراءة كل بيانات المنيو والألوان والخصومات...', true);
 
     try {
       const data = await fetchAll();
@@ -88,7 +107,7 @@
 
       const payload = {
         format: 'RESTBR_MENU_BACKUP',
-        version: 3,
+        version: 4,
         created_at: new Date().toISOString(),
         scope: 'full',
         restaurant,
@@ -98,7 +117,7 @@
 
       downloadJson(`${safeName(restaurant)}-full-${fileDate()}.json`, payload);
       setStatus(
-        `تم إنشاء نسخة كاملة ✓ (${data.categories.length} قسم، ${data.products.length} صنف، ${data.product_options.length} خيار، ${data.discounts.length} خصم)`,
+        `تم إنشاء نسخة كاملة ✓ (${data.categories.length} قسم، ${data.products.length} صنف، ${data.product_options.length} خيار، ${data.product_colors.length} لون، ${data.discounts.length} خصم)`,
         true
       );
       return payload;
