@@ -47,7 +47,7 @@ for (const marker of [
   'create or replace function public.submit_order(p_payload jsonb)',
   'security definer',
   'orders_client_token_uidx',
-  'v_discount_percent := 0;',
+  'v_discount_percent := coalesce(v_discount_percent, 0);',
   "coalesce(v_option.takeaway_price, v_option.price)",
   "d.scope_type = 'product'",
   "d.scope_type = 'category'",
