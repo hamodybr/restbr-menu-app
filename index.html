@@ -37,7 +37,9 @@
         ].forEach(key=>localStorage.removeItem(key));
         [
           "RESTBR_INTRO_SEEN_V1",
-          "RESTBR_PRODUCT_COLOR_SELECTION_V1"
+          "RESTBR_PRODUCT_COLOR_SELECTION_V1",
+          "RESTBR_PENDING_ORDER_V1",
+          "RESTBR_CHECKOUT_LOCATION_V1"
         ].forEach(key=>sessionStorage.removeItem(key));
         localStorage.setItem(templateResetKey,"done");
       }
@@ -187,6 +189,7 @@
   <script src="js/product-image-fallback.js?v=1.3"></script>
   <script src="js/price-safety.js?v=1.0"></script>
   <script src="js/cart.js?v=4.5"></script>
+  <script src="js/order-submit.js?v=1.0"></script>
   <script src="js/cart-stale-item-guard.js?v=1.1"></script>
   <script src="js/cart-fab-effects.js?v=1.5"></script>
   <script src="js/live-prices.js?v=1.0"></script>

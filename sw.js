@@ -1,4 +1,4 @@
-const CACHE_NAME = "restbr-restaurant-template-v7";
+const CACHE_NAME = "restbr-restaurant-template-v8";
 const SUPABASE_BROWSER_URL = "https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.114.0";
 
 const CORE = [
@@ -21,6 +21,7 @@ const CORE = [
   "./js/product-image-fallback.js?v=1.3",
   "./js/price-safety.js?v=1.0",
   "./js/cart.js?v=4.5",
+  "./js/order-submit.js?v=1.0",
   "./js/cart-stale-item-guard.js?v=1.1",
   "./js/cart-fab-effects.js?v=1.5",
   "./js/runtime-config.js?v=2.0",
