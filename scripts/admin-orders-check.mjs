@@ -33,7 +33,7 @@ for (const marker of [
   "new Intl.DateTimeFormat('en-GB'",
   "timeZone:'Asia/Baghdad'",
   "channel('restbr-admin-orders-v1')",
-  "data-admin-nav = 'orders'",
+  "navBtn.dataset.adminNav = 'orders'",
   "grid-template-columns:repeat(6,minmax(0,1fr))"
 ]) requireText('js/admin-orders.js', marker);
 
