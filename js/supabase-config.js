@@ -196,6 +196,18 @@ if (RESTBR_CONFIGURED) {
   document.head.appendChild(script);
 })();
 
+// Admin-only: persisted order inbox, status workflow and delivery-fee control.
+(() => {
+  if (!RESTBR_IS_ADMIN_PATH) return;
+  if (document.getElementById('restbrAdminOrdersScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'restbrAdminOrdersScript';
+  script.src = 'js/admin-orders.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Admin-only: use the current restaurant logo when a product has no image.
 (() => {
   if (!RESTBR_IS_ADMIN_PATH) return;
