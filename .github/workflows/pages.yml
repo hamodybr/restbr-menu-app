@@ -30,6 +30,9 @@ jobs:
       - name: Admin orders regression check
         run: node scripts/admin-orders-check.mjs
 
+      - name: Invoice print regression check
+        run: node scripts/invoice-print-check.mjs
+
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: validate
