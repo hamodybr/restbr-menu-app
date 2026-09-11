@@ -27,6 +27,9 @@ jobs:
       - name: Order persistence regression check
         run: node scripts/order-persistence-check.mjs
 
+      - name: Admin orders regression check
+        run: node scripts/admin-orders-check.mjs
+
   deploy:
     if: github.ref == 'refs/heads/main'
     needs: validate
