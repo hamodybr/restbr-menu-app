@@ -98,6 +98,11 @@ const adminHtml = await expectText('admin.html', [
   'customSocialLinksDraft'
 ], 'master admin page');
 
+await expectText('js/runtime-config.js?v=2.0', [
+  "script.src = 'js/admin-order-print.js?v=1.0'",
+  'restbrAdminOrderPrintScript'
+], 'admin invoice print loader');
+
 await expectText('js/url-safety.js?v=1.4', [
   'RESTBR_NORMALIZE_CONFIGURED_URL',
   'PHONE_SHORTHAND',
@@ -170,6 +175,17 @@ await expectText('js/admin-orders.js?v=1.0', [
   "timeZone:'Asia/Baghdad'",
   "channel('restbr-admin-orders-v1')"
 ], 'admin orders runtime');
+
+await expectText('js/admin-order-print.js?v=1.0', [
+  "from('orders')",
+  "from('order_items')",
+  "from('restaurant_settings')",
+  '100mm 150mm',
+  'A4 portrait',
+  'selected_color_name',
+  'filter:grayscale(1)',
+  'RESTBR_PRINT_ORDER'
+], 'admin invoice print runtime');
 
 try {
   const { response, body } = await get('manifest.webmanifest', { json: true });
