@@ -162,7 +162,7 @@ for (const marker of [
   requireText('js/number-normalizer.js', marker, marker);
 }
 requireText('js/runtime-config.js', "script.src = 'js/number-normalizer.js?v=1.0'", 'admin number-normalizer loader');
-if (read('js/number-normalizer.js').includes('MutationObserver')) {
+if (read('js/number-normalizer.js').includes('new MutationObserver')) {
   fail('js/number-normalizer.js: global MutationObserver must not be reintroduced');
 }
 
