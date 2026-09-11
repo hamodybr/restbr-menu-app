@@ -87,7 +87,8 @@ const indexHtml = await expectText('', [
   'js/product-service-mode.js?v=2.0',
   'js/app.js?v=18.1',
   'js/product-colors.js?v=1.0',
-  'js/product-color-cart-meta.js?v=1.0'
+  'js/product-color-cart-meta.js?v=1.0',
+  'js/order-submit.js?v=1.0'
 ], 'master storefront');
 
 const adminHtml = await expectText('admin.html', [
@@ -110,12 +111,13 @@ await expectText('css/flexible-actions.css?v=1.0', [
 ], 'flexible action presentation');
 
 await expectText('sw.js', [
-  'restbr-restaurant-template-v7',
+  'restbr-restaurant-template-v8',
   'js/product-service-mode.js?v=2.0',
   'js/url-safety.js?v=1.4',
   'js/number-normalizer.js?v=1.0',
   'js/product-colors.js?v=1.0',
   'js/product-color-cart-meta.js?v=1.0',
+  'js/order-submit.js?v=1.0',
   'staleWhileRevalidate(event, request)',
   'css/flexible-actions.css?v=1.0'
 ], 'service worker');
@@ -143,6 +145,14 @@ await expectText('js/product-color-cart-meta.js?v=1.0', [
   'selectedColor',
   'RESTBR_CART_COLOR_META'
 ], 'cart color metadata bridge');
+
+await expectText('js/order-submit.js?v=1.0', [
+  "db.rpc('submit_order', { p_payload: payload })",
+  'RESTBR_PENDING_ORDER_V1',
+  'selected_color_id',
+  'restbr:order-created',
+  'RESTBR_CHECKOUT_LOCATION_V1'
+], 'persisted checkout runtime');
 
 try {
   const { response, body } = await get('manifest.webmanifest', { json: true });
