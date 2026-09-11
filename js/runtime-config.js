@@ -133,6 +133,19 @@ window.RESTBR_CONFIG = Object.freeze({
   document.head.appendChild(script);
 })();
 
+// Admin-only invoice/label printing. The runtime stays read-only and uses the
+// same persisted order/order_items records that power the order dashboard.
+(() => {
+  const isAdmin = /(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname);
+  if (!isAdmin || document.getElementById('restbrAdminOrderPrintScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'restbrAdminOrderPrintScript';
+  script.src = 'js/admin-order-print.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Backward-compatible loader for page shells that do not load the URL guard first.
 (() => {
   if (document.getElementById('restbrUrlSafetyScript')) return;
