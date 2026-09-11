@@ -120,6 +120,19 @@ window.RESTBR_CONFIG = Object.freeze({
   }
 })();
 
+// Admin-only localized digit normalizer. It is loaded from the small runtime shell
+// so every numeric field, including dynamically-created editors, gets the same behavior.
+(() => {
+  const isAdmin = /(?:^|\/)admin(?:\.html)?\/?$/i.test(location.pathname);
+  if (!isAdmin || document.getElementById('restbrNumberNormalizerScript')) return;
+
+  const script = document.createElement('script');
+  script.id = 'restbrNumberNormalizerScript';
+  script.src = 'js/number-normalizer.js?v=1.0';
+  script.async = false;
+  document.head.appendChild(script);
+})();
+
 // Backward-compatible loader for page shells that do not load the URL guard first.
 (() => {
   if (document.getElementById('restbrUrlSafetyScript')) return;
