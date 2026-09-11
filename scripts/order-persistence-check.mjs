@@ -12,6 +12,7 @@ const requireText = (file, marker, label = marker) => {
 const index = read('index.html');
 const submit = read('js/order-submit.js');
 const migration = read('supabase/migrations/20260911173000_order_persistence.sql');
+const hoursGuard = read('supabase/migrations/20260911173100_order_hours_guard.sql');
 const bootstrap = read('supabase/bootstrap.sql');
 const sw = read('sw.js');
 
@@ -62,8 +63,19 @@ for (const marker of [
   'delivery_fee numeric not null default 0'
 ]) requireText('supabase/migrations/20260911173000_order_persistence.sql', marker);
 
-if (/grant\s+[^;]*insert[^;]*on\s+public\.(?:orders|order_items)\s+to\s+anon/i.test(migration)) {
-  fail('order persistence migration must not grant direct anonymous INSERT on order tables');
+for (const marker of [
+  'private.restbr_restaurant_schedule_open',
+  "array['sun','mon','tue','wed','thu','fri','sat']",
+  "p_at at time zone 'Asia/Baghdad'",
+  "v_mode = 'daily'",
+  "v_mode = 'weekly'",
+  'restbr_orders_open_hours_guard',
+  'before insert on public.orders',
+  "raise exception 'Restaurant is closed according to opening hours'"
+]) requireText('supabase/migrations/20260911173100_order_hours_guard.sql', marker);
+
+if (/grant\s+[^;]*insert[^;]*on\s+public\.(?:orders|order_items)\s+to\s+anon/i.test(`${migration}\n${hoursGuard}`)) {
+  fail('order migrations must not grant direct anonymous INSERT on order tables');
 } else {
   ok('anonymous checkout is RPC-only; no direct order INSERT grant');
 }
